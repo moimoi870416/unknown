@@ -1,0 +1,3 @@
+Name,-16751002,C:\Users\lin\Desktop\軟體戰鬥營\遊戲專題\圖檔\GuttyKreumNatureTilesvol1_v2\tree96x96transparent.png,4,4
+tree1,-16711732,C:\Users\lin\Desktop\軟體戰鬥營\遊戲專題\圖檔\GuttyKreumNatureTilesvol1_v2\tree96x96transparentanimated.gif,4,4
+grass1,-6684928,C:\Users\lin\Desktop\軟體戰鬥營\遊戲專題\圖檔\GuttyKreumNatureTilesvol1_v2\grassf32x32transparent.png,1,1
