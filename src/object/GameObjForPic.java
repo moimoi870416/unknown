@@ -4,17 +4,17 @@ import controller.ImageController;
 
 import java.awt.*;
 
-public class Tree extends GameObject {
+public class GameObjForPic extends GameObject{
     private Image img;
 
-    public Tree(int x, int y, int width, int height) {
+    public GameObjForPic(String path,int x, int y, int width, int height) {
         super(x, y, width, height);
-        img = ImageController.getInstance().tryGet("/tree1.png");
+        img = ImageController.getInstance().tryGet(path);
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(img, painter().centerX(), painter().centerY(), null);
+        g.drawImage(img,painter().left(), painter().top(), null);
     }
 
     @Override

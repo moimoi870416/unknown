@@ -1,5 +1,7 @@
 package unit;
 
+import com.sun.javafx.scene.traversal.Direction;
+
 public class Global {
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
@@ -19,7 +21,7 @@ public class Global {
         DOWN,
         LEFT,
         RIGHT,
-        NO
+        NO;
     }
 
     public static void log(String str) {

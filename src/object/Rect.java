@@ -1,4 +1,4 @@
-package objectdata;
+package object;
 
 //物件長方形
 public class Rect {
@@ -23,10 +23,10 @@ public class Rect {
     }
 
     public static Rect genWithCenter(int x, int y, int width, int height) {
-        int left = x - width / 2;
-        int right = left + width;
-        int top = y - height / 2;
-        int bottom = top + height;
+        int left = x;
+        int right = x + width;
+        int top = y;
+        int bottom = y + height;
         return new Rect(left, top, right, bottom);
     }
 

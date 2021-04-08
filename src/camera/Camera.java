@@ -1,6 +1,6 @@
 package camera;
 
-import objectdata.GameObject;
+import object.GameObject;
 import unit.CommandSolver;
 import java.awt.*;
 import java.awt.geom.AffineTransform;

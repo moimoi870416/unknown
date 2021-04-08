@@ -1,6 +1,6 @@
 package camera;
 
-import objectdata.Rect;
+import object.Rect;
 
 public class Mapinformation {
     // 記得要在地圖那邊做地圖資訊的設定唷～

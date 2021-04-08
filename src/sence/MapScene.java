@@ -12,15 +12,14 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import actor.GameActor;
-import bullet.Bullet;
+import object.GameObjForPic;
+import object.actor.GameActor;
+import weapon.Bullet;
 import maploader.MapInfo;
 import maploader.MapLoader;
-import monster.Goblin;
-import monster.Monster;
-import objectdata.GameObject;
-import bullet.TestBullet;
-import object.Tree;
+import object.monster.Goblin;
+import object.monster.Monster;
+import object.GameObject;
 import unit.CommandSolver;
 
 public class MapScene extends Scene {
@@ -28,25 +27,26 @@ public class MapScene extends Scene {
     private int shootingCount;
     private ArrayList<GameObject> gameObjectArr;
     private LinkedList<Bullet> testBullets;
+    private LinkedList<Monster> monster;
     private int mouseX;
     private int mouseY;
     GameActor gameActor;
-    Monster monster;
+
 
     @Override
     public void sceneBegin() {
         testBullets = new LinkedList<>();
-        monster = new Goblin(200,200);
-        gameActor = new GameActor(0,720,450);
+        monster = new LinkedList<>();
+        gameActor = new GameActor(720,450);
         try {
             final MapLoader mapLoader = new MapLoader("genMap.bmp", "genMap.txt");
             final ArrayList<MapInfo> test = mapLoader.combineInfo();
             gameObjectArr = mapLoader.createObjectArray("Name", 32, test, new MapLoader.CompareClass() {
                 @Override
                 public GameObject compareClassName(final String gameObject, final String name, final MapInfo mapInfo, final int size) {
-                    GameObject tmp = null;
+                    GameObject tmp;
                     if (gameObject.equals(name)) {
-                        tmp = new Tree(mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                        tmp = new GameObjForPic("/tree1.png",mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
                         return tmp;
                     }
                     return null;
@@ -59,7 +59,6 @@ public class MapScene extends Scene {
 //                System.out.println(test.get(i).getSizeX());
 //                System.out.println(test.get(i).getSizeY());
 //            }
-            this.gameObjectArr.forEach(a -> System.out.println(a.getClass().getSimpleName()));
         } catch (final IOException ex) {
             Logger.getLogger(MapScene.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,10 +71,10 @@ public class MapScene extends Scene {
 
     @Override
     public void paint(final Graphics g) {
-        monster.paint(g);
+        monster.forEach(monster -> monster.paint(g));
         gameActor.paint(g);
         testBullets.forEach(testBullet -> testBullet.paint(g));
-        this.gameObjectArr.forEach(a -> a.paint(g));
+        gameObjectArr.forEach(a -> a.paint(g));
     }
 
     @Override
@@ -87,27 +86,46 @@ public class MapScene extends Scene {
                 i--;
                 continue;
             }
+            int x=0;
             for(int k=0 ; k<gameObjectArr.size() ; k++){
                 if(testBullets.get(i).isCollied(gameObjectArr.get(k))){
                     testBullets.remove(i);
                     i--;
+                    x++;
                     break;
                 }
             }
+            if(x == 0) {
+                for (int k = 0; k < monster.size(); k++) {
+                    if (testBullets.get(i).isCollied(monster.get(k))) {
+                        monster.remove(k);
+                        testBullets.remove(i);
+                        i--;
+                        break;
+                    }
+                }
+            }
+
+
         }
-        monster.chase(gameActor.painter().centerX(),gameActor.painter().centerY());
+        monster.forEach(monster->monster.chase(gameActor.collider().centerX(),gameActor.collider().centerY()));
+
+        if(Math.random()*100 <5 && monster.size()<20){
+
+            monster.add(new Goblin(50,(int)(Math.random()*900)));
+        }
+
         if (shooting) {
             if (shootingCount % 10 == 0) {
                 shoot();
             }
             shootingCount++;
         }
-        System.out.println(testBullets.size());
     }
 
 
     private void shoot(){
-        this.testBullets.add(new TestBullet(this.gameActor.painter().centerX() -6, this.gameActor.painter().centerY()-6, 12, 11, mouseX, mouseY));
+        this.testBullets.add(new Bullet(this.gameActor.painter().centerX() -6, this.gameActor.painter().centerY()-6, 12, 11, mouseX, mouseY, Bullet.GunType.PISTOL));
     }
 
 
@@ -137,12 +155,13 @@ public class MapScene extends Scene {
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
+                gameActor.getAnimator().setDelay().play();
                 gameActor.move(commandCode);
             }
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-
+                gameActor.getAnimator().setDelay().stop();
             }
 
             @Override

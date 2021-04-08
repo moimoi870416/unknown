@@ -1,4 +1,4 @@
-package objectdata;
+package object;
 
 import camera.Mapinformation;
 import unit.Global;

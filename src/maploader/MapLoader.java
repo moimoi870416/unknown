@@ -1,6 +1,6 @@
 package maploader;
 
-import objectdata.GameObject;
+import object.GameObject;
 
 import java.io.IOException;
 import java.util.ArrayList;

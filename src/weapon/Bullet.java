@@ -1,9 +1,12 @@
-package bullet;
+package weapon;
 
-import objectdata.GameObject;
+import controller.ImageController;
+import object.GameObject;
 import unit.GameKernel;
 
-public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
+import java.awt.*;
+
+public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
 
     private float x;
     private float y;
@@ -16,22 +19,20 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
     private int MOVE_SPEED;
     protected float shootDeviation;//射擊偏差(預設為1=無偏差)
     private float distance;
+    private int atk;
+    private GunType gunType;
+    private Image img;
 
-    public Bullet(final int x, final int y, final int width, final int height,int mouseX,int mouseY,int moveSpeed,double shootDeviation) {
+    public Bullet(final int x, final int y, final int width, final int height,int mouseX,int mouseY,GunType gunType) {
+        img = ImageController.getInstance().tryGet("/bullet.png");
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-        this.shootDeviation = (float)shootDeviation;
-        if(shootDeviation == 0){
-            this.shootDeviation =1;
-        }
-        MOVE_SPEED = moveSpeed;
-        if(moveSpeed == 0){
-            MOVE_SPEED = 10;
-        }
+        this.gunType = gunType;
+        setGun();
         setAngle();
         setDistanceDeviation();
     }
@@ -105,6 +106,29 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
         return false;
     }
 
-    public abstract boolean isOut();
+    public boolean isOut() {
+        if(setRange()<0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        g.drawImage(img,(int)left(),(int)top(),null);
+    }
+
+    @Override
+    public void update() {
+        move();
+    }
+
+    private float setShootDeviation(int max,int min){
+        float temp = (float) (Math.random() * (max - min + 1) + min);
+        if(temp == 0){
+            return 1;
+        }
+        return temp;
+    }
 
 }
