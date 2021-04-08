@@ -1,10 +1,10 @@
 package object;
 
 import controller.ImageController;
-
+import objectdata.GameObject;
 import java.awt.*;
 
-public class Tree extends GameObject{
+public class Tree extends GameObject {
     private Image img;
 
     public Tree(int x, int y, int width, int height) {
@@ -13,13 +13,8 @@ public class Tree extends GameObject{
     }
 
     @Override
-    public boolean isOut() {
-        return false;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        g.drawImage(img,left(),top(),null);
+    public void paintComponent(Graphics g) {
+        g.drawImage(img, painter().centerX(), painter().centerY(), null);
     }
 
     @Override

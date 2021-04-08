@@ -1,8 +1,6 @@
 package maploader;
 
-import actor.GameActor;
-import object.GameObject;
-import object.Tree;
+import objectdata.GameObject;
 
 import java.io.IOException;
 import java.util.ArrayList;

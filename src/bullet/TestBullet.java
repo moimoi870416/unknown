@@ -1,6 +1,5 @@
-package object;
+package bullet;
 
-import bullet.Bullet;
 import controller.ImageController;
 import java.awt.*;
 

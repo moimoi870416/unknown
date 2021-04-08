@@ -1,4 +1,4 @@
-import controller.Global;
+import unit.Global;
 import controller.SenceController;
 import sence.MapScene;
 import unit.CommandSolver;
@@ -18,10 +18,10 @@ public class Main {
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()
-                        .add(KeyEvent.VK_W, 6)
-                        .add(KeyEvent.VK_S, -6)
-                        .add(KeyEvent.VK_D, 7)
-                        .add(KeyEvent.VK_A, -7)
+                        .add(KeyEvent.VK_W, Global.UP)
+                        .add(KeyEvent.VK_S, Global.DOWN)
+                        .add(KeyEvent.VK_D, Global.RIGHT)
+                        .add(KeyEvent.VK_A, Global.LEFT)
                         .add(KeyEvent.VK_ENTER, 0)
                         .add(KeyEvent.VK_SPACE, 1)
                         .next().keyCleanMode()

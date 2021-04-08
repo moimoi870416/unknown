@@ -1,23 +1,21 @@
 package bullet;
 
-import object.GameObject;
+import objectdata.GameObject;
 import unit.GameKernel;
 
 public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
 
-    private double x;
-    private double y;
-    private double width;
-    private double height;
-    protected double mouseX;//滑鼠X位置
-    protected double mouseY;//滑鼠Y位置
-    private double moveOnX;//X方向位移
-    private double moveOnY;//Y方向位移
-    //protected double originalX;//初始X位置
-    //protected double originalY;//初始Y位置
+    private float x;
+    private float y;
+    private float width;
+    private float height;
+    protected float mouseX;//滑鼠X位置
+    protected float mouseY;//滑鼠Y位置
+    private float moveOnX;//X方向位移
+    private float moveOnY;//Y方向位移
     private int MOVE_SPEED;
-    protected double shootDeviation;//射擊偏差(預設為1=無偏差)
-    private double distance;
+    protected float shootDeviation;//射擊偏差(預設為1=無偏差)
+    private float distance;
 
     public Bullet(final int x, final int y, final int width, final int height,int mouseX,int mouseY,int moveSpeed,double shootDeviation) {
         this.x = x;
@@ -26,12 +24,10 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
         this.height = height;
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-        this.shootDeviation = shootDeviation;
+        this.shootDeviation = (float)shootDeviation;
         if(shootDeviation == 0){
             this.shootDeviation =1;
         }
-        //originalX = getCenterX();
-        //originalY = getCenterY();
         MOVE_SPEED = moveSpeed;
         if(moveSpeed == 0){
             MOVE_SPEED = 10;
@@ -41,11 +37,11 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
     }
 
     private void setAngle(){
-        double x = Math.abs(mouseX-getCenterX());
-        double y = Math.abs(mouseY-getCenterY());
-        distance = Math.sqrt(x*x+y*y);//計算斜邊
-        moveOnX = Math.cos(Math.toRadians((Math.acos(x/distance)/Math.PI*180)+this.shootDeviation))*MOVE_SPEED;
-        moveOnY = Math.sin(Math.toRadians((Math.asin(y/distance)/Math.PI*180)+this.shootDeviation))*MOVE_SPEED;
+        float x = (float) Math.abs(mouseX-getCenterX());
+        float y = (float)Math.abs(mouseY-getCenterY());
+        distance = (float)Math.sqrt(x*x+y*y);//計算斜邊
+        moveOnX = (float)Math.cos(Math.toRadians((Math.acos(x/distance)/Math.PI*180)+this.shootDeviation))*MOVE_SPEED;
+        moveOnY = (float)Math.sin(Math.toRadians((Math.asin(y/distance)/Math.PI*180)+this.shootDeviation))*MOVE_SPEED;
         if(mouseY < getCenterY()){
             moveOnY = -moveOnY;
         }
@@ -67,35 +63,7 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
     }
 
     protected void move(){
-        /*
-        if(clickOnY || clickOnX) {
-            if(clickOnY) {
-                if (mouseX > originalX) {
-                    offSetX(MOVE_SPEED);
-                } else if (mouseX < originalX) {
-                    offSetX(-MOVE_SPEED);
-                }
-            }
-            if(clickOnX) {
-                if (mouseY < originalY) {
-                    offSetY(-MOVE_SPEED);
-                } else if (mouseY > originalY) {
-                    offSetY(MOVE_SPEED);
-                }
-            }
-            return;
-        }
-
-         */
         offSet(moveOnX,moveOnY);
-    }
-
-    public void offSetX(final double x) {
-        this.x += x;
-    }
-
-    public void offSetY(final double y) {
-        this.y += y;
     }
 
     public void offSet(final double x, final double y) {
@@ -104,11 +72,11 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
     }
 
     public double getCenterX() {
-        return (this.x + this.width) / 2;
+        return (this.x  + this.x+this.width) / 2;
     }
 
     public double getCenterY() {
-        return (this.y + this.height) / 2;
+        return (this.y  + this.y+this.height) / 2;
     }
 
     public double left() {
@@ -128,19 +96,13 @@ public abstract class Bullet implements GameKernel.PaintInterface, GameKernel.Up
     }
 
     public boolean isCollied(final GameObject object) {
-        if (left() > object.right()) {
-            return false;
+        float x = (float)Math.abs(object.collider().centerX()-getCenterX());
+        float y = (float)Math.abs(object.collider().centerY()-getCenterY());
+        float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
+        if(d < (object.collider().width()+width)/2){
+            return true;
         }
-        if (right() < object.left()) {
-            return false;
-        }
-        if (top() > object.bottom()) {
-            return false;
-        }
-        if (bottom() < object.top()) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     public abstract boolean isOut();

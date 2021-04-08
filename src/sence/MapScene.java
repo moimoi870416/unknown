@@ -8,27 +8,35 @@ package sence;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import actor.GameActor;
+import bullet.Bullet;
 import maploader.MapInfo;
 import maploader.MapLoader;
+import monster.Goblin;
 import monster.Monster;
-import object.GameObject;
-import object.TestBullet;
+import objectdata.GameObject;
+import bullet.TestBullet;
 import object.Tree;
 import unit.CommandSolver;
 
 public class MapScene extends Scene {
+    private boolean shooting ;
+    private int shootingCount;
     private ArrayList<GameObject> gameObjectArr;
-    private ArrayList<TestBullet> testBullets;
+    private LinkedList<Bullet> testBullets;
+    private int mouseX;
+    private int mouseY;
     GameActor gameActor;
     Monster monster;
 
     @Override
     public void sceneBegin() {
-        testBullets = new ArrayList<>();
+        testBullets = new LinkedList<>();
+        monster = new Goblin(200,200);
         gameActor = new GameActor(0,720,450);
         try {
             final MapLoader mapLoader = new MapLoader("genMap.bmp", "genMap.txt");
@@ -64,6 +72,7 @@ public class MapScene extends Scene {
 
     @Override
     public void paint(final Graphics g) {
+        monster.paint(g);
         gameActor.paint(g);
         testBullets.forEach(testBullet -> testBullet.paint(g));
         this.gameObjectArr.forEach(a -> a.paint(g));
@@ -73,28 +82,51 @@ public class MapScene extends Scene {
     public void update() {
         for(int i=0 ; i<testBullets.size() ; i++){
             testBullets.get(i).update();
-            if (testBullets.get(i).isOut()) {
+            if(testBullets.get(i).isOut()){
                 testBullets.remove(i);
                 i--;
                 continue;
             }
             for(int k=0 ; k<gameObjectArr.size() ; k++){
-                if(gameObjectArr.get(k).isCollied(testBullets.get(i))){
+                if(testBullets.get(i).isCollied(gameObjectArr.get(k))){
                     testBullets.remove(i);
                     i--;
                     break;
                 }
             }
-
         }
-
+        monster.chase(gameActor.painter().centerX(),gameActor.painter().centerY());
+        if (shooting) {
+            if (shootingCount % 10 == 0) {
+                shoot();
+            }
+            shootingCount++;
+        }
+        System.out.println(testBullets.size());
     }
+
+
+    private void shoot(){
+        this.testBullets.add(new TestBullet(this.gameActor.painter().centerX() -6, this.gameActor.painter().centerY()-6, 12, 11, mouseX, mouseY));
+    }
+
+
 
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return (e, state, trigTime) -> {
-            if(state == CommandSolver.MouseState.PRESSED) {
-                this.testBullets.add(new TestBullet(this.gameActor.left() + 12, this.gameActor.top() + 12, gameActor.right() - 12, gameActor.bottom() - 11, e.getX(), e.getY()));
+            if(state == CommandSolver.MouseState.PRESSED){
+                mouseX = e.getX();
+                mouseY = e.getY();
+                shooting = true;
+            }
+            if(shooting && state == CommandSolver.MouseState.DRAGGED){
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+            if(state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED){
+                shooting = false;
+                shootingCount = 0;
             }
 
         };
@@ -105,7 +137,7 @@ public class MapScene extends Scene {
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
-                gameActor.keyPressed(commandCode, trigTime);
+                gameActor.move(commandCode);
             }
 
             @Override
