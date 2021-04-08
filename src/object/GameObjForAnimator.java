@@ -31,6 +31,7 @@ public class GameObjForAnimator extends GameObject {
     protected enum Dir{
         LEFT,
         RIGHT,
+        DEAD
     }
 
     protected void changeDir(double moveOnX){
@@ -54,6 +55,11 @@ public class GameObjForAnimator extends GameObject {
     }
 
     public void setLife(int life){
+        if(life < 0){
+            animator.setDelay().stop();
+            animator.setDelay().play();
+            dir = Dir.DEAD;
+        }
         this.life = life;
     }
 

@@ -17,11 +17,11 @@ public class Global {
     public static final int CENTER_HEIGHT = 32;
 
     public enum Direction {
-        UP,
-        DOWN,
         LEFT,
         RIGHT,
-        NO;
+        UP,
+        DOWN,
+        NO
     }
 
     public static void log(String str) {

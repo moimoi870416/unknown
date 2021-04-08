@@ -4,18 +4,14 @@ import controller.ImageController;
 import object.GameObject;
 import object.monster.Monster;
 import unit.GameKernel;
-
-import javax.management.monitor.Monitor;
 import java.awt.*;
 
 public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
 
     private float x;
     private float y;
-    private float width = 9;
-    private float height = 9;
-    protected float mouseX;//滑鼠X位置
-    protected float mouseY;//滑鼠Y位置
+    private float width = 4;
+    private float height = 4;
     private float moveOnX;//X方向位移
     private float moveOnY;//Y方向位移
     private int MOVE_SPEED;
@@ -23,23 +19,23 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private float distance;
     private int atk;
     private Image img;
+    private int flyingDistance;
 
-    public Bullet(final int x, final int y,int mouseX,int mouseY,int moveSpeed,int atk,int shootDeviation) {
+    public Bullet(final int x, final int y,int mouseX,int mouseY,int moveSpeed,int atk,int flyingDistance,float shootDeviation) {
         img = ImageController.getInstance().tryGet("/bullet.png");
         this.x = x;
         this.y = y;
-        this.mouseX = mouseX;
-        this.mouseY = mouseY;
         this.MOVE_SPEED = moveSpeed;
         this.atk = atk;
+        this.flyingDistance = flyingDistance;
         if(shootDeviation == 0){
             this.shootDeviation =1;
         }
-        setAngle();
+        setAngle(mouseX,mouseY);
         setDistanceDeviation();
     }
 
-    private void setAngle(){
+    private void setAngle(int mouseX,int mouseY){
         float x = (float) Math.abs(mouseX-getCenterX());
         float y = (float)Math.abs(mouseY-getCenterY());
         distance = (float)Math.sqrt(x*x+y*y);//計算斜邊
@@ -55,14 +51,14 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
 
     private void setDistanceDeviation(){
         if(distance>500){
-            distance += (Math.random()*30-15);
+            flyingDistance += (Math.random()*30-15);
         }else if(distance >200){
-            distance += (Math.random()*16-8);
+            flyingDistance += (Math.random()*16-8);
         }
     }
 
     protected double setRange(){
-        return distance -= MOVE_SPEED;
+        return flyingDistance -= MOVE_SPEED;
     }
 
     protected void move(){

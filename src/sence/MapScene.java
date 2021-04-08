@@ -118,23 +118,28 @@ public class MapScene extends Scene {
         }
 
         if (shooting) {
-            if (shootingCount % 10 == 0) {
+            if (shootingCount % gameActor.getGun().getFiringSpeed() == 0 && gameActor.getGun().shoot()) {
                 shoot();
             }
             shootingCount++;
         }
+        if(gameActor.getGun().getIsReloading()){
+            gameActor.getGun().reloading();
+            System.out.println(gameActor.getGun().getCount() +"/"+gameActor.getGun().getMagazine());
+        }
     }
-
 
     private void shoot(){
-        this.testBullets.add(new Bullet(this.gameActor.painter().centerX() -5, this.gameActor.painter().centerY()-5, mouseX, mouseY, 15,30, (int)Math.random()*6-3));
+        this.testBullets.add(new Bullet(this.gameActor.painter().centerX() -5, this.gameActor.painter().centerY()-5, mouseX, mouseY, gameActor.getGun().getSpeedMove(),gameActor.getGun().getAtk(),gameActor.getGun().getFlyingDistance(), gameActor.getGun().getShootDeviation()));
+        System.out.println(gameActor.getGun().getCount() +"/"+gameActor.getGun().getMagazine());
     }
-
-
 
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return (e, state, trigTime) -> {
+            if(state == CommandSolver.MouseState.MOVED || state == CommandSolver.MouseState.DRAGGED){
+                gameActor.changeDir(e.getX());
+            }
             if(state == CommandSolver.MouseState.PRESSED){
                 mouseX = e.getX();
                 mouseY = e.getY();
@@ -159,6 +164,12 @@ public class MapScene extends Scene {
             public void keyPressed(int commandCode, long trigTime) {
                 gameActor.getAnimator().setDelay().play();
                 gameActor.move(commandCode);
+                if(commandCode == 30){
+                    gameActor.getGun().reloading();
+                }
+                if(commandCode == -1 || commandCode == -2){
+                    gameActor.changeGun(commandCode);
+                }
             }
 
             @Override
