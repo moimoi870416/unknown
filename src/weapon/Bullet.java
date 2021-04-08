@@ -2,16 +2,18 @@ package weapon;
 
 import controller.ImageController;
 import object.GameObject;
+import object.monster.Monster;
 import unit.GameKernel;
 
+import javax.management.monitor.Monitor;
 import java.awt.*;
 
 public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
 
     private float x;
     private float y;
-    private float width;
-    private float height;
+    private float width = 9;
+    private float height = 9;
     protected float mouseX;//滑鼠X位置
     protected float mouseY;//滑鼠Y位置
     private float moveOnX;//X方向位移
@@ -20,19 +22,19 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     protected float shootDeviation;//射擊偏差(預設為1=無偏差)
     private float distance;
     private int atk;
-    private GunType gunType;
     private Image img;
 
-    public Bullet(final int x, final int y, final int width, final int height,int mouseX,int mouseY,GunType gunType) {
+    public Bullet(final int x, final int y,int mouseX,int mouseY,int moveSpeed,int atk,int shootDeviation) {
         img = ImageController.getInstance().tryGet("/bullet.png");
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-        this.gunType = gunType;
-        setGun();
+        this.MOVE_SPEED = moveSpeed;
+        this.atk = atk;
+        if(shootDeviation == 0){
+            this.shootDeviation =1;
+        }
         setAngle();
         setDistanceDeviation();
     }
@@ -101,6 +103,18 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         float y = (float)Math.abs(object.collider().centerY()-getCenterY());
         float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
         if(d < (object.collider().width()+width)/2){
+
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isCollied(final Monster monster) {
+        float x = (float)Math.abs(monster.collider().centerX()-getCenterX());
+        float y = (float)Math.abs(monster.collider().centerY()-getCenterY());
+        float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
+        if(d < (monster.collider().width()+width)/2){
+            monster.setLife(monster.getLife()-atk);
             return true;
         }
         return false;
@@ -121,14 +135,6 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     @Override
     public void update() {
         move();
-    }
-
-    private float setShootDeviation(int max,int min){
-        float temp = (float) (Math.random() * (max - min + 1) + min);
-        if(temp == 0){
-            return 1;
-        }
-        return temp;
     }
 
 }

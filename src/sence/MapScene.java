@@ -30,13 +30,14 @@ public class MapScene extends Scene {
     private LinkedList<Monster> monster;
     private int mouseX;
     private int mouseY;
-    GameActor gameActor;
+    private GameActor gameActor;
 
 
     @Override
     public void sceneBegin() {
         testBullets = new LinkedList<>();
         monster = new LinkedList<>();
+        monster.add(new Goblin(50,50));
         gameActor = new GameActor(720,450);
         try {
             final MapLoader mapLoader = new MapLoader("genMap.bmp", "genMap.txt");
@@ -98,7 +99,9 @@ public class MapScene extends Scene {
             if(x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-                        monster.remove(k);
+                        if(monster.get(k).getLife() <=0){
+                            monster.remove(k);
+                        }
                         testBullets.remove(i);
                         i--;
                         break;
@@ -110,8 +113,7 @@ public class MapScene extends Scene {
         }
         monster.forEach(monster->monster.chase(gameActor.collider().centerX(),gameActor.collider().centerY()));
 
-        if(Math.random()*100 <5 && monster.size()<20){
-
+        if(Math.random()*100 <1 && monster.size()<20){
             monster.add(new Goblin(50,(int)(Math.random()*900)));
         }
 
@@ -125,7 +127,7 @@ public class MapScene extends Scene {
 
 
     private void shoot(){
-        this.testBullets.add(new Bullet(this.gameActor.painter().centerX() -6, this.gameActor.painter().centerY()-6, 12, 11, mouseX, mouseY, Bullet.GunType.PISTOL));
+        this.testBullets.add(new Bullet(this.gameActor.painter().centerX() -5, this.gameActor.painter().centerY()-5, mouseX, mouseY, 15,30, (int)Math.random()*6-3));
     }
 
 

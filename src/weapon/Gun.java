@@ -1,12 +1,12 @@
 package weapon;
 
 public class Gun {
-    private GunType gunType;
+    //private GunType gunType;
 
     public Gun(){
 
     }
-
+/*
     public enum GunType{
         PISTOL,
         UZI,
@@ -45,4 +45,6 @@ public class Gun {
                 break;
         }
     }
+
+ */
 }

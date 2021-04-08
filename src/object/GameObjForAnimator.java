@@ -5,10 +5,16 @@ import java.awt.*;
 public class GameObjForAnimator extends GameObject {
     protected Animator animator;
     protected Dir dir;
+    protected int life;
+    protected int atk;
+    protected int moveSpeed;
 
-    public GameObjForAnimator(String path,int countLimit, int x, int y, int width, int height) {
+    public GameObjForAnimator(String path,int countLimit, int x, int y, int width, int height,int life,int atk,int moveSpeed) {
         super(x, y, width, height);
         animator = new Animator(path,countLimit);
+        this.life = life;
+        this.atk = atk;
+        this.moveSpeed = moveSpeed;
         dir = Dir.LEFT;
     }
 
@@ -45,5 +51,21 @@ public class GameObjForAnimator extends GameObject {
 
     public Animator getAnimator(){
         return animator;
+    }
+
+    public void setLife(int life){
+        this.life = life;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public int getAtk() {
+        return atk;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
     }
 }

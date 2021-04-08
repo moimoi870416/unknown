@@ -3,14 +3,9 @@ package object.monster;
 import object.GameObjForAnimator;
 
 public abstract class Monster extends GameObjForAnimator {
-    private int MOVE_SPEED;
-    private int atk;
 
-
-    public Monster(String path,int countLimit,int x, int y, int width, int height,int moveSpeed,int atk) {
-        super(path,countLimit,x, y, width, height);
-        this.atk = atk;
-        this.MOVE_SPEED = moveSpeed;
+    public Monster(String path,int countLimit,int x, int y, int width, int height,int life,int moveSpeed,int atk) {
+        super(path,countLimit,x, y, width, height,life,atk,moveSpeed);
 
     }
 
@@ -20,9 +15,9 @@ public abstract class Monster extends GameObjForAnimator {
         if(x == 0 && y == 0){
             return;
         }
-        float distance = (float)Math.sqrt(x * x + y * y);//計算斜邊
-        float moveOnX = (float)Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * MOVE_SPEED;
-        float moveOnY = (float)Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * MOVE_SPEED;
+        float distance = (float)Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
+        float moveOnX = (float)(Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * this.moveSpeed);
+        float moveOnY = (float)(Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * this.moveSpeed);
         if (actorY < painter().centerY()) {
             moveOnY = -moveOnY;
         }
@@ -34,6 +29,8 @@ public abstract class Monster extends GameObjForAnimator {
 
     }
 
+    @Override
+    public void update() {
 
-
+    }
 }
