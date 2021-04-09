@@ -10,12 +10,12 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
 
     private float x;
     private float y;
-    private float width = 4;
-    private float height = 4;
+    private float width = 5;
+    private float height = 5;
     private float moveOnX;//X方向位移
     private float moveOnY;//Y方向位移
     private int MOVE_SPEED;
-    protected float shootDeviation;//射擊偏差(預設為1=無偏差)
+    protected float shootDeviation;//射擊偏差(預設為0=無偏差)
     private float distance;
     private int atk;
     private Image img;
@@ -28,16 +28,14 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         this.MOVE_SPEED = moveSpeed;
         this.atk = atk;
         this.flyingDistance = flyingDistance;
-        if(shootDeviation == 0){
-            this.shootDeviation =1;
-        }
+        this.shootDeviation = shootDeviation;
         setAngle(mouseX,mouseY);
         setDistanceDeviation();
     }
 
     private void setAngle(int mouseX,int mouseY){
-        float x = (float) Math.abs(mouseX-getCenterX());
-        float y = (float)Math.abs(mouseY-getCenterY());
+        int x = (int)Math.abs(mouseX-getCenterX());
+        int y = (int)Math.abs(mouseY-getCenterY());
         distance = (float)Math.sqrt(x*x+y*y);//計算斜邊
         moveOnX = (float)Math.cos(Math.toRadians((Math.acos(x/distance)/Math.PI*180)+this.shootDeviation))*MOVE_SPEED;
         moveOnY = (float)Math.sin(Math.toRadians((Math.asin(y/distance)/Math.PI*180)+this.shootDeviation))*MOVE_SPEED;

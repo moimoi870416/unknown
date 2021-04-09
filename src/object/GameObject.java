@@ -1,6 +1,6 @@
 package object;
 
-import camera.Mapinformation;
+import camera.MapInformation;
 import unit.Global;
 import unit.GameKernel;
 import java.awt.*;
@@ -50,10 +50,10 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         if (painter.right() <= 0) {
             return true;
         }
-        if (painter.left() >= Mapinformation.mapInfo().right()) {
+        if (painter.left() >= MapInformation.mapInfo().right()) {
             return true;
         }
-        return painter.top() >= Mapinformation.mapInfo().bottom();
+        return painter.top() >= MapInformation.mapInfo().bottom();
     }
 
     //這四個是專門寫給讓主角在中間的方法 只要被追焦對象改即可
@@ -66,11 +66,11 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     }
 
     public boolean touchRight2() {
-        return collider.right() >= Mapinformation.mapInfo().right() - Global.CAMERA_HEIGHT / 2 + Global.CENTER_HEIGHT / 2;
+        return collider.right() >= MapInformation.mapInfo().right() - Global.CAMERA_HEIGHT / 2 + Global.CENTER_HEIGHT / 2;
     }
 
     public boolean touchBottom2() {
-        return collider.bottom() >= Mapinformation.mapInfo().bottom() - Global.CAMERA_WIDTH / 2 + Global.CENTER_WIDTH / 2;
+        return collider.bottom() >= MapInformation.mapInfo().bottom() - Global.CAMERA_WIDTH / 2 + Global.CENTER_WIDTH / 2;
     }
 
     public boolean touchTop() {
@@ -82,11 +82,11 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     }
 
     public boolean touchRight() {
-        return collider.right() >= Mapinformation.mapInfo().right();
+        return collider.right() >= MapInformation.mapInfo().right();
     }
 
     public boolean touchBottom() {
-        return collider.bottom() >= Mapinformation.mapInfo().bottom();
+        return collider.bottom() >= MapInformation.mapInfo().bottom();
     }
 
 

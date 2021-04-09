@@ -1,6 +1,7 @@
 package unit;
 
 import com.sun.javafx.scene.traversal.Direction;
+import org.omg.PortableInterceptor.ACTIVE;
 
 public class Global {
     public final static int UNIT_X = 32;
@@ -8,20 +9,64 @@ public class Global {
     private static int SCREEN_X;
     private static int SCREEN_Y;
     public final static boolean IS_DEBUG = false;
+
+
     //  視野大小
-    public static final int CAMERA_WIDTH = 400;
-    public static final int CAMERA_HEIGHT = 400;
+    public static final int WINDOW_WIDTH = 8334;
+    public static final int WINDOW_HEIGHT = 4167;
+
+    //  視野大小
+    public static final int CAMERA_WIDTH = 1440;
+    public static final int CAMERA_HEIGHT = 900;
 
     //追焦對象大小
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
+
+    public enum Actor{
+        FIRST("/actorrun.png"),
+        SECOND("/actorrun.png"),
+        THIRD("/actorrun.png");
+
+        String path;
+
+        public String getPath(){
+            return path;
+        }
+
+        Actor(String path){
+            this.path = path;
+        }
+    }
 
     public enum Direction {
         LEFT,
         RIGHT,
         UP,
         DOWN,
-        NO
+        NO;
+    }
+
+    public enum Active{
+        NUMBER_ONE(-1),
+        NUMBER_TWO(-2),
+        NUMBER_THREE(-3),
+        NUMBER_FORE(-4),
+        FLASH(30),
+        RELOADING(31),
+        CATCH_ITEM(32),
+        SPACE(0);
+
+
+        private int commandCode;
+
+        public int getCommandCode(){
+            return commandCode;
+        }
+
+        Active(int num){
+            commandCode = num;
+        }
     }
 
     public static void log(String str) {
@@ -30,10 +75,10 @@ public class Global {
         }
     }
 
-    public static final int UP = 6;
-    public static final int DOWN = -6;
-    public static final int LEFT = -7;
-    public static final int RIGHT = 7;
+    public static final int UP = 0;
+    public static final int DOWN = 1;
+    public static final int LEFT = 2;
+    public static final int RIGHT = 3;
 
     //public static final int SINGLE_MODE = 8;
     //public static final int CONNECT_NET_MODE = 9;
