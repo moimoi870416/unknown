@@ -1,9 +1,8 @@
 package object.actor;
 
-import camera.MapInformation;
 import unit.Global;
 import object.GameObjForAnimator;
-import weapon.Gun;
+import weapon.GunTest;
 import java.awt.*;
 
 public class GameActor extends GameObjForAnimator {
@@ -27,15 +26,15 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun{
-        ONE(new Gun(Gun.GunType.MACHINE_GUN)),
-        TWO(new Gun(Gun.GunType.SNIPER_GUN));
+        ONE(new GunTest(GunTest.GunTypeTest.MACHINE_GUN)),
+        TWO(new GunTest(GunTest.GunTypeTest.SNIPER_GUN));
 
-        private Gun gun;
-        private Gun getGun(){
-            return gun;
+        private GunTest gunTest;
+        private GunTest getGun(){
+            return gunTest;
         }
-        WhichGun(Gun gun){
-            this.gun = gun;
+        WhichGun(GunTest gunTest){
+            this.gunTest = gunTest;
         }
     }
 
@@ -48,7 +47,7 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-    public Gun getGun(){
+    public GunTest getGun(){
         return whichGun.getGun();
     }
 
@@ -80,29 +79,29 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        whichGun.gun.paint(g,painter().centerX(),painter().centerY());
+        whichGun.gunTest.paint(g,painter().centerX(),painter().centerY());
     }
 
     @Override
     public void update() {
         switch (dirMove) {
             case RIGHT:
-                if (painter().right() > MapInformation.mapInfo().right() - Global.CAMERA_HEIGHT / 2 + Global.CENTER_HEIGHT / 2) {
+                if (painter().right() > Global.WINDOW_WIDTH) {
                     translateX(-moveSpeed);
                 }
                 break;
             case LEFT :
-                if (painter().left() < 0+ Global.CAMERA_HEIGHT / 2 - Global.CENTER_HEIGHT / 2 ) {
+                if (painter().left() < 0) {
                     translateX(moveSpeed);
                 }
                 break;
             case UP :
-                if (painter().top() < 0+ Global.CAMERA_WIDTH / 2 - Global.CENTER_WIDTH / 2) {
+                if (painter().top() < 0) {
                     translateY(moveSpeed);
                 }
                 break;
             case DOWN :
-                if (painter().bottom() > MapInformation.mapInfo().bottom() - Global.CAMERA_WIDTH / 2 + Global.CENTER_WIDTH / 2) {
+                if (painter().bottom() > Global.WINDOW_HEIGHT) {
                     translateY(-moveSpeed);
                 }
                 break;
@@ -110,7 +109,5 @@ public class GameActor extends GameObjForAnimator {
 
         }
     }
-
-
 
 }

@@ -12,8 +12,8 @@ public class Global {
 
 
     //  視野大小
-    public static final int WINDOW_WIDTH = 4093;
-    public static final int WINDOW_HEIGHT = 2036;
+    public static final int WINDOW_WIDTH = 4096;
+    public static final int WINDOW_HEIGHT = 1024;
 
     //  視野大小
     public static final int CAMERA_WIDTH = 1440;

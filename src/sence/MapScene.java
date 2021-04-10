@@ -6,32 +6,27 @@
 package sence;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import camera.Camera;
 import camera.MapInformation;
+import controller.MapObjController;
 import unit.Global.Direction;
 import controller.ImageController;
-import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
 import unit.Global;
 
 import weapon.Bullet;
-import maploader.MapInfo;
-import maploader.MapLoader;
 import object.monster.Goblin;
 import object.monster.Monster;
 import object.GameObject;
 import unit.CommandSolver;
 
 public class MapScene extends Scene {
+    private ArrayList<GameObject> mapObjArr;
     private boolean shooting ;
-    private ArrayList<GameObject> gameObjectArr;
     private LinkedList<Bullet> testBullets;
     private LinkedList<Monster> monster;
     private int mouseX;
@@ -39,12 +34,14 @@ public class MapScene extends Scene {
     private GameActor gameActor;
     private Camera camera;
     private Image map;
+    private Image gun;
     private int cameraX;
     private int cameraY;
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map.png");
+        map = ImageController.getInstance().tryGet("/map3.png");
+        gun = ImageController.getInstance().tryGet("/gun.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, Global.WINDOW_WIDTH,Global.WINDOW_HEIGHT);
@@ -60,11 +57,11 @@ public class MapScene extends Scene {
     private void cameraUpdate(){
         mouseX = mouseX -cameraX;
         mouseY = mouseY -cameraY;
-        cameraX = gameActor.painter().left()-720;
-        cameraY = gameActor.painter().top()-450;
+        cameraX = gameActor.painter().left()-500;
+        cameraY = gameActor.painter().top()-500;
         mouseX = mouseX +cameraX;
         mouseY = mouseY +cameraY;
-        //System.out.println(cameraX);
+
     }
 
 
@@ -81,18 +78,20 @@ public class MapScene extends Scene {
 
         camera.start(g);
         g.drawImage(map,0,0,null);
-        gameObjectArr.forEach(a -> a.paint(g));
+        mapObjArr.forEach(a -> a.paint(g));
+/*
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
             }
           });
-
+*/
         if(camera.isCollision(gameActor)){
             gameActor.paint(g);
         }
 
         testBullets.forEach(testBullet -> testBullet.paint(g));
+        g.drawImage(gun,500,500,null);
         camera.paint(g);
         camera.end(g);
 
@@ -110,8 +109,8 @@ public class MapScene extends Scene {
                 continue;
             }
             int x=0;
-            for(int k=0 ; k<gameObjectArr.size() ; k++){
-                if(testBullets.get(i).isCollied(gameObjectArr.get(k))){
+            for(int k=0 ; k<mapObjArr.size() ; k++){
+                if(testBullets.get(i).isCollied(mapObjArr.get(k))){
                     testBullets.remove(i);
                     i--;
                     x++;
@@ -149,8 +148,7 @@ public class MapScene extends Scene {
         if (shooting) {
             if (gameActor.getGun().shootingDelay() && gameActor.getGun().shoot()) {
                 this.testBullets.add(new Bullet(this.gameActor.painter().centerX(), this.gameActor.painter().centerY(), mouseX, mouseY, gameActor.getGun().getSpeedMove(),gameActor.getGun().getAtk(),gameActor.getGun().getFlyingDistance(), gameActor.getGun().getShootDeviation()));
-                //System.out.println(gameActor.getGun().getCount() +"/"+gameActor.getGun().getMagazine());
-                //System.out.println(gameActor.painter().centerX() + "//" + mouseX);
+
             }
         }
 
@@ -165,7 +163,7 @@ public class MapScene extends Scene {
         camera.update();
         cameraUpdate();
         gameActor.update();
-        monsterUpdate();
+        //monsterUpdate();
         bulletsUpdate();
         shootUpdate();
     }
@@ -229,29 +227,9 @@ public class MapScene extends Scene {
 
 
     public void mapInit() {
-        try {
-            final MapLoader mapLoader = new MapLoader("genMap.bmp", "genMap.txt");
-            final ArrayList<MapInfo> test = mapLoader.combineInfo();
-            gameObjectArr = mapLoader.createObjectArray("Name", 32, test, new MapLoader.CompareClass() {
-                @Override
-                public GameObject compareClassName(final String gameObject, final String name, final MapInfo mapInfo, final int size) {
-                    GameObject tmp;
-                    if (gameObject.equals(name)) {
-                        tmp = new GameObjForPic("/tree1.png",mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
-                        return tmp;
-                    }
-                    return null;
-                }
-            });
-//            for (int i = 0; i < test.size(); i++) {    //  這邊可以看array內容  {String name ,int x, int y, int xSize, int ySize}
-//                System.out.println(test.get(i).getName());
-//                System.out.println(test.get(i).getX());
-//                System.out.println(test.get(i).getY());
-//                System.out.println(test.get(i).getSizeX());
-//                System.out.println(test.get(i).getSizeY());
-//            }
-        } catch (final IOException ex) {
-            Logger.getLogger(MapScene.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp","genMap.txt")
+                .setNameAndPath("Name","/tree1.png")
+                .gen()
+                .setMap();
     }
 }
