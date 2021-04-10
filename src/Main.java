@@ -1,15 +1,20 @@
+import controller.ImageController;
 import unit.Global;
 import controller.SenceController;
 import sence.MapScene;
 import unit.CommandSolver;
 import unit.GameKernel;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Main {
     public static void main(final String[] args) {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
+
+        Image mouse1 = ImageController.getInstance().tryGet("/target2.png");
         new Global.Builder().setScreenX(1440)
                 .setFullScreen(false)
                 .setScreenY(900)
@@ -34,6 +39,8 @@ public class Main {
                 .update(sc)
                 .gen();
 
+        Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(mouse1, new Point(100, 100), "mouse1");
+        jFrame.setCursor(cursor);
         jFrame.setTitle("Game 8th");//視窗標題
         jFrame.setSize(Global.getScreenX(), Global.getScreenY());//視窗大小
         jFrame.setLocationRelativeTo(null);//視窗置中
