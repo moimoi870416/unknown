@@ -1,7 +1,6 @@
 package camera;
 
-import objectdata.GameObject;
-import objectdata.Rect;
+import object.GameObject;
 
 import java.awt.*;
 

@@ -1,6 +1,6 @@
 package camera;
 
-import objectdata.GameObject;
+import object.GameObject;
 import unit.CommandSolver;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -128,19 +128,19 @@ public class Camera extends GameObject implements CommandSolver.KeyListener {
             int top = obj.painter().centerY() - painter().height() / 2;
             int bottom = obj.painter().centerY() + painter().height() / 2;
             if (touchLeft()) {
-                left = Mapinformation.mapInfo().left();
+                left = MapInformation.mapInfo().left();
                 right = left + painter().width();
             }
             if (touchRight()) {
-                right = Mapinformation.mapInfo().right();
+                right = MapInformation.mapInfo().right();
                 left = right - painter().width();
             }
             if (touchTop()) {
-                top = Mapinformation.mapInfo().top();
+                top = MapInformation.mapInfo().top();
                 bottom = top + painter().height();
             }
             if (touchBottom()) {
-                bottom = Mapinformation.mapInfo().bottom();
+                bottom = MapInformation.mapInfo().bottom();
                 top = bottom - painter().height();
             }
             resetX(left, right);
