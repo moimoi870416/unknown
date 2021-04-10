@@ -87,22 +87,22 @@ public class GameActor extends GameObjForAnimator {
     public void update() {
         switch (dirMove) {
             case RIGHT:
-                if (painter().right() > MapInformation.mapInfo().right() - Global.CAMERA_HEIGHT / 2 + Global.CENTER_HEIGHT / 2) {
+                if (painter().right() > MapInformation.mapInfo().right() ) {
                     translateX(-moveSpeed);
                 }
                 break;
             case LEFT :
-                if (painter().left() < 0+ Global.CAMERA_HEIGHT / 2 - Global.CENTER_HEIGHT / 2 ) {
+                if (painter().left() < 0) {
                     translateX(moveSpeed);
                 }
                 break;
             case UP :
-                if (painter().top() < 0+ Global.CAMERA_WIDTH / 2 - Global.CENTER_WIDTH / 2) {
+                if (painter().top() < 0) {
                     translateY(moveSpeed);
                 }
                 break;
             case DOWN :
-                if (painter().bottom() > MapInformation.mapInfo().bottom() - Global.CAMERA_WIDTH / 2 + Global.CENTER_WIDTH / 2) {
+                if (painter().bottom() > MapInformation.mapInfo().bottom() ) {
                     translateY(-moveSpeed);
                 }
                 break;

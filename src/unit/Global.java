@@ -1,7 +1,5 @@
 package unit;
 
-import com.sun.javafx.scene.traversal.Direction;
-import org.omg.PortableInterceptor.ACTIVE;
 
 public class Global {
     public final static int UNIT_X = 32;
@@ -12,8 +10,8 @@ public class Global {
 
 
     //  視野大小
-    public static final int WINDOW_WIDTH = 4093;
-    public static final int WINDOW_HEIGHT = 2036;
+    public static final int WINDOW_WIDTH = 2048;
+    public static final int WINDOW_HEIGHT = 1024;
 
     //  視野大小
     public static final int CAMERA_WIDTH = 1440;

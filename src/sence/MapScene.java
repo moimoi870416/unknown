@@ -44,7 +44,7 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map.png");
+        map = ImageController.getInstance().tryGet("/map-grassland.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, Global.WINDOW_WIDTH,Global.WINDOW_HEIGHT);
