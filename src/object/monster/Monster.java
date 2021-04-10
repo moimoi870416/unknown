@@ -1,5 +1,6 @@
 package object.monster;
 
+import unit.Global;
 import object.GameObjForAnimator;
 
 public abstract class Monster extends GameObjForAnimator {
@@ -32,5 +33,25 @@ public abstract class Monster extends GameObjForAnimator {
     @Override
     public void update() {
 
+    }
+
+    public void isCollisionWithMonster(Monster monster){
+        if(collider().overlap(monster.collider())){
+            int r = Global.random(0,3);
+            switch (r){
+                case 0:
+                    translateX(moveSpeed);
+                    break;
+                case 1:
+                    translateX(-moveSpeed);
+                    break;
+                case 2:
+                    translateY(moveSpeed);
+                    break;
+                case 3:
+                    translateY(-moveSpeed);
+                    break;
+            }
+        }
     }
 }

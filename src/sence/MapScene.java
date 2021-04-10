@@ -44,14 +44,14 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/firstmap.jpg");
+        map = ImageController.getInstance().tryGet("/map.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, Global.WINDOW_WIDTH,Global.WINDOW_HEIGHT);
         monster = new LinkedList<>();
         monster.add(new Goblin(50,50));
         monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Global.Actor.FIRST.getPath(),720,450);
+        gameActor = new GameActor(Global.Actor.FIRST.getPath(),500,500);
         this.camera = new Camera.Builder(Global.CAMERA_WIDTH, Global.CAMERA_HEIGHT).setChaseObj(gameActor,1,1).setCameraStartLocation(0,0).gen();
 
 
@@ -64,7 +64,7 @@ public class MapScene extends Scene {
         cameraY = gameActor.painter().top()-450;
         mouseX = mouseX +cameraX;
         mouseY = mouseY +cameraY;
-        System.out.println(cameraX);
+        //System.out.println(cameraX);
     }
 
 
@@ -91,6 +91,7 @@ public class MapScene extends Scene {
         if(camera.isCollision(gameActor)){
             gameActor.paint(g);
         }
+
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
@@ -134,13 +135,13 @@ public class MapScene extends Scene {
 
     public void monsterUpdate(){
         for(int i=0 ; i<monster.size() ; i++){
-            monster.get(i).chase(gameActor.collider().centerX(),gameActor.collider().centerY());
+            monster.get(i).chase(gameActor.collider().centerX(),gameActor.collider().bottom());
             if(monster.get(i).isCollision(gameActor)){
                 gameActor.setLife(gameActor.getLife()-monster.get(i).getAtk());
             }
         }
-        if(Math.random()*100 <1 && monster.size()<20){
-           monster.add(new Goblin(50,(int)(Math.random()*900)));
+        if(Math.random()*100 <1 && monster.size()<25){
+           monster.add(new Goblin(50,(int)(Math.random()*1000)));
         }
     }
 
@@ -149,7 +150,7 @@ public class MapScene extends Scene {
             if (gameActor.getGun().shootingDelay() && gameActor.getGun().shoot()) {
                 this.testBullets.add(new Bullet(this.gameActor.painter().centerX(), this.gameActor.painter().centerY(), mouseX, mouseY, gameActor.getGun().getSpeedMove(),gameActor.getGun().getAtk(),gameActor.getGun().getFlyingDistance(), gameActor.getGun().getShootDeviation()));
                 //System.out.println(gameActor.getGun().getCount() +"/"+gameActor.getGun().getMagazine());
-                System.out.println(gameActor.painter().centerX() + "//" + mouseX);
+                //System.out.println(gameActor.painter().centerX() + "//" + mouseX);
             }
         }
 
