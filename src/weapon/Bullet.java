@@ -20,17 +20,50 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int atk;
     private Image img;
     private int flyingDistance;
+    private BulletType bulletType;
 
-    public Bullet(final int x, final int y,int mouseX,int mouseY,int moveSpeed,int atk,int flyingDistance,float shootDeviation) {
+    public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
         img = ImageController.getInstance().tryGet("/bullet.png");
         this.x = x;
         this.y = y;
-        this.MOVE_SPEED = moveSpeed;
-        this.atk = atk;
-        this.flyingDistance = flyingDistance;
-        this.shootDeviation = shootDeviation;
+        System.out.println("1."+mouseX +"///"+mouseY);
+        System.out.println("2."+x +"///"+y);
+        setGunBullet(gunType);
+        this.atk = bulletType.atk;
+        this.MOVE_SPEED = bulletType.speedMove;
+        this.flyingDistance = bulletType.flyingDistance;
+        this.shootDeviation = bulletType.shootDeviation;
         setAngle(mouseX,mouseY);
         setDistanceDeviation();
+    }
+
+    private enum BulletType{
+        PISTOL(10,10,200,0,0),
+        UZI(19,15,400,0,0),
+        AK(31,12,550,0,0),
+        SNIPER(120,30,1000,0,0),
+        MACHINE_GUN(25,15,550,0,0);
+
+        private int atk;//攻擊力
+        private int speedMove;//子彈的速度
+        private int flyingDistance;//射程
+        private float shootDeviation;
+
+        BulletType(int atk,int speedMove,int flyingDistance,int shootDeviationMax,int shootDeviationMin){
+            this.atk = atk;
+            this.speedMove = speedMove;
+            this.flyingDistance = flyingDistance;
+            this.shootDeviation = setShootDeviation(shootDeviationMax,shootDeviationMin);
+
+        }
+
+        private float setShootDeviation(int max,int min){
+            return (float)(Math.random() * (max - min + 1) + min);
+        }
+
+    }
+    private void setGunBullet(Gun.GunType gunType){
+        bulletType = BulletType.values()[gunType.ordinal()];
     }
 
     private void setAngle(int mouseX,int mouseY){
@@ -45,6 +78,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         if(mouseX < getCenterX()){
             moveOnX = -moveOnX;
         }
+
     }
 
     private void setDistanceDeviation(){
@@ -97,7 +131,6 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         float y = (float)Math.abs(object.collider().centerY()-getCenterY());
         float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
         if(d < (object.collider().width()+width)/2){
-
             return true;
         }
         return false;

@@ -2,7 +2,8 @@ package object.actor;
 
 import unit.Global;
 import object.GameObjForAnimator;
-import weapon.GunTest;
+import weapon.Gun;
+
 import java.awt.*;
 
 public class GameActor extends GameObjForAnimator {
@@ -26,15 +27,13 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun{
-        ONE(new GunTest(GunTest.GunTypeTest.MACHINE_GUN)),
-        TWO(new GunTest(GunTest.GunTypeTest.SNIPER_GUN));
+        ONE(new Gun(Gun.GunType.MACHINE_GUN,0,0)),
+        TWO(new Gun(Gun.GunType.SNIPER,0,0));
 
-        private GunTest gunTest;
-        private GunTest getGun(){
-            return gunTest;
-        }
-        WhichGun(GunTest gunTest){
-            this.gunTest = gunTest;
+        private Gun gun;
+
+        WhichGun(Gun gun){
+            this.gun = gun;
         }
     }
 
@@ -47,8 +46,8 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-    public GunTest getGun(){
-        return whichGun.getGun();
+    public Gun getGun(){
+        return whichGun.gun;
     }
 
     public void move(int commandCode){
@@ -79,7 +78,7 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        whichGun.gunTest.paint(g,painter().centerX(),painter().centerY());
+//        whichGun.gun.paint(g,painter().centerX(),painter().centerY(),null);
     }
 
     @Override

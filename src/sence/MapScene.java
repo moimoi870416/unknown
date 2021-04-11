@@ -8,7 +8,6 @@ package sence;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
@@ -17,7 +16,6 @@ import controller.ImageController;
 import object.actor.GameActor;
 import object.monster.BullBoss;
 import unit.Global;
-
 import weapon.Bullet;
 import object.monster.Goblin;
 import object.monster.Monster;
@@ -29,56 +27,43 @@ public class MapScene extends Scene {
     private boolean shooting ;
     private LinkedList<Bullet> testBullets;
     private LinkedList<Monster> monster;
+    private int listenerMouseX;
+    private int listenerMouseY;
     private int mouseX;
     private int mouseY;
     private GameActor gameActor;
     private Camera camera;
     private Image map;
-    private Image gun;
-    private int cameraX;
-    private int cameraY;
+    private int actorX;
+    private int actorY;
 
     @Override
     public void sceneBegin() {
         map = ImageController.getInstance().tryGet("/map3.png");
-        gun = ImageController.getInstance().tryGet("/gun.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, Global.WINDOW_WIDTH,Global.WINDOW_HEIGHT);
         monster = new LinkedList<>();
-        monster.add(new Goblin(50,50));
         monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Global.Actor.FIRST.getPath(),500,500);
-        this.camera = new Camera.Builder(Global.CAMERA_WIDTH, Global.CAMERA_HEIGHT).setChaseObj(gameActor,1,1).setCameraStartLocation(0,0).gen();
-
-
+        gameActor = new GameActor(Global.Actor.FIRST.getPath(),0,0);
+        this.camera = new Camera.Builder(Global.CAMERA_WIDTH, Global.CAMERA_HEIGHT).setChaseObj(gameActor,1,1).gen();
     }
 
     private void cameraUpdate(){
-        mouseX = mouseX -cameraX;
-        mouseY = mouseY -cameraY;
-        cameraX = gameActor.painter().left()-500;
-        cameraY = gameActor.painter().top()-500;
-        mouseX = mouseX +cameraX;
-        mouseY = mouseY +cameraY;
-
+        actorX = gameActor.painter().left();
+        actorY = gameActor.painter().top();
     }
-
-
 
     @Override
     public void sceneEnd() {
-
-
 
     }
 
     @Override
     public void paint(final Graphics g) {
-
         camera.start(g);
         g.drawImage(map,0,0,null);
-        mapObjArr.forEach(a -> a.paint(g));
+
 /*
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
@@ -89,15 +74,12 @@ public class MapScene extends Scene {
         if(camera.isCollision(gameActor)){
             gameActor.paint(g);
         }
-
+        mapObjArr.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
-        g.drawImage(gun,500,500,null);
         camera.paint(g);
         camera.end(g);
 
     }
-
-
 
 
     public void bulletsUpdate(){
@@ -146,9 +128,11 @@ public class MapScene extends Scene {
 
     public void shootUpdate(){
         if (shooting) {
+            mouseX = listenerMouseX+actorX-Global.CAMERA_WIDTH/2+30;
+            mouseY = listenerMouseY+actorY-Global.CAMERA_HEIGHT/2+30;
+            gameActor.getGun().getShootingDelay().play();
             if (gameActor.getGun().shootingDelay() && gameActor.getGun().shoot()) {
-                this.testBullets.add(new Bullet(this.gameActor.painter().centerX(), this.gameActor.painter().centerY(), mouseX, mouseY, gameActor.getGun().getSpeedMove(),gameActor.getGun().getAtk(),gameActor.getGun().getFlyingDistance(), gameActor.getGun().getShootDeviation()));
-
+                this.testBullets.add(new Bullet(this.gameActor.painter().centerX(), this.gameActor.painter().centerY(), mouseX, mouseY,gameActor.getGun().getGunType()));
             }
         }
 
@@ -161,8 +145,8 @@ public class MapScene extends Scene {
     @Override
     public void update() {
         camera.update();
-        cameraUpdate();
         gameActor.update();
+        cameraUpdate();
         //monsterUpdate();
         bulletsUpdate();
         shootUpdate();
@@ -173,17 +157,18 @@ public class MapScene extends Scene {
         return (e, state, trigTime) -> {
 
             if(state == CommandSolver.MouseState.MOVED || state == CommandSolver.MouseState.DRAGGED){
-                gameActor.changeDir(e.getX()+cameraX);
+                gameActor.changeDir(e.getX());
             }
             if(state == CommandSolver.MouseState.PRESSED){
-                mouseX = e.getX() + cameraX;
-                mouseY = e.getY() + cameraY;
+                listenerMouseX = e.getX();
+                listenerMouseY = e.getY();
                 shooting = true;
             }
 
             if(shooting && state == CommandSolver.MouseState.DRAGGED){
-                mouseX = e.getX() + cameraX;
-                mouseY = e.getY() + cameraY;
+                listenerMouseX = e.getX();
+                listenerMouseY = e.getY();
+
             }
             if(state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED){
                 shooting = false;
@@ -225,10 +210,9 @@ public class MapScene extends Scene {
         };
     }
 
-
     public void mapInit() {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp","genMap.txt")
-                .setNameAndPath("Name","/tree1.png")
+                .setNameAndPath("bananastatue","/banana.png",false,null)
                 .gen()
                 .setMap();
     }

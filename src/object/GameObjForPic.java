@@ -8,7 +8,11 @@ public class GameObjForPic extends GameObject{
     private Image img;
 
     public GameObjForPic(String path,int x, int y, int width, int height) {
-        super(x, y, width, height);
+        this(path,x, y, width, height,x,y,width,height);
+    }
+
+    public GameObjForPic(String path,int x, int y, int width, int height,int x2, int y2, int width2, int height2) {
+        super(x, y, width, height,x2,y2,width2,height2);
         img = ImageController.getInstance().tryGet(path);
     }
 

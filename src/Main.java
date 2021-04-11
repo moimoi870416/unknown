@@ -19,7 +19,6 @@ public class Main {
                 .setScreenY(900)
                 .gen();
 
-        Image mouse1 = ImageController.getInstance().tryGet("/target.png");
         SenceController.getSenceController().change(new MapScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
@@ -45,9 +44,9 @@ public class Main {
                 .ups(60)
                 .update(sc)
                 .gen();
-
-        Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(mouse1, new Point(10, 10), "mouse1");
-        jFrame.setCursor(cursor);
+//        Image mouse1 = ImageController.getInstance().tryGet("/target.png");
+//        Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(mouse1, new Point(10, 10), "mouse1");
+//        jFrame.setCursor(cursor);
         jFrame.setTitle("Game 8th");//視窗標題
         jFrame.setSize(Global.getScreenX(), Global.getScreenY());//視窗大小
         jFrame.setLocationRelativeTo(null);//視窗置中

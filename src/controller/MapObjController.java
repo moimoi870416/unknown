@@ -11,7 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /***
- * this class only read a picture without animator for object on map.
+ * this class only read a picture without animator and collision for object on map.
+ * add can input a object from outside and adjust collision,but maybe exist bug.
+ * if need to adjust collision, kindly create a new class and input size after adjust not X-Y.
  */
 public class MapObjController {
     private static MapObjController mapObjController;
@@ -23,15 +25,8 @@ public class MapObjController {
 
     private MapObjController(){
     }
-/*
-    private LoadMap(String bmp,String txt,int size,ArrayList<KeyPair> keyPairs){
-        this.bmp = bmp;
-        this.txt = txt;
-        this.objSize = size;
-        this.keyPairs = keyPairs;
-    }
-*/
-    private static MapObjController getInstance() {//推遲到第一次呼叫getInstance()才創建實體
+
+    public static MapObjController getInstance() {//推遲到第一次呼叫getInstance()才創建實體
         if (mapObjController == null) {
             mapObjController = new MapObjController();
         }
@@ -57,10 +52,36 @@ public class MapObjController {
                     @Override
                     public GameObject compareClassName(final String gameObject, final String name, final maploader.MapInfo mapInfo, final int size) {
                         //進行name的比照並產生對應地圖物件
-                        GameObject tmp = null;
-                        if (gameObject.equals(name)) {
-                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size) {
-                            };
+                        GameObject tmp;
+                        if (gameObject.equals(name) && keyPairs.get(k).gameObject == null && !keyPairs.get(k).adjustCollision) {
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            return tmp;
+                        }if (gameObject.equals(name) && keyPairs.get(k).gameObject == null && keyPairs.get(k).adjustCollision) {
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp.collider().setLeft(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().left());
+                            tmp.collider().setTop(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().right());
+                            tmp.collider().setRight(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().width());
+                            tmp.collider().setBottom(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().height());
+                            return tmp;
+                        }
+                        if(gameObject.equals(name) && keyPairs.get(k).gameObject != null && keyPairs.get(k).adjustCollision){
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath, mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp.collider().setLeft(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().left());
+                            tmp.collider().setTop(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().right());
+                            tmp.collider().setRight(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().width());
+                            tmp.collider().setBottom(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().height());
+                            return tmp;
+                        }
+                        if(gameObject.equals(name) && keyPairs.get(k).gameObject != null && !keyPairs.get(k).adjustCollision){
+                            tmp = keyPairs.get(k).gameObject;
+                            tmp.painter().setLeft(mapInfo.getX() * size);
+                            tmp.painter().setTop(mapInfo.getY() * size);
+                            tmp.painter().setRight(mapInfo.getX() * size+mapInfo.getSizeX() * size);
+                            tmp.painter().setBottom(mapInfo.getY() * size+mapInfo.getSizeY() * size);
+                            tmp.collider().setLeft(mapInfo.getX() * size);
+                            tmp.collider().setTop(mapInfo.getY() * size);
+                            tmp.collider().setRight(mapInfo.getX() * size+mapInfo.getSizeX() * size);
+                            tmp.collider().setBottom(mapInfo.getY() * size+mapInfo.getSizeY() * size);
                             return tmp;
                         }
                         return null;
@@ -95,8 +116,8 @@ public class MapObjController {
             return this;
         }
 
-        public Builder setNameAndPath(String objNameInTxt, String picPath){
-            keyPairs.add(new KeyPair(objNameInTxt,picPath));
+        public Builder setNameAndPath(String objNameInTxt, String picPath,boolean isAdjustCollision,GameObject gameObject){
+            keyPairs.add(new KeyPair(objNameInTxt,picPath,isAdjustCollision,gameObject));
             return this;
         }
 
@@ -108,13 +129,16 @@ public class MapObjController {
     private static class KeyPair {//內部類別
         private String objNameInTxt;//路徑
         private String picPath;//圖片
+        private GameObject gameObject;
+        private boolean adjustCollision;
 
-        public KeyPair(final String objName, final String picPath) {
+        public KeyPair(final String objName, final String picPath,boolean collision,GameObject gameObject) {
             this.objNameInTxt = objName;
             this.picPath = picPath;
+            this.gameObject = gameObject;
+            this.adjustCollision = collision;
         }
     }
-
 
 }
 
