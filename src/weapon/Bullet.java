@@ -164,4 +164,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         move();
     }
 
+    public int getAtk(){
+        return atk;
+    }
 }
