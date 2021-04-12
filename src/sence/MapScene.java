@@ -111,8 +111,8 @@ public class MapScene extends Scene {
             if(x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-                        if(monster.get(k).getLife() <=0){
-                            monster.get(k).setDir(GameObjForAnimator.Dir.DEAD);
+                        if(monster.get(k).getLife() >=0){
+                            monster.get(k).setLife(monster.get(k).getLife() - testBullets.get(i).getAtk());
                         }
                         testBullets.remove(i);
                         i--;
@@ -125,6 +125,11 @@ public class MapScene extends Scene {
 
     public void monsterUpdate(){
         for(int i=0 ; i<monster.size()-1 ; i++){
+            if(monster.get(i).getLife() <= 0){
+                monster.remove(i);
+                i--;
+                break;
+            }
             monster.get(i).update();
             monster.get(i).chase(gameActor.collider().centerX(),gameActor.collider().bottom());
 //            if(monster.get(i).isCollisionWithActor(gameActor)){
