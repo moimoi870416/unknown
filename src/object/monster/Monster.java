@@ -39,11 +39,10 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
-        if(life <= 0){
-            dir = Dir.DEAD;
-        }
-        if(delayForCollision.count()){
-            collision = true;
+        if(state == State.ALIVE) {
+            if (delayForCollision.count()) {
+                collision = true;
+            }
         }
     }
 

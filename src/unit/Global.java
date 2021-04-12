@@ -11,13 +11,13 @@ public class Global {
     public final static boolean IS_DEBUG = false;
 
 
-    //  視野大小
-    public static final int WINDOW_WIDTH = 2048;
-    public static final int WINDOW_HEIGHT = 1024;
+    //地圖大小
+    public static final int MAP_WIDTH = 2048;
+    public static final int MAP_HEIGHT = 1024;
 
-    //  視野大小
-    public static final int CAMERA_WIDTH = 1440;
-    public static final int CAMERA_HEIGHT = 900;
+    //視窗大小
+    public static final int WINDOW_WIDTH = 1440;
+    public static final int WINDOW_HEIGHT = 900;
 
     //追焦對象大小
     public static final int CENTER_WIDTH = 32;

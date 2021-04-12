@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
-import object.GameObjForAnimator;
 import object.GameObjForPic;
 import object.monster.BullBoss;
 import unit.Global.Direction;
@@ -32,39 +31,32 @@ public class MapScene extends Scene {
     private LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
-    private int cameraX;
-    private int cameraY;
     private int mouseX;
     private int mouseY;//滑鼠位置
     private GameActor gameActor;//主角
     private Camera camera;//鏡頭
     private Image map;//地圖
-    private int actorX;
-    private int actorY; //鏡頭中心=主角
 
     @Override
     public void sceneBegin() {
         map = ImageController.getInstance().tryGet("/map3.png");
         mapInit();
         testBullets = new LinkedList<>();
-        MapInformation.setMapInfo(0, 0, WINDOW_WIDTH,WINDOW_HEIGHT);
+        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
         monster.add(new BullBoss(200,200));
         gameActor = new GameActor(Actor.FIRST.getPath(),0,0);
-        this.camera = new Camera.Builder(CAMERA_WIDTH, CAMERA_HEIGHT)
+        this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
+                .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor,1,1)
-                .setCameraStartLocation(-CAMERA_WIDTH/2,-CAMERA_HEIGHT/2)
+                .setCameraStartLocation(-WINDOW_WIDTH /2,-WINDOW_HEIGHT /2)
                 .gen();
     }
 
-    private void cameraUpdate(){
-        cameraX = camera.cameraWindowX();//取得鏡頭位於地圖的的左上角位置
-        cameraY = camera.cameraWindowY();
-        actorX = gameActor.collider().left();//取得人物的位置
-        actorY = gameActor.collider().top();
-        mouseX = listenerMouseX +cameraX;//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
-        mouseY = listenerMouseY +cameraY;
+    private void mouseUpdate(){
+        mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
+        mouseY = listenerMouseY + camera.getCameraWindowY();
     }
 
     @Override
@@ -75,14 +67,14 @@ public class MapScene extends Scene {
     public void paint(final Graphics g) {
         camera.start(g);
         g.drawImage(map,0,0,null);
-
-/*
+        /*
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
             }
           });
-*/
+
+         */
         if(camera.isCollision(gameActor)){
             gameActor.paint(g);
         }
@@ -90,6 +82,8 @@ public class MapScene extends Scene {
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
+
+
     }
     public void bulletsUpdate(){
         for(int i=0 ; i<testBullets.size() ; i++){
@@ -111,12 +105,17 @@ public class MapScene extends Scene {
             if(x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-                        if(monster.get(k).getLife() >=0){
-                            monster.get(k).setLife(monster.get(k).getLife() - testBullets.get(i).getAtk());
+                        int life = monster.get(k).getLife();
+                        monster.get(k).offLife(testBullets.get(i).getAtk());
+                        if(monster.get(k).getLife()<=0){
+                            monster.remove(k);
+                            k--;
                         }
-                        testBullets.remove(i);
-                        i--;
-                        break;
+                        if(testBullets.get(i).isPenetrate(life)) {
+                            testBullets.remove(i);
+                            i--;
+                            break;
+                        }
                     }
                 }
             }
@@ -125,11 +124,6 @@ public class MapScene extends Scene {
 
     public void monsterUpdate(){
         for(int i=0 ; i<monster.size()-1 ; i++){
-            if(monster.get(i).getLife() <= 0){
-                monster.remove(i);
-                i--;
-                break;
-            }
             monster.get(i).update();
             monster.get(i).chase(gameActor.collider().centerX(),gameActor.collider().bottom());
 //            if(monster.get(i).isCollisionWithActor(gameActor)){
@@ -148,7 +142,6 @@ public class MapScene extends Scene {
         if (shooting) {
             if (gameActor.getGun().isCanShoot()) {
                 gameActor.getGun().shoot();
-                System.out.println("CAMERA" + cameraX +"///" + cameraY);
                 this.testBullets.add(new Bullet
                         (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
                                 mouseX, mouseY,
@@ -159,9 +152,9 @@ public class MapScene extends Scene {
 
     @Override
     public void update() {
+        mouseUpdate();
         camera.update();
         gameActor.update();
-        cameraUpdate();
         //monsterUpdate();
         bulletsUpdate();
         shootUpdate();
@@ -218,7 +211,7 @@ public class MapScene extends Scene {
                     gameActor.changeDir(4);
                 }
                 if(commandCode == Active.FLASH.getCommandCode()){
-                    gameActor.flash(listenerMouseX, listenerMouseY);
+                    gameActor.flash(mouseX,mouseY);
                 }
             }
 
