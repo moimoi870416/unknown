@@ -76,7 +76,6 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
@@ -110,7 +109,5 @@ public class GameActor extends GameObjForAnimator {
 
         }
     }
-
-
 
 }

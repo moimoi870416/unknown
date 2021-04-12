@@ -4,8 +4,10 @@ package unit;
 public class Global {
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
+
     private static int SCREEN_X;
     private static int SCREEN_Y;
+
     public final static boolean IS_DEBUG = false;
 
 
