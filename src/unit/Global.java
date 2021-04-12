@@ -12,7 +12,7 @@ public class Global {
 
 
     //  視野大小
-    public static final int WINDOW_WIDTH = 4096;
+    public static final int WINDOW_WIDTH = 2048;
     public static final int WINDOW_HEIGHT = 1024;
 
     //  視野大小

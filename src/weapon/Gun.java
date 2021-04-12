@@ -5,26 +5,28 @@ import unit.Delay;
 
 
 public class Gun extends GameObjForAnimator {
-    private int magazine;//彈匣
-    private int count;//彈匣內的子彈數量
-    private int currentCount;
+    private int magazine;//彈匣內的剩餘子彈數量
+    private final int magazineMax;//一個彈匣的子彈數量
+    private int surplusBullet;//剩餘的總子彈數量
+    private final int magazineMaxQuantity;//最大總彈量
     private Delay reloadingDelay;//裝彈延遲
     private Delay shootingDelay;//射擊延遲(射速)
-    private boolean isReloading;//是否在裝彈(裝彈中無法射擊)
-    private int maxMagazine;//最大彈匣數量
+    private boolean canReloading;//是否在裝彈(裝彈中無法射擊)
+    private boolean canShoot;
+    
     private GunType gunType;
 
     public Gun(GunType gunType, int x, int y) {
         super(gunType.path, 0, x, y, gunType.width, gunType.height,0,0,0);
         this.gunType = gunType;
         this.magazine = gunType.magazine;
-        this.count = this.magazine;
-        this.maxMagazine = gunType.maxMagazine;
-        this.currentCount = this.magazine;
+        this.magazineMax = this.magazine;
+        this.magazineMaxQuantity = gunType.maxMagazine;
+        this.surplusBullet = this.magazineMaxQuantity;
         this.reloadingDelay = new Delay(gunType.reloadingDelay);
         this.shootingDelay = new Delay(gunType.shootingDelay);
-        isReloading = false;
-        reloadingDelay.loop();
+        canReloading = false;
+        canShoot = true;
     }
 
     public enum GunType{
@@ -56,49 +58,55 @@ public class Gun extends GameObjForAnimator {
     public GunType getGunType(){
         return gunType;
     }
-
-    public int getCount() {
-        if(count <0){
-            return 0;
+    
+    public void shoot(){
+        if(canShoot){
+            shootingDelay.play();
+            if(magazineMax <=0){
+                //補缺彈音檔
+                return;
+            }
+            magazine--;
+            canShoot = false;
+            System.out.println(magazine+"/"+magazineMax);
         }
-        return count;
     }
 
-    public int getMagazine() {
-        return magazine;
-    }
-
-    public boolean shoot(){
-        if(count <=0){
-            //補缺彈音檔
-            return false;
+    public void getBullet(int key){
+        surplusBullet += key;
+        if(surplusBullet > magazineMaxQuantity){
+            surplusBullet = magazineMaxQuantity;
         }
-        count--;
-        return true;
-    }
-
-    public boolean shootingDelay(){
-        if(shootingDelay.isStop()){
-            return true;
-        }
-        return shootingDelay.count();
-    }
-
-    public Delay getShootingDelay(){
-        return shootingDelay;
-    }
-
-    public boolean getIsReloading(){
-        return isReloading;
     }
 
     public void reloading(){
-        isReloading = true;
-        if(reloadingDelay.count()) {
-            count = magazine;
-            isReloading = false;
+        if(canReloading) {
+            reloadingDelay.play();
+            if(surplusBullet < magazineMax){
+                magazine = surplusBullet;
+                surplusBullet = 0;
+            }else {
+                magazine = magazineMax;
+                surplusBullet -= magazine;
+            }
+            canReloading = false;
+            canShoot = false;
         }
     }
 
+    public boolean isCanShoot(){
+        return canShoot;
+    }
+
+    @Override
+    public void update() {
+        if(reloadingDelay.count()){
+            canReloading = true;
+            canShoot = true;
+        }
+        if(shootingDelay.count()){
+            canShoot = true;
+        }
+    }
 
 }

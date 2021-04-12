@@ -6,8 +6,11 @@ import object.GameObjForAnimator;
 public abstract class Monster extends GameObjForAnimator {
 
     public Monster(String path,int countLimit,int x, int y, int width, int height,int life,int moveSpeed,int atk) {
-        super(path,countLimit,x, y, width, height,life,atk,moveSpeed);
+        super(path,countLimit,x, y, width, height,x,y,width,height,life,atk,moveSpeed);
+    }
 
+    public Monster(String path,int countLimit,int x, int y, int width, int height,int x2, int y2, int width2, int height2,int life,int moveSpeed,int atk) {
+        super(path,countLimit,x, y, width, height,x2,y2,width2,height2,life,atk,moveSpeed);
     }
 
     public void chase(int actorX,int actorY){
@@ -32,6 +35,9 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
+        if(life <= 0){
+            dir = Dir.DEAD;
+        }
 
     }
 

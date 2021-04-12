@@ -11,7 +11,6 @@ public class Delay {
         this.count = 0;
         this.isPause = true;
         this.isLoop = false;
-
     }
 
     public void play() {

@@ -38,6 +38,7 @@ public class MapObjController {
         this.txt = txt;
         this.objSize = size;
         this.keyPairs = keyPairs;
+        mapObjArr = new ArrayList<>();
         return this;
     }
 
@@ -48,7 +49,7 @@ public class MapObjController {
             final ArrayList<MapInfo> mapInfos = mapLoader.combineInfo();//使用MapLoader中的combineInfo()方法產生MapInfo陣列
             for(int i=0 ; i<keyPairs.size() ; i++) {
                 int k=i;
-                this.mapObjArr = mapLoader.createObjectArray(keyPairs.get(i).objNameInTxt, this.objSize, mapInfos, new MapLoader.CompareClass() {
+                this.mapObjArr.addAll(mapLoader.createObjectArray(keyPairs.get(i).objNameInTxt, this.objSize, mapInfos, new MapLoader.CompareClass() {
                     @Override
                     public GameObject compareClassName(final String gameObject, final String name, final maploader.MapInfo mapInfo, final int size) {
                         //進行name的比照並產生對應地圖物件
@@ -86,7 +87,7 @@ public class MapObjController {
                         }
                         return null;
                     }
-                });
+                }));
             }
         } catch (final IOException ex) {
             Logger.getLogger(Scene.class.getName()).log(Level.SEVERE, null, ex);
