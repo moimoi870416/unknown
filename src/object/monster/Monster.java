@@ -30,7 +30,6 @@ public abstract class Monster extends GameObjForAnimator {
         }
         translate((int)moveOnX, (int)moveOnY);
         changeDir(moveOnX);
-
     }
 
     @Override
