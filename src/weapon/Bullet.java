@@ -27,7 +27,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         this.x = x;
         this.y = y;
         System.out.println("1."+mouseX +"///"+mouseY);
-        System.out.println("2."+x +"///"+y);
+        System.out.println("2."+(x-29) +"///"+(y-29));
         setGunBullet(gunType);
         this.atk = bulletType.atk;
         this.MOVE_SPEED = bulletType.speedMove;

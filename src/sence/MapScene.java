@@ -32,6 +32,8 @@ public class MapScene extends Scene {
     private LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
+    private int cameraX;
+    private int cameraY;
     private int mouseX;
     private int mouseY;//滑鼠位置
     private GameActor gameActor;//主角
@@ -49,13 +51,20 @@ public class MapScene extends Scene {
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
         monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Actor.FIRST.getPath(),720,450);
-        this.camera = new Camera.Builder(CAMERA_WIDTH, CAMERA_HEIGHT).setChaseObj(gameActor,1,1).setCameraStartLocation(0,0).setCameraWindowLocation(0,0).gen();
+        gameActor = new GameActor(Actor.FIRST.getPath(),0,0);
+        this.camera = new Camera.Builder(CAMERA_WIDTH, CAMERA_HEIGHT)
+                .setChaseObj(gameActor,1,1)
+                .setCameraStartLocation(-CAMERA_WIDTH/2,-CAMERA_HEIGHT/2)
+                .gen();
     }
 
     private void cameraUpdate(){
-        actorX = gameActor.painter().left();
-        actorY = gameActor.painter().top();
+        cameraX = camera.cameraWindowX();//取得鏡頭位於地圖的的左上角位置
+        cameraY = camera.cameraWindowY();
+        actorX = gameActor.collider().left();//取得人物的位置
+        actorY = gameActor.collider().top();
+        mouseX = listenerMouseX +cameraX;//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
+        mouseY = listenerMouseY +cameraY;
     }
 
     @Override
@@ -67,13 +76,13 @@ public class MapScene extends Scene {
         camera.start(g);
         g.drawImage(map,0,0,null);
 
-
+/*
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
             }
           });
-
+*/
         if(camera.isCollision(gameActor)){
             gameActor.paint(g);
         }
@@ -132,11 +141,13 @@ public class MapScene extends Scene {
 
     public void shootUpdate(){
         if (shooting) {
-            mouseX = listenerMouseX+actorX-CAMERA_WIDTH/2+30;
-            mouseY = listenerMouseY+actorY-CAMERA_HEIGHT/2+30;
             if (gameActor.getGun().isCanShoot()) {
                 gameActor.getGun().shoot();
-                this.testBullets.add(new Bullet(this.gameActor.painter().centerX(), this.gameActor.painter().centerY(), mouseX, mouseY,gameActor.getGun().getGunType()));
+                System.out.println("CAMERA" + cameraX +"///" + cameraY);
+                this.testBullets.add(new Bullet
+                        (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
+                                mouseX, mouseY,
+                                gameActor.getGun().getGunType()));
             }
         }
     }
@@ -146,7 +157,7 @@ public class MapScene extends Scene {
         camera.update();
         gameActor.update();
         cameraUpdate();
-        monsterUpdate();
+        //monsterUpdate();
         bulletsUpdate();
         shootUpdate();
     }
