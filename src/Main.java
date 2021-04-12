@@ -19,6 +19,7 @@ public class Main {
                 .setScreenY(900)
                 .gen();
 
+        Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
         SenceController.getSenceController().change(new MapScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()

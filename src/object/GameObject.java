@@ -12,8 +12,6 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     //畫圖的匡
     private Rect painter;
 
-
-
     public GameObject(int x, int y, int width, int height) {
         this(x, y, width, height, x, y, width, height);
     }
@@ -56,23 +54,6 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         return painter.top() >= MapInformation.mapInfo().bottom();
     }
 
-    //這四個是專門寫給讓主角在中間的方法 只要被追焦對象改即可
-    public boolean touchTop2() {
-        return collider.top() <= 0 + Global.CAMERA_WIDTH / 2 - Global.CENTER_WIDTH / 2; //鏡頭到  地圖邊界的距離 ;
-    }
-
-    public boolean touchLeft2() {
-        return collider.left() <= 0 + Global.CAMERA_HEIGHT / 2 - Global.CENTER_HEIGHT / 2;
-    }
-
-    public boolean touchRight2() {
-        return collider.right() >= MapInformation.mapInfo().right() - Global.CAMERA_HEIGHT / 2 + Global.CENTER_HEIGHT / 2;
-    }
-
-    public boolean touchBottom2() {
-        return collider.bottom() >= MapInformation.mapInfo().bottom() - Global.CAMERA_WIDTH / 2 + Global.CENTER_WIDTH / 2;
-    }
-
     public boolean touchTop() {
         return collider.top() <= 0;
     }
@@ -89,12 +70,10 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         return collider.bottom() >= MapInformation.mapInfo().bottom();
     }
 
-
     //是否在境頭視野內
     public boolean isCollision(GameObject obj) {
         return collider.overlap(obj.collider);
     }
-
 
     //移動 x及y的位置
     public final void translate(int x, int y) {
@@ -125,4 +104,5 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     }
 
     public abstract void paintComponent(Graphics g);
+
 }

@@ -13,11 +13,12 @@ import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForAnimator;
 import object.GameObjForPic;
+import object.monster.BullBoss;
 import unit.Global.Direction;
 import controller.ImageController;
 import object.actor.GameActor;
-import object.monster.BullBoss;
-import unit.Global;
+import static  unit.Global.*;
+
 import weapon.Bullet;
 import object.monster.Goblin;
 import object.monster.Monster;
@@ -32,24 +33,24 @@ public class MapScene extends Scene {
     private int listenerMouseX;
     private int listenerMouseY;
     private int mouseX;
-    private int mouseY;
-    private GameActor gameActor;
-    private Camera camera;
-    private Image map;
+    private int mouseY;//滑鼠位置
+    private GameActor gameActor;//主角
+    private Camera camera;//鏡頭
+    private Image map;//地圖
     private int actorX;
-    private int actorY;
+    private int actorY; //鏡頭中心=主角
 
     @Override
     public void sceneBegin() {
         map = ImageController.getInstance().tryGet("/map3.png");
         mapInit();
         testBullets = new LinkedList<>();
-        MapInformation.setMapInfo(0, 0, Global.WINDOW_WIDTH,Global.WINDOW_HEIGHT);
+        MapInformation.setMapInfo(0, 0, WINDOW_WIDTH,WINDOW_HEIGHT);
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
         monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Global.Actor.FIRST.getPath(),720,450);
-        this.camera = new Camera.Builder(Global.CAMERA_WIDTH, Global.CAMERA_HEIGHT).setChaseObj(gameActor,1,1).setCameraStartLocation(0,0).setCameraWindowLocation(0,0).gen();
+        gameActor = new GameActor(Actor.FIRST.getPath(),720,450);
+        this.camera = new Camera.Builder(CAMERA_WIDTH, CAMERA_HEIGHT).setChaseObj(gameActor,1,1).setCameraStartLocation(0,0).setCameraWindowLocation(0,0).gen();
     }
 
     private void cameraUpdate(){
@@ -59,7 +60,6 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneEnd() {
-
     }
 
     @Override
@@ -81,10 +81,7 @@ public class MapScene extends Scene {
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
-
     }
-
-
     public void bulletsUpdate(){
         for(int i=0 ; i<testBullets.size() ; i++){
             testBullets.get(i).update();
@@ -118,25 +115,25 @@ public class MapScene extends Scene {
     }
 
     public void monsterUpdate(){
-        for(int i=0 ; i<monster.size() ; i++){
-            if(monster.get(i).getDir() == GameObjForAnimator.Dir.DEAD){
-                monster.get(i).update();
-            }else{
-                monster.get(i).chase(gameActor.collider().centerX(), gameActor.collider().bottom());
-                if (monster.get(i).isCollision(gameActor)) {
-                    gameActor.setLife(gameActor.getLife() - monster.get(i).getAtk());
-                }
+        for(int i=0 ; i<monster.size()-1 ; i++){
+            monster.get(i).update();
+            monster.get(i).chase(gameActor.collider().centerX(),gameActor.collider().bottom());
+//            if(monster.get(i).isCollisionWithActor(gameActor)){
+//                gameActor.setLife(gameActor.getLife()-monster.get(i).getAtk());
+//            }
+            if(!gameActor.isCollisionWithActor(monster.get(i))){
+                monster.get(i).isCollisionWithMonster(monster.get(i+1));
             }
         }
-        if(Math.random()*100 <1 && monster.size()<25){
+        if(Math.random()*100 <1 && monster.size()<5){
            monster.add(new Goblin(50,(int)(Math.random()*1000)));
         }
     }
 
     public void shootUpdate(){
         if (shooting) {
-            mouseX = listenerMouseX+actorX-Global.CAMERA_WIDTH/2+30;
-            mouseY = listenerMouseY+actorY-Global.CAMERA_HEIGHT/2+30;
+            mouseX = listenerMouseX+actorX-CAMERA_WIDTH/2+30;
+            mouseY = listenerMouseY+actorY-CAMERA_HEIGHT/2+30;
             if (gameActor.getGun().isCanShoot()) {
                 gameActor.getGun().shoot();
                 this.testBullets.add(new Bullet(this.gameActor.painter().centerX(), this.gameActor.painter().centerY(), mouseX, mouseY,gameActor.getGun().getGunType()));
@@ -157,7 +154,6 @@ public class MapScene extends Scene {
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return (e, state, trigTime) -> {
-
             if(state == CommandSolver.MouseState.MOVED || state == CommandSolver.MouseState.DRAGGED){
                 gameActor.changeDir(e.getX());
                 listenerMouseX = e.getX();
@@ -177,7 +173,6 @@ public class MapScene extends Scene {
             if(state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED){
                 shooting = false;
             }
-
         };
     }
 
@@ -190,10 +185,10 @@ public class MapScene extends Scene {
                     gameActor.getAnimator().setDelay().play();
                     gameActor.move(commandCode);
                 }
-                if(commandCode == Global.Active.RELOADING.getCommandCode()){
+                if(commandCode == Active.RELOADING.getCommandCode()){
                     gameActor.getGun().reloading();
                 }
-                if(commandCode == Global.Active.NUMBER_ONE.getCommandCode() || commandCode == Global.Active.NUMBER_TWO.getCommandCode()){
+                if(commandCode == Active.NUMBER_ONE.getCommandCode() || commandCode == Active.NUMBER_TWO.getCommandCode()){
                     gameActor.changeGun(commandCode);
                 }
 
@@ -206,7 +201,7 @@ public class MapScene extends Scene {
                         || commandCode == Direction.UP.ordinal() || commandCode == Direction.DOWN.ordinal()) {
                     gameActor.changeDir(4);
                 }
-                if(commandCode == Global.Active.FLASH.getCommandCode()){
+                if(commandCode == Active.FLASH.getCommandCode()){
                     gameActor.flash(listenerMouseX, listenerMouseY);
                 }
             }

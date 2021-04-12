@@ -26,7 +26,7 @@ public class GameObjForAnimator extends GameObject {
 
     @Override
     public void paintComponent(Graphics g) {
-        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(),dir);
+        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
     }
 
     @Override
@@ -34,40 +34,42 @@ public class GameObjForAnimator extends GameObject {
 
     }
 
-    public enum Dir{
+
+    public enum Dir {
         LEFT,
         RIGHT,
         DEAD
     }
 
-    protected void changeDir(double moveOnX){
-        if(moveOnX>0){
+    protected void changeDir(double moveOnX) {
+        if (moveOnX > 0) {
             dir = Dir.LEFT;
-        }else {
+        } else {
             dir = Dir.RIGHT;
         }
     }
 
-    protected void changeDir(int moveOnX){
-        if(moveOnX>0){
+    protected void changeDir(int moveOnX) {
+        if (moveOnX > 0) {
             dir = Dir.LEFT;
-        }else {
+        } else {
             dir = Dir.RIGHT;
         }
     }
 
-    public Animator getAnimator(){
+    public Animator getAnimator() {
         return animator;
     }
 
-    public void setLife(int life){
-        if(life < 0){
+    public void setLife(int life) {
+        if (life < 0) {
             animator.setDelay().stop();
             animator.setDelay().play();
             dir = Dir.DEAD;
         }
         this.life = life;
     }
+
 
     public int getLife() {
         return life;
@@ -87,5 +89,20 @@ public class GameObjForAnimator extends GameObject {
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+    //    public boolean isCollisionWithActor(GameObjForAnimator other) {
+//            int distanceX = this.collider().centerX() - other.collider().centerX();
+//            int distanceY = this.collider().centerY() - other.collider().centerY();
+//            double distance = Math.sqrt(distanceX ^ 2 + distanceY ^ 2);
+//            if (distance < (this.collider().width()/2 + other.collider().width()/2 )) {
+//                return true;
+//            }
+//        return false;
+//    }
+    public boolean isCollisionWithActor(GameObjForAnimator other) {
+        if (Math.abs(this.collider().centerX() - other.collider().centerX()) < 50 && Math.abs(this.collider().centerY() - other.collider().centerY()) < 50) {
+            return true;
+        }
+        return false;
     }
 }
