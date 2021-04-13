@@ -24,6 +24,7 @@ public class Animator {
         if (this.delay.count()) {
             this.count = ++this.count % ACTOR_WALK.length;
         }
+
         g.drawImage(this.img, left, top, right , bottom
                 , animatorSize *ACTOR_WALK[this.count]
                 , animatorSize * dir.ordinal()
@@ -42,5 +43,13 @@ public class Animator {
 
     public Delay setDelay(){
         return delay;
+    }
+
+    public void setImg(Image img){
+        this.img = img;
+    }
+
+    public void setCount(int count){
+        this.count = count;
     }
 }

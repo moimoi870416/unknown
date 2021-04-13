@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public abstract  class BackgroundType {
     public BackgroundType(){
-        imageSrcIn = new BufferedImage(CAMERA_WIDTH ,CAMERA_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        imageSrcIn = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
         ovalSrcIn = imageSrcIn.createGraphics();
     }
 

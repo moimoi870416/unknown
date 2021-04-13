@@ -18,9 +18,11 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     protected float shootDeviation;//射擊偏差(預設為0=無偏差)
     private float distance;
     private int atk;
+    private int penetration;
     private Image img;
     private int flyingDistance;
     private BulletType bulletType;
+    private State state;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
         img = ImageController.getInstance().tryGet("/bullet.png");
@@ -33,27 +35,35 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         this.MOVE_SPEED = bulletType.speedMove;
         this.flyingDistance = bulletType.flyingDistance;
         this.shootDeviation = bulletType.shootDeviation;
+        this.penetration = bulletType.penetration;
+        state = State.FLYING;
         setAngle(mouseX,mouseY);
         setDistanceDeviation();
     }
+    public enum State{
+        FLYING,
+        STOP
+    }
 
     private enum BulletType{
-        PISTOL(10,10,200,0,0),
-        UZI(19,15,400,0,0),
-        AK(31,12,550,0,0),
-        SNIPER(120,30,1000,0,0),
-        MACHINE_GUN(25,15,550,0,0);
+        PISTOL(10,10,200,0,0,50),
+        UZI(19,15,400,0,0,50),
+        AK(31,12,550,0,0,50),
+        SNIPER(120,30,1000,0,0,300),
+        MACHINE_GUN(25,15,550,0,0,100);
 
         private int atk;//攻擊力
         private int speedMove;//子彈的速度
         private int flyingDistance;//射程
         private float shootDeviation;
+        private int penetration;//穿透力
 
-        BulletType(int atk,int speedMove,int flyingDistance,int shootDeviationMax,int shootDeviationMin){
+        BulletType(int atk,int speedMove,int flyingDistance,int shootDeviationMax,int shootDeviationMin,int penetration){
             this.atk = atk;
             this.speedMove = speedMove;
             this.flyingDistance = flyingDistance;
             this.shootDeviation = setShootDeviation(shootDeviationMax,shootDeviationMin);
+            this.penetration = penetration;
 
         }
 
@@ -141,7 +151,6 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         float y = (float)Math.abs(monster.collider().centerY()-getCenterY());
         float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
         if(d < (monster.collider().width()+width)/2){
-            monster.setLife(monster.getLife()-atk);
             return true;
         }
         return false;
@@ -166,5 +175,13 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
 
     public int getAtk(){
         return atk;
+    }
+
+    public boolean isPenetrate(int monsterLife){
+        penetration -= monsterLife;
+        if(penetration <= 0){
+            return true;
+        }
+        return false;
     }
 }

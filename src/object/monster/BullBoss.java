@@ -16,4 +16,6 @@ public class BullBoss extends Monster {
         animator.paintAnimator(g,painter().left(), painter().right(), painter().top(), painter().bottom(),dir);
     }
 
+
+
 }

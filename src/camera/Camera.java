@@ -218,6 +218,7 @@ public class Camera extends GameObject implements CommandSolver.KeyListener {
                 case LEFT:
                     if (!touchLeft()) {
                         translateX(-cameraMoveSpeed);
+
                     }
                     break;
                 case RIGHT:
@@ -285,6 +286,14 @@ public class Camera extends GameObject implements CommandSolver.KeyListener {
 
     public int cameraWindowY() {
         return cameraWindowY;
+    }
+
+    public int getCameraWindowX(){
+        return this.painter().left();
+    }
+
+    public int getCameraWindowY(){
+        return this.painter().top();
     }
 
 }

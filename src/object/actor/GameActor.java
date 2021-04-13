@@ -10,7 +10,7 @@ import java.awt.*;
 public class GameActor extends GameObjForAnimator {
     private WhichGun whichGun;
     private Global.Direction dirMove;
-    private final int FLASHDISTANCE = 200;
+    private final int FLASH_MAX_DISTANCE = 300;
     private Delay delayForFlash;
     private boolean canFlash;
 
@@ -20,7 +20,7 @@ public class GameActor extends GameObjForAnimator {
         animator.setACTOR_WALK(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
         whichGun = WhichGun.ONE;
         dirMove = Global.Direction.NO;
-        delayForFlash = new Delay(600);
+        delayForFlash = new Delay(1);
         canFlash = true;
     }
 
@@ -90,7 +90,7 @@ public class GameActor extends GameObjForAnimator {
     public void update() {
         switch (dirMove) {
             case RIGHT:
-                if (painter().right() > Global.WINDOW_WIDTH) {
+                if (painter().right() > Global.MAP_WIDTH) {
                     translateX(-moveSpeed);
                 }
                 break;
@@ -105,7 +105,7 @@ public class GameActor extends GameObjForAnimator {
                 }
                 break;
             case DOWN :
-                if (painter().bottom() > Global.WINDOW_HEIGHT) {
+                if (painter().bottom() > Global.MAP_HEIGHT) {
                     translateY(-moveSpeed);
                 }
                 break;
@@ -119,19 +119,22 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public void flash(int mouseX,int mouseY){
-        delayForFlash.play();
         if(canFlash) {
-            float x = Math.abs(mouseX - painter().centerX());
-            float y = Math.abs(mouseY - painter().centerY());
+            delayForFlash.play();
+            int x = Math.abs(mouseX - painter().centerX());
+            int y = Math.abs(mouseY - painter().centerY());
             if (x == 0 && y == 0) {
                 return;
             }
-            float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
-            if (distance > FLASHDISTANCE) {
-                distance = FLASHDISTANCE;
+            float d = (float) Math.sqrt(x * x + y * y);
+            float distance = d;//計算斜邊,怪物與人物的距離
+            if (distance > FLASH_MAX_DISTANCE) {
+                distance = FLASH_MAX_DISTANCE;
             }
-            float moveOnX = (float) (Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * distance);
-            float moveOnY = (float) (Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * distance);
+
+            float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
+            float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
+            System.out.println("move  "+moveOnX+"///"+moveOnY);
             if (mouseY < painter().centerY()) {
                 moveOnY = -moveOnY;
             }
@@ -140,7 +143,10 @@ public class GameActor extends GameObjForAnimator {
             }
             translate((int) moveOnX, (int) moveOnY);
             canFlash = false;
+            System.out.println("mouse  "+mouseX+"///"+mouseY);
+            System.out.println("actor  "+painter().centerX()+"///"+painter().centerY());
         }
+
     }
 
 }

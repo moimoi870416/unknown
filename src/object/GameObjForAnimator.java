@@ -5,6 +5,7 @@ import java.awt.*;
 public class GameObjForAnimator extends GameObject {
     protected Animator animator;
     protected Dir dir;
+    protected State state;
     protected int life;
     protected int atk;
     protected int moveSpeed;
@@ -19,6 +20,7 @@ public class GameObjForAnimator extends GameObject {
         this.life = life;
         this.atk = atk;
         this.moveSpeed = moveSpeed;
+        state = State.ALIVE;
         dir = Dir.LEFT;
     }
 
@@ -34,11 +36,15 @@ public class GameObjForAnimator extends GameObject {
 
     }
 
+    public enum State{
+        ALIVE,
+        ATTACK,
+        DEAD,
+    }
 
     public enum Dir {
         LEFT,
         RIGHT,
-        DEAD
     }
 
     protected void changeDir(double moveOnX) {
@@ -61,26 +67,19 @@ public class GameObjForAnimator extends GameObject {
         return animator;
     }
 
-    public void setLife(int life) {
-        if (life < 0) {
-            animator.setDelay().stop();
-            animator.setDelay().play();
-            dir = Dir.DEAD;
+    public void offLife(int atk){
+        this.life -= atk;
+        if(life <=0){
+            state = State.DEAD;
         }
-        this.life = life;
     }
 
-
-    public int getLife() {
+    public int getLife(){
         return life;
     }
 
     public int getAtk() {
         return atk;
-    }
-
-    public void setAtk(int atk) {
-        this.atk = atk;
     }
 
     public Dir getDir(){
@@ -90,6 +89,7 @@ public class GameObjForAnimator extends GameObject {
     public void setDir(Dir dir) {
         this.dir = dir;
     }
+
     //    public boolean isCollisionWithActor(GameObjForAnimator other) {
 //            int distanceX = this.collider().centerX() - other.collider().centerX();
 //            int distanceY = this.collider().centerY() - other.collider().centerY();
@@ -99,6 +99,7 @@ public class GameObjForAnimator extends GameObject {
 //            }
 //        return false;
 //    }
+
     public boolean isCollisionWithActor(GameObjForAnimator other) {
         if (Math.abs(this.collider().centerX() - other.collider().centerX()) < 50 && Math.abs(this.collider().centerY() - other.collider().centerY()) < 50) {
             return true;
