@@ -7,11 +7,10 @@ import menu.Label;
 import menu.impl.MouseTriggerImpl;
 import unit.CommandSolver;
 
+import static unit.Global.*;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
-
-import static unit.Global.CAMERA_HEIGHT;
-import static unit.Global.CAMERA_WIDTH;
 
 public class MenuScene2 extends Scene {
 
@@ -98,7 +97,7 @@ public class MenuScene2 extends Scene {
 
     @Override
     public void paint(Graphics g) {
-        menuImg.paintBackground(g, false, true, 0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+        menuImg.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         a.paint(g);
         b.paint(g);
 //        ee.paint(g);

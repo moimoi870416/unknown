@@ -50,6 +50,6 @@ public class MenuScene1 extends Scene {
 
     @Override
     public void paint(Graphics g) {
-        menuImg.paintBackground(g, false, true, 0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+        menuImg.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 }

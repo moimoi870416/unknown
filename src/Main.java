@@ -48,7 +48,7 @@ public class Main {
         Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(mouse1, new Point(10, 10), "mouse1");
         jFrame.setCursor(cursor);
         jFrame.setTitle("Game 8th");//視窗標題
-        jFrame.setSize(Global.CAMERA_WIDTH, Global.CAMERA_HEIGHT);//視窗大小
+        jFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);//視窗大小
         jFrame.setLocationRelativeTo(null);//視窗置中
         jFrame.setResizable(false);//固定視窗大小
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//按X是否結束程式
