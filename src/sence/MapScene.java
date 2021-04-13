@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
+import object.GameObjForAnimator;
 import object.GameObjForPic;
 import object.monster.BullBoss;
 import util.Global.Direction;
@@ -45,7 +46,7 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
-        monster.add(new BullBoss(200,200));
+        //monster.add(new BullBoss(200,200));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
@@ -67,14 +68,11 @@ public class MapScene extends Scene {
     public void paint(final Graphics g) {
         camera.start(g);
         g.drawImage(map,0,0,null);
-        /*
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
             }
           });
-
-         */
         if(camera.isCollision(gameActor)){
             gameActor.paint(g);
         }
@@ -108,6 +106,7 @@ public class MapScene extends Scene {
                         int life = monster.get(k).getLife();
                         monster.get(k).offLife(testBullets.get(i).getAtk());
                         if(monster.get(k).getLife()<=0){
+                            //monster.get(k).setState(GameObjForAnimator.State.DEATH);
                             monster.remove(k);
                             k--;
                         }
@@ -125,7 +124,6 @@ public class MapScene extends Scene {
     public void monsterUpdate(){
         for(int i=0 ; i<monster.size()-1 ; i++){
             monster.get(i).update();
-            monster.get(i).chase(gameActor.collider().centerX(),gameActor.collider().bottom());
 //            if(monster.get(i).isCollisionWithActor(gameActor)){
 //                gameActor.setLife(gameActor.getLife()-monster.get(i).getAtk());
 //            }
@@ -155,7 +153,7 @@ public class MapScene extends Scene {
         mouseUpdate();
         camera.update();
         gameActor.update();
-        //monsterUpdate();
+        monsterUpdate();
         bulletsUpdate();
         shootUpdate();
     }
@@ -191,7 +189,6 @@ public class MapScene extends Scene {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
                 if(commandCode >= 1 || commandCode <= 4) {
-                    gameActor.getAnimator().setDelay().play();
                     gameActor.move(commandCode);
                 }
                 if(commandCode == Active.RELOADING.getCommandCode()){
@@ -205,7 +202,6 @@ public class MapScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-                gameActor.getAnimator().setDelay().stop();
                 if (commandCode == Direction.LEFT.ordinal() || commandCode == Direction.RIGHT.ordinal()
                         || commandCode == Direction.UP.ordinal() || commandCode == Direction.DOWN.ordinal()) {
                     gameActor.changeDir(4);
@@ -226,6 +222,8 @@ public class MapScene extends Scene {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp","genMap.txt")
                 .setNameAndPath("bananastatue", "/map/banana.png",true,new GameObjForPic("/map/banana.png",0,370,168,30))
                 .setNameAndPath("tree1", "/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png",0,100,208,336))
+                .setNameAndPath("rock1","/map/rock-sand1-424-216.png",false,null)
+                .setNameAndPath("rock2","/map/rock-sand1-584-216.png",false,null)
                 .gen()
                 .setMap();
     }

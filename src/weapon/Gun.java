@@ -3,7 +3,6 @@ package weapon;
 import object.GameObjForAnimator;
 import util.Delay;
 
-
 public class Gun extends GameObjForAnimator {
     private int magazine;//彈匣內的剩餘子彈數量
     private final int magazineMax;//一個彈匣的子彈數量
@@ -17,7 +16,7 @@ public class Gun extends GameObjForAnimator {
     private GunType gunType;
 
     public Gun(GunType gunType, int x, int y) {
-        super(gunType.path, 0, x, y, gunType.width, gunType.height,0,0,0);
+        super(x, y, gunType.width, gunType.height,0,0,0);
         this.gunType = gunType;
         this.magazine = gunType.magazine;
         this.magazineMax = this.magazine;
@@ -99,11 +98,6 @@ public class Gun extends GameObjForAnimator {
     }
 
     @Override
-    protected void setAnimator(String path, int countLimit) {
-
-    }
-
-    @Override
     public void update() {
         if(reloadingDelay.count()){
             canReloading = true;
@@ -112,6 +106,10 @@ public class Gun extends GameObjForAnimator {
         if(shootingDelay.count()){
             canShoot = true;
         }
+    }
+
+    @Override
+    protected void setStatePath() {
     }
 
 }

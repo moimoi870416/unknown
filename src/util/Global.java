@@ -7,6 +7,9 @@ public class Global {
     public static final int UPDATE_TIMES_PER_SEC=60;
     public static final int FRAME_LIMIT = 60;
 
+    public static int actorX;
+    public static int actorY;
+
 
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
