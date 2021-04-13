@@ -67,7 +67,7 @@ public class MapScene extends Scene {
     @Override
     public void paint(final Graphics g) {
         camera.start(g);
-        //g.drawImage(map,0,0,null);
+        g.drawImage(map,0,0,null);
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
