@@ -17,7 +17,6 @@ import java.awt.event.KeyEvent;
 public class Main {
     public static void main(final String[] args) {
 
-        initTheme();
         final JFrame jFrame = new JFrame();//創建一個視窗
         Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
         SenceController.getSenceController().change(new MenuScene1());
@@ -57,27 +56,4 @@ public class Main {
         gk.run();//執行主程式
     }
 
-    private static void initTheme() {
-        Style simple = new Style.StyleOval(100, 100, true, new BackgroundType.BackgroundColor(Color.YELLOW))
-                .setTextColor(new Color(128, 128, 128))
-                .setHaveBorder(true)
-                .setBorderColor(new Color(255, 215, 0))
-                .setBorderThickness(5)
-                .setTextFont(new Font("", Font.TYPE1_FONT, 30))
-                .setText("Press");
-        Style aa = new Style.StyleOval(100, 100, true, new BackgroundType.BackgroundColor(new Color(184, 134, 11)))
-                .setTextColor(Color.BLACK)
-                .setHaveBorder(true)
-                .setBorderColor(new Color(230, 184, 0))
-                .setBorderThickness(5)
-                .setTextFont(new Font("", Font.TYPE1_FONT, 28))
-                .setText("Press");
-        Style im = new Style.StyleOval(100, 100, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/banana.png")))
-                .setHaveBorder(true)
-                .setBorderColor(Color.WHITE)
-                .setBorderThickness(5)
-                .setTextFont(new Font("", Font.TYPE1_FONT, 30))
-                .setText("Press");
-        Theme.add(new Theme(im, simple, aa));
-    }
 }

@@ -5,22 +5,17 @@ import java.util.ArrayList;
 
 public class Theme {
     public static final Theme DEFAULT_THEME = new Theme(
-            new Style.StyleRect(150, 70, true, new BackgroundType.BackgroundColor(new Color(112, 128, 105)))
-                    .setText("GOOD")
+            new Style.StyleRect(400 , 800, true, new BackgroundType.BackgroundColor(new Color(112, 128, 105)))
                     .setTextFont(new Font("TimesRoman", Font.BOLD, 30))
-                    .setTextColor(Color.WHITE)
                     .setHaveBorder(true)
                     .setBorderColor(new Color(211, 211, 211))
                     .setBorderThickness(5),
-            new Style.StyleRect(150, 70, true, new BackgroundType.BackgroundColor(new Color(169, 169, 169)))
+            new Style.StyleRect(400, 800, true, new BackgroundType.BackgroundColor(new Color(169, 169, 169)))
                     .setHaveBorder(true)
                     .setBorderColor(Color.WHITE)
                     .setBorderThickness(5)
-                    .setText("HOVER")
-                    .setTextColor(Color.WHITE)
                     .setTextFont(new Font("TimesRoman", Font.BOLD, 30)),
-            new Style.StyleRect(150, 70, true, new BackgroundType.BackgroundColor(new Color(178, 34, 34)))
-                    .setText("FOCUS")
+            new Style.StyleRect(400, 800, true, new BackgroundType.BackgroundColor(new Color(178, 34, 34)))
                     .setTextFont(new Font("TimesRoman", Font.BOLD, 35))
                     .setTextColor(new Color(255, 228, 255))
                     .setHaveBorder(true)

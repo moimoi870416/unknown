@@ -2,7 +2,7 @@ package menu;
 
 import java.awt.*;
 
-public class Button extends Label{
+public class Button extends Label {
     public Button(int x, int y, Style style) {
         super(x, y, style);
 
@@ -15,6 +15,13 @@ public class Button extends Label{
 
     public Button(int x, int y) {
         super(x, y);
+    }
+
+    public boolean IsUse(Label label) {
+        if (this.getIsFocus() || label.getIsFocus()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
