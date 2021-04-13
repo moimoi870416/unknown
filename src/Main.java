@@ -34,7 +34,7 @@ public class Main {
                         .add(KeyEvent.VK_3, Global.Active.NUMBER_THREE.getCommandCode())
                         .add(KeyEvent.VK_4, Global.Active.NUMBER_FORE.getCommandCode())
                         .add(KeyEvent.VK_SPACE, Global.Active.SPACE.getCommandCode())
-                        .add(KeyEvent.VK_F, Global.Active.FLASH.getCommandCode())
+                        .add(KeyEvent.VK_F, Global.Active.SKILL.getCommandCode())
                         .add(KeyEvent.VK_E, Global.Active.CATCH_ITEM.getCommandCode())
                         .next().keyCleanMode()
                         .subscribe(sc))

@@ -21,7 +21,6 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
     public void chase() {
-        System.out.println(Global.actorX);
         float x = Math.abs(Global.actorX - painter().centerX());
         float y = Math.abs(Global.actorY - painter().centerY());
         if (x == 0 && y == 0) {

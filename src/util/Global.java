@@ -9,6 +9,8 @@ public class Global {
 
     public static int actorX;
     public static int actorY;
+    public static int shootCount = 0;
+
 
 
     public final static int UNIT_X = 32;
@@ -17,7 +19,7 @@ public class Global {
     private static int SCREEN_X;
     private static int SCREEN_Y;
 
-    public final static boolean IS_DEBUG = false;
+    public final static boolean IS_DEBUG = true;
 
 
     //地圖大小
@@ -53,7 +55,7 @@ public class Global {
         RIGHT,
         UP,
         DOWN,
-        NO;
+        NO
     }
 
     public enum Active{
@@ -61,10 +63,10 @@ public class Global {
         NUMBER_TWO(-2),
         NUMBER_THREE(-3),
         NUMBER_FORE(-4),
-        FLASH(30),
+        SKILL(30),
         RELOADING(31),
         CATCH_ITEM(32),
-        SPACE(0);
+        SPACE(5);
 
 
         private int commandCode;

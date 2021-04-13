@@ -33,7 +33,7 @@ public class Gun extends GameObjForAnimator {
         UZI("/weapon/gun.png",76,32,160,40,7,45),
         AK("/weapon/gun.png",76,32,120,30,10,90),
         SNIPER("/weapon/gun.png",76,32,30,10,60,120),
-        MACHINE_GUN("/weapon/gun.png",76,32,300,100,3,180);
+        MACHINE_GUN("/weapon/gun.png",76,32,300,100,5,180);
 
         private String path;
         private int width;

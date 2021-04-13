@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
-import object.GameObjForAnimator;
 import object.GameObjForPic;
 import object.monster.BullBoss;
 import util.Global.Direction;
@@ -46,7 +45,7 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
-        //monster.add(new BullBoss(200,200));
+        monster.add(new BullBoss(200,200));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
@@ -58,6 +57,7 @@ public class MapScene extends Scene {
     private void mouseUpdate(){
         mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
         mouseY = listenerMouseY + camera.getCameraWindowY();
+        gameActor.changeDir(mouseX);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MapScene extends Scene {
     @Override
     public void paint(final Graphics g) {
         camera.start(g);
-        g.drawImage(map,0,0,null);
+        //g.drawImage(map,0,0,null);
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
@@ -144,6 +144,8 @@ public class MapScene extends Scene {
                         (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
                                 mouseX, mouseY,
                                 gameActor.getGun().getGunType()));
+                System.out.println(shootCount);
+                shootCount++;
             }
         }
     }
@@ -162,7 +164,6 @@ public class MapScene extends Scene {
     public CommandSolver.MouseListener mouseListener() {
         return (e, state, trigTime) -> {
             if(state == CommandSolver.MouseState.MOVED || state == CommandSolver.MouseState.DRAGGED){
-                gameActor.changeDir(e.getX());
                 listenerMouseX = e.getX();
                 listenerMouseY = e.getY();
             }
@@ -179,6 +180,7 @@ public class MapScene extends Scene {
             }
             if(state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED){
                 shooting = false;
+                shootCount = 0;
             }
         };
     }
@@ -204,11 +206,12 @@ public class MapScene extends Scene {
             public void keyReleased(int commandCode, long trigTime) {
                 if (commandCode == Direction.LEFT.ordinal() || commandCode == Direction.RIGHT.ordinal()
                         || commandCode == Direction.UP.ordinal() || commandCode == Direction.DOWN.ordinal()) {
-                    gameActor.changeDir(4);
+                    gameActor.move(commandCode);
                 }
-                if(commandCode == Active.FLASH.getCommandCode()){
+                if(commandCode == Active.SPACE.getCommandCode()){
                     gameActor.flash(mouseX,mouseY);
                 }
+                System.out.println(commandCode);
             }
 
             @Override

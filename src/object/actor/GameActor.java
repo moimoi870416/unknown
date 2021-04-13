@@ -19,7 +19,7 @@ public class GameActor extends GameObjForAnimator {
         whichGun = WhichGun.ONE;
         whichGun.gun.translate(painter().centerX(),painter().centerY());
         dirMove = Global.Direction.NO;
-        delayForFlash = new Delay(1);
+        delayForFlash = new Delay(600);
         canFlash = true;
     }
 
