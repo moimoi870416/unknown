@@ -46,7 +46,7 @@ public class MapScene extends Scene {
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
         monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Actor.FIRST.getPath(),0,0);
+        gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor,1,1)
@@ -224,7 +224,8 @@ public class MapScene extends Scene {
 
     public void mapInit() {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp","genMap.txt")
-                .setNameAndPath("bananastatue","/banana.png",true,new GameObjForPic("/banana.png",30,30,12,12))
+                .setNameAndPath("bananastatue","/banana.png",true,new GameObjForPic("/banana.png",0,370,168,30))
+                .setNameAndPath("tree1","/tree1-208-336.png",false,null)
                 .gen()
                 .setMap();
     }

@@ -2,7 +2,7 @@ package object;
 
 import java.awt.*;
 
-public class GameObjForAnimator extends GameObject {
+public abstract class GameObjForAnimator extends GameObject {
     protected Animator animator;
     protected Dir dir;
     protected State state;
@@ -16,7 +16,7 @@ public class GameObjForAnimator extends GameObject {
 
     public GameObjForAnimator(String path,int countLimit, int x, int y, int width, int height, int x2, int y2, int width2, int height2,int life,int atk,int moveSpeed) {
         super(x, y, width, height,x2,y2,width2,height2);
-        animator = new Animator(path,countLimit);
+        setAnimator(path,countLimit);
         this.life = life;
         this.atk = atk;
         this.moveSpeed = moveSpeed;
@@ -24,11 +24,11 @@ public class GameObjForAnimator extends GameObject {
         dir = Dir.LEFT;
     }
 
-
+    protected abstract void setAnimator(String path,int countLimit);
 
     @Override
     public void paintComponent(Graphics g) {
-        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom());
     }
 
     @Override
@@ -89,16 +89,6 @@ public class GameObjForAnimator extends GameObject {
     public void setDir(Dir dir) {
         this.dir = dir;
     }
-
-    //    public boolean isCollisionWithActor(GameObjForAnimator other) {
-//            int distanceX = this.collider().centerX() - other.collider().centerX();
-//            int distanceY = this.collider().centerY() - other.collider().centerY();
-//            double distance = Math.sqrt(distanceX ^ 2 + distanceY ^ 2);
-//            if (distance < (this.collider().width()/2 + other.collider().width()/2 )) {
-//                return true;
-//            }
-//        return false;
-//    }
 
     public boolean isCollisionWithActor(GameObjForAnimator other) {
         if (Math.abs(this.collider().centerX() - other.collider().centerX()) < 50 && Math.abs(this.collider().centerY() - other.collider().centerY()) < 50) {

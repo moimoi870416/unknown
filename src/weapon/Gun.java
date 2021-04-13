@@ -99,6 +99,11 @@ public class Gun extends GameObjForAnimator {
     }
 
     @Override
+    protected void setAnimator(String path, int countLimit) {
+
+    }
+
+    @Override
     public void update() {
         if(reloadingDelay.count()){
             canReloading = true;

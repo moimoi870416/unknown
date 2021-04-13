@@ -1,19 +1,11 @@
 package sence;
 
-import camera.Camera;
+
 import controller.ImageController;
 import controller.SenceController;
 import menu.*;
-import menu.Button;
-import menu.Label;
 import unit.CommandSolver;
-
 import java.awt.*;
-import java.awt.event.MouseEvent;
-
-import menu.impl.MouseTriggerImpl;
-import unit.Global;
-
 import static unit.Global.*;
 
 public class MenuScene1 extends Scene {
