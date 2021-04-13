@@ -5,9 +5,9 @@ import menu.*;
 import menu.Button;
 import menu.Label;
 import menu.impl.MouseTriggerImpl;
-import unit.CommandSolver;
+import util.CommandSolver;
 
-import static unit.Global.*;
+import static util.Global.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -20,7 +20,7 @@ public class MenuScene2 extends Scene {
 
     @Override
     public void sceneBegin() {
-        menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu-10.png"));
+        menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-10.png"));
 
         a = new Label(413, 122);
         b = new Button(430, 410, Theme.get(0));

@@ -1,10 +1,10 @@
 package camera;
 
 import object.GameObject;
-import unit.CommandSolver;
+import util.CommandSolver;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import static unit.Global.*;
+import static util.Global.*;
 
 public class Camera extends GameObject implements CommandSolver.KeyListener {
     //地圖資訊由 MapInformation 類別直接呼叫，可以進行將相關資訊設定到Global 其實只需要地圖的寬跟長即可

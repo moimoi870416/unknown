@@ -1,8 +1,8 @@
 package object;
 
 import controller.ImageController;
-import unit.Delay;
-import unit.Global;
+import util.Delay;
+import util.Global;
 
 import java.awt.*;
 

@@ -3,7 +3,7 @@ package weapon;
 import controller.ImageController;
 import object.GameObject;
 import object.monster.Monster;
-import unit.GameKernel;
+import util.GameKernel;
 import java.awt.*;
 
 public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
@@ -25,7 +25,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private State state;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
-        img = ImageController.getInstance().tryGet("/bullet.png");
+        img = ImageController.getInstance().tryGet("/weapon/bullet.png");
         this.x = x;
         this.y = y;
         System.out.println("1."+mouseX +"///"+mouseY);

@@ -1,6 +1,6 @@
 package menu;
 
-import static  unit.Global.*;
+import static  util.Global.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

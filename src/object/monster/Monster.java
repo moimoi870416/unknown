@@ -1,7 +1,7 @@
 package object.monster;
 
-import unit.Delay;
-import unit.Global;
+import util.Delay;
+import util.Global;
 import object.GameObjForAnimator;
 
 public abstract class Monster extends GameObjForAnimator {

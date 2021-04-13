@@ -13,16 +13,16 @@ import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.monster.BullBoss;
-import unit.Global.Direction;
+import util.Global.Direction;
 import controller.ImageController;
 import object.actor.GameActor;
-import static  unit.Global.*;
+import static  util.Global.*;
 
 import weapon.Bullet;
 import object.monster.Goblin;
 import object.monster.Monster;
 import object.GameObject;
-import unit.CommandSolver;
+import util.CommandSolver;
 
 public class MapScene extends Scene {
     private ArrayList<GameObject> mapObjArr;
@@ -39,7 +39,7 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map3.png");
+        map = ImageController.getInstance().tryGet("/map/map3.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
@@ -224,8 +224,8 @@ public class MapScene extends Scene {
 
     public void mapInit() {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp","genMap.txt")
-                .setNameAndPath("bananastatue","/banana.png",true,new GameObjForPic("/banana.png",0,370,168,30))
-                .setNameAndPath("tree1","/tree1-208-336.png",false,null)
+                .setNameAndPath("bananastatue", "/map/banana.png",true,new GameObjForPic("/map/banana.png",0,370,168,30))
+                .setNameAndPath("tree1", "/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png",0,100,208,336))
                 .gen()
                 .setMap();
     }

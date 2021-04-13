@@ -1,7 +1,7 @@
 package menu.impl;
 //選滑鼠滑進去、點擊功能擇一
 
-import unit.CommandSolver;
+import util.CommandSolver;
 //外面輸入xy(滑鼠該有反應的位置)
 //使用者可以改變滑進去、點擊呈現出的style自訂
 

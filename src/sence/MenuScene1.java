@@ -4,9 +4,9 @@ package sence;
 import controller.ImageController;
 import controller.SenceController;
 import menu.*;
-import unit.CommandSolver;
+import util.CommandSolver;
 import java.awt.*;
-import static unit.Global.*;
+import static util.Global.*;
 
 public class MenuScene1 extends Scene {
 
@@ -15,7 +15,7 @@ public class MenuScene1 extends Scene {
 
     @Override
     public void sceneBegin() {
-        menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu-4.png"));
+        menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-4.png"));
     }
 
     @Override

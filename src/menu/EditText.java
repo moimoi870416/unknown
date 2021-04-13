@@ -1,9 +1,9 @@
 package menu;
 
 
-import unit.Delay;
+import util.Delay;
 
-import static unit.Global.*;
+import static util.Global.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

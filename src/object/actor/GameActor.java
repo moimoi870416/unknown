@@ -1,8 +1,8 @@
 package object.actor;
 
 import object.Animator;
-import unit.Delay;
-import unit.Global;
+import util.Delay;
+import util.Global;
 import object.GameObjForAnimator;
 import weapon.Gun;
 
@@ -125,7 +125,7 @@ public class GameActor extends GameObjForAnimator {
                 }
                 break;
             case DOWN :
-                if (painter().bottom() > Global.MAP_HEIGHT) {
+                if (painter().bottom() > Global.MAP_HEIGHT-15) {
                     translateY(-moveSpeed);
                 }
                 break;

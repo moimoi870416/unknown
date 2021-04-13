@@ -3,13 +3,12 @@ import menu.BackgroundType;
 import menu.Style;
 import menu.Theme;
 import sence.MapScene;
-import sence.MenuScene1;
-import unit.Global;
+import util.Global;
 import controller.SenceController;
-import unit.CommandSolver;
-import unit.GameKernel;
+import util.CommandSolver;
+import util.GameKernel;
 
-import static unit.Global.*;
+import static util.Global.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,7 +72,7 @@ public class Main {
                 .setBorderThickness(5)
                 .setTextFont(new Font("", Font.TYPE1_FONT, 28))
                 .setText("Press");
-        Style im = new Style.StyleOval(100, 100, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/banana.png")))
+        Style im = new Style.StyleOval(100, 100, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/map/banana.png")))
                 .setHaveBorder(true)
                 .setBorderColor(Color.WHITE)
                 .setBorderThickness(5)
