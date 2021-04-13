@@ -77,7 +77,6 @@ public abstract  class Style {
     }
 
     public static class StyleOval extends StyleRect {
-
         //建構子
         public StyleOval(int width, int height, boolean isFill, BackgroundType backgroundType) {
             super(width, height, isFill, backgroundType);

@@ -73,7 +73,6 @@ public abstract  class BackgroundType {
                 ovalSrcIn.setComposite(AlphaComposite.SrcIn);
                 ovalSrcIn.drawImage(this.img, 0, 0, width, width, null);
                 g.drawImage(imageSrcIn, x, y, null);
-
             } else {
                 g.drawImage(this.img, x, y, width, height, null);
             }

@@ -7,7 +7,7 @@ import java.awt.*;
 public class Label  implements GameKernel.PaintInterface,GameKernel.UpdateInterface {
     public interface ClickedAction {
 
-        public void clickedActionPerformed(int x, int y);
+    void clickedActionPerformed(int x, int y);
     }
     private ClickedAction clickAction;
 

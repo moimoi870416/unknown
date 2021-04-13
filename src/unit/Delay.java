@@ -65,4 +65,5 @@ public class Delay {
         this.count++;// 沒有算到要觸發 同時也 不是暫停的情況 計算次數增加
         return false;// 還沒觸發
     }
+
 }
