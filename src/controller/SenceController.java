@@ -1,8 +1,8 @@
 package controller;
 
 import sence.Scene;
-import unit.CommandSolver;
-import unit.GameKernel;
+import util.CommandSolver;
+import util.GameKernel;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

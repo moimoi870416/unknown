@@ -1,11 +1,10 @@
 package object.actor;
 
-import unit.Delay;
-import unit.Global;
+import object.animator.GoblinAnimator;
+import util.Delay;
+import util.Global;
 import object.GameObjForAnimator;
 import weapon.Gun;
-
-import java.awt.*;
 
 public class GameActor extends GameObjForAnimator {
     private WhichGun whichGun;
@@ -15,12 +14,12 @@ public class GameActor extends GameObjForAnimator {
     private boolean canFlash;
 
     public GameActor( String path,final int x, final int y) {
-        super(path,15,x, y, 58, 58,100,10,3);
-        animator.setAnimatorSize(58);
-        animator.setACTOR_WALK(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+        super(x, y, 58, 58,100,10,3);
+        animator = new GoblinAnimator(statePath.get(0),15,58);
         whichGun = WhichGun.ONE;
+        whichGun.gun.translate(painter().centerX(),painter().centerY());
         dirMove = Global.Direction.NO;
-        delayForFlash = new Delay(1);
+        delayForFlash = new Delay(600);
         canFlash = true;
     }
 
@@ -33,7 +32,7 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun{
-        ONE(new Gun(Gun.GunType.MACHINE_GUN,0,0)),
+        ONE(new Gun(Gun.GunType.MACHINE_GUN, 0, 0)),
         TWO(new Gun(Gun.GunType.SNIPER,0,0));
 
         private Gun gun;
@@ -79,12 +78,27 @@ public class GameActor extends GameObjForAnimator {
                 break;
         }
     }
-
+/*
     @Override
-    public void paintComponent(Graphics g) {
-        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-//        whichGun.gun.paint(g,painter().centerX(),painter().centerY(),null);
+    protected void setAnimator(String path, int countLimit) {
+        animator = new Animator(path,countLimit) {
+            @Override
+            public void paintAnimator(Graphics g, int left, int right, int top, int bottom) {
+                if (delay.count()) {
+                    this.count = ++this.count % ACTOR_WALK.length;
+                }
+
+                g.drawImage(this.img, left, top, right , bottom
+                        , animatorSize *ACTOR_WALK[this.count]
+                        , animatorSize * dir.ordinal()
+                        , animatorSize + animatorSize * ACTOR_WALK[this.count]
+                        , animatorSize + animatorSize * dir.ordinal()
+                        , null);
+            }
+        };
     }
+
+ */
 
     @Override
     public void update() {
@@ -105,7 +119,7 @@ public class GameActor extends GameObjForAnimator {
                 }
                 break;
             case DOWN :
-                if (painter().bottom() > Global.MAP_HEIGHT) {
+                if (painter().bottom() > Global.MAP_HEIGHT-15) {
                     translateY(-moveSpeed);
                 }
                 break;
@@ -116,6 +130,17 @@ public class GameActor extends GameObjForAnimator {
             canFlash = true;
         }
         whichGun.gun.update();
+        updatePosition();
+    }
+
+    private void updatePosition(){
+        Global.actorX = collider().centerX();
+        Global.actorY = collider().bottom();
+    }
+
+    @Override
+    protected void setStatePath() {
+        statePath.add("/actor/actorrun.png");
     }
 
     public void flash(int mouseX,int mouseY){
@@ -134,7 +159,6 @@ public class GameActor extends GameObjForAnimator {
 
             float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
             float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
-            System.out.println("move  "+moveOnX+"///"+moveOnY);
             if (mouseY < painter().centerY()) {
                 moveOnY = -moveOnY;
             }
@@ -143,10 +167,6 @@ public class GameActor extends GameObjForAnimator {
             }
             translate((int) moveOnX, (int) moveOnY);
             canFlash = false;
-            System.out.println("mouse  "+mouseX+"///"+mouseY);
-            System.out.println("actor  "+painter().centerX()+"///"+painter().centerY());
         }
-
     }
-
 }

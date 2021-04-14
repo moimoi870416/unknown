@@ -1,6 +1,6 @@
 package menu;
 
-import unit.GameKernel;
+import util.GameKernel;
 
 import java.awt.*;
 

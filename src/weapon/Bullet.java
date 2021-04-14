@@ -3,8 +3,9 @@ package weapon;
 import controller.ImageController;
 import object.GameObject;
 import object.monster.Monster;
-import unit.GameKernel;
+import util.GameKernel;
 import java.awt.*;
+import static util.Global.*;
 
 public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInterface{
 
@@ -25,16 +26,23 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private State state;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
-        img = ImageController.getInstance().tryGet("/bullet.png");
+        img = ImageController.getInstance().tryGet("/weapon/bullet.png");
         this.x = x;
         this.y = y;
-        System.out.println("1."+mouseX +"///"+mouseY);
-        System.out.println("2."+(x-29) +"///"+(y-29));
         setGunBullet(gunType);
         this.atk = bulletType.atk;
         this.MOVE_SPEED = bulletType.speedMove;
         this.flyingDistance = bulletType.flyingDistance;
-        this.shootDeviation = bulletType.shootDeviation;
+        if(shootCount <=3){
+            shootDeviation = 0;
+        }else if(shootCount > 3){
+            this.shootDeviation = setShootDeviation(bulletType.shootDeviationMax-2, bulletType.shootDeviationMix+2);
+        }else if(shootCount > 7){
+            this.shootDeviation = setShootDeviation(bulletType.shootDeviationMax, bulletType.shootDeviationMix);
+        }
+        if(bulletType == BulletType.SNIPER){
+            shootDeviation = 0;
+        }
         this.penetration = bulletType.penetration;
         state = State.FLYING;
         setAngle(mouseX,mouseY);
@@ -46,34 +54,36 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     private enum BulletType{
-        PISTOL(10,10,200,0,0,50),
-        UZI(19,15,400,0,0,50),
-        AK(31,12,550,0,0,50),
+        PISTOL(10,10,200,2,-2,50),
+        UZI(19,15,400,7,-7,50),
+        AK(31,12,550,3,-3,50),
         SNIPER(120,30,1000,0,0,300),
-        MACHINE_GUN(25,15,550,0,0,100);
+        MACHINE_GUN(25,15,550,5,-5,100);
 
         private int atk;//攻擊力
         private int speedMove;//子彈的速度
         private int flyingDistance;//射程
-        private float shootDeviation;
+        private int shootDeviationMax;
+        private int shootDeviationMix;
         private int penetration;//穿透力
 
         BulletType(int atk,int speedMove,int flyingDistance,int shootDeviationMax,int shootDeviationMin,int penetration){
             this.atk = atk;
             this.speedMove = speedMove;
             this.flyingDistance = flyingDistance;
-            this.shootDeviation = setShootDeviation(shootDeviationMax,shootDeviationMin);
             this.penetration = penetration;
+            this.shootDeviationMax = shootDeviationMax;
+            this.shootDeviationMix = shootDeviationMin;
 
-        }
-
-        private float setShootDeviation(int max,int min){
-            return (float)(Math.random() * (max - min + 1) + min);
         }
 
     }
     private void setGunBullet(Gun.GunType gunType){
         bulletType = BulletType.values()[gunType.ordinal()];
+    }
+
+    private float setShootDeviation(int max,int min){
+        return (float)(Math.random() * (max - min + 1) + min);
     }
 
     private void setAngle(int mouseX,int mouseY){

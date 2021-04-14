@@ -1,8 +1,8 @@
 package sence;
 
 import controller.SenceController;
-import unit.CommandSolver;
-import unit.GameKernel;
+import util.CommandSolver;
+import util.GameKernel;
 
 public abstract class Scene implements GameKernel.PaintInterface, GameKernel.UpdateInterface {
     protected SenceController sc;

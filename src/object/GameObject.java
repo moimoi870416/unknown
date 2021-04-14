@@ -1,8 +1,8 @@
 package object;
 
 import camera.MapInformation;
-import unit.Global;
-import unit.GameKernel;
+import util.Global;
+import util.GameKernel;
 import java.awt.*;
 
 public abstract class GameObject implements GameKernel.PaintInterface, GameKernel.UpdateInterface {

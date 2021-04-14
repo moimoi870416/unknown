@@ -1,34 +1,40 @@
 package object;
 
-import java.awt.*;
+import object.animator.Animator;
 
-public class GameObjForAnimator extends GameObject {
+import java.awt.*;
+import java.util.ArrayList;
+
+public abstract class GameObjForAnimator extends GameObject {
     protected Animator animator;
     protected Dir dir;
     protected State state;
     protected int life;
     protected int atk;
     protected int moveSpeed;
+    protected ArrayList<String> statePath;
 
-    public GameObjForAnimator(String path,int countLimit, int x, int y, int width, int height,int life,int atk,int moveSpeed) {
-        this(path,countLimit,x, y, width, height,x,y,width,height,life,atk,moveSpeed);
+    public GameObjForAnimator(int x, int y, int width, int height,int life,int atk,int moveSpeed) {
+        this(x, y, width, height,x,y,width,height,life,atk,moveSpeed);
     }
 
-    public GameObjForAnimator(String path,int countLimit, int x, int y, int width, int height, int x2, int y2, int width2, int height2,int life,int atk,int moveSpeed) {
+    public GameObjForAnimator(int x, int y, int width, int height, int x2, int y2, int width2, int height2,int life,int atk,int moveSpeed) {
         super(x, y, width, height,x2,y2,width2,height2);
-        animator = new Animator(path,countLimit);
         this.life = life;
         this.atk = atk;
         this.moveSpeed = moveSpeed;
-        state = State.ALIVE;
+        statePath = new ArrayList<>();
+        state = State.STAND;
         dir = Dir.LEFT;
+        setStatePath();
+
     }
-
-
 
     @Override
     public void paintComponent(Graphics g) {
-        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+        if(state != State.DEAD) {
+            animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+        }
     }
 
     @Override
@@ -36,9 +42,23 @@ public class GameObjForAnimator extends GameObject {
 
     }
 
+    public void setState(State state){
+        switch (state){
+            case DEATH:
+                animator.setImg(statePath.get(state.ordinal()),false);
+                break;
+            default:
+                animator.setImg(statePath.get(0),true);
+        }
+    }
+
+    protected abstract void setStatePath();
+
     public enum State{
-        ALIVE,
+        STAND,
+        RUN,
         ATTACK,
+        DEATH,
         DEAD,
     }
 
@@ -63,10 +83,6 @@ public class GameObjForAnimator extends GameObject {
         }
     }
 
-    public Animator getAnimator() {
-        return animator;
-    }
-
     public void offLife(int atk){
         this.life -= atk;
         if(life <=0){
@@ -81,24 +97,6 @@ public class GameObjForAnimator extends GameObject {
     public int getAtk() {
         return atk;
     }
-
-    public Dir getDir(){
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    //    public boolean isCollisionWithActor(GameObjForAnimator other) {
-//            int distanceX = this.collider().centerX() - other.collider().centerX();
-//            int distanceY = this.collider().centerY() - other.collider().centerY();
-//            double distance = Math.sqrt(distanceX ^ 2 + distanceY ^ 2);
-//            if (distance < (this.collider().width()/2 + other.collider().width()/2 )) {
-//                return true;
-//            }
-//        return false;
-//    }
 
     public boolean isCollisionWithActor(GameObjForAnimator other) {
         if (Math.abs(this.collider().centerX() - other.collider().centerX()) < 50 && Math.abs(this.collider().centerY() - other.collider().centerY()) < 50) {

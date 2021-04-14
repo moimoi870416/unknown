@@ -1,6 +1,6 @@
 package client;
 
-import unit.Global;
+import util.Global;
 
 import java.io.*;
 import java.net.DatagramPacket;

@@ -1,8 +1,7 @@
 package weapon;
 
 import object.GameObjForAnimator;
-import unit.Delay;
-
+import util.Delay;
 
 public class Gun extends GameObjForAnimator {
     private int magazine;//彈匣內的剩餘子彈數量
@@ -17,7 +16,7 @@ public class Gun extends GameObjForAnimator {
     private GunType gunType;
 
     public Gun(GunType gunType, int x, int y) {
-        super(gunType.path, 0, x, y, gunType.width, gunType.height,0,0,0);
+        super(x, y, gunType.width, gunType.height,0,0,0);
         this.gunType = gunType;
         this.magazine = gunType.magazine;
         this.magazineMax = this.magazine;
@@ -30,11 +29,11 @@ public class Gun extends GameObjForAnimator {
     }
 
     public enum GunType{
-        PISTOL("/gun.png",76,32,Integer.MAX_VALUE,15,30,60),
-        UZI("/gun.png",76,32,160,40,7,45),
-        AK("/gun.png",76,32,120,30,10,90),
-        SNIPER("/gun.png",76,32,30,10,60,120),
-        MACHINE_GUN("/gun.png",76,32,300,100,3,180);
+        PISTOL("/weapon/gun.png",76,32,Integer.MAX_VALUE,15,30,60),
+        UZI("/weapon/gun.png",76,32,160,40,7,45),
+        AK("/weapon/gun.png",76,32,120,30,10,90),
+        SNIPER("/weapon/gun.png",76,32,30,10,60,120),
+        MACHINE_GUN("/weapon/gun.png",76,32,300,100,5,180);
 
         private String path;
         private int width;
@@ -107,6 +106,10 @@ public class Gun extends GameObjForAnimator {
         if(shootingDelay.count()){
             canShoot = true;
         }
+    }
+
+    @Override
+    protected void setStatePath() {
     }
 
 }

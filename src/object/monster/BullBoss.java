@@ -1,21 +1,22 @@
 package object.monster;
 
-import java.awt.*;
+import object.animator.BullBossAnimator;
 
 public class BullBoss extends Monster {
 
     public BullBoss(int x, int y) {
-        super("/bullboss.png",15,x+30,y+30,132,132,x, y, 192, 192,1000,51,2);
-        animator.setAnimatorSize(96);
-        animator.setACTOR_WALK(new int[]{0,1,2,3,4});
-        animator.setDelay().loop();
+        super(x+30,y+30,132,132,x, y, 192, 192,1000,51,5);
+        animator = new BullBossAnimator(statePath.get(0),15,96);
     }
 
     @Override
-    public void paintComponent(Graphics g) {
-        animator.paintAnimator(g,painter().left(), painter().right(), painter().top(), painter().bottom(),dir);
+    protected void setStatePath() {
+        statePath.add("/monster/bullboss.png");
+        statePath.add("/monster/bullboss.png");
+        statePath.add("/monster/bullboss.png");
+        statePath.add("/monster/bullboss.png");
+        statePath.add("/monster/bullboss.png");
     }
-
 
 
 }

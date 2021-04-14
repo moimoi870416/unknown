@@ -4,6 +4,7 @@ package sence;
 import controller.ImageController;
 import controller.SenceController;
 import menu.*;
+<<<<<<< HEAD
 import unit.CommandSolver.MouseListener;
 
 import unit.CommandSolver;
@@ -13,14 +14,23 @@ import java.awt.*;
 
 
 import static unit.Global.*;
+=======
+import util.CommandSolver;
+import java.awt.*;
+import static util.Global.*;
+>>>>>>> main
 
 public class MenuScene1 extends Scene {
     private BackgroundType.BackgroundImage menuImg;
 
     @Override
     public void sceneBegin() {
+<<<<<<< HEAD
         menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-2.png"));
         initTheme();
+=======
+        menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-4.png"));
+>>>>>>> main
     }
 
     @Override

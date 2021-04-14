@@ -2,13 +2,13 @@ import controller.ImageController;
 import menu.BackgroundType;
 import menu.Style;
 import menu.Theme;
-import sence.MenuScene1;
-import unit.Global;
+import sence.MapScene;
+import util.Global;
 import controller.SenceController;
-import unit.CommandSolver;
-import unit.GameKernel;
+import util.CommandSolver;
+import util.GameKernel;
 
-import static unit.Global.*;
+import static util.Global.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class Main {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
         Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
-        SenceController.getSenceController().change(new MenuScene1());
+        SenceController.getSenceController().change(new MapScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()
@@ -33,7 +33,7 @@ public class Main {
                         .add(KeyEvent.VK_3, Global.Active.NUMBER_THREE.getCommandCode())
                         .add(KeyEvent.VK_4, Global.Active.NUMBER_FORE.getCommandCode())
                         .add(KeyEvent.VK_SPACE, Global.Active.SPACE.getCommandCode())
-                        .add(KeyEvent.VK_F, Global.Active.FLASH.getCommandCode())
+                        .add(KeyEvent.VK_F, Global.Active.SKILL.getCommandCode())
                         .add(KeyEvent.VK_E, Global.Active.CATCH_ITEM.getCommandCode())
                         .next().keyCleanMode()
                         .subscribe(sc))
@@ -56,4 +56,30 @@ public class Main {
         gk.run();//執行主程式
     }
 
+<<<<<<< HEAD
+=======
+    private static void initTheme() {
+        Style simple = new Style.StyleOval(100, 100, true, new BackgroundType.BackgroundColor(Color.YELLOW))
+                .setTextColor(new Color(128, 128, 128))
+                .setHaveBorder(true)
+                .setBorderColor(new Color(255, 215, 0))
+                .setBorderThickness(5)
+                .setTextFont(new Font("", Font.TYPE1_FONT, 30))
+                .setText("Press");
+        Style aa = new Style.StyleOval(100, 100, true, new BackgroundType.BackgroundColor(new Color(184, 134, 11)))
+                .setTextColor(Color.BLACK)
+                .setHaveBorder(true)
+                .setBorderColor(new Color(230, 184, 0))
+                .setBorderThickness(5)
+                .setTextFont(new Font("", Font.TYPE1_FONT, 28))
+                .setText("Press");
+        Style im = new Style.StyleOval(100, 100, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/map/banana.png")))
+                .setHaveBorder(true)
+                .setBorderColor(Color.WHITE)
+                .setBorderThickness(5)
+                .setTextFont(new Font("", Font.TYPE1_FONT, 30))
+                .setText("Press");
+        Theme.add(new Theme(im, simple, aa));
+    }
+>>>>>>> main
 }

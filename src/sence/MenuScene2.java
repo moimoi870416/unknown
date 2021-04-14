@@ -6,10 +6,15 @@ import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
+<<<<<<< HEAD
 
 import unit.CommandSolver;
+=======
+import menu.impl.MouseTriggerImpl;
+import util.CommandSolver;
+>>>>>>> main
 
-import static unit.Global.*;
+import static util.Global.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -29,6 +34,7 @@ public class MenuScene2 extends Scene {
     @Override
     public void sceneBegin() {
         menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-10.png"));
+<<<<<<< HEAD
         labels = new ArrayList<>();
         singleMode = new Button(200, 25, Theme.get(0));
         multiplayer = new Button(800, 25, Theme.get(1));
@@ -37,6 +43,13 @@ public class MenuScene2 extends Scene {
         isSecond = false;
 
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
+=======
+
+        a = new Label(413, 122);
+        b = new Button(430, 410, Theme.get(0));
+        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
+
+>>>>>>> main
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
         //第一行：set MouseListener and KeyListener
