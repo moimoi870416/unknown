@@ -8,7 +8,11 @@ public class Global {
     public static int actorX;
     public static int actorY;
     public static int shootCount = 0;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 0bf81f604f426c65bddb4dfc4879ff25e6c272f2
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
 
@@ -17,7 +21,7 @@ public class Global {
 
 
     //地圖大小
-    public static final int MAP_WIDTH = 2048;
+    public static final int MAP_WIDTH = 4096;
     public static final int MAP_HEIGHT = 1024;
 
     //視窗大小
