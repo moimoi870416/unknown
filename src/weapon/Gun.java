@@ -2,6 +2,7 @@ package weapon;
 
 import object.GameObjForAnimator;
 import util.Delay;
+import util.Global;
 
 public class Gun extends GameObjForAnimator {
     private int magazine;//彈匣內的剩餘子彈數量
@@ -10,6 +11,7 @@ public class Gun extends GameObjForAnimator {
     private final int magazineMaxQuantity;//最大總彈量
     private Delay reloadingDelay;//裝彈延遲
     private Delay shootingDelay;//射擊延遲(射速)
+    private Delay beginShoot;
     private boolean canReloading;//是否在裝彈(裝彈中無法射擊)
     private boolean canShoot;
     
@@ -24,16 +26,17 @@ public class Gun extends GameObjForAnimator {
         this.surplusBullet = this.magazineMaxQuantity;
         this.reloadingDelay = new Delay(gunType.reloadingDelay);
         this.shootingDelay = new Delay(gunType.shootingDelay);
+        this.beginShoot = new Delay(gunType.beginShoot);
         canReloading = false;
         canShoot = true;
     }
 
     public enum GunType{
-        PISTOL("/weapon/gun.png",76,32,Integer.MAX_VALUE,15,30,60),
-        UZI("/weapon/gun.png",76,32,160,40,7,45),
-        AK("/weapon/gun.png",76,32,120,30,10,90),
-        SNIPER("/weapon/gun.png",76,32,30,10,60,120),
-        MACHINE_GUN("/weapon/gun.png",76,32,300,100,5,180);
+        PISTOL("/weapon/gun.png",76,32,Integer.MAX_VALUE,15,30,60,1),
+        UZI("/weapon/gun.png",76,32,160,40,7,45,5),
+        AK("/weapon/gun.png",76,32,120,30,10,90,10),
+        SNIPER("/weapon/gun.png",76,32,30,10,60,120,60),
+        MACHINE_GUN("/weapon/gun.png",76,32,300,100,5,180,120);
 
         private String path;
         private int width;
@@ -42,8 +45,9 @@ public class Gun extends GameObjForAnimator {
         private int reloadingDelay;//裝彈延遲
         private int shootingDelay;//射擊延遲(射速)
         private int maxMagazine;//最大彈匣數量
+        private int beginShoot;
 
-        GunType(String path,int width, int height,int maxMagazine,int magazine,int shootingDelay,int reloadingDelay){
+        GunType(String path,int width, int height,int maxMagazine,int magazine,int shootingDelay,int reloadingDelay,int beginShoot){
             this.path = path;
             this.width = width;
             this.height = height;
@@ -51,24 +55,37 @@ public class Gun extends GameObjForAnimator {
             this.magazine = magazine;
             this.reloadingDelay = reloadingDelay;
             this.shootingDelay = shootingDelay;
+            this.beginShoot = beginShoot;
         }
+    }
+
+    public void beginShoot(){
+        beginShoot.play();
+    }
+    public void resetBeginShoot(){
+        beginShoot.stop();
     }
 
     public GunType getGunType(){
         return gunType;
     }
     
-    public void shoot(){
+    public boolean shoot(){
+        if(Global.shootCount == 0){
+            return beginShoot.count();
+        }
         if(canShoot){
             shootingDelay.play();
-            if(magazineMax <=0){
+            if(magazine <=0){
                 //補缺彈音檔
-                return;
+                return false;
             }
             magazine--;
             canShoot = false;
             System.out.println(magazine+"/"+magazineMax);
+            return true;
         }
+        return false;
     }
 
     public void getBullet(int key){
@@ -93,10 +110,6 @@ public class Gun extends GameObjForAnimator {
         }
     }
 
-    public boolean isCanShoot(){
-        return canShoot;
-    }
-
     @Override
     public void update() {
         if(reloadingDelay.count()){
@@ -106,10 +119,6 @@ public class Gun extends GameObjForAnimator {
         if(shootingDelay.count()){
             canShoot = true;
         }
-    }
-
-    @Override
-    protected void setStatePath() {
     }
 
 }

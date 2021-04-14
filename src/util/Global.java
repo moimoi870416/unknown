@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.*;
+
 public class Global {
 
     public static final int UPDATE_TIMES_PER_SEC=60;

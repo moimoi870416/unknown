@@ -41,10 +41,11 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
-        if(state != State.DEAD) {
-            if (delayForCollision.count()) {
-                collision = true;
-            }
+        if(isChase){
+            return;
+        }
+        if (delayForCollision.count()) {
+            collision = true;
         }
         if(isChase) {
             chase();

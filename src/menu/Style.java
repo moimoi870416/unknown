@@ -1,5 +1,7 @@
 package menu;
 
+import controller.ImageController;
+
 import java.awt.*;
 
 public abstract  class Style {
@@ -29,8 +31,8 @@ public abstract  class Style {
             this.objectBackground = background;
         }
 
-        public StyleRect(int width, int height, BackgroundType background) {
-            this(width, height, true, background);
+        public StyleRect(int width, int height, String path) {
+            this(width, height, true, new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet(path)));
         }
 
         @Override
@@ -168,4 +170,5 @@ public abstract  class Style {
     public boolean isHaveBorder() {
         return isHaveBorder;
     }
+
 }

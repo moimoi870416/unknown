@@ -45,7 +45,7 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
-        monster.add(new BullBoss(200,200));
+        //monster.add(new BullBoss(200,200));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
@@ -67,7 +67,7 @@ public class MapScene extends Scene {
     @Override
     public void paint(final Graphics g) {
         camera.start(g);
-        g.drawImage(map,0,0,null);
+        //g.drawImage(map,0,0,null);
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
@@ -106,7 +106,6 @@ public class MapScene extends Scene {
                         int life = monster.get(k).getLife();
                         monster.get(k).offLife(testBullets.get(i).getAtk());
                         if(monster.get(k).getLife()<=0){
-                            //monster.get(k).setState(GameObjForAnimator.State.DEATH);
                             monster.remove(k);
                             k--;
                         }
@@ -138,8 +137,8 @@ public class MapScene extends Scene {
 
     public void shootUpdate(){
         if (shooting) {
-            if (gameActor.getGun().isCanShoot()) {
-                gameActor.getGun().shoot();
+            if (gameActor.getGun().shoot()) {
+//                gameActor.getGun().shoot();
                 this.testBullets.add(new Bullet
                         (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
                                 mouseX, mouseY,
@@ -170,6 +169,7 @@ public class MapScene extends Scene {
             if(state == CommandSolver.MouseState.PRESSED){
                 listenerMouseX = e.getX();
                 listenerMouseY = e.getY();
+                gameActor.getGun().beginShoot();
                 shooting = true;
             }
 
@@ -181,6 +181,7 @@ public class MapScene extends Scene {
             if(state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED){
                 shooting = false;
                 shootCount = 0;
+                gameActor.getGun().resetBeginShoot();
             }
         };
     }
@@ -211,7 +212,6 @@ public class MapScene extends Scene {
                 if(commandCode == Active.SPACE.getCommandCode()){
                     gameActor.flash(mouseX,mouseY);
                 }
-                System.out.println(commandCode);
             }
 
             @Override
