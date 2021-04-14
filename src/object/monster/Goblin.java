@@ -9,7 +9,6 @@ public class Goblin extends Monster {
         animator = new GoblinAnimator(statePath.get(0),15,16);
     }
 
-
     @Override
     protected void setStatePath() {
         statePath.add("/monster/goblin/goblin.png");

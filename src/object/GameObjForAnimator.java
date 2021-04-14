@@ -32,7 +32,9 @@ public abstract class GameObjForAnimator extends GameObject {
 
     @Override
     public void paintComponent(Graphics g) {
-        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(),dir);
+        if(state != State.DEAD) {
+            animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+        }
     }
 
     @Override
@@ -56,7 +58,6 @@ public abstract class GameObjForAnimator extends GameObject {
         STAND,
         RUN,
         ATTACK,
-        ATTACK1,
         DEATH,
         DEAD,
     }
@@ -95,14 +96,6 @@ public abstract class GameObjForAnimator extends GameObject {
 
     public int getAtk() {
         return atk;
-    }
-
-    public Dir getDir(){
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
     }
 
     public boolean isCollisionWithActor(GameObjForAnimator other) {

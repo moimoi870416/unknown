@@ -39,7 +39,7 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map/map3.png");
+        map = ImageController.getInstance().tryGet("/map/map.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
@@ -67,7 +67,7 @@ public class MapScene extends Scene {
     @Override
     public void paint(final Graphics g) {
         camera.start(g);
-        //g.drawImage(map,0,0,null);
+        g.drawImage(map,0,0,null);
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
                 monster.paint(g);
@@ -225,8 +225,8 @@ public class MapScene extends Scene {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp","genMap.txt")
                 .setNameAndPath("bananastatue", "/map/banana.png",true,new GameObjForPic("/map/banana.png",0,370,168,30))
                 .setNameAndPath("tree1", "/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png",0,100,208,336))
-                .setNameAndPath("rock1","/map/rock-sand1-424-216.png",false,null)
-                .setNameAndPath("rock2","/map/rock-sand1-584-216.png",false,null)
+                .setNameAndPath("rock1","/map/rock-sand1-424-216.png",false,new GameObjForPic("/map/rock-sand1-424-216.png",0,0,424,216))
+                .setNameAndPath("rock2","/map/rock-sand1-584-216.png",false,new GameObjForPic("/map/rock-sand1-584-216.png",0,0,584,216))
                 .gen()
                 .setMap();
     }

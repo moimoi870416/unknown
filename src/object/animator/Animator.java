@@ -10,6 +10,8 @@ public abstract class Animator {
     protected int count;
     protected Delay delay;
     protected int animatorSize;
+    protected int deadCount;
+    protected boolean isDie;
 
     public Animator(String path,int countLimit,int size) {
         this.img = ImageController.getInstance().tryGet(path);
@@ -17,6 +19,7 @@ public abstract class Animator {
         delay.loop();
         count = 0;
         animatorSize = size;
+        isDie = false;
     }
 
     public abstract void paintAnimator(Graphics g, int left, int right, int top, int bottom, GameObjForAnimator.Dir dir);

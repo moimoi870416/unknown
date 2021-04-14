@@ -16,7 +16,6 @@ public class BullBossAnimator extends Animator{
         if (this.delay.count()) {
             this.count = ++this.count % state.getActiveArr().length;
         }
-
         g.drawImage(this.img, left, top, right , bottom
                 , animatorSize * state.getActiveArr()[this.count]
                 , animatorSize * dir.ordinal()* 10 + animatorSize * state.ordinal()
