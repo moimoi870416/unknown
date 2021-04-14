@@ -4,6 +4,7 @@ import menu.Style;
 import menu.Theme;
 import sence.MapScene;
 import sence.MenuScene1;
+import sence.MenuScene2;
 import util.Global;
 import controller.SenceController;
 import util.CommandSolver;
@@ -20,7 +21,7 @@ public class Main {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
         Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
-        SenceController.getSenceController().change(new MenuScene1());
+        SenceController.getSenceController().change(new MapScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()
