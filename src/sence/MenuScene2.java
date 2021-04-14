@@ -1,43 +1,45 @@
 package sence;
 
 import controller.ImageController;
+
 import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
-import menu.impl.MouseTriggerImpl;
+
 import unit.CommandSolver;
 
 import static unit.Global.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class MenuScene2 extends Scene {
 
+    private ArrayList<Label> labels;
     private Button singleMode;
     private Button multiplayer;
-    private Label back;
+    private Button back;
     private Button normalMode;
     private Button limitMode;
-
+    private boolean isSecond;
     private BackgroundType.BackgroundImage menuImg;
 
     @Override
     public void sceneBegin() {
         menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-10.png"));
+        labels = new ArrayList<>();
         singleMode = new Button(200, 25, Theme.get(0));
         multiplayer = new Button(800, 25, Theme.get(1));
-        back = new Label(50, 50, Theme.get(4));
-        normalMode = new Button(200, 25, Theme.get(3));
-        limitMode = new Button(800, 25, Theme.get(2));
-
+        labels.add(singleMode);
+        labels.add(multiplayer);
+        isSecond = false;
 
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
-
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
-        //第一行：set MouscCommandedListener and KeyListerner
+        //第一行：set MouseListener and KeyListener
         //一定要分開設定
 
 //        Style et = new Style.StyleRect(400, 800, true, new BackgroundType.BackgroundColor(Color.YELLOW))
@@ -72,7 +74,29 @@ public class MenuScene2 extends Scene {
 
     @Override
     public void sceneEnd() {
+    }
 
+    private boolean isOverLao(Label obj, int eX, int eY) {
+        return eX <= obj.right() && eX >= obj.left() && eY >= obj.top() && eY <= obj.bottom();
+    }
+
+    private void isMove(Label obj, int eX, int eY) {
+        if (isOverLao(obj, eX, eY)) {
+            obj.isHover();
+        } else {
+            obj.unHover();
+        }
+    }
+
+    private void isPress(Label obj, int eX, int eY) {
+        if (isOverLao(obj, eX, eY)) {
+            obj.isFocus();
+            if (obj.getClickedAction() != null) {
+                obj.clickedActionPerformed();
+            }
+        } else {
+            obj.unFocus();
+        }
     }
 
     @Override
@@ -93,42 +117,76 @@ public class MenuScene2 extends Scene {
         };
     }
 
+    private void addSecond() {
+        normalMode = new Button(200, 25, Theme.get(2));
+        limitMode = new Button(800, 25, Theme.get(3));
+        back = new Button(50, 50, Theme.get(4));
+        labels.add(normalMode);
+        labels.add(limitMode);
+        labels.add(back);
+        isSecond = true;
+    }
+
+    private void release(){
+        for(int i=0;i<labels.size() ; i++){
+            labels.get(i).unFocus();
+        }
+    }
+
+
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return (MouseEvent e, CommandSolver.MouseState state, long trigTime) -> {
-            MouseTriggerImpl.mouseTrig(singleMode, e, state);
-            MouseTriggerImpl.mouseTrig(multiplayer, e, state);
-            MouseTriggerImpl.mouseTrig(back, e, state);
-            MouseTriggerImpl.mouseTrig(normalMode, e, state);
-            MouseTriggerImpl.mouseTrig(limitMode, e, state);
-            System.out.println(normalMode.IsUse(limitMode));
-//            MouseTriggerImpl.mouseTrig(ee, e, state);
-            limitMode.setClickedActionPerformed(new Label.ClickedAction() {
-                @Override
-                public void clickedActionPerformed(int x, int y) {
-                    SenceController.getSenceController().change(new MapScene());
+            if (state != null) {
+                switch (state) {
+                    case MOVED -> {
+                        for (int i = 0; i < labels.size(); i++) {
+                            isMove(labels.get(i), e.getX(), e.getY());
+                        }
+                    }
+                    case PRESSED -> {
+                        if (isSecond) {
+                            for (int i = 2; i < labels.size(); i++) {
+                                isPress(labels.get(i), e.getX(), e.getY());
+                            }
+                            if (back.getIsFocus()) {
+                                isSecond = false;
+                                return;
+                            }
+                            if (limitMode.IsUse(normalMode)) {
+                                SenceController.getSenceController().change(new MapScene());
+                            }
+                            return;
+                        }
+                        for (int i = 0; i < labels.size(); i++) {
+                            isPress(labels.get(i), e.getX(), e.getY());
+                        }
+                        if (singleMode.IsUse(multiplayer)) {
+                            addSecond();
+                        }
+                        release();
+                    }
+
                 }
-            });
+            }
         };
     }
 
     @Override
     public void paint(Graphics g) {
         menuImg.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        if (!singleMode.IsUse(multiplayer)) {
-            multiplayer.paint(g);
-            singleMode.paint(g);
-        } else {
+        if (isSecond) {
+            back.paint(g);
             normalMode.paint(g);
             limitMode.paint(g);
+            return;
         }
-        back.paint(g);
-
-//        ee.paint(g);
+        multiplayer.paint(g);
+        singleMode.paint(g);
     }
 
     @Override
     public void update() {
-    }
 
+    }
 }
