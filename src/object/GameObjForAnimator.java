@@ -12,6 +12,7 @@ public abstract class GameObjForAnimator extends GameObject {
     protected int moveSpeed;
     protected State state;
     protected boolean isDie;
+    protected int deadCount;
 
     public GameObjForAnimator(int x, int y, int width, int height,int life,int atk,int moveSpeed) {
         this(x, y, width, height,x,y,width,height,life,atk,moveSpeed);
@@ -23,19 +24,39 @@ public abstract class GameObjForAnimator extends GameObject {
         this.atk = atk;
         this.moveSpeed = moveSpeed;
         dir = Dir.LEFT;
-        state = State.ALIVE;
+        state = State.STAND;
         isDie = false;
     }
 
     @Override
     public void paintComponent(Graphics g) {
+        if(state == State.DEAD){
+            return;
+        }
+        if(state == State.DEATH){
+            deadCount--;
+            if(deadCount <= 0){
+                state = State.DEAD;
+            }
+        }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+
     }
 
     public enum State{
-        ALIVE,
+        STAND,
+        WALK,
+        RUN,
+        ATTACK,
+        CRITICAL,
         DEATH,
         DEAD
+    }
+
+    public abstract void setState(State state);
+
+    public State getState(){
+        return state;
     }
 
     @Override

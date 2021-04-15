@@ -4,6 +4,8 @@ import object.GameObjForAnimator;
 import util.Delay;
 import util.Global;
 
+import java.awt.*;
+
 public class Gun extends GameObjForAnimator {
     private int magazine;//彈匣內的剩餘子彈數量
     private final int magazineMax;//一個彈匣的子彈數量
@@ -14,7 +16,6 @@ public class Gun extends GameObjForAnimator {
     private Delay beginShoot;
     private boolean canReloading;//是否在裝彈(裝彈中無法射擊)
     private boolean canShoot;
-    
     private GunType gunType;
 
     public Gun(GunType gunType, int x, int y) {
@@ -27,7 +28,7 @@ public class Gun extends GameObjForAnimator {
         this.reloadingDelay = new Delay(gunType.reloadingDelay);
         this.shootingDelay = new Delay(gunType.shootingDelay);
         this.beginShoot = new Delay(gunType.beginShoot);
-        canReloading = false;
+        canReloading = true;
         canShoot = true;
     }
 
@@ -111,6 +112,11 @@ public class Gun extends GameObjForAnimator {
     }
 
     @Override
+    public void setState(State state) {
+
+    }
+
+    @Override
     public void update() {
         if(reloadingDelay.count()){
             canReloading = true;
@@ -120,5 +126,4 @@ public class Gun extends GameObjForAnimator {
             canShoot = true;
         }
     }
-
 }
