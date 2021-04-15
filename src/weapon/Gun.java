@@ -43,6 +43,7 @@ public class Gun extends GameObjForAnimator {
         this.beginShoot = new Delay(gunType.beginShoot);
         canReloading = true;
         canShoot = true;
+        shootingDelay.loop();
 
     }
 
@@ -91,16 +92,15 @@ public class Gun extends GameObjForAnimator {
     }
 
     public boolean shoot() {
-
         if (canShoot) {
-            shootingDelay.play();
-            if (magazine <= 0) {
-                //補缺彈音檔
-                return false;
+            if(shootingDelay.count()) {
+                if (magazine <= 0) {
+                    //補缺彈音檔
+                    return false;
+                }
+                magazine--;
+                return true;
             }
-            magazine--;
-            canShoot = false;
-            return true;
         }
         return false;
     }
@@ -113,7 +113,7 @@ public class Gun extends GameObjForAnimator {
     }
 
     public void reloading() {//要修正裝彈延遲
-        if(surplusBullet == 0){
+        if(surplusBullet == 0){//沒子彈可以reload則return
             return;
         }
         if (canReloading) {
@@ -148,11 +148,7 @@ public class Gun extends GameObjForAnimator {
             canReloading = true;
             canShoot = true;
         }
-        if (shootingDelay.count()) {
-            canShoot = true;
-        }
     }
-<<<<<<< HEAD
 
     @Override
     public void paintComponent(Graphics g){
@@ -172,6 +168,4 @@ public class Gun extends GameObjForAnimator {
         return (magazine)+"|"+(magazineMax);
     }
 
-=======
->>>>>>> balanceMonster
 }

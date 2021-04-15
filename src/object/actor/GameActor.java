@@ -17,17 +17,10 @@ public class GameActor extends GameObjForAnimator {
     private Delay delayForFlash;
     private boolean canFlash;
 
-<<<<<<< HEAD
-
-    public GameActor(String path, final int x, final int y) {
-        super(x, y, 58, 58, 100, 10, 3);
-        animator = new Animator(path, 15, 58, 2);
-=======
     public GameActor( String path,final int x, final int y) {
         super(x, y, 58, 58,100,10,3);
         animator = new Animator(path,15,58,58,2);
->>>>>>> balanceMonster
-        animator.setArr(14);
+        animator.setArr(4);
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());

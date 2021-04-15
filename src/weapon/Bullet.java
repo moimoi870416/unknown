@@ -98,7 +98,6 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         if(mouseX < getCenterX()){
             moveOnX = -moveOnX;
         }
-
     }
 
     private void setDistanceDeviation(){

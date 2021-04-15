@@ -14,12 +14,9 @@ import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForAnimator;
 import object.GameObjForPic;
-<<<<<<< HEAD
 import util.Display;
-=======
 import object.monster.BullBoss;
 import object.monster.Rino;
->>>>>>> balanceMonster
 import util.Global.Direction;
 import controller.ImageController;
 import object.actor.GameActor;
@@ -49,20 +46,19 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map/map-test2.png");
+        map = ImageController.getInstance().tryGet("/map/map-test.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
-<<<<<<< HEAD
-        monster.add(new Goblin(100, 100));
-        //monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Actor.FIRST.getPath(), 50, 500);
-=======
-        monster.add(new Goblin(100,100));
-        monster.add(new Rino(1400,500));
+
+        //monster.add(new Goblin(100,100));
+//        monster.add(new Rino(1400,500));
+//        monster.add(new Rino(200,500));
+//        monster.add(new Rino(1000,500));
+//        monster.add(new Rino(500,500));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
->>>>>>> balanceMonster
+
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor, 1, 1)
@@ -121,20 +117,8 @@ public class MapScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-<<<<<<< HEAD
-                        int life = monster.get(k).getLife();
-                        monster.get(k).offLife(testBullets.get(i).getAtk());
-                        if (monster.get(k).getLife() <= 0) {
-                            monster.remove(k);
-                            k--;
-                        }
-                        if (testBullets.get(i).isPenetrate(life)) {
-                            testBullets.remove(i);
-                            i--;
-                            break;
-=======
+
                         if(monster.get(k).getState() != GameObjForAnimator.State.DEATH) {
-                            System.out.println(monster.get(k).getState());
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
@@ -145,7 +129,6 @@ public class MapScene extends Scene {
                                 i--;
                                 break;
                             }
->>>>>>> balanceMonster
                         }
                     }
                 }
@@ -154,7 +137,7 @@ public class MapScene extends Scene {
     }
 
     public void monsterUpdate() {
-        for (int i = 0; i < monster.size() - 1; i++) {
+        for (int i = 0; i < monster.size() ; i++) {
             if(monster.get(i).getState() == GameObjForAnimator.State.DEAD){
                 monster.remove(i);
                 i--;
@@ -164,13 +147,18 @@ public class MapScene extends Scene {
 //            if(monster.get(i).isCollisionWithActor(gameActor)){
 //                gameActor.setLife(gameActor.getLife()-monster.get(i).getAtk());
 //            }
-            if (!gameActor.isCollisionWithActor(monster.get(i))) {
-                monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+            if(monster.size()>1 && i != monster.size()-1) {
+                if (!gameActor.isCollisionWithActor(monster.get(i))) {
+                    monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+                }
             }
         }
+        /*
         if (Math.random() * 100 < 1 && monster.size() < 5) {
             monster.add(new Goblin(50, (int) (Math.random() * 1000)));
         }
+
+         */
     }
 
     public void shootUpdate() {

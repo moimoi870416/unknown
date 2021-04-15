@@ -31,7 +31,7 @@ public class Global {
     public static final int CENTER_HEIGHT = 32;
 
     public enum Actor{
-        FIRST("/actor/actorrun.png"),
+        FIRST("/actor/run.png"),
         SECOND("/actor/actorrun.png"),
         THIRD("/actor/actorrun.png");
 
