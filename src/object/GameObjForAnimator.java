@@ -3,16 +3,15 @@ package object;
 import object.animator.Animator;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public abstract class GameObjForAnimator extends GameObject {
     protected Animator animator;
     protected Dir dir;
-    protected State state;
     protected int life;
     protected int atk;
     protected int moveSpeed;
-    protected ArrayList<String> statePath;
+    protected State state;
+    protected boolean isDie;
 
     public GameObjForAnimator(int x, int y, int width, int height,int life,int atk,int moveSpeed) {
         this(x, y, width, height,x,y,width,height,life,atk,moveSpeed);
@@ -23,43 +22,25 @@ public abstract class GameObjForAnimator extends GameObject {
         this.life = life;
         this.atk = atk;
         this.moveSpeed = moveSpeed;
-        statePath = new ArrayList<>();
-        state = State.STAND;
         dir = Dir.LEFT;
-        setStatePath();
-
+        state = State.ALIVE;
+        isDie = false;
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        if(state != State.DEAD) {
-            animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        }
+        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+    }
+
+    public enum State{
+        ALIVE,
+        DEATH,
+        DEAD
     }
 
     @Override
     public void update() {
 
-    }
-
-    public void setState(State state){
-        switch (state){
-            case DEATH:
-                animator.setImg(statePath.get(state.ordinal()),false);
-                break;
-            default:
-                animator.setImg(statePath.get(0),true);
-        }
-    }
-
-    protected abstract void setStatePath();
-
-    public enum State{
-        STAND,
-        RUN,
-        ATTACK,
-        DEATH,
-        DEAD,
     }
 
     public enum Dir {
@@ -85,9 +66,6 @@ public abstract class GameObjForAnimator extends GameObject {
 
     public void offLife(int atk){
         this.life -= atk;
-        if(life <=0){
-            state = State.DEAD;
-        }
     }
 
     public int getLife(){
