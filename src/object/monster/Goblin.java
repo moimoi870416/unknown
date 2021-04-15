@@ -1,6 +1,6 @@
 package object.monster;
 
-import object.animator.Animator;
+import util.Animator;
 
 public class Goblin extends Monster {
 

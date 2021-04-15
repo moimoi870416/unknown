@@ -1,8 +1,10 @@
 package weapon;
 
+import controller.ImageController;
 import object.GameObjForAnimator;
 import util.Delay;
-import util.Global;
+
+import java.awt.*;
 
 
 public class Gun extends GameObjForAnimator {
@@ -16,11 +18,17 @@ public class Gun extends GameObjForAnimator {
     private boolean canReloading;//是否在裝彈(裝彈中無法射擊)
     private boolean canShoot;
     private GunType gunType;
+    private Image img;
+    private int positionX;
+    private int positionY;
 
 
 
     public Gun(GunType gunType, int x, int y) {
         super(x, y, gunType.width, gunType.height, 0, 0, 0);
+        this.img = ImageController.getInstance().tryGet(gunType.path);
+        this.positionX = x;
+        this.positionX = y;
         this.gunType = gunType;
         this.magazine = gunType.magazine;
         this.magazineMax = this.magazine;
@@ -35,11 +43,11 @@ public class Gun extends GameObjForAnimator {
     }
 
     public enum GunType {
-        PISTOL("/weapon/gun.png", 76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
-        UZI("/weapon/gun.png", 76, 32, 160, 40, 7, 45, 5),
-        AK("/weapon/gun.png", 76, 32, 120, 30, 10, 90, 10),
-        SNIPER("/weapon/gun.png", 76, 32, 30, 10, 60, 120, 1),
-        MACHINE_GUN("/weapon/gun.png", 76, 32, 300, 100, 5, 180, 1);
+        PISTOL("/weapon/pistol.png", 76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
+        UZI("/weapon/uzi.png", 76, 32, 160, 40, 7, 45, 5),
+        AK("/weapon/ak.png", 76, 32, 120, 30, 10, 90, 10),
+        SNIPER("/weapon/sniper.png", 76, 32, 30, 10, 60, 120, 1),
+        MACHINE_GUN("/weapon/machine.png", 76, 32, 150, 100, 5, 180, 1);
 
         public String path;
         private int width;
@@ -62,6 +70,8 @@ public class Gun extends GameObjForAnimator {
         }
     }
 
+
+
     public void beginShoot() {
         beginShoot.play();
     }
@@ -75,13 +85,6 @@ public class Gun extends GameObjForAnimator {
     }
 
     public boolean shoot() {
-        if (Global.shootCount == 0) {
-            if (magazine <= 0) {
-                //補缺彈音檔
-                return false;
-            }
-            return beginShoot.count();
-        }
 
         if (canShoot) {
             shootingDelay.play();
@@ -103,15 +106,25 @@ public class Gun extends GameObjForAnimator {
         }
     }
 
-    public void reloading() {
+    public void reloading() {//要修正裝彈延遲
+        if(surplusBullet == 0){
+            return;
+        }
         if (canReloading) {
             reloadingDelay.play();
             if (surplusBullet < magazineMax) {
-                magazine = surplusBullet;
-                surplusBullet = 0;
+                if(surplusBullet + magazine > magazineMax){
+                    surplusBullet -= (magazineMax - magazine);
+                    magazine = magazineMax;
+                }else {
+                    magazine += surplusBullet;
+                    surplusBullet =0;
+                }
+
             } else {
+                surplusBullet -= (magazineMax-magazine);
                 magazine = magazineMax;
-                surplusBullet -= magazine;
+
             }
             canReloading = false;
             canShoot = false;
@@ -130,8 +143,21 @@ public class Gun extends GameObjForAnimator {
     }
 
     @Override
+    public void paintComponent(Graphics g){
+        g.drawImage(img,positionX,positionY,null);
+    }
+
+    public void paintComponent(Graphics g,int actorX,int actorY){
+        g.drawImage(img,actorX,actorY,null);
+    }
+
+    public int getSurplusBullet() {
+        return surplusBullet;
+    }
+
+    @Override
     public String toString() {
-        return String.valueOf(magazine)+"|"+String.valueOf(magazineMax);
+        return (magazine)+"|"+(magazineMax);
     }
 
 }

@@ -13,7 +13,6 @@ import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForPic;
-import object.monster.BullBoss;
 import util.Display;
 import util.Global.Direction;
 import controller.ImageController;
@@ -26,7 +25,6 @@ import object.monster.Goblin;
 import object.monster.Monster;
 import object.GameObject;
 import util.CommandSolver;
-import weapon.Gun;
 
 public class MapScene extends Scene {
     private ArrayList<GameObject> mapObjArr;
@@ -52,7 +50,7 @@ public class MapScene extends Scene {
         monster = new LinkedList<>();
         monster.add(new Goblin(100, 100));
         //monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Actor.FIRST.getPath(), 50, 700);
+        gameActor = new GameActor(Actor.FIRST.getPath(), 50, 500);
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor, 1, 1)
@@ -145,11 +143,11 @@ public class MapScene extends Scene {
 
     public void shootUpdate() {
         if (shooting) {
-            if (gameActor.getGun().shoot()) {
+            if (gameActor.getCurrentGun().shoot()) {
                 this.testBullets.add(new Bullet
                         (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
                                 mouseX, mouseY,
-                                gameActor.getGun().getGunType()));
+                                gameActor.getCurrentGun().getGunType()));
                 shootCount++;
             }
         }
@@ -176,7 +174,7 @@ public class MapScene extends Scene {
             if (state == CommandSolver.MouseState.PRESSED) {
                 listenerMouseX = e.getX();
                 listenerMouseY = e.getY();
-                gameActor.getGun().beginShoot();
+                gameActor.getCurrentGun().beginShoot();
                 shooting = true;
             }
 
@@ -188,7 +186,7 @@ public class MapScene extends Scene {
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
                 shootCount = 0;
-                gameActor.getGun().resetBeginShoot();
+                gameActor.getCurrentGun().resetBeginShoot();
             }
         };
     }
@@ -202,7 +200,7 @@ public class MapScene extends Scene {
                     gameActor.move(commandCode);
                 }
                 if (commandCode == Active.RELOADING.getCommandCode()) {
-                    gameActor.getGun().reloading();
+                    gameActor.getCurrentGun().reloading();
                 }
                 if (commandCode == Active.NUMBER_ONE.getCommandCode() || commandCode == Active.NUMBER_TWO.getCommandCode()) {
                     gameActor.changeGun(commandCode);

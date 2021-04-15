@@ -1,4 +1,4 @@
-package object.animator;
+package util;
 
 import controller.ImageController;
 import object.GameObjForAnimator;

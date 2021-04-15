@@ -1,6 +1,6 @@
 package object;
 
-import object.animator.Animator;
+import util.Animator;
 
 import java.awt.*;
 

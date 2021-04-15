@@ -1,7 +1,8 @@
 package object.actor;
 
-import object.animator.Animator;
+import util.Animator;
 import util.Delay;
+import util.Display;
 import util.Global;
 import object.GameObjForAnimator;
 import weapon.Gun;
@@ -9,7 +10,8 @@ import weapon.Gun;
 import java.awt.*;
 
 public class GameActor extends GameObjForAnimator {
-    private WhichGun whichGun;
+    private WhichGun currentGun;
+    private WhichGun otherGun;
     private Global.Direction dirMove;
     private final int FLASH_MAX_DISTANCE = 300;
     private Delay delayForFlash;
@@ -20,25 +22,35 @@ public class GameActor extends GameObjForAnimator {
         super(x, y, 58, 58, 100, 10, 3);
         animator = new Animator(path, 15, 58, 2);
         animator.setArr(14);
-        whichGun = WhichGun.ONE;
-        whichGun.gun.translate(painter().centerX(), painter().centerY());
+        currentGun = WhichGun.ONE;
+        otherGun = WhichGun.TWO;
+        currentGun.gun.translate(painter().centerX(), painter().centerY());
         dirMove = Global.Direction.NO;
         delayForFlash = new Delay(600);
         canFlash = true;
 
     }
+    @Override
+    public void paintComponent(Graphics g) {
+        animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
+        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50);
+    }
 
     public void changeGun(int commandCode) {
         if (commandCode == -1) {
-            whichGun = WhichGun.ONE;
+            currentGun = WhichGun.ONE;
+            otherGun = WhichGun.TWO;
+            Display.isFirstGun = true;
         } else if (commandCode == -2) {
-            whichGun = WhichGun.TWO;
+            currentGun = WhichGun.TWO;
+            otherGun = WhichGun.ONE;
+            Display.isFirstGun = false;
         }
     }
 
     private enum WhichGun {
-        ONE(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY));
+        ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
+        TWO(new Gun(Gun.GunType.UZI, Global.actorX, Global.actorY));
 
         private Gun gun;
 
@@ -56,8 +68,16 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-    public Gun getGun() {
-        return whichGun.gun;
+    public void tradeGun(Gun gun){
+        currentGun.gun = gun;
+    }
+
+    public Gun gunOtherGun(){
+        return otherGun.gun;
+    }
+
+    public Gun getCurrentGun() {
+        return currentGun.gun;
     }
 
     public void move(int commandCode) {
@@ -113,7 +133,7 @@ public class GameActor extends GameObjForAnimator {
         if (delayForFlash.count()) {
             canFlash = true;
         }
-        whichGun.gun.update();
+        currentGun.gun.update();
         updatePosition();
     }
 
