@@ -38,33 +38,26 @@ public class MapScene extends Scene {
     private GameActor gameActor;//主角
     private Camera camera;//鏡頭
     private Image map;//地圖
-    private GameObjForPic frame;
-    private GameObjForPic frame2;
+    private Image gun1Frame;
+    private Image gun2Frame;
 
     @Override
     public void sceneBegin() {
+        gun1Frame = ImageController.getInstance().tryGet("/map/gun.png");
+        gun2Frame = ImageController.getInstance().tryGet("/map/gun2.png");
         map = ImageController.getInstance().tryGet("/map/map.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-<<<<<<< HEAD
-//        monster = new LinkedList<>();
-//        monster.add(new Goblin(100, 100));
-//        monster.add(new BullBoss(200, 200));
-        gameActor = new GameActor(Actor.FIRST.getPath(), 50, 700);
-=======
         monster = new LinkedList<>();
         monster.add(new Goblin(100,100));
         //monster.add(new BullBoss(200,200));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
->>>>>>> e975845bc944e41c251d9cdd9efbac2bfba72cb6
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor, 1, 1)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
-        frame = new GameObjForPic("/map/gun.png", 1200, 750, 70, 70);
-        frame2 = new GameObjForPic("/map/gun2.png", 1280, 750, 70, 70);
     }
 
     private void mouseUpdate() {
@@ -80,15 +73,6 @@ public class MapScene extends Scene {
     @Override
     public void paint(final Graphics g) {
         camera.start(g);
-<<<<<<< HEAD
-        g.drawImage(map, 0, 0, null);
-//        monster.forEach(monster -> {
-//            if (camera.isCollision(monster)) {
-//                monster.paint(g);
-//            }
-//        });
-        if (camera.isCollision(gameActor)) {
-=======
         //g.drawImage(map,0,0,null);
         monster.forEach(monster -> {
             if(camera.isCollision(monster)){
@@ -96,15 +80,14 @@ public class MapScene extends Scene {
             }
           });
         if(camera.isCollision(gameActor)){
->>>>>>> e975845bc944e41c251d9cdd9efbac2bfba72cb6
             gameActor.paint(g);
         }
         mapObjArr.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
-        frame.paint(g);
-        frame2.paint(g);
+        g.drawImage(gun1Frame,1200,750,null);
+        g.drawImage(gun2Frame,1280,750,null);
 
 
     }
@@ -131,12 +114,7 @@ public class MapScene extends Scene {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
                         int life = monster.get(k).getLife();
                         monster.get(k).offLife(testBullets.get(i).getAtk());
-<<<<<<< HEAD
-                        if (monster.get(k).getLife() <= 0) {
-                            //monster.get(k).setState(GameObjForAnimator.State.DEATH);
-=======
                         if(monster.get(k).getLife()<=0){
->>>>>>> e975845bc944e41c251d9cdd9efbac2bfba72cb6
                             monster.remove(k);
                             k--;
                         }

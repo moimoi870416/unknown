@@ -47,11 +47,13 @@ public class MenuScene1 extends Scene {
 
     private void initTheme() {
 
-        Theme.add(setTheme(100,50,"/menu/button-0.png"));
-        Theme.add(setTheme(400,800,"/menu/button-1.png"));
-        Theme.add(setTheme(400,800,"/menu/button-2.png"));
+
+
         Theme.add(setTheme(400,800,"/menu/button-3.png"));
         Theme.add(setTheme(400,800,"/menu/button-4.png"));
+        Theme.add(setTheme(400,800,"/menu/button-1.png"));
+        Theme.add(setTheme(400,800,"/menu/button-2.png"));
+        Theme.add(setTheme(100,50,"/menu/button-0.png"));
     }
 
     private Theme setTheme(int width,int height,String path){

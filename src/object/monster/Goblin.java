@@ -10,4 +10,9 @@ public class Goblin extends Monster {
         animator.setArr(6);
     }
 
+    public void setState(State state){
+        switch (state){
+            case DEATH -> animator.setImg("/monster/goblin/goblindead.png",2);
+        }
+    }
 }
