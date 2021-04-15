@@ -23,8 +23,8 @@ public class Display {
         isFirstGun = true;
         gun1Frame = ImageController.getInstance().tryGet("/display/frame1.png");
         gun2Frame = ImageController.getInstance().tryGet("/display/frame2.png");
-        currentGun = ImageController.getInstance().tryGet(gameActor.getCurrentGun().getGunType().path);
-        otherGun=ImageController.getInstance().tryGet(gameActor.gunOtherGun().getGunType().path);
+        currentGun = ImageController.getInstance().tryGet(gameActor.getCurrentGun().getGunType().forMapPath);
+        otherGun=ImageController.getInstance().tryGet(gameActor.gunOtherGun().getGunType().forMapPath);
         font1 = new Font("Curlz TM", Font.PLAIN, 20);
         font2=new  Font("Curlz TM", Font.PLAIN, 14);
     }

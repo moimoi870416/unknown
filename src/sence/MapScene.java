@@ -43,7 +43,7 @@ public class MapScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map/map.png");
+        map = ImageController.getInstance().tryGet("/map/map-test2.png");
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);

@@ -18,7 +18,8 @@ public class Gun extends GameObjForAnimator {
     private boolean canReloading;//是否在裝彈(裝彈中無法射擊)
     private boolean canShoot;
     private GunType gunType;
-    private Image img;
+    private Image imgForDisplay;
+    private Image imgForActor;
     private int positionX;
     private int positionY;
 
@@ -26,7 +27,8 @@ public class Gun extends GameObjForAnimator {
 
     public Gun(GunType gunType, int x, int y) {
         super(x, y, gunType.width, gunType.height, 0, 0, 0);
-        this.img = ImageController.getInstance().tryGet(gunType.path);
+        this.imgForDisplay = ImageController.getInstance().tryGet(gunType.forMapPath);
+        this.imgForActor = ImageController.getInstance().tryGet(gunType.forActorPath);
         this.positionX = x;
         this.positionX = y;
         this.gunType = gunType;
@@ -43,13 +45,14 @@ public class Gun extends GameObjForAnimator {
     }
 
     public enum GunType {
-        PISTOL("/weapon/pistol.png", 76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
-        UZI("/weapon/uzi.png", 76, 32, 160, 40, 7, 45, 5),
-        AK("/weapon/ak.png", 76, 32, 120, 30, 10, 90, 10),
-        SNIPER("/weapon/sniper.png", 76, 32, 30, 10, 60, 120, 1),
-        MACHINE_GUN("/weapon/machine.png", 76, 32, 150, 100, 5, 180, 1);
+        PISTOL("/weapon/pistol.png", "/actor/pistol.png",76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
+        UZI("/weapon/uzi.png", "/actor/uzi.png",76, 32, 160, 40, 7, 45, 5),
+        AK("/weapon/ak.png", "/actor/ak.png",76, 32, 120, 30, 10, 90, 10),
+        SNIPER("/weapon/sniper.png", "/actor/sniper.png",76, 32, 30, 10, 60, 120, 1),
+        MACHINE_GUN("/weapon/machine.png", "/actor/machine.png",76, 32, 150, 100, 5, 180, 1);
 
-        public String path;
+        public String forMapPath;
+        public String forActorPath;
         private int width;
         private int height;
         private int magazine;//彈匣
@@ -58,8 +61,9 @@ public class Gun extends GameObjForAnimator {
         private int maxMagazine;//最大彈匣數量
         private int beginShoot;
 
-        GunType(String path, int width, int height, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot) {
-            this.path = path;
+        GunType(String forMapPath,String forActorPath, int width, int height, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot) {
+            this.forMapPath = forMapPath;
+            this.forActorPath = forActorPath;
             this.width = width;
             this.height = height;
             this.maxMagazine = maxMagazine;
@@ -144,11 +148,11 @@ public class Gun extends GameObjForAnimator {
 
     @Override
     public void paintComponent(Graphics g){
-        g.drawImage(img,positionX,positionY,null);
+        g.drawImage(imgForDisplay,positionX,positionY,null);
     }
 
     public void paintComponent(Graphics g,int actorX,int actorY){
-        g.drawImage(img,actorX,actorY,null);
+        g.drawImage(imgForActor,actorX,actorY+25,null);
     }
 
     public int getSurplusBullet() {
