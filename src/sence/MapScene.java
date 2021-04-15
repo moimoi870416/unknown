@@ -25,6 +25,7 @@ import object.monster.Goblin;
 import object.monster.Monster;
 import object.GameObject;
 import util.CommandSolver;
+import weapon.Gun;
 
 public class MapScene extends Scene {
     private ArrayList<GameObject> mapObjArr;
@@ -40,6 +41,7 @@ public class MapScene extends Scene {
     private Image map;//地圖
     private Image gun1Frame;
     private Image gun2Frame;
+    private Font font;
 
     @Override
     public void sceneBegin() {
@@ -50,14 +52,15 @@ public class MapScene extends Scene {
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
-        monster.add(new Goblin(100,100));
+        monster.add(new Goblin(100, 100));
         //monster.add(new BullBoss(200,200));
-        gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
+        gameActor = new GameActor(Actor.FIRST.getPath(), 50, 700);
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor, 1, 1)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
+        font = new Font("Curlz TM", Font.PLAIN, 20);
     }
 
     private void mouseUpdate() {
@@ -73,23 +76,29 @@ public class MapScene extends Scene {
     @Override
     public void paint(final Graphics g) {
         camera.start(g);
-        //g.drawImage(map,0,0,null);
+        g.drawImage(map, 0, 0, null);
         monster.forEach(monster -> {
-            if(camera.isCollision(monster)){
+            if (camera.isCollision(monster)) {
                 monster.paint(g);
             }
-          });
-        if(camera.isCollision(gameActor)){
+        });
+        if (camera.isCollision(gameActor)) {
             gameActor.paint(g);
         }
         mapObjArr.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
-        g.drawImage(gun1Frame,1200,750,null);
-        g.drawImage(gun2Frame,1280,750,null);
+        g.drawImage(gun1Frame, 1200, 750, null);
+        g.drawImage(gun2Frame, 1280, 750, null);
+        magazinePaint(g);
 
+    }
 
+    public void magazinePaint(Graphics g){
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        g.drawString(gameActor.getGun().toString(), 1100, 800);
     }
 
     public void bulletsUpdate() {
@@ -114,7 +123,7 @@ public class MapScene extends Scene {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
                         int life = monster.get(k).getLife();
                         monster.get(k).offLife(testBullets.get(i).getAtk());
-                        if(monster.get(k).getLife()<=0){
+                        if (monster.get(k).getLife() <= 0) {
                             monster.remove(k);
                             k--;
                         }
@@ -151,7 +160,6 @@ public class MapScene extends Scene {
                         (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
                                 mouseX, mouseY,
                                 gameActor.getGun().getGunType()));
-                System.out.println(shootCount);
                 shootCount++;
             }
         }
@@ -165,6 +173,7 @@ public class MapScene extends Scene {
 //        monsterUpdate();
         bulletsUpdate();
         shootUpdate();
+
     }
 
     @Override

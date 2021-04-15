@@ -75,12 +75,12 @@ public class MenuScene2 extends Scene {
     public void sceneEnd() {
     }
 
-    private boolean isOverLao(Label obj, int eX, int eY) {
+    private boolean isOverLap(Label obj, int eX, int eY) {
         return eX <= obj.right() && eX >= obj.left() && eY >= obj.top() && eY <= obj.bottom();
     }
 
     private void isMove(Label obj, int eX, int eY) {
-        if (isOverLao(obj, eX, eY)) {
+        if (isOverLap(obj, eX, eY)) {
             obj.isHover();
         } else {
             obj.unHover();
@@ -88,7 +88,7 @@ public class MenuScene2 extends Scene {
     }
 
     private void isPress(Label obj, int eX, int eY) {
-        if (isOverLao(obj, eX, eY)) {
+        if (isOverLap(obj, eX, eY)) {
             obj.isFocus();
             if (obj.getClickedAction() != null) {
                 obj.clickedActionPerformed();

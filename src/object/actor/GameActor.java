@@ -6,6 +6,8 @@ import util.Global;
 import object.GameObjForAnimator;
 import weapon.Gun;
 
+import java.awt.*;
+
 public class GameActor extends GameObjForAnimator {
     private WhichGun whichGun;
     private Global.Direction dirMove;
@@ -13,51 +15,53 @@ public class GameActor extends GameObjForAnimator {
     private Delay delayForFlash;
     private boolean canFlash;
 
-    public GameActor( String path,final int x, final int y) {
-        super(x, y, 58, 58,100,10,3);
-        animator = new Animator(path,15,58,2);
+
+    public GameActor(String path, final int x, final int y) {
+        super(x, y, 58, 58, 100, 10, 3);
+        animator = new Animator(path, 15, 58, 2);
         animator.setArr(14);
         whichGun = WhichGun.ONE;
-        whichGun.gun.translate(painter().centerX(),painter().centerY());
+        whichGun.gun.translate(painter().centerX(), painter().centerY());
         dirMove = Global.Direction.NO;
         delayForFlash = new Delay(600);
         canFlash = true;
+
     }
 
-    public void changeGun(int commandCode){
-        if(commandCode == -1){
+    public void changeGun(int commandCode) {
+        if (commandCode == -1) {
             whichGun = WhichGun.ONE;
-        }else if(commandCode == -2){
+        } else if (commandCode == -2) {
             whichGun = WhichGun.TWO;
         }
     }
 
-    private enum WhichGun{
+    private enum WhichGun {
         ONE(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.SNIPER,Global.actorX,Global.actorY));
+        TWO(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY));
 
         private Gun gun;
 
-        WhichGun(Gun gun){
+        WhichGun(Gun gun) {
             this.gun = gun;
         }
     }
 
     @Override
-    public void changeDir(int mouseX){
-        if(mouseX>painter().centerX()){
+    public void changeDir(int mouseX) {
+        if (mouseX > painter().centerX()) {
             dir = Dir.LEFT;
-        }else {
+        } else {
             dir = Dir.RIGHT;
         }
     }
 
-    public Gun getGun(){
+    public Gun getGun() {
         return whichGun.gun;
     }
 
-    public void move(int commandCode){
-        switch (commandCode){
+    public void move(int commandCode) {
+        switch (commandCode) {
             case 2:
                 translateY(-moveSpeed);
                 dirMove = Global.Direction.UP;
@@ -88,38 +92,38 @@ public class GameActor extends GameObjForAnimator {
                     translateX(-moveSpeed);
                 }
                 break;
-            case LEFT :
+            case LEFT:
                 if (painter().left() < 0) {
                     translateX(moveSpeed);
                 }
                 break;
-            case UP :
+            case UP:
                 if (painter().top() < 0) {
                     translateY(moveSpeed);
                 }
                 break;
-            case DOWN :
-                if (painter().bottom() > Global.MAP_HEIGHT-15) {
+            case DOWN:
+                if (painter().bottom() > Global.MAP_HEIGHT - 15) {
                     translateY(-moveSpeed);
                 }
                 break;
             case NO:
 
         }
-        if(delayForFlash.count()){
+        if (delayForFlash.count()) {
             canFlash = true;
         }
         whichGun.gun.update();
         updatePosition();
     }
 
-    private void updatePosition(){
+    private void updatePosition() {
         Global.actorX = collider().centerX();
         Global.actorY = collider().bottom();
     }
 
-    public void flash(int mouseX,int mouseY){
-        if(canFlash) {
+    public void flash(int mouseX, int mouseY) {
+        if (canFlash) {
             delayForFlash.play();
             int x = Math.abs(mouseX - painter().centerX());
             int y = Math.abs(mouseY - painter().centerY());
