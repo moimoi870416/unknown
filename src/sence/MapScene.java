@@ -14,6 +14,7 @@ import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.monster.BullBoss;
+import util.Display;
 import util.Global.Direction;
 import controller.ImageController;
 import object.actor.GameActor;
@@ -39,14 +40,11 @@ public class MapScene extends Scene {
     private GameActor gameActor;//主角
     private Camera camera;//鏡頭
     private Image map;//地圖
-    private Image gun1Frame;
-    private Image gun2Frame;
-    private Font font;
+    private Display display;
+
 
     @Override
     public void sceneBegin() {
-        gun1Frame = ImageController.getInstance().tryGet("/map/gun.png");
-        gun2Frame = ImageController.getInstance().tryGet("/map/gun2.png");
         map = ImageController.getInstance().tryGet("/map/map.png");
         mapInit();
         testBullets = new LinkedList<>();
@@ -60,7 +58,7 @@ public class MapScene extends Scene {
                 .setChaseObj(gameActor, 1, 1)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
-        font = new Font("Curlz TM", Font.PLAIN, 20);
+        display = new Display(gameActor);
     }
 
     private void mouseUpdate() {
@@ -89,17 +87,9 @@ public class MapScene extends Scene {
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
-        g.drawImage(gun1Frame, 1200, 750, null);
-        g.drawImage(gun2Frame, 1280, 750, null);
-        magazinePaint(g);
-
+        display.paint(g);
     }
 
-    public void magazinePaint(Graphics g){
-        g.setFont(font);
-        g.setColor(Color.WHITE);
-        g.drawString(gameActor.getGun().toString(), 1100, 800);
-    }
 
     public void bulletsUpdate() {
         for (int i = 0; i < testBullets.size(); i++) {

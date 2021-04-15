@@ -15,7 +15,6 @@ public class Gun extends GameObjForAnimator {
     private Delay beginShoot;
     private boolean canReloading;//是否在裝彈(裝彈中無法射擊)
     private boolean canShoot;
-
     private GunType gunType;
 
 
@@ -42,7 +41,7 @@ public class Gun extends GameObjForAnimator {
         SNIPER("/weapon/gun.png", 76, 32, 30, 10, 60, 120, 1),
         MACHINE_GUN("/weapon/gun.png", 76, 32, 300, 100, 5, 180, 1);
 
-        private String path;
+        public String path;
         private int width;
         private int height;
         private int magazine;//彈匣
