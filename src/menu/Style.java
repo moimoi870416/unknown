@@ -171,4 +171,11 @@ public abstract  class Style {
         return isHaveBorder;
     }
 
+    public static Style getGeneralStyle(int width,int height,String path,boolean border,Color color,int num){
+        return new Style.StyleRect(width, height, path)
+                .setHaveBorder(border)
+                .setBorderColor(color)
+                .setBorderThickness(num);
+    }
+
 }

@@ -46,73 +46,19 @@ public class MenuScene1 extends Scene {
     }
 
     private void initTheme() {
-        Style simple = new Style.StyleRect(400, 800, "/menu/button-3.png")
-                .setHaveBorder(true)
-                .setBorderColor(new Color(255, 215, 0))
-                .setBorderThickness(5);
-        Style aa = new Style.StyleRect(400, 800,"/menu/button-3.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.BLACK)
-                .setBorderThickness(5);
-        Style im = new Style.StyleRect(400, 800,"/menu/button-3.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.WHITE)
-                .setBorderThickness(5);
-        Theme.add(new Theme(im, simple, aa));
-        Style simple2 = new Style.StyleRect(400, 800,"/menu/button-4.png")
-                .setHaveBorder(true)
-                .setBorderColor(new Color(255, 215, 0))
-                .setBorderThickness(5);
-        Style aa2 = new Style.StyleRect(400, 800,"/menu/button-4.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.BLACK)
-                .setBorderThickness(5);
-        Style im2 = new Style.StyleRect(400, 800,"/menu/button-4.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.WHITE)
-                .setBorderThickness(5);
-        Theme.add(new Theme(im2, simple2, aa2));
-        Style simple3 = new Style.StyleRect(400, 800,"/menu/button-1.png")
-                .setHaveBorder(true)
-                .setBorderColor(new Color(255, 215, 0))
-                .setBorderThickness(5);
-        Style aa3 = new Style.StyleRect(400, 800,"/menu/button-1.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.BLACK)
-                .setBorderThickness(5);
-        Style im3 = new Style.StyleRect(400, 800,"/menu/button-1.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.WHITE)
-                .setBorderThickness(5);
-        Theme.add(new Theme(im3, simple3, aa3));
-        Style simple4 = new Style.StyleRect(400, 800,"/menu/button-2.png")
-                .setHaveBorder(true)
-                .setBorderColor(new Color(255, 215, 0))
-                .setBorderThickness(5);
-        Style aa4 = new Style.StyleRect(400, 800,"/menu/button-2.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.BLACK)
-                .setBorderThickness(5);
-        Style im4 = new Style.StyleRect(400, 800,"/menu/button-2.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.WHITE)
-                .setBorderThickness(5);
-        Theme.add(new Theme(im4, simple4, aa4));
-        Style simple5 = new Style.StyleRect(100, 50, "/menu/button-0.png")
-                .setHaveBorder(true)
-                .setBorderColor(new Color(255, 215, 0))
-                .setBorderThickness(5);
-        Style aa5 = new Style.StyleRect(100, 50,"/menu/button-0.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.BLACK)
-                .setBorderThickness(5);
-        Style im5 = new Style.StyleRect(100, 50,"/menu/button-0.png")
-                .setHaveBorder(true)
-                .setBorderColor(Color.WHITE)
-                .setBorderThickness(5);
-        Theme.add(new Theme(im5, simple5, aa5));
 
-
+        Theme.add(setTheme(100,50,"/menu/button-0.png"));
+        Theme.add(setTheme(400,800,"/menu/button-1.png"));
+        Theme.add(setTheme(400,800,"/menu/button-2.png"));
+        Theme.add(setTheme(400,800,"/menu/button-3.png"));
+        Theme.add(setTheme(400,800,"/menu/button-4.png"));
     }
+
+    private Theme setTheme(int width,int height,String path){
+        return new Theme(Style.getGeneralStyle(width,height,path, true,Color.WHITE,5)
+                ,Style.getGeneralStyle(width,height,path,true,new Color(255,215,0),5)
+                ,Style.getGeneralStyle(width,height,path,true,Color.BLACK,5));
+    }
+
 }
 

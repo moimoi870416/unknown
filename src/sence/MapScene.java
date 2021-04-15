@@ -138,7 +138,6 @@ public class MapScene extends Scene {
     public void shootUpdate(){
         if (shooting) {
             if (gameActor.getGun().shoot()) {
-//                gameActor.getGun().shoot();
                 this.testBullets.add(new Bullet
                         (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
                                 mouseX, mouseY,
