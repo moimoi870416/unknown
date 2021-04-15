@@ -7,6 +7,8 @@ import util.Delay;
 import java.awt.*;
 
 
+import java.awt.*;
+
 public class Gun extends GameObjForAnimator {
     private int magazine;//彈匣內的剩餘子彈數量
     private final int magazineMax;//一個彈匣的子彈數量
@@ -136,6 +138,11 @@ public class Gun extends GameObjForAnimator {
     }
 
     @Override
+    public void setState(State state) {
+
+    }
+
+    @Override
     public void update() {
         if (reloadingDelay.count()) {
             canReloading = true;
@@ -145,6 +152,7 @@ public class Gun extends GameObjForAnimator {
             canShoot = true;
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void paintComponent(Graphics g){
@@ -164,4 +172,6 @@ public class Gun extends GameObjForAnimator {
         return (magazine)+"|"+(magazineMax);
     }
 
+=======
+>>>>>>> balanceMonster
 }

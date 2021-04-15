@@ -9,17 +9,19 @@ public class Animator {
     private Image img;
     private int count;
     private Delay delay;
-    private int animatorSize;
+    private int widthSize;
+    private int heightSize;
     private int[] arr;
     private int picSize;
     private int height;
 
-    public Animator(String path,int countLimit,int size,int picSize) {
+    public Animator(String path,int countLimit,int widthSize,int heightSize,int picSize) {
         this.img = ImageController.getInstance().tryGet(path);
         delay = new Delay(countLimit);
         delay.loop();
         count = 0;
-        animatorSize = size;
+        this.widthSize = widthSize;
+        this.heightSize = heightSize;
         this.picSize = picSize /2;//圖片高度的動作/2
     }
 
@@ -28,15 +30,15 @@ public class Animator {
             this.count = ++this.count % arr.length;
         }
         g.drawImage(this.img, left, top, right , bottom
-                , animatorSize * arr[this.count]
-                , animatorSize * dir.ordinal() * this.picSize
-                , animatorSize+ animatorSize * arr[this.count]
-                , animatorSize + animatorSize * dir.ordinal() * this.picSize
+                , widthSize * arr[this.count]
+                , heightSize * dir.ordinal() * this.picSize + heightSize *   height
+                , widthSize + widthSize * arr[this.count]
+                , heightSize + heightSize * dir.ordinal() * this.picSize + heightSize *height
                 , null);
     }
 
     public void setArr(int number){
-        setArr(number,0);
+        setArr(number,1);
     }
     public void setArr(int number,int height){
         int[] arr = new int[number];
@@ -54,5 +56,9 @@ public class Animator {
         this.count = 0;
     }
 
+    public void setDelayCount(int delayCount){
+        delay = new Delay(delayCount);
+        delay.loop();
+    }
 
 }

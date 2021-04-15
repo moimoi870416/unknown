@@ -6,8 +6,9 @@ import object.GameObjForAnimator;
 
 public abstract class Monster extends GameObjForAnimator {
     private Delay delayForCollision;
+    protected Delay attackDelay;
     private boolean collision;
-    private boolean isChase;
+    protected boolean isChase;
 
     public Monster(int x, int y, int width, int height,int life,int atk,int moveSpeed) {
         this(x, y, width, height,x,y,width,height,life,atk,moveSpeed);
@@ -23,7 +24,7 @@ public abstract class Monster extends GameObjForAnimator {
     public void chase() {
         float x = Math.abs(Global.actorX - painter().centerX());
         float y = Math.abs(Global.actorY - painter().centerY());
-        if (x == 0 && y == 0) {
+        if (x <= 20 && y <=20) {
             return;
         }
         float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
@@ -41,7 +42,8 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
-        if(isChase){
+        if(state == State.DEATH){
+            isChase = false;
             return;
         }
         if (delayForCollision.count()) {
@@ -55,8 +57,9 @@ public abstract class Monster extends GameObjForAnimator {
 
     }
 
-    private void isSeeingActor(){
+    protected void isSeeingActor(){
         if(Math.abs(Global.actorX - painter().centerX()) < Global.WINDOW_WIDTH/2) {
+            setState(State.RUN);
             isChase = true;
         }
     }
@@ -91,4 +94,6 @@ public abstract class Monster extends GameObjForAnimator {
         }
 
     }
+
+    public abstract void setState(State state);
 }

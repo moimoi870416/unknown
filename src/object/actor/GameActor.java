@@ -17,10 +17,16 @@ public class GameActor extends GameObjForAnimator {
     private Delay delayForFlash;
     private boolean canFlash;
 
+<<<<<<< HEAD
 
     public GameActor(String path, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
         animator = new Animator(path, 15, 58, 2);
+=======
+    public GameActor( String path,final int x, final int y) {
+        super(x, y, 58, 58,100,10,3);
+        animator = new Animator(path,15,58,58,2);
+>>>>>>> balanceMonster
         animator.setArr(14);
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
@@ -102,6 +108,11 @@ public class GameActor extends GameObjForAnimator {
                 dirMove = Global.Direction.NO;
                 break;
         }
+    }
+
+    @Override
+    public void setState(State state) {
+
     }
 
     @Override
