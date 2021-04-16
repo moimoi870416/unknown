@@ -14,49 +14,44 @@ import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForAnimator;
 import object.GameObjForPic;
+import object.monster.*;
 import util.Display;
-import object.monster.BullBoss;
-import object.monster.Rino;
 import util.Global.Direction;
 import controller.ImageController;
 import object.actor.GameActor;
-
 import static util.Global.*;
 
 import weapon.Bullet;
-import object.monster.Goblin;
-import object.monster.Monster;
 import object.GameObject;
 import util.CommandSolver;
 
 public class MapScene extends Scene {
     private ArrayList<GameObject> mapObjArr;
-    private boolean shooting;
     private LinkedList<Bullet> testBullets;
     private LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
-    private int mouseX;
-    private int mouseY;//滑鼠位置
     private GameActor gameActor;//主角
     private Camera camera;//鏡頭
-    private Image map;//地圖
-    private Display display;
-
+    private Display display;//畫面物件
+    private mapInfo mapInfo;
+    private boolean shooting;
 
     @Override
     public void sceneBegin() {
-        map = ImageController.getInstance().tryGet("/map/map-test.png");
+        mapInfo = new mapInfo();
         mapInit();
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
 
-        //monster.add(new Goblin(100,100));
-//        monster.add(new Rino(1400,500));
-//        monster.add(new Rino(200,500));
-//        monster.add(new Rino(1000,500));
-//        monster.add(new Rino(500,500));
+        monster.add(new Goblin(1000,500));
+        monster.add(new Cockroach(1400,500));
+        monster.add(new Goblin(1000,500));
+        monster.add(new Goblin(1000,500));
+        monster.add(new Rino(200,500));
+        monster.add(new Rino(1100,500));
+        monster.add(new Rino(500,500));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
 
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -79,8 +74,8 @@ public class MapScene extends Scene {
 
     @Override
     public void paint(final Graphics g) {
-        camera.start(g);
-        g.drawImage(map, 0, 0, null);
+        camera.start(g);//鏡頭一定要第一個PAINT
+        mapInfo.mapPaint(g);
         monster.forEach(monster -> {
             if (camera.isCollision(monster)) {
                 monster.paint(g);
@@ -99,6 +94,11 @@ public class MapScene extends Scene {
 
     public void bulletsUpdate() {
         for (int i = 0; i < testBullets.size(); i++) {
+            if(testBullets.get(i).getState() == Bullet.State.STOP){
+                testBullets.remove(i);
+                i--;
+                break;
+            }
             testBullets.get(i).update();
             if (testBullets.get(i).isOut()) {
                 testBullets.remove(i);
@@ -125,9 +125,9 @@ public class MapScene extends Scene {
                                 monster.get(k).setState(GameObjForAnimator.State.DEATH);
                             }
                             if (testBullets.get(i).isPenetrate(life)) {
-                                testBullets.remove(i);
-                                i--;
-                                break;
+//                                testBullets.remove(i);
+//                                i--;
+//                                break;
                             }
                         }
                     }
@@ -181,6 +181,7 @@ public class MapScene extends Scene {
         monsterUpdate();
         bulletsUpdate();
         shootUpdate();
+        mapInfo.mapUpdate();
 
     }
 
@@ -230,9 +231,8 @@ public class MapScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-                if (commandCode == Direction.LEFT.ordinal() || commandCode == Direction.RIGHT.ordinal()
-                        || commandCode == Direction.UP.ordinal() || commandCode == Direction.DOWN.ordinal()) {
-                    gameActor.move(commandCode);
+                if (commandCode >= 1 || commandCode <= 4) {
+                    gameActor.setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
                     gameActor.flash(mouseX, mouseY);
@@ -254,5 +254,40 @@ public class MapScene extends Scene {
 //                .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, new GameObjForPic("/map/rock-sand1-584-216.png", 0, 0, 584, 216))
                 .gen()
                 .setMap();
+    }
+
+    private class mapInfo{
+        //之後會有切換圖片的行為，所以先開一個內部類
+        private Image mapLeft;
+        private Image mapMiddle;
+        private Image mapRight;
+        private final int mapWidth = 2048;
+        private int count;
+        private boolean passing4000X;
+
+        private mapInfo(){
+            mapLeft = ImageController.getInstance().tryGet(MapPath.BEGIN.mapPath);
+            mapMiddle = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
+            mapRight = ImageController.getInstance().tryGet(MapPath.THIRD.mapPath);
+            this.count = 0;
+        }
+
+        public void mapPaint(Graphics g){
+            g.drawImage(mapLeft, mapWidth * count, 0, null);
+            g.drawImage(mapMiddle,mapWidth * (count +1),0,null);
+            g.drawImage(mapRight,mapWidth * (count+2),0,null);
+        }
+
+        public void mapUpdate(){
+            if(!passing4000X) {
+                if (actorX > 4000) {
+                    mapLeft = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
+                    count++;
+                    passing4000X = true;
+                }
+            }
+        }
+
+
     }
 }

@@ -12,7 +12,8 @@ import java.awt.*;
 public class GameActor extends GameObjForAnimator {
     private WhichGun currentGun;
     private WhichGun otherGun;
-    private Global.Direction dirMove;
+    private Global.Direction verticalDir;
+    private Global.Direction horizontalDir;
     private final int FLASH_MAX_DISTANCE = 300;
     private Delay delayForFlash;
     private boolean canFlash;
@@ -22,14 +23,15 @@ public class GameActor extends GameObjForAnimator {
 
     public GameActor( String path,final int x, final int y) {
         super(x, y, 58, 58,100,10,3);
-        animator = new Animator(path,15,58,58,2);
-        animator.setArr(4);
-        flashAnimator = new Animator("/actor/flash.png",5,48,32,2);
+        animator = new Animator(path,30,58,58,2);
+        animator.setArr(3);
+        flashAnimator = new Animator("/actor/flash.png",8,48,32,2);
         flashAnimator.setArr(4);
+        flashAnimator.setPlayOnce();
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
-        dirMove = Global.Direction.NO;
+        verticalDir = horizontalDir = Global.Direction.NO;
         delayForFlash = new Delay(120);
         canFlash = true;
 
@@ -38,7 +40,7 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50);
+        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50,dir);
         flashAnimator.paintAnimator(g,XForFlash-24,XForFlash+24,YForFlash-16,YForFlash+16,dir);
 
     }
@@ -56,8 +58,8 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun {
-        ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.UZI, Global.actorX, Global.actorY));
+        ONE(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY)),
+        TWO(new Gun(Gun.GunType.AK, Global.actorX, Global.actorY));
 
         private Gun gun;
 
@@ -88,37 +90,73 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public void move(int commandCode) {
+        if(state != State.RUN){
+            setState(State.RUN);
+        }
         switch (commandCode) {
             case 2:
                 translateY(-moveSpeed);
-                dirMove = Global.Direction.UP;
+                verticalDir = Global.Direction.UP;
                 break;
             case 3:
                 translateY(moveSpeed);
-                dirMove = Global.Direction.DOWN;
+                verticalDir = Global.Direction.DOWN;
                 break;
             case 1:
                 translateX(moveSpeed);
-                dirMove = Global.Direction.RIGHT;
+                horizontalDir = Global.Direction.RIGHT;
                 break;
             case 0:
                 translateX(-moveSpeed);
-                dirMove = Global.Direction.LEFT;
+                horizontalDir = Global.Direction.LEFT;
                 break;
             default:
-                dirMove = Global.Direction.NO;
+                verticalDir = horizontalDir = Global.Direction.NO;
                 break;
         }
     }
 
     @Override
     public void setState(State state) {
+        this.state = state;
+        switch (state){
+            case STAND -> {
+                animator.setImg("/actor/actorStand.png",2);
+                animator.setArr(3);
+                animator.setDelayCount(30);
+                animator.setPlayLoop();
+            }
+            case RUN -> {
+                animator.setImg("/actor/run.png",2);
+                animator.setArr(4);
+                animator.setDelayCount(10);
+                animator.setPlayLoop();
+            }
+            case DEATH -> {
+                animator.setImg("/actor/actorDead.png",2);
+                animator.setArr(16);
+                animator.setDelayCount(20);
+                animator.setPlayOnce();
+            }
+        }
 
     }
 
     @Override
     public void update() {
-        switch (dirMove) {
+        switch (verticalDir) {
+            case UP:
+                if (painter().top() < 0) {
+                    translateY(moveSpeed);
+                }
+                break;
+            case DOWN:
+                if (painter().bottom() > Global.MAP_HEIGHT - 70) {
+                    translateY(-moveSpeed);
+                }
+                break;
+        }
+        switch (horizontalDir){
             case RIGHT:
                 if (painter().right() > Global.MAP_WIDTH) {
                     translateX(-moveSpeed);
@@ -129,18 +167,6 @@ public class GameActor extends GameObjForAnimator {
                     translateX(moveSpeed);
                 }
                 break;
-            case UP:
-                if (painter().top() < 0) {
-                    translateY(moveSpeed);
-                }
-                break;
-            case DOWN:
-                if (painter().bottom() > Global.MAP_HEIGHT - 15) {
-                    translateY(-moveSpeed);
-                }
-                break;
-            case NO:
-
         }
         if (delayForFlash.count()) {
             canFlash = true;

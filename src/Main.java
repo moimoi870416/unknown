@@ -21,7 +21,7 @@ public class Main {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
         Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
-        SenceController.getSenceController().change(new MapScene());
+        SenceController.getSenceController().change(new MenuScene1());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()
@@ -29,6 +29,10 @@ public class Main {
                         .add(KeyEvent.VK_S, Global.Direction.DOWN.ordinal())
                         .add(KeyEvent.VK_D, Global.Direction.RIGHT.ordinal())
                         .add(KeyEvent.VK_A, Global.Direction.LEFT.ordinal())
+                        .add(KeyEvent.VK_UP, Global.Direction.UP.ordinal())
+                        .add(KeyEvent.VK_DOWN, Global.Direction.DOWN.ordinal())
+                        .add(KeyEvent.VK_RIGHT, Global.Direction.RIGHT.ordinal())
+                        .add(KeyEvent.VK_LEFT, Global.Direction.LEFT.ordinal())
                         .add(KeyEvent.VK_R, Global.Active.RELOADING.getCommandCode())
                         .add(KeyEvent.VK_1, Global.Active.NUMBER_ONE.getCommandCode())
                         .add(KeyEvent.VK_2, Global.Active.NUMBER_TWO.getCommandCode())

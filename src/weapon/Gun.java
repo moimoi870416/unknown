@@ -49,10 +49,10 @@ public class Gun extends GameObjForAnimator {
 
     public enum GunType {
         PISTOL("/weapon/pistol.png", "/actor/pistol.png",76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
-        UZI("/weapon/uzi.png", "/actor/uzi.png",76, 32, 160, 40, 7, 45, 5),
-        AK("/weapon/ak.png", "/actor/ak.png",76, 32, 120, 30, 10, 90, 10),
-        SNIPER("/weapon/sniper.png", "/actor/sniper.png",76, 32, 30, 10, 60, 120, 1),
-        MACHINE_GUN("/weapon/machine.png", "/actor/machine.png",76, 32, 150, 100, 5, 180, 1);
+        UZI("/weapon/uzi.png", "/actor/uzi.png",70, 54, 160, 40, 7, 45, 5),
+        AK("/weapon/ak.png", "/actor/ak3.png",70, 54, 120, 30, 10, 90, 10),
+        SNIPER("/weapon/sniper.png", "/actor/sniper.png",70, 54, 30, 10, 60, 120, 1),
+        MACHINE_GUN("/weapon/machine.png", "/actor/machine.png",70, 54, 150, 100, 5, 180, 1);
 
         public String forMapPath;
         public String forActorPath;
@@ -155,8 +155,12 @@ public class Gun extends GameObjForAnimator {
         g.drawImage(imgForDisplay,positionX,positionY,null);
     }
 
-    public void paintComponent(Graphics g,int actorX,int actorY){
-        g.drawImage(imgForActor,actorX,actorY+25,null);
+    public void paintComponent(Graphics g,int actorX,int actorY,Dir dir){
+        if(dir == Dir.LEFT) {
+            g.drawImage(imgForActor, actorX+3, actorY + 20, null);
+            return;
+        }
+        g.drawImage(imgForActor, actorX-painter().width()+15, actorY + 20, null);
     }
 
     public int getSurplusBullet() {

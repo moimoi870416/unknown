@@ -1,61 +1,43 @@
 package object.monster;
-
-
 import util.Animator;
-import util.Delay;
-import util.Global;
 
-public class Rino extends Monster{
-    private boolean readyAtk;
-    private final int atkDistance = 500;
-    private int moveOnX;
-    private int moveOnY;
+public class Cockroach extends Monster{
     private int moveDistance;
-    private int totalDistance;
-    private boolean focus;
 
-    public Rino(int x, int y) {
-        super(x, y, 104,68, 500, 80, 2);
-        animator = new Animator("/monster/rino/Idle2(52x34).png",30,52,34,2);
-        animator.setArr(11);
-        readyAtk = true;
-        attackDelay = new Delay(180);
-        attackDelay.play();
-        this.totalDistance = 0;
-        focus = false;
+    public Cockroach(int x, int y) {
+        super(x+75,y+30,30,30,x, y, 150, 150, 5000, 30, 5);
+        animator = new Animator("/monster/cockroach/run.png",0,150,150,2);
+        animator.setArr(40);
+        moveDistance = 800;
     }
 
     @Override
     public void setState(State state) {
         this.state = state;
         switch (state){
-            case STAND -> animator.setImg("/monster/rino/Idle2(52x34).png",2);
             case RUN -> {
-                animator.setImg("/monster/rino/Run(52x34).png", 2);
-                animator.setArr(6);
-                animator.setDelayCount(10);}
-        }
-    }
-
-    @Override
-    public void update(){
-        if(isChase){
-            if(readyAtk){
-                if(attack()){
-                    return;
-                }
-                chase();
-                return;
+                animator.setImg("/monster/cockroach/run.png",2);
+                animator.setArr(40);
+                animator.setDelayCount(0);
+                animator.setPlayLoop();
             }
-            atkMove();
-            return;
+            case ATTACK -> {
+                animator.setImg("/monster/cockroach/eat.png",2);
+                animator.setArr(29);
+                animator.setDelayCount(6);
+                animator.setPlayOnce();
+            }
+            case DEATH -> animator.setImg("/monster/cockroach/run.png",2);
         }
-        isSeeingActor();
-        setState(State.RUN);
     }
 
+//    @Override
+//    public void update(){
+//
+//    }
+/*
     private boolean attack(){
-        if(Math.abs(painter().centerX() - Global.actorX) < 500 || focus) {
+        if(isChase) {
             focus = true;
             setState(State.STAND);
             if (attackDelay.count()) {
@@ -96,4 +78,6 @@ public class Rino extends Monster{
         animator.setDelayCount(30);
 
     }
+
+ */
 }

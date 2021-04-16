@@ -16,6 +16,7 @@ public class Animator {
     private int height;
     private boolean playOnce;
     private int playOnceCount;
+    private boolean isFinish;
 
     public Animator(String path,int countLimit,int widthSize,int heightSize,int picSize) {
         this.img = ImageController.getInstance().tryGet(path);
@@ -25,13 +26,21 @@ public class Animator {
         this.widthSize = widthSize;
         this.heightSize = heightSize;
         this.picSize = picSize /2;//圖片高度的動作/2
+        playOnceCount = 0;
         playOnce = false;
+        isFinish = false;
     }
 
     public void paintAnimator(Graphics g, int left, int right, int top, int bottom, GameObjForAnimator.Dir dir){
         if(playOnceCount >= 0) {
             if (this.delay.count()) {
                 this.count = ++this.count % arr.length;
+                if(playOnce){
+                    playOnceCount--;
+                    if(playOnceCount < 0){
+                        isFinish = true;
+                    }
+                }
             }
             g.drawImage(this.img, left, top, right, bottom
                     , widthSize * arr[this.count]
@@ -39,9 +48,6 @@ public class Animator {
                     , widthSize + widthSize * arr[this.count]
                     , heightSize + heightSize * dir.ordinal() * this.picSize + heightSize * height
                     , null);
-        }
-        if(playOnce){
-            playOnceCount--;
         }
     }
 
@@ -71,7 +77,7 @@ public class Animator {
     }
 
     public void setPlayOnce(){
-        playOnceCount = arr.length;
+        playOnceCount = arr.length-2;
         playOnce = true;
         count = 0;
     }
@@ -82,5 +88,7 @@ public class Animator {
         count = 0;
     }
 
-
+    public boolean isFinish(){
+        return playOnce && isFinish;
+    }
 }

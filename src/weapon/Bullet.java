@@ -1,8 +1,10 @@
 package weapon;
 
 import controller.ImageController;
+import object.GameObjForAnimator;
 import object.GameObject;
 import object.monster.Monster;
+import util.Animator;
 import util.GameKernel;
 import java.awt.*;
 import static util.Global.*;
@@ -24,6 +26,10 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int flyingDistance;
     private BulletType bulletType;
     private State state;
+    private Animator hitAnimator;
+    private int hitX;
+    private int hitY;
+    private boolean isHit;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
         img = ImageController.getInstance().tryGet("/weapon/bullet.png");
@@ -47,11 +53,19 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         state = State.FLYING;
         setAngle(mouseX,mouseY);
         setDistanceDeviation();
+        hitAnimator = new Animator("/weapon/blood(100-100).png",0,100,100,2);
+        hitAnimator.setArr(14);
+        isHit = false;
     }
+
     public enum State{
         FLYING,
         HIT,
         STOP
+    }
+
+    public State getState(){
+        return state;
     }
 
     private enum BulletType{
@@ -114,6 +128,9 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     protected void move(){
+        if(state != State.FLYING){
+            return;
+        }
         offSet(moveOnX,moveOnY);
     }
 
@@ -167,6 +184,9 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     public boolean isOut() {
+        if(state != State.FLYING){
+            return false;
+        }
         if(setRange()<0){
             return true;
         }
@@ -175,12 +195,20 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(img,(int)left(),(int)top(),null);
+        if(state == State.FLYING) {
+            g.drawImage(img, (int) left(), (int) top(), null);
+            return;
+        }
+        hitAnimator.paintAnimator(g,hitX-30,hitX+70,hitY-50,hitY+50, GameObjForAnimator.Dir.LEFT);
+
     }
 
     @Override
     public void update() {
         move();
+        if(hitAnimator.isFinish()){
+            state = State.STOP;
+        }
     }
 
     public int getAtk(){
@@ -190,8 +218,19 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     public boolean isPenetrate(int monsterLife){
         penetration -= monsterLife;
         if(penetration <= 0){
+            if(!isHit){
+                state = State.HIT;
+                setHitXAndY();
+                hitAnimator.setPlayOnce();
+            }
             return true;
         }
         return false;
+    }
+
+    private void setHitXAndY(){
+        hitX = (int)left();
+        hitY = (int)top();
+        isHit = true;
     }
 }

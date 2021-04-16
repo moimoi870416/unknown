@@ -7,6 +7,9 @@ public class Global {
     public static final int UPDATE_TIMES_PER_SEC=60;
     public static final int FRAME_LIMIT = 60;
 
+    public static int mouseX;
+    public static int mouseY;
+
     public static int actorX;
     public static int actorY;
     public static int shootCount = 0;
@@ -19,7 +22,7 @@ public class Global {
 
 
     //地圖大小
-    public static final int MAP_WIDTH = 2048;
+    public static final int MAP_WIDTH = 2048*5;
     public static final int MAP_HEIGHT = 1024;
 
     //視窗大小
@@ -30,8 +33,22 @@ public class Global {
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
 
+    public enum MapPath{
+        BEGIN("/map/map-begin.png"),
+        SECOND("/map/map-second.png"),
+        THIRD("/map/map-second.png"),
+        FOURTH("/map/map-second.png");
+        //END;
+
+        public String mapPath;
+
+        private MapPath(String paht){
+            mapPath = paht;
+        }
+    }
+
     public enum Actor{
-        FIRST("/actor/run.png"),
+        FIRST("/actor/actorStand.png"),
         SECOND("/actor/actorrun.png"),
         THIRD("/actor/actorrun.png");
 
