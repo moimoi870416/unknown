@@ -50,6 +50,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
     public enum State{
         FLYING,
+        HIT,
         STOP
     }
 

@@ -16,23 +16,31 @@ public class GameActor extends GameObjForAnimator {
     private final int FLASH_MAX_DISTANCE = 300;
     private Delay delayForFlash;
     private boolean canFlash;
+    private Animator flashAnimator;
+    private int XForFlash;
+    private int YForFlash;
 
     public GameActor( String path,final int x, final int y) {
         super(x, y, 58, 58,100,10,3);
         animator = new Animator(path,15,58,58,2);
         animator.setArr(4);
+        flashAnimator = new Animator("/actor/flash.png",5,48,32,2);
+        flashAnimator.setArr(4);
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         dirMove = Global.Direction.NO;
-        delayForFlash = new Delay(600);
+        delayForFlash = new Delay(120);
         canFlash = true;
 
     }
+
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
         currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50);
+        flashAnimator.paintAnimator(g,XForFlash-24,XForFlash+24,YForFlash-16,YForFlash+16,dir);
+
     }
 
     public void changeGun(int commandCode) {
@@ -149,6 +157,9 @@ public class GameActor extends GameObjForAnimator {
     public void flash(int mouseX, int mouseY) {
         if (canFlash) {
             delayForFlash.play();
+            flashAnimator.setPlayOnce();
+            XForFlash = painter().centerX();
+            YForFlash = painter().centerY();
             int x = Math.abs(mouseX - painter().centerX());
             int y = Math.abs(mouseY - painter().centerY());
             if (x == 0 && y == 0) {

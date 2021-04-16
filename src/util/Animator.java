@@ -14,6 +14,8 @@ public class Animator {
     private int[] arr;
     private int picSize;
     private int height;
+    private boolean playOnce;
+    private int playOnceCount;
 
     public Animator(String path,int countLimit,int widthSize,int heightSize,int picSize) {
         this.img = ImageController.getInstance().tryGet(path);
@@ -23,18 +25,24 @@ public class Animator {
         this.widthSize = widthSize;
         this.heightSize = heightSize;
         this.picSize = picSize /2;//圖片高度的動作/2
+        playOnce = false;
     }
 
     public void paintAnimator(Graphics g, int left, int right, int top, int bottom, GameObjForAnimator.Dir dir){
-        if (this.delay.count()) {
-            this.count = ++this.count % arr.length;
+        if(playOnceCount >= 0) {
+            if (this.delay.count()) {
+                this.count = ++this.count % arr.length;
+            }
+            g.drawImage(this.img, left, top, right, bottom
+                    , widthSize * arr[this.count]
+                    , heightSize * dir.ordinal() * this.picSize + heightSize * height
+                    , widthSize + widthSize * arr[this.count]
+                    , heightSize + heightSize * dir.ordinal() * this.picSize + heightSize * height
+                    , null);
         }
-        g.drawImage(this.img, left, top, right , bottom
-                , widthSize * arr[this.count]
-                , heightSize * dir.ordinal() * this.picSize + heightSize *   height
-                , widthSize + widthSize * arr[this.count]
-                , heightSize + heightSize * dir.ordinal() * this.picSize + heightSize *height
-                , null);
+        if(playOnce){
+            playOnceCount--;
+        }
     }
 
     public void setArr(int number){
@@ -59,6 +67,20 @@ public class Animator {
     public void setDelayCount(int delayCount){
         delay = new Delay(delayCount);
         delay.loop();
+        count = 0;
     }
+
+    public void setPlayOnce(){
+        playOnceCount = arr.length;
+        playOnce = true;
+        count = 0;
+    }
+
+    public void setPlayLoop(){
+        playOnceCount = arr.length;
+        playOnce = false;
+        count = 0;
+    }
+
 
 }

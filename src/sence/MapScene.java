@@ -61,7 +61,7 @@ public class MapScene extends Scene {
 
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
-                .setChaseObj(gameActor, 1, 1)
+                .setChaseObj(gameActor, 20, 20)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
         display = new Display(gameActor);
@@ -250,8 +250,8 @@ public class MapScene extends Scene {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
                 .setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 370, 168, 30))
                 .setNameAndPath("tree1", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 100, 208, 336))
-                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", false, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 0, 424, 216))
-                .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, new GameObjForPic("/map/rock-sand1-584-216.png", 0, 0, 584, 216))
+//                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", false, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 0, 424, 216))
+//                .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, new GameObjForPic("/map/rock-sand1-584-216.png", 0, 0, 584, 216))
                 .gen()
                 .setMap();
     }
