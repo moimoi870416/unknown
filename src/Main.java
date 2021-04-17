@@ -20,8 +20,7 @@ public class Main {
     public static void main(final String[] args) {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
-        Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
-        SenceController.getSenceController().change(new MenuScene1());
+        SenceController.getSenceController().change(new MapScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()
@@ -50,6 +49,7 @@ public class Main {
                 .ups(UPDATE_TIMES_PER_SEC)
                 .update(sc)
                 .gen();
+        Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
         Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(mouse1, new Point(10, 10), "mouse1");
         jFrame.setCursor(cursor);
         jFrame.setTitle("Game 8th");//視窗標題
