@@ -36,8 +36,6 @@ public class MapScene extends Scene {
     private LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
-    private int mouseX;
-    private int mouseY;//滑鼠位置
     private GameActor gameActor;//主角
     private Camera camera;//鏡頭
     private Image map;//地圖
@@ -52,9 +50,9 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
 
-        //monster.add(new Goblin(100,100));
-//        monster.add(new Rino(1400,500));
-//        monster.add(new Rino(200,500));
+        monster.add(new Goblin(100,100));
+        monster.add(new Rino(1400,500));
+//        monster.add(new Rino(200,500))·;
 //        monster.add(new Rino(1000,500));
 //        monster.add(new Rino(500,500));
         gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
@@ -89,6 +87,7 @@ public class MapScene extends Scene {
         if (camera.isCollision(gameActor)) {
             gameActor.paint(g);
         }
+
         mapObjArr.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
@@ -117,7 +116,6 @@ public class MapScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-
                         if(monster.get(k).getState() != GameObjForAnimator.State.DEATH) {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());

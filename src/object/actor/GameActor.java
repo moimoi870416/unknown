@@ -1,9 +1,6 @@
 package object.actor;
 
-import util.Animator;
-import util.Delay;
-import util.Display;
-import util.Global;
+import util.*;
 import object.GameObjForAnimator;
 import weapon.Gun;
 
@@ -19,6 +16,7 @@ public class GameActor extends GameObjForAnimator {
     private Animator flashAnimator;
     private int XForFlash;
     private int YForFlash;
+    private Rotation rotation;
 
     public GameActor( String path,final int x, final int y) {
         super(x, y, 58, 58,100,10,3);
@@ -32,13 +30,14 @@ public class GameActor extends GameObjForAnimator {
         dirMove = Global.Direction.NO;
         delayForFlash = new Delay(120);
         canFlash = true;
-
+        rotation=new Rotation();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50);
+//        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50);
+        rotation.paint(g,currentGun.gun.getGunType().forActorPath);
         flashAnimator.paintAnimator(g,XForFlash-24,XForFlash+24,YForFlash-16,YForFlash+16,dir);
 
     }
@@ -146,7 +145,10 @@ public class GameActor extends GameObjForAnimator {
             canFlash = true;
         }
         currentGun.gun.update();
+        currentGun.gun.translateForActor();
         updatePosition();
+        rotation.rotationUpdate(painter().centerX()+20,painter().centerY(),painter().centerX()-20,painter().centerY()-15);
+
     }
 
     private void updatePosition() {

@@ -4,8 +4,11 @@ import java.awt.*;
 
 public class Global {
 
-    public static final int UPDATE_TIMES_PER_SEC=60;
+    public static final int UPDATE_TIMES_PER_SEC = 60;
     public static final int FRAME_LIMIT = 60;
+
+    public static int mouseX;
+    public static int mouseY;
 
     public static int actorX;
     public static int actorY;
@@ -30,18 +33,18 @@ public class Global {
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
 
-    public enum Actor{
+    public enum Actor {
         FIRST("/actor/run.png"),
         SECOND("/actor/actorrun.png"),
         THIRD("/actor/actorrun.png");
 
         String path;
 
-        public String getPath(){
+        public String getPath() {
             return path;
         }
 
-        Actor(String path){
+        Actor(String path) {
             this.path = path;
         }
     }
@@ -54,7 +57,7 @@ public class Global {
         NO
     }
 
-    public enum Active{
+    public enum Active {
         NUMBER_ONE(-1),
         NUMBER_TWO(-2),
         NUMBER_THREE(-3),
@@ -66,11 +69,11 @@ public class Global {
 
         private int commandCode;
 
-        public int getCommandCode(){
+        public int getCommandCode() {
             return commandCode;
         }
 
-        Active(int num){
+        Active(int num) {
             commandCode = num;
         }
     }
@@ -100,12 +103,13 @@ public class Global {
 
     //網路
     public static boolean isServer = false;
-    public static class NetCommandCode{
+
+    public static class NetCommandCode {
         public static final int AIRCRAFT_CONNECT = 0;
         public static final int AIRCRAFT_MOVE = 1;
         public static final int AIRCRAFT_DISCONNECT = 2;
         public static final int ENEMY_ADD = 3;
-        public static final int ENEMY_REMOVE =4;
+        public static final int ENEMY_REMOVE = 4;
         public static final int SHOT_BOOM = 5;
     }
 

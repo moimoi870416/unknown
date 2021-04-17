@@ -54,7 +54,6 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         isSeeingActor();
-
     }
 
     protected void isSeeingActor(){
