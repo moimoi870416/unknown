@@ -34,7 +34,6 @@ public class GameActor extends GameObjForAnimator {
         verticalDir = horizontalDir = Global.Direction.NO;
         delayForFlash = new Delay(120);
         canFlash = true;
-
     }
 
     @Override
@@ -76,6 +75,14 @@ public class GameActor extends GameObjForAnimator {
             dir = Dir.RIGHT;
         }
     }
+
+//    @Override
+//    protected void setRect() {
+//        rect.setLeft(painter().left());
+//        rect.setTop(painter().top());
+//        rect.setRight(painter().right());
+//        rect.setBottom(painter().bottom());
+//    }
 
     public void tradeGun(Gun gun){
         currentGun.gun = gun;

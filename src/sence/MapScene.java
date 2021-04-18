@@ -16,7 +16,6 @@ import object.GameObjForAnimator;
 import object.GameObjForPic;
 import object.monster.*;
 import util.Display;
-import util.Global.Direction;
 import controller.ImageController;
 import object.actor.GameActor;
 import static util.Global.*;
@@ -147,6 +146,9 @@ public class MapScene extends Scene {
 //            if(monster.get(i).isCollisionWithActor(gameActor)){
 //                gameActor.setLife(gameActor.getLife()-monster.get(i).getAtk());
 //            }
+            for(int k=0 ; k<mapObjArr.size() ;k++){
+                monster.get(i).isCollider(mapObjArr.get(k));
+            }
             if(monster.size()>1 && i != monster.size()-1) {
                 if (!gameActor.isCollisionWithActor(monster.get(i))) {
                     monster.get(i).isCollisionWithMonster(monster.get(i + 1));
@@ -173,11 +175,26 @@ public class MapScene extends Scene {
         }
     }
 
+    public void actorUpdate(){
+        gameActor.update();
+        for(int i=0 ; i<mapObjArr.size() ; i++){
+            gameActor.isCollider(mapObjArr.get(i));
+        }
+    }
+
+//    public void mapObjUpdate(){
+//        for(int i=0 ; i<mapObjArr.size() ; i++){
+//            if(mapObjArr.get(i).isCollision(gameActor){
+//
+//            }
+//        }
+//    }
+
     @Override
     public void update() {
         mouseUpdate();
         camera.update();
-        gameActor.update();
+        actorUpdate();
         monsterUpdate();
         bulletsUpdate();
         shootUpdate();
@@ -248,10 +265,10 @@ public class MapScene extends Scene {
 
     public void mapInit() {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
-                .setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 370, 168, 30))
+                .setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
                 .setNameAndPath("tree1", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 100, 208, 336))
-//                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", false, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 0, 424, 216))
-//                .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, new GameObjForPic("/map/rock-sand1-584-216.png", 0, 0, 584, 216))
+                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png",0,0,425,212))
+                .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
                 .gen()
                 .setMap();
     }

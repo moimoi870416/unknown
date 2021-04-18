@@ -164,13 +164,26 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     public boolean isCollied(final GameObject object) {
-        float x = (float)Math.abs(object.collider().centerX()-getCenterX());
-        float y = (float)Math.abs(object.collider().centerY()-getCenterY());
-        float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
-        if(d < (object.collider().width()+width)/2){
+            if (this.left() > object.collider().right()) {
+                return false;
+            }
+            if (this.right() < object.collider().left()) {
+                return false;
+            }
+            if (this.top() > object.collider().bottom()) {
+                return false;
+            }
+            if (this.bottom() < object.collider().top()) {
+                return false;
+            }
             return true;
-        }
-        return false;
+//        float x = (float)Math.abs(object.collider().centerX()-getCenterX());
+//        float y = (float)Math.abs(object.collider().centerY()-getCenterY());
+//        float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
+//        if(d < (object.collider().width()+width)/2){
+//            return true;
+//        }
+//        return false;
     }
 
     public boolean isCollied(final Monster monster) {

@@ -1,12 +1,15 @@
 package object.monster;
+import object.Rect;
 import util.Animator;
 
 public class Cockroach extends Monster{
     private int moveDistance;
+    private Rect hitCollied;
 
     public Cockroach(int x, int y) {
-        super(x+75,y+30,30,30,x, y, 150, 150, 5000, 30, 5);
+        super(x+30,y+30,100,92,x, y, 150, 150, 5000, 30, 5);
         animator = new Animator("/monster/cockroach/run.png",0,150,150,2);
+        hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
         animator.setArr(40);
         moveDistance = 800;
     }
@@ -30,11 +33,20 @@ public class Cockroach extends Monster{
             case DEATH -> animator.setImg("/monster/cockroach/run.png",2);
         }
     }
-
-//    @Override
-//    public void update(){
-//
-//    }
+/*
+    @Override
+    public void update(){
+        if(dir == Dir.RIGHT){
+            collider().setLeft(collider().left()-35);
+        }else {
+            collider().setLeft(collider().left()+35);
+        }
+        if(isChase) {
+            chase();
+            return;
+        }
+        isSeeingActor();
+    }
 /*
     private boolean attack(){
         if(isChase) {

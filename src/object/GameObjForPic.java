@@ -17,6 +17,11 @@ public class GameObjForPic extends GameObject{
     }
 
     @Override
+    public CollisionDir isCollider(GameObject obj) {
+        return null;
+    }
+
+    @Override
     public void paintComponent(Graphics g) {
         g.drawImage(img,painter().left(), painter().top(), null);
     }

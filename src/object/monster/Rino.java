@@ -13,9 +13,10 @@ public class Rino extends Monster{
     private int moveDistance;
     private int totalDistance;
     private boolean focus;
+    private int originalAtk;
 
     public Rino(int x, int y) {
-        super(x, y, 104,68, 500, 80, 2);
+        super(x+5,y+6,94,58,x, y, 104,68, 500, 80, 2);
         animator = new Animator("/monster/rino/Idle2(52x34).png",30,52,34,2);
         animator.setArr(11);
         readyAtk = true;
@@ -23,13 +24,30 @@ public class Rino extends Monster{
         attackDelay.play();
         this.totalDistance = 0;
         focus = false;
+        originalAtk = atk;
     }
 
     @Override
     public void setState(State state) {
         this.state = state;
         switch (state){
-            case STAND -> animator.setImg("/monster/rino/Idle2(52x34).png",2);
+            case STAND -> {
+                animator.setImg("/monster/rino/Idle2(52x34).png", 2);
+                animator.setArr(11);
+                animator.setDelayCount(180);
+            }
+            case WALK -> {
+                animator.setImg("/monster/rino/Idle2(52x34).png", 2);
+                animator.setArr(11);
+                animator.setDelayCount(180);
+                atk += atk;
+            }
+            case ATTACK -> {
+                animator.setImg("/monster/rino/Idle2(52x34).png", 2);
+                animator.setArr(11);
+                animator.setDelayCount(180);
+                atk = originalAtk;
+            }
             case RUN -> {
                 animator.setImg("/monster/rino/Run(52x34).png", 2);
                 animator.setArr(6);
@@ -39,6 +57,9 @@ public class Rino extends Monster{
 
     @Override
     public void update(){
+        if(isOut()){
+            return;
+        }
         if(isChase){
             if(readyAtk){
                 if(attack()){

@@ -54,6 +54,24 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         return painter.top() >= MapInformation.mapInfo().bottom();
     }
 
+    protected boolean isOut(){
+        if (collider().bottom() > Global.MAP_HEIGHT - 70) {
+            offSetY(Global.MAP_HEIGHT - 70-collider().height());
+            return true;
+        }
+        if (collider().right() > Global.MAP_WIDTH) {
+            offSetX(Global.MAP_WIDTH-collider().width());
+            return true;
+        }
+        if (collider().left() < 0) {
+            offSetX(0);
+            return true;
+        }
+        return false;
+
+
+    }
+
     public boolean touchTop() {
         return collider.top() <= 0;
     }
@@ -75,6 +93,16 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         return collider.overlap(obj.collider);
     }
 
+    public enum CollisionDir{
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        NO
+    }
+
+    public abstract CollisionDir isCollider(GameObject obj);
+
     //移動 x及y的位置
     public final void translate(int x, int y) {
         collider.translate(x, y);
@@ -91,10 +119,41 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         painter.translateY(y);
     }
 
+    public final void offSetX(int x){
+        int value = collider.left() - painter.left();
+        int cW = collider.width();
+        int pW = painter.width();
+        collider.setLeft(x);
+        collider.setRight(x+cW);
+        painter.setLeft(x-value);
+        painter.setRight(x-value+pW);
+    }
+
+    public final void offSetY(int y){
+        int value = collider.top() - painter.top();
+        int cH = collider.height();
+        int pH = painter.height();
+        collider.setTop(y);
+        collider.setBottom(y+cH);
+        painter.setTop(y-value);
+        painter.setBottom(y-value+pH);
+    }
+
+    public final void offSet(int x,int y){
+        int valueX = collider.left() - painter.left();
+        collider.setLeft(x);
+        painter.setLeft(x-valueX);
+        int valueY = collider.top() - painter.top();
+        collider.setTop(y);
+        painter.setTop(y-valueY);
+    }
+
     @Override
     public final void paint(Graphics g) {
         paintComponent(g);
         if (Global.IS_DEBUG) {
+            g.drawString(this.painter.left() + "," + this.painter.top(), this.painter.left() + 5, this.painter.top() + 12);
+            g.drawString(this.painter.right() + "," + this.painter.bottom(), this.painter.left() + 5, this.painter.top() + 27);
             g.setColor(Color.RED);
             g.drawRect(this.painter.left(), this.painter.top(), this.painter.width(), this.painter.height());
             g.setColor(Color.BLUE);

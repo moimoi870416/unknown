@@ -13,6 +13,7 @@ public abstract class GameObjForAnimator extends GameObject {
     protected State state;
     protected boolean isDie;
     protected int deadCount;
+    private GameObject nearestObj;
 
     public GameObjForAnimator(int x, int y, int width, int height,int life,int atk,int moveSpeed) {
         this(x, y, width, height,x,y,width,height,life,atk,moveSpeed);
@@ -40,7 +41,6 @@ public abstract class GameObjForAnimator extends GameObject {
             }
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-
     }
 
     public enum State{
@@ -103,4 +103,60 @@ public abstract class GameObjForAnimator extends GameObject {
         }
         return false;
     }
+
+    //判斷四面碰撞
+    private boolean topIsCollision(GameObject obj) {
+        return obj.collider().bottom() >= collider().top() &&
+                obj.collider().left()<collider().right()&&
+                obj.collider().right()>collider().left()&&
+                obj.collider().bottom()<collider().bottom()&&
+                collider().right()-obj.collider().left()>obj.collider().bottom()-collider().top()&&
+                obj.collider().right()-collider().left()>obj.collider().bottom()-collider().top();
+    }
+    private boolean leftIsCollision(GameObject obj) {
+        return obj.collider().right() >= collider().left() &&
+                obj.collider().bottom()>collider().top()&&
+                obj.collider().top()<collider().bottom()&&
+                obj.collider().right()<collider().right();
+    }
+    private boolean rightIsCollision(GameObject obj) {
+        return obj.collider().left() <= collider().right() &&
+                obj.collider().bottom()>collider().top()&&
+                obj.collider().top()<collider().bottom()&&
+                obj.collider().left()>collider().left();
+    }
+    private boolean bottomIsCollision(GameObject obj) {
+        return obj.collider().top() <= collider().bottom() &&
+                obj.collider().left()<collider().right()&&
+                obj.collider().right()>collider().left()&&
+                obj.collider().top()>collider().top()&&
+                collider().right()-obj.collider().left()>collider().bottom()-obj.collider().top()&&
+                obj.collider().right()-collider().left()>collider().bottom()-obj.collider().top();
+    }
+
+
+    @Override
+    public CollisionDir isCollider(GameObject obj){
+        if(isCollision(obj)) {
+            nearestObj = obj;
+            if (topIsCollision(obj)) {
+                offSetY(obj.collider().bottom());
+                return CollisionDir.UP;
+            }
+            if (bottomIsCollision(obj)) {
+                offSetY(obj.collider().top()-collider().height());
+                return CollisionDir.DOWN;
+            }
+            if (leftIsCollision(obj)) {
+                offSetX(obj.collider().right());
+                return CollisionDir.LEFT;
+            }
+            if (rightIsCollision(obj)) {
+                offSetX(obj.collider().left()-collider().width());
+                return CollisionDir.RIGHT;
+            }
+        }
+        return CollisionDir.NO;
+    }
+
 }

@@ -189,6 +189,11 @@ public class Camera extends GameObject implements CommandSolver.KeyListener {
 
 
     @Override
+    public CollisionDir isCollider(GameObject obj) {
+        return null;
+    }
+
+    @Override
     public void paintComponent(Graphics g) {
 
     }
