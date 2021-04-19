@@ -58,7 +58,7 @@ public class GameActor extends GameObjForAnimator {
 
     private enum WhichGun {
         ONE(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.AK, Global.actorX, Global.actorY));
+        TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
 
         private Gun gun;
 

@@ -3,10 +3,6 @@ package weapon;
 import controller.ImageController;
 import object.GameObjForAnimator;
 import util.Delay;
-
-import java.awt.*;
-
-
 import java.awt.*;
 
 public class Gun extends GameObjForAnimator {
@@ -48,8 +44,8 @@ public class Gun extends GameObjForAnimator {
     }
 
     public enum GunType {
-        PISTOL("/weapon/pistol.png", "/actor/pistol.png",76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
-        UZI("/weapon/uzi.png", "/actor/uzi.png",70, 54, 160, 40, 7, 45, 5),
+        PISTOL("/weapon/pistol.png", "/actor/pistol.png",76, 32, Integer.MAX_VALUE, 15, 15, 60, 1),
+        UZI("/weapon/uzi.png", "/actor/uzi.png",70, 54, 160, 40, 7, 60, 5),
         AK("/weapon/ak.png", "/actor/ak3.png",70, 54, 120, 30, 10, 90, 10),
         SNIPER("/weapon/sniper.png", "/actor/sniper.png",70, 54, 30, 10, 60, 120, 1),
         MACHINE_GUN("/weapon/machine.png", "/actor/machine.png",70, 54, 150, 100, 5, 180, 1);
@@ -157,10 +153,10 @@ public class Gun extends GameObjForAnimator {
 
     public void paintComponent(Graphics g,int actorX,int actorY,Dir dir){
         if(dir == Dir.LEFT) {
-            g.drawImage(imgForActor, actorX+3, actorY + 20, null);
+            g.drawImage(imgForActor, actorX+3, actorY + 20,62,31, null);
             return;
         }
-        g.drawImage(imgForActor, actorX-painter().width()+15, actorY + 20, null);
+        g.drawImage(imgForActor, actorX-painter().width()+15, actorY + 20,actorX-painter().width()+15+62, actorY + 51,0,31,62,62, null);
     }
 
     public int getSurplusBullet() {

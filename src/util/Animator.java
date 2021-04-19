@@ -91,4 +91,11 @@ public class Animator {
     public boolean isFinish(){
         return playOnce && isFinish;
     }
+
+    public void setWidthAndHeightSize(int widthSize,int heightSize){
+        this.widthSize = widthSize;
+        this.heightSize = heightSize;
+    }
+
+
 }

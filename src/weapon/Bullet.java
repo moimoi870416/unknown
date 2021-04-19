@@ -5,6 +5,7 @@ import object.GameObjForAnimator;
 import object.GameObject;
 import object.monster.Monster;
 import util.Animator;
+import util.Delay;
 import util.GameKernel;
 import java.awt.*;
 import static util.Global.*;
@@ -30,6 +31,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int hitX;
     private int hitY;
     private boolean isHit;
+    private Delay appear;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
         img = ImageController.getInstance().tryGet("/weapon/bullet.png");
@@ -56,6 +58,9 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         hitAnimator = new Animator("/weapon/blood(100-100).png",0,100,100,2);
         hitAnimator.setArr(14);
         isHit = false;
+        appear = new Delay(4);
+        appear.play();
+
     }
 
     public enum State{
@@ -69,11 +74,11 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     private enum BulletType{
-        PISTOL(10,10,200,2,-2,50),
-        UZI(19,15,400,7,-7,50),
-        AK(31,12,550,3,-3,50),
+        PISTOL(20,10,500,1,-1,50),
+        UZI(26,15,500,7,-7,50),
+        AK(35,12,700,3,-3,50),
         SNIPER(120,30,1000,0,0,300),
-        MACHINE_GUN(25,15,550,5,-5,100);
+        MACHINE_GUN(31,15,600,5,-5,100);
 
         private int atk;//攻擊力
         private int speedMove;//子彈的速度
@@ -209,7 +214,10 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     @Override
     public void paint(Graphics g) {
         if(state == State.FLYING) {
-            g.drawImage(img, (int) left(), (int) top(), null);
+            if(appear.count() || appear.isStop()){
+                g.drawImage(img, (int) left(), (int) top(), null);
+                return;
+            }
             return;
         }
         hitAnimator.paintAnimator(g,hitX-30,hitX+70,hitY-50,hitY+50, GameObjForAnimator.Dir.LEFT);

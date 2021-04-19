@@ -35,8 +35,7 @@ public abstract class GameObjForAnimator extends GameObject {
             return;
         }
         if(state == State.DEATH){
-            deadCount--;
-            if(deadCount <= 0){
+            if(animator.isFinish()){
                 state = State.DEAD;
             }
         }

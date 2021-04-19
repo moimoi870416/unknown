@@ -15,6 +15,11 @@ public class Cockroach extends Monster{
     }
 
     @Override
+    protected void updateComponent() {
+
+    }
+
+    @Override
     public void setState(State state) {
         this.state = state;
         switch (state){

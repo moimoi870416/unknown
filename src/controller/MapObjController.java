@@ -20,6 +20,8 @@ public class MapObjController {
     private ArrayList<GameObject> mapObjArr;
     private String bmp;
     private String txt;
+    private int x;
+    private int y;
     private int objSize;
     private ArrayList<KeyPair> keyPairs;
 
@@ -33,9 +35,11 @@ public class MapObjController {
         return mapObjController;
     }
 
-    private MapObjController setLoadMap(String bmp, String txt, int size, ArrayList<KeyPair> keyPairs){
+    private MapObjController setLoadMap(String bmp, String txt,int x,int y, int size, ArrayList<KeyPair> keyPairs){
         this.bmp = bmp;
         this.txt = txt;
+        this.x = x;
+        this.y = y;
         this.objSize = size;
         this.keyPairs = keyPairs;
         mapObjArr = new ArrayList<>();
@@ -55,10 +59,10 @@ public class MapObjController {
                         //進行name的比照並產生對應地圖物件
                         GameObject tmp;
                         if (gameObject.equals(name) && keyPairs.get(k).gameObject == null && !keyPairs.get(k).adjustCollision) {
-                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size+x, mapInfo.getY() * size+y, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
                             return tmp;
                         }if (gameObject.equals(name) && keyPairs.get(k).gameObject == null && keyPairs.get(k).adjustCollision) {
-                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size+x, mapInfo.getY() * size+y, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
                             tmp.collider().setLeft(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().left());
                             tmp.collider().setTop(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().top());
                             tmp.collider().setRight(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().width());
@@ -66,7 +70,7 @@ public class MapObjController {
                             return tmp;
                         }
                         if(gameObject.equals(name) && keyPairs.get(k).gameObject != null && keyPairs.get(k).adjustCollision){
-                            tmp = new GameObjForPic(keyPairs.get(k).picPath, mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath, mapInfo.getX() * size+x, mapInfo.getY() * size+y, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
                             tmp.collider().setLeft(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().left());
                             tmp.collider().setTop(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().top());
                             tmp.collider().setRight(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().width());
@@ -75,12 +79,12 @@ public class MapObjController {
                         }
                         if(gameObject.equals(name) && keyPairs.get(k).gameObject != null && !keyPairs.get(k).adjustCollision){
                             tmp = keyPairs.get(k).gameObject;
-                            tmp.painter().setLeft(mapInfo.getX() * size);
-                            tmp.painter().setTop(mapInfo.getY() * size);
+                            tmp.painter().setLeft(mapInfo.getX() * size+x);
+                            tmp.painter().setTop(mapInfo.getY() * size+y);
                             tmp.painter().setRight(mapInfo.getSizeX() * size);
                             tmp.painter().setBottom(mapInfo.getSizeY() * size);
-                            tmp.collider().setLeft(mapInfo.getX() * size);
-                            tmp.collider().setTop(mapInfo.getY() * size);
+                            tmp.collider().setLeft(mapInfo.getX() * size+x);
+                            tmp.collider().setTop(mapInfo.getY() * size+y);
                             tmp.collider().setRight(mapInfo.getSizeX() * size);
                             tmp.collider().setBottom(mapInfo.getSizeY() * size);
                             return tmp;
@@ -98,6 +102,8 @@ public class MapObjController {
     public static class Builder {
         private String bmp;
         private String txt;
+        private int x;
+        private int y;
         private int objSize;
         private ArrayList<KeyPair> keyPairs;
 
@@ -109,6 +115,18 @@ public class MapObjController {
             keyPairs = new ArrayList<>();
             this.bmp = bmp;
             this.txt = txt;
+            this.x = 0;
+            this.y = 0;
+            return this;
+        }
+
+        public Builder setX(int x){
+            this.x = x;
+            return this;
+        }
+
+        public Builder setY(int y){
+            this.y = y;
             return this;
         }
 
@@ -123,7 +141,7 @@ public class MapObjController {
         }
 
         public MapObjController gen(){
-            return MapObjController.getInstance().setLoadMap(bmp,txt,objSize,keyPairs);
+            return MapObjController.getInstance().setLoadMap(bmp,txt,x,y,objSize,keyPairs);
         }
 
     }
