@@ -17,8 +17,8 @@ public class GameActor extends GameObjForAnimator {
     private int XForFlash;
     private int YForFlash;
     private Rotation rotation;
-    private int fixedX;
-    private int fixedY;
+    private Bar blood;
+
 
     public GameActor(String path, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
@@ -34,15 +34,15 @@ public class GameActor extends GameObjForAnimator {
         delayForFlash = new Delay(120);
         canFlash = true;
         rotation = new Rotation();
+        blood = new Bar();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-//        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50);
         rotation.paint(g, currentGun.gun.getGunType().forActorPath);
         flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
-
+        blood.paint(g);
     }
 
     public void changeGun(int commandCode) {
@@ -61,6 +61,7 @@ public class GameActor extends GameObjForAnimator {
         ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
         TWO(new Gun(Gun.GunType.UZI, Global.actorX, Global.actorY));
         private Gun gun;
+
         WhichGun(Gun gun) {
             this.gun = gun;
         }
@@ -78,6 +79,7 @@ public class GameActor extends GameObjForAnimator {
     public void tradeGun(Gun gun) {
         currentGun.gun = gun;
     }
+
     public Gun gunOtherGun() {
         return otherGun.gun;
     }
@@ -145,9 +147,10 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
-
-        rotation.rotationUpdate(this.collider().centerX()+currentGun.gun.collider().width()/3f, this.collider().centerY()-currentGun.gun.collider().height()/2,
-                this.collider().centerX()-currentGun.gun.collider().width()/3f, this.collider().centerY()-currentGun.gun.collider().height()/2);
+        rotation.rotationUpdate(this.collider().centerX() + currentGun.gun.collider().width() / 3f, this.collider().centerY() - currentGun.gun.collider().height() / 2,
+                this.collider().centerX() - currentGun.gun.collider().width() / 3f, this.collider().centerY() - currentGun.gun.collider().height() / 2);
+        System.out.println(life);
+        blood.barUpdate(collider().left(),collider().top(),this.life);
     }
 
     private void updatePosition() {

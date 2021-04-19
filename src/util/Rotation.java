@@ -15,11 +15,6 @@ public class Rotation {
     private float fixedY;
 
     public float angleBetweenTwoPointWithFixedPoint() {
-
-        System.out.println("mouseX" + mouseX + " " + "mouseY" + mouseY);
-        System.out.println("startX" + startPointX + "/startY" + startPointY);
-        System.out.println("fixed" + fixedX + "/fixedY" + fixedY);
-
         float angle1 = (float) Math.atan2((startPointY - fixedY), (startPointX - fixedX));
         float angle2 = (float) Math.atan2((mouseY - fixedY), (mouseX - fixedX));
         System.out.println("angle1" + angle1 + "/angle2" + angle2);
@@ -51,8 +46,6 @@ public class Rotation {
         this.startPointY = startPointY;
         this.fixedX = fixedX;
         this.fixedY = fixedY;
-
     }
-
 
 }
