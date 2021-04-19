@@ -1,9 +1,6 @@
 package object.actor;
 
-import util.Animator;
-import util.Delay;
-import util.Display;
-import util.Global;
+import util.*;
 import object.GameObjForAnimator;
 import weapon.Gun;
 
@@ -20,6 +17,9 @@ public class GameActor extends GameObjForAnimator {
     private Animator flashAnimator;
     private int XForFlash;
     private int YForFlash;
+    private Rotation rotation;
+    private Bar blood;
+
 
     public GameActor( String path,final int x, final int y) {
         super(x, y, 58, 58,100,10,3);
@@ -31,17 +31,22 @@ public class GameActor extends GameObjForAnimator {
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
+
         verticalDir = horizontalDir = Global.Direction.NO;
+        otherGun.gun.translate(painter().centerX(), painter().centerY());
         delayForFlash = new Delay(120);
         canFlash = true;
+        rotation = new Rotation();
+        blood = new Bar();
+
     }
 
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        currentGun.gun.paintComponent(g,Global.actorX,Global.actorY-50,dir);
-        flashAnimator.paintAnimator(g,XForFlash-24,XForFlash+24,YForFlash-16,YForFlash+16,dir);
-
+        rotation.paint(g, currentGun.gun,dir);
+        flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
+        blood.paint(g);
     }
 
     public void changeGun(int commandCode) {
@@ -59,7 +64,6 @@ public class GameActor extends GameObjForAnimator {
     private enum WhichGun {
         ONE(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY)),
         TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
-
         private Gun gun;
 
         WhichGun(Gun gun) {
@@ -76,19 +80,13 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-//    @Override
-//    protected void setRect() {
-//        rect.setLeft(painter().left());
-//        rect.setTop(painter().top());
-//        rect.setRight(painter().right());
-//        rect.setBottom(painter().bottom());
-//    }
 
-    public void tradeGun(Gun gun){
+
+    public void tradeGun(Gun gun) {
         currentGun.gun = gun;
     }
 
-    public Gun gunOtherGun(){
+    public Gun gunOtherGun() {
         return otherGun.gun;
     }
 
@@ -125,6 +123,7 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void setState(State state) {
+
         this.state = state;
         switch (state){
             case STAND -> {
@@ -146,6 +145,7 @@ public class GameActor extends GameObjForAnimator {
                 animator.setPlayOnce();
             }
         }
+
 
     }
 
@@ -174,12 +174,29 @@ public class GameActor extends GameObjForAnimator {
                     translateX(moveSpeed);
                 }
                 break;
+
+            case UP:
+                if (painter().top() < 0) {
+                    translateY(moveSpeed);
+                }
+                break;
+            case DOWN:
+                if (painter().bottom() > Global.MAP_HEIGHT - 15) {
+                    translateY(-moveSpeed);
+                }
+                break;
+            case NO:
         }
         if (delayForFlash.count()) {
             canFlash = true;
         }
         currentGun.gun.update();
+        currentGun.gun.translateForActor();
         updatePosition();
+        rotation.rotationUpdate(this.collider().centerX() + currentGun.gun.collider().width() / 3f, this.collider().centerY() - currentGun.gun.collider().height() / 2,
+                this.collider().centerX() - currentGun.gun.collider().width() / 3f, this.collider().centerY() - currentGun.gun.collider().height() / 2);
+        System.out.println(life);
+        blood.barUpdate(collider().left(),collider().top(),this.life);
     }
 
     private void updatePosition() {
@@ -203,7 +220,6 @@ public class GameActor extends GameObjForAnimator {
             if (distance > FLASH_MAX_DISTANCE) {
                 distance = FLASH_MAX_DISTANCE;
             }
-
             float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
             float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
             if (mouseY < painter().centerY()) {

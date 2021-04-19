@@ -104,7 +104,7 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     public abstract CollisionDir isCollider(GameObject obj);
 
     //移動 x及y的位置
-    public final void translate(int x, int y) {
+    public void translate(int x, int y) {
         collider.translate(x, y);
         painter.translate(x, y);
     }
