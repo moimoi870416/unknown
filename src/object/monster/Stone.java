@@ -21,7 +21,6 @@ public class Stone extends Monster{
             animator.setArr(1);
             animator.setDelayCount(6000);
             animator.setPlayLoop();
-            System.out.println(222);
         }
     }
 
@@ -42,7 +41,6 @@ public class Stone extends Monster{
                     animator.setDelayCount(10);
                     animator.setWidthAndHeightSize(22, 18);
                     animator.setPlayOnce();
-                    System.out.println(111);
                     dead = true;
                 }
             }

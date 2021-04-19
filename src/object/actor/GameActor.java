@@ -33,7 +33,7 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Global.Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
-        delayForFlash = new Delay(120);
+        delayForFlash = new Delay(300);
         canFlash = true;
         rotation = new Rotation();
         blood = new Bar();
