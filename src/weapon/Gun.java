@@ -3,14 +3,11 @@ package weapon;
 import controller.ImageController;
 import object.GameObjForAnimator;
 import util.Delay;
-<<<<<<< HEAD
-=======
+
 import util.Rotation;
 
 import java.awt.*;
 
-
->>>>>>> 旋轉
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
@@ -56,19 +53,12 @@ public class Gun extends GameObjForAnimator {
     }
 
     public enum GunType {
-<<<<<<< HEAD
         PISTOL("/weapon/pistol.png", "/actor/pistol.png",76, 32, Integer.MAX_VALUE, 15, 15, 60, 1),
         UZI("/weapon/uzi.png", "/actor/uzi.png",70, 54, 160, 40, 7, 60, 5),
         AK("/weapon/ak.png", "/actor/ak3.png",70, 54, 120, 30, 10, 90, 10),
         SNIPER("/weapon/sniper.png", "/actor/sniper.png",70, 54, 30, 10, 60, 120, 1),
         MACHINE_GUN("/weapon/machine.png", "/actor/machine.png",70, 54, 150, 100, 5, 180, 1);
-=======
-        PISTOL("/weapon/pistol.png", "/actor/pistol.png", 76, 32, Integer.MAX_VALUE, 15, 3, 60, 1),
-        UZI("/weapon/uzi.png", "/actor/uzi.png", 76, 32, 160, 40, 7, 45, 5),
-        AK("/weapon/ak.png", "/actor/ak.png", 76, 32, 120, 30, 10, 9, 10),
-        SNIPER("/weapon/sniper.png", "/actor/sniper.png", 76, 32, 30, 10, 6, 120, 1),
-        MACHINE_GUN("/weapon/machine.png", "/actor/machine.png", 76, 32, 150, 100, 5, 180, 1);
->>>>>>> 旋轉
+
 
         public String forMapPath;
         public String forActorPath;
@@ -170,17 +160,14 @@ public class Gun extends GameObjForAnimator {
         g.drawImage(imgForDisplay, positionX, positionY, null);
     }
 
-<<<<<<< HEAD
+
     public void paintComponent(Graphics g,int actorX,int actorY,Dir dir){
         if(dir == Dir.LEFT) {
             g.drawImage(imgForActor, actorX+3, actorY + 20,62,31, null);
             return;
         }
-        g.drawImage(imgForActor, actorX-painter().width()+15, actorY + 20,actorX-painter().width()+15+62, actorY + 51,0,31,62,62, null);
-=======
-    public void paintComponent(Graphics g, int actorX, int actorY) {
+
         g.drawImage(imgForActor, actorX, actorY + 25, null);
->>>>>>> 旋轉
     }
 
     public int getSurplusBullet() {

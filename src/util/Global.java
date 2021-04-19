@@ -30,7 +30,6 @@ public class Global {
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
 
-<<<<<<< HEAD
     public enum MapPath{
         BEGIN("/map/map-begin.png"),
         SECOND("/map/map-second.png"),
@@ -47,10 +46,6 @@ public class Global {
 
     public enum Actor{
         FIRST("/actor/actorStand.png"),
-=======
-    public enum Actor {
-        FIRST("/actor/run.png"),
->>>>>>> 旋轉
         SECOND("/actor/actorrun.png"),
         THIRD("/actor/actorrun.png");
 
