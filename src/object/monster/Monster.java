@@ -9,22 +9,39 @@ public abstract class Monster extends GameObjForAnimator {
     protected Delay attackDelay;
     private boolean collision;
     private boolean canAttack;
+    private Delay delayForAttack;
+    private boolean isOnceAttack;
     protected boolean isChase;
     protected boolean clickAtk;
     protected Delay clickAttack;
 
+<<<<<<< HEAD
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed) {
         this(x, y, width, height, x, y, width, height, life, atk, moveSpeed);
         attackDelay = new Delay(60);
         isChase = false;
         canAttack = true;
         clickAttack = new Delay(90);
+=======
+    public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack) {
+        this(x, y, width, height, x, y, width, height, life, atk, moveSpeed, isOnceAttack);
+
+>>>>>>> 碰撞
     }
 
-    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2, int life, int atk, int moveSpeed) {
+    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2, int life, int atk, int moveSpeed, boolean isOnceAttack) {
         super(x, y, width, height, x2, y2, width2, height2, life, atk, moveSpeed);
+        attackDelay = new Delay(60);
+        isChase = false;
+        canAttack = true;
+        delayForAttack = new Delay(120);
         this.delayForCollision = new Delay(10);
         collision = true;
+<<<<<<< HEAD
+=======
+        confirmAtk = false;
+        this.isOnceAttack = isOnceAttack;
+>>>>>>> 碰撞
     }
 
     public void chase() {
@@ -56,8 +73,14 @@ public abstract class Monster extends GameObjForAnimator {
             isChase = false;
             return;
         }
+        updateComponent();
         if (delayForCollision.count()) {
             collision = true;
+        }
+        if (isOnceAttack) {
+            if (delayForAttack.count()) {
+                canAttack = true;
+            }
         }
         if (isChase) {
             chase();
@@ -65,6 +88,29 @@ public abstract class Monster extends GameObjForAnimator {
         }
         isSeeingActor();
 
+<<<<<<< HEAD
+=======
+    }
+
+    public void attack(GameObjForAnimator gameObjForAnimator) {
+        if (isOnceAttack) {
+            if (canAttack) {
+                delayForAttack.play();
+                gameObjForAnimator.offLife(this.atk);
+                canAttack = false;
+            }
+            return;
+        }
+        if (this.isCollisionWithActor(gameObjForAnimator)) {
+            delayForAttack.play();
+            if (delayForAttack.count()) {
+                gameObjForAnimator.offLife(this.atk);
+            }
+            return;
+        }
+        delayForAttack.stop();
+
+>>>>>>> 碰撞
     }
 
     protected abstract void updateComponent();
@@ -106,12 +152,6 @@ public abstract class Monster extends GameObjForAnimator {
         }
 
     }
-
-
-    public boolean attack1() {
-        return false;
-    }
-
 
     public abstract void setState(State state);
     //public abstract String getType();

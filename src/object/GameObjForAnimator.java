@@ -158,4 +158,6 @@ public abstract class GameObjForAnimator extends GameObject {
         return CollisionDir.NO;
     }
 
+
+
 }

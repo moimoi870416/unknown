@@ -18,6 +18,7 @@ import object.monster.*;
 import util.Display;
 import controller.ImageController;
 import object.actor.GameActor;
+
 import static util.Global.*;
 
 import weapon.Bullet;
@@ -51,10 +52,10 @@ public class MapScene extends Scene {
 //        monster.add(new Cockroach(1400,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.MUSHROOM));
 //        monster.add(new SmallMonster(1000,500,SmallMonster.Type.MUSHROOM));
-//        monster.add(new Rino(200,500));
+        monster.add(new Rino(200,500));
 //        monster.add(new Rino(1100,500));
 //        monster.add(new Rino(500,500));
-        gameActor = new GameActor(Actor.FIRST.getPath(),300,700);
+        gameActor = new GameActor(Actor.FIRST.getPath(), 300, 700);
 
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
@@ -86,9 +87,8 @@ public class MapScene extends Scene {
         if (camera.isCollision(gameActor)) {
             gameActor.paint(g);
         }
-
         mapObjArr.forEach(a -> a.paint(g));
-        mapObjArr2.forEach(a->a.paint(g));
+        mapObjArr2.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
@@ -98,7 +98,7 @@ public class MapScene extends Scene {
 
     public void bulletsUpdate() {
         for (int i = 0; i < testBullets.size(); i++) {
-            if(testBullets.get(i).getState() == Bullet.State.STOP){
+            if (testBullets.get(i).getState() == Bullet.State.STOP) {
                 testBullets.remove(i);
                 i--;
                 break;
@@ -121,7 +121,7 @@ public class MapScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-                        if(monster.get(k).getState() != GameObjForAnimator.State.DEATH) {
+                        if (monster.get(k).getState() != GameObjForAnimator.State.DEATH) {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
@@ -140,23 +140,23 @@ public class MapScene extends Scene {
     }
 
     public void monsterUpdate() {
-        for (int i = 0; i < monster.size() ; i++) {
-            if(monster.get(i).getState() == GameObjForAnimator.State.DEAD){
+        for (int i = 0; i < monster.size(); i++) {
+            if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                 monster.remove(i);
                 i--;
                 break;
             }
             monster.get(i).update();
-            if(monster.get(i).isCollisionWithActor(gameActor)){
-                gameActor.offLife(monster.get(i).getAtk());
+            if (monster.get(i).isCollisionWithActor(gameActor)) {
+               monster.get(i).attack(gameActor);
             }
-            for(int k=0 ; k<mapObjArr.size() ;k++){
+            for (int k = 0; k < mapObjArr.size(); k++) {
                 monster.get(i).isCollider(mapObjArr.get(k));
             }
-            for(int k=0 ; k<mapObjArr2.size() ; k++){
+            for (int k = 0; k < mapObjArr2.size(); k++) {
                 gameActor.isCollider(mapObjArr2.get(k));
             }
-            if(monster.size()>1 && i != monster.size()-1) {
+            if (monster.size() > 1 && i != monster.size() - 1) {
                 if (!gameActor.isCollisionWithActor(monster.get(i))) {
                     monster.get(i).isCollisionWithMonster(monster.get(i + 1));
                 }
@@ -176,8 +176,12 @@ public class MapScene extends Scene {
                 monster.add(new Rino(actorX + 1400, random(500, WINDOW_WIDTH)));
             }
         }
+<<<<<<< HEAD
 
 
+=======
+         */
+>>>>>>> 碰撞
     }
 
     public void shootUpdate() {
@@ -192,12 +196,12 @@ public class MapScene extends Scene {
         }
     }
 
-    public void actorUpdate(){
+    public void actorUpdate() {
         gameActor.update();
-        for(int i=0 ; i<mapObjArr.size() ; i++){
+        for (int i = 0; i < mapObjArr.size(); i++) {
             gameActor.isCollider(mapObjArr.get(i));
         }
-        for(int i=0 ; i<mapObjArr2.size() ; i++){
+        for (int i = 0; i < mapObjArr2.size(); i++) {
             gameActor.isCollider(mapObjArr2.get(i));
         }
     }
@@ -294,25 +298,25 @@ public class MapScene extends Scene {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
                 .setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
                 .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree2","/map/tree2-208-336.png",true,new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree3","/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png",0,50,425,212))
+                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
+                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
+                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                 //.setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
                 .gen()
                 .setMap();
         mapObjArr2 = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
                 .setX(MAP_UNIT_WIDTH)
                 .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree2","/map/tree2-208-336.png",true,new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree3","/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png",0,50,425,212))
+                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
+                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
+                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                 //.setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
                 .gen()
                 .setMap();
 
     }
 
-    private class mapInfo{
+    private class mapInfo {
         //之後會有切換圖片的行為，所以先開一個內部類
         private Image mapLeft;
         private Image mapMiddle;
@@ -321,21 +325,21 @@ public class MapScene extends Scene {
         private int count;
         private boolean passing4000X;
 
-        private mapInfo(){
+        private mapInfo() {
             mapLeft = ImageController.getInstance().tryGet(MapPath.BEGIN.mapPath);
             mapMiddle = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
             mapRight = ImageController.getInstance().tryGet(MapPath.THIRD.mapPath);
             this.count = 0;
         }
 
-        public void mapPaint(Graphics g){
+        public void mapPaint(Graphics g) {
             g.drawImage(mapLeft, mapWidth * count, 0, null);
-            g.drawImage(mapMiddle,mapWidth * (count +1),0,null);
-            g.drawImage(mapRight,mapWidth * (count+2),0,null);
+            g.drawImage(mapMiddle, mapWidth * (count + 1), 0, null);
+            g.drawImage(mapRight, mapWidth * (count + 2), 0, null);
         }
 
-        public void mapUpdate(){
-            if(!passing4000X) {
+        public void mapUpdate() {
+            if (!passing4000X) {
                 if (actorX > 4000) {
                     mapLeft = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
                     count++;

@@ -21,11 +21,11 @@ public class GameActor extends GameObjForAnimator {
     private Bar blood;
 
 
-    public GameActor( String path,final int x, final int y) {
-        super(x, y, 58, 58,100,10,3);
-        animator = new Animator(path,30,58,58,2);
+    public GameActor(String path, final int x, final int y) {
+        super(x, y, 58, 58, 100, 10, 3);
+        animator = new Animator(path, 30, 58, 58, 2);
         animator.setArr(3);
-        flashAnimator = new Animator("/actor/flash.png",8,48,32,2);
+        flashAnimator = new Animator("/actor/flash.png", 8, 48, 32, 2);
         flashAnimator.setArr(4);
         flashAnimator.setPlayOnce();
         currentGun = WhichGun.ONE;
@@ -43,7 +43,7 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        rotation.paint(g, currentGun.gun,dir);
+        rotation.paint(g, currentGun.gun, dir);
         flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
         blood.paint(g);
     }
@@ -93,7 +93,7 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public void move(int commandCode) {
-        if(state != State.RUN){
+        if (state != State.RUN) {
             setState(State.RUN);
         }
         switch (commandCode) {
@@ -122,21 +122,21 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void setState(State state) {
         this.state = state;
-        switch (state){
+        switch (state) {
             case STAND -> {
-                animator.setImg("/actor/actorStand.png",2);
+                animator.setImg("/actor/actorStand.png", 2);
                 animator.setArr(3);
                 animator.setDelayCount(30);
                 animator.setPlayLoop();
             }
             case RUN -> {
-                animator.setImg("/actor/run.png",2);
+                animator.setImg("/actor/run.png", 2);
                 animator.setArr(4);
                 animator.setDelayCount(10);
                 animator.setPlayLoop();
             }
             case DEATH -> {
-                animator.setImg("/actor/actorDead.png",2);
+                animator.setImg("/actor/actorDead.png", 2);
                 animator.setArr(16);
                 animator.setDelayCount(20);
                 animator.setPlayOnce();
@@ -158,7 +158,7 @@ public class GameActor extends GameObjForAnimator {
                 }
                 break;
         }
-        switch (horizontalDir){
+        switch (horizontalDir) {
             case RIGHT:
                 if (painter().right() > Global.MAP_WIDTH) {
                     translateX(-moveSpeed);
@@ -185,12 +185,20 @@ public class GameActor extends GameObjForAnimator {
         if (delayForFlash.count()) {
             canFlash = true;
         }
+
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
+<<<<<<< HEAD
         rotation.rotationUpdate(this.collider().centerX() , this.collider().centerY() ,
                 this.collider().centerX() , this.collider().centerY() );
         blood.barUpdate(collider().left(),collider().top(),this.life);
+=======
+        rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
+                this.collider().centerX(), this.collider().centerY());
+        System.out.println(life);
+        blood.barUpdate(collider().left(), collider().top(), this.life);
+>>>>>>> 碰撞
     }
 
     private void updatePosition() {
