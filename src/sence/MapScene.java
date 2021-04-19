@@ -153,6 +153,9 @@ public class MapScene extends Scene {
             for(int k=0 ; k<mapObjArr.size() ;k++){
                 monster.get(i).isCollider(mapObjArr.get(k));
             }
+            for(int k=0 ; k<mapObjArr2.size() ; k++){
+                gameActor.isCollider(mapObjArr2.get(k));
+            }
             if(monster.size()>1 && i != monster.size()-1) {
                 if (!gameActor.isCollisionWithActor(monster.get(i))) {
                     monster.get(i).isCollisionWithMonster(monster.get(i + 1));
@@ -183,6 +186,9 @@ public class MapScene extends Scene {
         gameActor.update();
         for(int i=0 ; i<mapObjArr.size() ; i++){
             gameActor.isCollider(mapObjArr.get(i));
+        }
+        for(int i=0 ; i<mapObjArr2.size() ; i++){
+            gameActor.isCollider(mapObjArr2.get(i));
         }
     }
 

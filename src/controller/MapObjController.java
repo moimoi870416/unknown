@@ -62,19 +62,23 @@ public class MapObjController {
                             tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size+x, mapInfo.getY() * size+y, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
                             return tmp;
                         }if (gameObject.equals(name) && keyPairs.get(k).gameObject == null && keyPairs.get(k).adjustCollision) {
-                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size+x, mapInfo.getY() * size+y, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
-                            tmp.collider().setLeft(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().left());
-                            tmp.collider().setTop(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().top());
-                            tmp.collider().setRight(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().width());
-                            tmp.collider().setBottom(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().height());
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath,mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp.collider().setLeft(mapInfo.getX() * size +x + keyPairs.get(k).gameObject.collider().left());
+                            tmp.collider().setTop(mapInfo.getY() * size +y+ keyPairs.get(k).gameObject.collider().top());
+                            tmp.collider().setRight(mapInfo.getX() * size +x+ keyPairs.get(k).gameObject.collider().width());
+                            tmp.collider().setBottom(mapInfo.getY() * size +y+ keyPairs.get(k).gameObject.collider().height());
+                            tmp.painter().setLeft(mapInfo.getX() * size +x);
+                            tmp.painter().setTop(mapInfo.getY() * size +y);
                             return tmp;
                         }
                         if(gameObject.equals(name) && keyPairs.get(k).gameObject != null && keyPairs.get(k).adjustCollision){
-                            tmp = new GameObjForPic(keyPairs.get(k).picPath, mapInfo.getX() * size+x, mapInfo.getY() * size+y, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
-                            tmp.collider().setLeft(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().left());
-                            tmp.collider().setTop(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().top());
-                            tmp.collider().setRight(mapInfo.getX() * size + keyPairs.get(k).gameObject.collider().width());
-                            tmp.collider().setBottom(mapInfo.getY() * size + keyPairs.get(k).gameObject.collider().height());
+                            tmp = new GameObjForPic(keyPairs.get(k).picPath, mapInfo.getX() * size, mapInfo.getY() * size, mapInfo.getSizeX() * size, mapInfo.getSizeY() * size);
+                            tmp.collider().setLeft(mapInfo.getX() * size +x + keyPairs.get(k).gameObject.collider().left());
+                            tmp.collider().setTop(mapInfo.getY() * size +y+ keyPairs.get(k).gameObject.collider().top());
+                            tmp.collider().setRight(mapInfo.getX() * size +x+ keyPairs.get(k).gameObject.collider().width());
+                            tmp.collider().setBottom(mapInfo.getY() * size +y+ keyPairs.get(k).gameObject.collider().height());
+                            tmp.painter().setLeft(mapInfo.getX() * size +x);
+                            tmp.painter().setTop(mapInfo.getY() * size +y);
                             return tmp;
                         }
                         if(gameObject.equals(name) && keyPairs.get(k).gameObject != null && !keyPairs.get(k).adjustCollision){

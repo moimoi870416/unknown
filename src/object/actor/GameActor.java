@@ -44,7 +44,7 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        rotation.paint(g, currentGun.gun.getGunType().forActorPath);
+        rotation.paint(g, currentGun.gun,dir);
         flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
         blood.paint(g);
     }
