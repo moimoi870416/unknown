@@ -50,14 +50,13 @@ public class Gun extends GameObjForAnimator {
         canShoot = true;
         shootingDelay.loop();
 
-
     }
 
     public enum GunType {
-        PISTOL("/weapon/pistol.png", "/actor/pistol.png", 76, 32, Integer.MAX_VALUE, 15, 30, 60, 1),
+        PISTOL("/weapon/pistol.png", "/actor/pistol.png", 76, 32, Integer.MAX_VALUE, 15, 3, 60, 1),
         UZI("/weapon/uzi.png", "/actor/uzi.png", 76, 32, 160, 40, 7, 45, 5),
-        AK("/weapon/ak.png", "/actor/ak.png", 76, 32, 120, 30, 10, 90, 10),
-        SNIPER("/weapon/sniper.png", "/actor/sniper.png", 76, 32, 30, 10, 60, 120, 1),
+        AK("/weapon/ak.png", "/actor/ak.png", 76, 32, 120, 30, 10, 9, 10),
+        SNIPER("/weapon/sniper.png", "/actor/sniper.png", 76, 32, 30, 10, 6, 120, 1),
         MACHINE_GUN("/weapon/machine.png", "/actor/machine.png", 76, 32, 150, 100, 5, 180, 1);
 
         public String forMapPath;
@@ -82,7 +81,6 @@ public class Gun extends GameObjForAnimator {
             this.beginShoot = beginShoot;
         }
     }
-
 
     public void beginShoot() {
         beginShoot.play();
@@ -175,12 +173,8 @@ public class Gun extends GameObjForAnimator {
     }
 
     public void translateForActor(){
-        painter().setLeft(actorX);
-        painter().setTop(actorY);
-        collider().setLeft(actorX);
-        collider().setTop(actorY);
-
+        painter().setCenter(actorX, actorY);
+        collider().setCenter(actorX, actorY);
     }
-
 
 }

@@ -95,6 +95,8 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     public final void paint(Graphics g) {
         paintComponent(g);
         if (Global.IS_DEBUG) {
+            g.drawString(this.painter.centerX()+ "," + this.painter.centerY(), this.painter.left() + 5, this.painter.top() + 12);
+            g.drawString(this.painter.width() + "," + this.painter.height(), this.painter.left() + 5, this.painter.top() + 27);
             g.setColor(Color.RED);
             g.drawRect(this.painter.left(), this.painter.top(), this.painter.width(), this.painter.height());
             g.setColor(Color.BLUE);
