@@ -80,8 +80,6 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-
-
     public void tradeGun(Gun gun) {
         currentGun.gun = gun;
     }
@@ -123,7 +121,6 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void setState(State state) {
-
         this.state = state;
         switch (state){
             case STAND -> {
@@ -145,8 +142,6 @@ public class GameActor extends GameObjForAnimator {
                 animator.setPlayOnce();
             }
         }
-
-
     }
 
     @Override

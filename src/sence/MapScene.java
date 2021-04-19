@@ -147,9 +147,9 @@ public class MapScene extends Scene {
                 break;
             }
             monster.get(i).update();
-//            if(monster.get(i).isCollisionWithActor(gameActor)){
-//                gameActor.offLife(monster.get(i).getAtk());
-//            }
+            if(monster.get(i).isCollisionWithActor(gameActor)){
+                gameActor.offLife(monster.get(i).getAtk());
+            }
             for(int k=0 ; k<mapObjArr.size() ;k++){
                 monster.get(i).isCollider(mapObjArr.get(k));
             }
