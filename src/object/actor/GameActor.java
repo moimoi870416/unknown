@@ -189,16 +189,10 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
-<<<<<<< HEAD
-        rotation.rotationUpdate(this.collider().centerX() , this.collider().centerY() ,
-                this.collider().centerX() , this.collider().centerY() );
-        blood.barUpdate(collider().left(),collider().top(),this.life);
-=======
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
                 this.collider().centerX(), this.collider().centerY());
         System.out.println(life);
         blood.barUpdate(collider().left(), collider().top(), this.life);
->>>>>>> 碰撞
     }
 
     private void updatePosition() {

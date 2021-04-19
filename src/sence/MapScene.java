@@ -176,12 +176,7 @@ public class MapScene extends Scene {
                 monster.add(new Rino(actorX + 1400, random(500, WINDOW_WIDTH)));
             }
         }
-<<<<<<< HEAD
 
-
-=======
-         */
->>>>>>> 碰撞
     }
 
     public void shootUpdate() {

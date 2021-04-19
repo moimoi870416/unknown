@@ -16,11 +16,8 @@ public class Rino extends Monster{
     private int originalAtk;
 
     public Rino(int x, int y) {
-<<<<<<< HEAD
-        super(x+5,y+6,94,58,x, y, 104,68, 500, 80, 2);
-=======
         super(x+5,y+6,94,58,x, y, 104,68, 1000, 80, 2,true);
->>>>>>> 碰撞
+
         animator = new Animator("/monster/rino/Idle2(52x34).png",30,52,34,2);
         animator.setArr(11);
         readyAtk = true;
@@ -69,19 +66,7 @@ public class Rino extends Monster{
         }
     }
 
-    @Override
-<<<<<<< HEAD
-    public void update(){
-        if (state == State.DEATH) {
-            isChase = false;
-            return;
-        }
-        if(isOut()){
-            return;
-        }
-=======
     protected void updateComponent() {
->>>>>>> 碰撞
         if(isChase){
             if(readyAtk){
                 if(attack()){
