@@ -19,7 +19,6 @@ public class Rotation {
     public float angleBetweenTwoPointWithFixedPoint() {
         float angle1 = (float) Math.atan2((startPointY - fixedY), (startPointX - fixedX));
         float angle2 = (float) Math.atan2((mouseY - fixedY), (mouseX - fixedX));
-        System.out.println("angle1" + angle1 + "/angle2" + angle2);
         return angle2 - angle1;
     }
 
