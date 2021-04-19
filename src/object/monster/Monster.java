@@ -60,7 +60,10 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         isSeeingActor();
+<<<<<<< HEAD
         updateComponent();
+=======
+>>>>>>> 旋轉
     }
 
     protected abstract void updateComponent();

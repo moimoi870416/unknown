@@ -45,6 +45,7 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
 
+<<<<<<< HEAD
         monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
         monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));
@@ -52,8 +53,14 @@ public class MapScene extends Scene {
 //        monster.add(new SmallMonster(1000,500,SmallMonster.Type.MUSHROOM));
 //        monster.add(new Rino(200,500));
 //        monster.add(new Rino(1100,500));
+=======
+        monster.add(new Goblin(100,100));
+        monster.add(new Rino(1400,500));
+//        monster.add(new Rino(200,500))·;
+//        monster.add(new Rino(1000,500));
+>>>>>>> 旋轉
 //        monster.add(new Rino(500,500));
-        gameActor = new GameActor(Actor.FIRST.getPath(),50,700);
+        gameActor = new GameActor(Actor.FIRST.getPath(),1000,700);
 
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
@@ -85,6 +92,7 @@ public class MapScene extends Scene {
         if (camera.isCollision(gameActor)) {
             gameActor.paint(g);
         }
+
         mapObjArr.forEach(a -> a.paint(g));
         mapObjArr2.forEach(a->a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
@@ -119,7 +127,6 @@ public class MapScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
                     if (testBullets.get(i).isCollied(monster.get(k))) {
-
                         if(monster.get(k).getState() != GameObjForAnimator.State.DEATH) {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
@@ -268,6 +275,7 @@ public class MapScene extends Scene {
 
     public void mapInit() {
         mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
+<<<<<<< HEAD
                 .setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
                 .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
                 .setNameAndPath("tree2","/map/tree2-208-336.png",true,new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
@@ -283,6 +291,12 @@ public class MapScene extends Scene {
                 .setNameAndPath("tree3","/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
                 .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png",0,50,425,212))
                 //.setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
+=======
+                //.setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 370, 168, 30))
+                .setNameAndPath("tree1", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 100, 208, 336))
+//                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", false, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 0, 424, 216))
+//                .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, new GameObjForPic("/map/rock-sand1-584-216.png", 0, 0, 584, 216))
+>>>>>>> 旋轉
                 .gen()
                 .setMap();
 
