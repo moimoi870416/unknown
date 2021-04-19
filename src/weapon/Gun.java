@@ -20,6 +20,8 @@ public class Gun extends GameObjForAnimator {
     private Image imgForActor;
     private int positionX;
     private int positionY;
+    private int widthForActor;
+    private int heightForActor;
 
 
 
@@ -40,15 +42,17 @@ public class Gun extends GameObjForAnimator {
         canReloading = true;
         canShoot = true;
         shootingDelay.loop();
+        this.widthForActor = gunType.widthForActor;
+        this.heightForActor = gunType.heightForActor;
 
     }
 
     public enum GunType {
-        PISTOL("/weapon/pistol.png", "/actor/pistol.png",76, 32, Integer.MAX_VALUE, 15, 15, 60, 1),
-        UZI("/weapon/uzi.png", "/actor/uzi.png",70, 54, 160, 40, 7, 60, 5),
-        AK("/weapon/ak.png", "/actor/ak3.png",70, 54, 120, 30, 10, 90, 10),
-        SNIPER("/weapon/sniper.png", "/actor/sniper.png",70, 54, 30, 10, 60, 120, 1),
-        MACHINE_GUN("/weapon/machine.png", "/actor/machine.png",70, 54, 150, 100, 5, 180, 1);
+        PISTOL("/weapon/pistol.png", "/actor/pistol3.png",76, 32,28,42, Integer.MAX_VALUE, 15, 15, 60, 1),
+        UZI("/weapon/uzi.png", "/actor/uzi3.png",70, 54,29,44, 160, 40, 7, 60, 5),
+        AK("/weapon/ak.png", "/actor/ak3.png",70, 54,53,56, 120, 30, 10, 90, 10),
+        SNIPER("/weapon/sniper.png", "/actor/sniper3.png",70, 54,66,48, 30, 10, 60, 120, 1),
+        MACHINE_GUN("/weapon/machine.png", "/actor/machine3.png",70, 54,62,62, 150, 100, 5, 180, 1);
 
         public String forMapPath;
         public String forActorPath;
@@ -59,8 +63,10 @@ public class Gun extends GameObjForAnimator {
         private int shootingDelay;//射擊延遲(射速)
         private int maxMagazine;//最大彈匣數量
         private int beginShoot;
+        private int widthForActor;
+        private int heightForActor;
 
-        GunType(String forMapPath,String forActorPath, int width, int height, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot) {
+        GunType(String forMapPath,String forActorPath, int width, int height,int widthForActor,int heightForActor, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot) {
             this.forMapPath = forMapPath;
             this.forActorPath = forActorPath;
             this.width = width;
@@ -70,6 +76,8 @@ public class Gun extends GameObjForAnimator {
             this.reloadingDelay = reloadingDelay;
             this.shootingDelay = shootingDelay;
             this.beginShoot = beginShoot;
+            this.widthForActor = widthForActor;
+            this.heightForActor = heightForActor;
         }
     }
 
@@ -153,10 +161,11 @@ public class Gun extends GameObjForAnimator {
 
     public void paintComponent(Graphics g,int actorX,int actorY,Dir dir){
         if(dir == Dir.LEFT) {
-            g.drawImage(imgForActor, actorX+3, actorY + 20,62,31, null);
+            g.drawImage(imgForActor, actorX+3, actorY + 20,actorX+3+widthForActor, actorY + 20+heightForActor/2,0,0,widthForActor,heightForActor/2, null);
             return;
         }
-        g.drawImage(imgForActor, actorX-painter().width()+15, actorY + 20,actorX-painter().width()+15+62, actorY + 51,0,31,62,62, null);
+        System.out.println(111);
+        g.drawImage(imgForActor, actorX-widthForActor+3, actorY + 20,actorX+3, actorY + 20+heightForActor/2,0,heightForActor/2,widthForActor,heightForActor, null);
     }
 
     public int getSurplusBullet() {
