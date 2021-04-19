@@ -193,8 +193,8 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
-        rotation.rotationUpdate(this.collider().centerX() + currentGun.gun.collider().width() / 3f, this.collider().centerY() - currentGun.gun.collider().height() / 2,
-                this.collider().centerX() - currentGun.gun.collider().width() / 3f, this.collider().centerY() - currentGun.gun.collider().height() / 2);
+        rotation.rotationUpdate(this.collider().centerX() , this.collider().centerY() ,
+                this.collider().centerX() , this.collider().centerY() );
         System.out.println(life);
         blood.barUpdate(collider().left(),collider().top(),this.life);
     }

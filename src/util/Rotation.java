@@ -39,7 +39,7 @@ public class Rotation {
         AffineTransform t = g2d.getTransform();
         g2d.rotate(Math.toRadians(toDegrees()), actorX, actorY);
         if(dir == GameObjForAnimator.Dir.LEFT) {
-            g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath), actorX, actorY,actorX+gun.getGunType().getWidthForActor(), actorY+gun.getGunType().getHeightForActor()/2,0,0,gun.getGunType().getWidthForActor(),gun.getGunType().getHeightForActor()/2, null);
+            g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath), actorX, actorY-35,actorX+gun.getGunType().getWidthForActor(), actorY+gun.getGunType().getHeightForActor()/2-35,0,0,gun.getGunType().getWidthForActor(),gun.getGunType().getHeightForActor()/2, null);
         }else {
             g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath), actorX-gun.getGunType().getWidthForActor(), actorY,actorX, actorY+gun.getGunType().getHeightForActor()/2,0,gun.getGunType().getHeightForActor()/2,gun.getGunType().getWidthForActor(),gun.getGunType().getHeightForActor(), null);
         }

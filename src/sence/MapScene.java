@@ -46,15 +46,15 @@ public class MapScene extends Scene {
         monster = new LinkedList<>();
 
 
-        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
-        monster.add(new Stone(1100,500));
+//        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
+//        monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.MUSHROOM));
 //        monster.add(new SmallMonster(1000,500,SmallMonster.Type.MUSHROOM));
 //        monster.add(new Rino(200,500));
 //        monster.add(new Rino(1100,500));
 //        monster.add(new Rino(500,500));
-        gameActor = new GameActor(Actor.FIRST.getPath(),1000,700);
+        gameActor = new GameActor(Actor.FIRST.getPath(),300,700);
 
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
