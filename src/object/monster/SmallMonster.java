@@ -10,6 +10,7 @@ public class SmallMonster extends Monster {
         animator = new Animator(type.path,15,16,16,2);
         animator.setArr(6);
         this.type = type;
+        state = State.RUN;
         setState(state);
     }
 
@@ -21,7 +22,7 @@ public class SmallMonster extends Monster {
     @Override
     public void setState(State state){
         this.state = state;
-        switch (state){
+        switch (this.state){
             case RUN -> {
                 animator.setImg(type.path, 2);
                 switch (type){
@@ -33,6 +34,8 @@ public class SmallMonster extends Monster {
             }
             case DEATH -> {
                 animator.setImg("/monster/goblin/goblindead.png",2);
+                animator.setArr(4);
+                animator.setWidthAndHeightSize(16,16);
                 animator.setPlayOnce();
             }
         }

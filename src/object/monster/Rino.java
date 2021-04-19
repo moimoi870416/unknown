@@ -16,7 +16,7 @@ public class Rino extends Monster{
     private int originalAtk;
 
     public Rino(int x, int y) {
-        super(x+5,y+6,94,58,x, y, 104,68, 1000, 80, 2);
+        super(x+5,y+6,94,58,x, y, 104,68, 500, 80, 2);
         animator = new Animator("/monster/rino/Idle2(52x34).png",30,52,34,2);
         animator.setArr(11);
         readyAtk = true;
@@ -25,12 +25,13 @@ public class Rino extends Monster{
         this.totalDistance = 0;
         focus = false;
         originalAtk = atk;
+        clickAtk = true;
     }
 
     @Override
     public void setState(State state) {
         this.state = state;
-        switch (state){
+        switch (state) {
             case STAND -> {
                 animator.setImg("/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
@@ -51,12 +52,25 @@ public class Rino extends Monster{
             case RUN -> {
                 animator.setImg("/monster/rino/Run(52x34).png", 2);
                 animator.setArr(6);
-                animator.setDelayCount(10);}
+                animator.setDelayCount(10);
+            }
+            case DEATH -> {
+                animator.setImg("/monster/rino/dead(224-64).png", 2);
+                animator.setWidthAndHeightSize(32,32);
+                animator.setArr(7);
+                animator.setDelayCount(10);
+                animator.setPlayOnce();
+                moveSpeed = 0;
+            }
         }
     }
 
     @Override
     public void update(){
+        if (state == State.DEATH) {
+            isChase = false;
+            return;
+        }
         if(isOut()){
             return;
         }
@@ -72,7 +86,7 @@ public class Rino extends Monster{
             return;
         }
         isSeeingActor();
-        setState(State.RUN);
+        //setState(State.RUN);
     }
 
     @Override
@@ -86,7 +100,6 @@ public class Rino extends Monster{
             setState(State.STAND);
             if (attackDelay.count()) {
                 setState(State.RUN);
-                animator.setDelayCount(10);
                 int x = Math.abs(Global.actorX - painter().centerX());
                 int y = Math.abs(Global.actorY - painter().centerY());
                 float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離

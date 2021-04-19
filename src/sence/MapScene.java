@@ -47,7 +47,7 @@ public class MapScene extends Scene {
 
 
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
-//        monster.add(new Stone(1100,500));
+        monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.MUSHROOM));
 //        monster.add(new SmallMonster(1000,500,SmallMonster.Type.MUSHROOM));
@@ -162,12 +162,22 @@ public class MapScene extends Scene {
                 }
             }
         }
-        /*
-        if (Math.random() * 100 < 1 && monster.size() < 5) {
-            monster.add(new Goblin(50, (int) (Math.random() * 1000)));
+
+        if (Math.random() * 100 < 3 && monster.size() < 200) {
+            int r = random(0,2);
+            if(r == 0) {
+                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.GOBLIN));
+            }else if(r == 1){
+                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.MUSHROOM));
+            }else if(r == 3){
+                monster.add(new Stone(actorX + 1400,random(500,WINDOW_WIDTH)));
+            }
+            if(Math.random() *100 <5) {
+                monster.add(new Rino(actorX + 1400, random(500, WINDOW_WIDTH)));
+            }
         }
 
-         */
+
     }
 
     public void shootUpdate() {
@@ -233,7 +243,14 @@ public class MapScene extends Scene {
             }
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
+                if (gameActor.getCurrentGun().shoot()) {
+                    this.testBullets.add(new Bullet
+                            (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
+                                    mouseX, mouseY,
+                                    gameActor.getCurrentGun().getGunType()));
+                }
                 shootCount = 0;
+
                 gameActor.getCurrentGun().resetBeginShoot();
             }
         };
@@ -284,7 +301,7 @@ public class MapScene extends Scene {
                 .gen()
                 .setMap();
         mapObjArr2 = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
-                .setX(4096)
+                .setX(MAP_UNIT_WIDTH)
                 .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
                 .setNameAndPath("tree2","/map/tree2-208-336.png",true,new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
                 .setNameAndPath("tree3","/map/tree3-208-336.png",true,new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))

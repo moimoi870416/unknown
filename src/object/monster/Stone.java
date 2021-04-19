@@ -21,7 +21,7 @@ public class Stone extends Monster{
             animator.setArr(1);
             animator.setDelayCount(6000);
             animator.setPlayLoop();
-
+            System.out.println(222);
         }
     }
 
@@ -30,15 +30,19 @@ public class Stone extends Monster{
         if(life <= 0){
             this.state = State.CRITICAL;
             moveSpeed = 0;
+            atk = 0;
+            life = Integer.MAX_VALUE;
         }
+
         switch (this.state) {
             case CRITICAL -> {
                 if(!dead) {
                     animator.setImg("/monster/rock/RockDeath(22x18).png", 2);
-                    animator.setArr(5);
+                    animator.setArr(4);
                     animator.setDelayCount(10);
                     animator.setWidthAndHeightSize(22, 18);
                     animator.setPlayOnce();
+                    System.out.println(111);
                     dead = true;
                 }
             }

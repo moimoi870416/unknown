@@ -31,14 +31,13 @@ public class GameActor extends GameObjForAnimator {
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
-
         verticalDir = horizontalDir = Global.Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
         delayForFlash = new Delay(120);
         canFlash = true;
         rotation = new Rotation();
         blood = new Bar();
-
+        this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
     }
 
     @Override
@@ -59,11 +58,12 @@ public class GameActor extends GameObjForAnimator {
             otherGun = WhichGun.ONE;
             Display.isFirstGun = false;
         }
+        this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
     }
 
     private enum WhichGun {
-        ONE(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
+        ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
+        TWO(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY));
         private Gun gun;
 
         WhichGun(Gun gun) {
@@ -190,7 +190,6 @@ public class GameActor extends GameObjForAnimator {
         updatePosition();
         rotation.rotationUpdate(this.collider().centerX() , this.collider().centerY() ,
                 this.collider().centerX() , this.collider().centerY() );
-        System.out.println(life);
         blood.barUpdate(collider().left(),collider().top(),this.life);
     }
 

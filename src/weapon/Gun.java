@@ -23,6 +23,7 @@ public class Gun extends GameObjForAnimator {
     private Image imgForActor;
     private int positionX;
     private int positionY;
+    private Delay aloneClick;
 
 
 
@@ -41,16 +42,18 @@ public class Gun extends GameObjForAnimator {
         this.shootingDelay = new Delay(gunType.shootingDelay);
         this.beginShoot = new Delay(gunType.beginShoot);
         canReloading = true;
-        canShoot = true;
+        canShoot = false;
         shootingDelay.loop();
+        aloneClick = new Delay(15);
+        shootingDelay.stop();
     }
 
     public enum GunType {
-        PISTOL("/weapon/pistol.png", "/actor/pistol3.png",76, 32,28,42, Integer.MAX_VALUE, 15, 15, 60, 1),
-        UZI("/weapon/uzi.png", "/actor/uzi3.png",70, 54,29,44, 160, 40, 7, 60, 5),
-        AK("/weapon/ak.png", "/actor/ak3.png",70, 54,53,56, 120, 30, 10, 90, 10),
-        SNIPER("/weapon/sniper.png", "/actor/sniper3.png",70, 54,66,48, 30, 10, 60, 120, 1),
-        MACHINE_GUN("/weapon/machine.png", "/actor/machine3.png",70, 54,62,62, 150, 100, 5, 180, 1);
+        PISTOL("/weapon/pistol.png", "/actor/pistol3.png",76, 32,28,42, Integer.MAX_VALUE, 15, 15, 60, 0,5),
+        UZI("/weapon/uzi.png", "/actor/uzi3.png",70, 54,29,44, 200, 40, 7, 60, 5,4),
+        AK("/weapon/ak.png", "/actor/ak3.png",70, 54,53,56, 160, 30, 10, 90, 10,3),
+        SNIPER("/weapon/sniper.png", "/actor/sniper3.png",70, 54,66,60, 30, 10, 60, 120, 10,2),
+        MACHINE_GUN("/weapon/machine.png", "/actor/machine3.png",70, 54,62,62, 500, 100, 5, 180, 60,1);
 
 
         public String forMapPath;
@@ -64,6 +67,7 @@ public class Gun extends GameObjForAnimator {
         private int beginShoot;
         private int widthForActor;
         private int heightForActor;
+        private int moveSpeed;
 
         public int getWidthForActor(){
             return widthForActor;
@@ -73,7 +77,11 @@ public class Gun extends GameObjForAnimator {
             return heightForActor;
         }
 
-        GunType(String forMapPath,String forActorPath, int width, int height,int widthForActor,int heightForActor, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot) {
+        public int getMoveSpeed(){
+            return moveSpeed;
+        }
+
+        GunType(String forMapPath,String forActorPath, int width, int height,int widthForActor,int heightForActor, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot,int moveSpeed) {
             this.forMapPath = forMapPath;
             this.forActorPath = forActorPath;
             this.width = width;
@@ -85,6 +93,7 @@ public class Gun extends GameObjForAnimator {
             this.beginShoot = beginShoot;
             this.widthForActor = widthForActor;
             this.heightForActor = heightForActor;
+            this.moveSpeed = moveSpeed;
         }
     }
 
@@ -102,7 +111,9 @@ public class Gun extends GameObjForAnimator {
 
     public boolean shoot() {
         if (canShoot) {
-            if (shootingDelay.count()) {
+            if (shootingDelay.isStop() || (getGunType() == GunType.PISTOL&&aloneClick.isPause())) {
+                aloneClick.play();
+                shootingDelay.play();
                 if (magazine <= 0) {
                     //補缺彈音檔
                     return false;
@@ -157,6 +168,16 @@ public class Gun extends GameObjForAnimator {
             canReloading = true;
             canShoot = true;
         }
+        if(!canReloading){
+            return;
+        }
+        aloneClick.count();
+        if(beginShoot.count()){
+            canShoot = true;
+        }
+        if(shootingDelay.count()){
+            canShoot = true;
+        }
     }
 
 
@@ -186,8 +207,8 @@ public class Gun extends GameObjForAnimator {
     }
 
     public void translateForActor(){
-        painter().setCenter(actorX, actorY);
-        collider().setCenter(actorX, actorY);
+        painter().setCenter(actorX, actorY-28);
+        collider().setCenter(actorX, actorY-28);
     }
 
 }

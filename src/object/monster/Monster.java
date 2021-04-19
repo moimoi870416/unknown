@@ -10,25 +10,26 @@ public abstract class Monster extends GameObjForAnimator {
     private boolean collision;
     private boolean canAttack;
     protected boolean isChase;
-    protected boolean confirmAtk;
+    protected boolean clickAtk;
+    protected Delay clickAttack;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed) {
         this(x, y, width, height, x, y, width, height, life, atk, moveSpeed);
         attackDelay = new Delay(60);
         isChase = false;
         canAttack = true;
+        clickAttack = new Delay(90);
     }
 
     public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2, int life, int atk, int moveSpeed) {
         super(x, y, width, height, x2, y2, width2, height2, life, atk, moveSpeed);
         this.delayForCollision = new Delay(10);
         collision = true;
-        confirmAtk = false;
     }
 
     public void chase() {
         float x = Math.abs(Global.actorX - painter().centerX());
-        float y = Math.abs(Global.actorY - painter().centerY());
+        float y = Math.abs(Global.actorY - painter().centerY()-10);
         if (x <= 20 && y <= 20) {
             return;
         }
@@ -47,6 +48,7 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
+        updateComponent();
         if (isOut()) {
             return;
         }
@@ -62,7 +64,7 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         isSeeingActor();
-        updateComponent();
+
     }
 
     protected abstract void updateComponent();
@@ -113,4 +115,5 @@ public abstract class Monster extends GameObjForAnimator {
 
     public abstract void setState(State state);
     //public abstract String getType();
+
 }
