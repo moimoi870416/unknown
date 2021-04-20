@@ -242,11 +242,13 @@ public class MapScene extends Scene {
             }
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
-                if (gameActor.getCurrentGun().shoot()) {
-                    this.testBullets.add(new Bullet
-                            (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
-                                    mouseX, mouseY,
-                                    gameActor.getCurrentGun().getGunType()));
+                if(shooting) {
+                    if (gameActor.getCurrentGun().shoot()) {
+                        this.testBullets.add(new Bullet
+                                (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
+                                        mouseX, mouseY,
+                                        gameActor.getCurrentGun().getGunType()));
+                    }
                 }
                 shootCount = 0;
 
@@ -278,7 +280,7 @@ public class MapScene extends Scene {
                     gameActor.setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
-                    gameActor.flash(mouseX, mouseY);
+                    gameActor.flash(mouseX, mouseY,mapObjArr);
                 }
             }
 
@@ -319,12 +321,23 @@ public class MapScene extends Scene {
         private final int mapWidth = 2048;
         private int count;
         private boolean passing4000X;
+        private boolean firstStage;
+        private boolean secondStage;
+        private boolean thirdStage;
+        private boolean finalStage;
+        private boolean back;
 
         private mapInfo() {
             mapLeft = ImageController.getInstance().tryGet(MapPath.BEGIN.mapPath);
             mapMiddle = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
             mapRight = ImageController.getInstance().tryGet(MapPath.THIRD.mapPath);
             this.count = 0;
+            firstStage = true;
+            secondStage = false;
+            thirdStage = false;
+            finalStage = false;
+            back = false;
+
         }
 
         public void mapPaint(Graphics g) {
@@ -340,6 +353,16 @@ public class MapScene extends Scene {
                     count++;
                     passing4000X = true;
                 }
+            }
+            if(!back) {
+                if (actorX > 4000) {
+
+
+                }
+                return;
+            }
+            if(back){
+
             }
         }
 

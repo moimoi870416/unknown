@@ -1,10 +1,11 @@
 package object.actor;
-
+import object.GameObject;
 import util.*;
 import object.GameObjForAnimator;
 import weapon.Gun;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameActor extends GameObjForAnimator {
     private WhichGun currentGun;
@@ -33,7 +34,7 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Global.Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
-        delayForFlash = new Delay(300);
+        delayForFlash = new Delay(10);
         canFlash = true;
         rotation = new Rotation();
         blood = new Bar();
@@ -191,7 +192,6 @@ public class GameActor extends GameObjForAnimator {
         updatePosition();
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
                 this.collider().centerX(), this.collider().centerY());
-        System.out.println(life);
         blood.barUpdate(collider().left(), collider().top(), this.life);
     }
 
@@ -200,7 +200,7 @@ public class GameActor extends GameObjForAnimator {
         Global.actorY = collider().bottom();
     }
 
-    public void flash(int mouseX, int mouseY) {
+    public void flash(int mouseX, int mouseY, ArrayList<GameObject> arr) {
         if (canFlash) {
             delayForFlash.play();
             flashAnimator.setPlayOnce();
@@ -225,7 +225,29 @@ public class GameActor extends GameObjForAnimator {
                 moveOnX = -moveOnX;
             }
             translate((int) moveOnX, (int) moveOnY);
+            flashInObj(arr);
             canFlash = false;
         }
+
     }
+
+    private void flashInObj(ArrayList<GameObject> arr){
+        for(int i=0 ; i<arr.size() ; i++){
+            if(this.isCollision(arr.get(i))){
+                if(XForFlash < arr.get(i).collider().left()){
+                    offSetX(arr.get(i).collider().left()-collider().width());
+                }
+                if(XForFlash > arr.get(i).collider().right()){
+                    offSetX(arr.get(i).collider().right());
+                }
+                if(YForFlash > arr.get(i).collider().bottom()){
+                    offSetY(arr.get(i).collider().bottom());
+                }
+                if(YForFlash < arr.get(i).collider().top()){
+                    offSetY(arr.get(i).collider().top()-collider().height());
+                }
+            }
+        }
+    }
+
 }

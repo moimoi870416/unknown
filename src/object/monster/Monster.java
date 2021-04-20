@@ -13,8 +13,7 @@ public abstract class Monster extends GameObjForAnimator {
     private boolean isOnceAttack;
     protected boolean isChase;
     protected boolean clickAtk;
-    protected Delay clickAttack;
-
+    protected boolean forRino;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack) {
         this(x, y, width, height, x, y, width, height, life, atk, moveSpeed, isOnceAttack);
@@ -26,10 +25,11 @@ public abstract class Monster extends GameObjForAnimator {
         attackDelay = new Delay(60);
         isChase = false;
         canAttack = true;
-        delayForAttack = new Delay(120);
+        delayForAttack = new Delay(90);
         this.delayForCollision = new Delay(10);
         collision = true;
         this.isOnceAttack = isOnceAttack;
+        forRino = false;
     }
 
     public void chase() {
@@ -53,7 +53,6 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
-        updateComponent();
         if (isOut()) {
             return;
         }
@@ -69,6 +68,9 @@ public abstract class Monster extends GameObjForAnimator {
             if (delayForAttack.count()) {
                 canAttack = true;
             }
+        }
+        if(forRino){
+            return;
         }
         if (isChase) {
             chase();
