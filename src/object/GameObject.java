@@ -109,12 +109,12 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         painter.translate(x, y);
     }
 
-    public final void translateX(int x) {
+    public void translateX(int x) {
         collider.translateX(x);
         painter.translateX(x);
     }
 
-    public final void translateY(int y) {
+    public void translateY(int y) {
         collider.translateY(y);
         painter.translateY(y);
     }

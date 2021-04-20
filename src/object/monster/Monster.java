@@ -9,7 +9,7 @@ public abstract class Monster extends GameObjForAnimator {
     protected Delay attackDelay;
     private boolean collision;
     private boolean canAttack;
-    private Delay delayForAttack;
+    protected Delay delayForAttack;
     private boolean isOnceAttack;
     protected boolean isChase;
     protected boolean clickAtk;
@@ -77,7 +77,6 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         isSeeingActor();
-
     }
 
     public void attack(GameObjForAnimator gameObjForAnimator) {

@@ -12,7 +12,6 @@ public abstract class GameObjForAnimator extends GameObject {
     protected int moveSpeed;
     protected State state;
     protected boolean isDie;
-    protected int deadCount;
     private GameObject nearestObj;
 
     public GameObjForAnimator(int x, int y, int width, int height,int life,int atk,int moveSpeed) {

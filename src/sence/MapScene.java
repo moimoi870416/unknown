@@ -46,7 +46,7 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
 
-
+        monster.add(new BullBoss(1000,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
 //        monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));
@@ -169,7 +169,7 @@ public class MapScene extends Scene {
                 monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.GOBLIN));
             }else if(r == 1){
                 monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.MUSHROOM));
-            }else if(r == 3){
+            }else if(r == 2){
                 monster.add(new Stone(actorX + 1400,random(500,WINDOW_WIDTH)));
             }
             if(Math.random() *100 <5) {

@@ -2,9 +2,8 @@ package object.monster;
 import object.Rect;
 import util.Animator;
 
-public class Cockroach extends Monster{
+public class Cockroach extends MonsterAddHitArea {
     private int moveDistance;
-    private Rect hitCollied;
 
     public Cockroach(int x, int y) {
         super(x+30,y+30,100,92,x, y, 150, 150, 5000, 30, 5,false);
@@ -37,6 +36,11 @@ public class Cockroach extends Monster{
             }
             case DEATH -> animator.setImg("/monster/cockroach/run.png",2);
         }
+    }
+
+    @Override
+    protected void setHitCollied(int x,int y) {
+        hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
     }
 /*
     @Override

@@ -2,7 +2,6 @@ package util;
 
 import controller.ImageController;
 import object.GameObjForAnimator;
-import util.Delay;
 import java.awt.*;
 
 public class Animator {
@@ -62,30 +61,35 @@ public class Animator {
         this.arr = arr;
         this.height = height-1;
         this.count = 0;
+        isFinish = false;
     }
 
     public void setImg(String path,int picSize){
         this.img = ImageController.getInstance().tryGet(path);
         this.picSize = picSize/2;
         this.count = 0;
+        isFinish = false;
     }
 
     public void setDelayCount(int delayCount){
         delay = new Delay(delayCount);
         delay.loop();
         count = 0;
+        isFinish = false;
     }
 
     public void setPlayOnce(){
         playOnceCount = arr.length-2;
         playOnce = true;
         count = 0;
+        isFinish = false;
     }
 
     public void setPlayLoop(){
         playOnceCount = arr.length;
         playOnce = false;
         count = 0;
+        isFinish = false;
     }
 
     public boolean isFinish(){

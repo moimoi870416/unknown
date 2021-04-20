@@ -9,7 +9,6 @@ public class Stone extends Monster{
         super(x, y, 32, 27,200,10,2,false);
         animator = new Animator("/monster/rock/rockRun(32x28).png",15,32,27,2);
         animator.setArr(14);
-        deadCount = 80;
         dead = false;
 
     }
