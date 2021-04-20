@@ -21,7 +21,6 @@ public class GameActor extends GameObjForAnimator {
     private Rotation rotation;
     private Bar blood;
 
-
     public GameActor(String path, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
         animator = new Animator(path, 30, 58, 58, 2);
