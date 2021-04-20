@@ -15,7 +15,7 @@ public class Global {
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
 
-    public final static boolean IS_DEBUG = true;
+    public final static boolean IS_DEBUG = false;
 
 
     //地圖大小

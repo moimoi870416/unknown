@@ -6,7 +6,7 @@ public class SmallMonster extends Monster {
     private Type type;
 
     public SmallMonster(int x, int y,Type type) {
-        super(x, y, 32, 32,200,10,2,false);
+        super(x, y, 32, 32,500,10,2,false);
         animator = new Animator(type.path,15,16,16,2);
         animator.setArr(6);
         this.type = type;

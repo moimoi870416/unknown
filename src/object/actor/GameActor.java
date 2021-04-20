@@ -33,7 +33,7 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Global.Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
-        delayForFlash = new Delay(10);
+        delayForFlash = new Delay(600);
         canFlash = true;
         rotation = new Rotation();
         blood = new Bar();
@@ -42,6 +42,9 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void paintComponent(Graphics g) {
+        if(state == State.DEAD){
+            return;
+        }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
         rotation.paint(g, currentGun.gun);
         flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
@@ -62,8 +65,8 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun {
-        ONE(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
+        ONE(new Gun(Gun.GunType.UZI, Global.actorX, Global.actorY)),
+        TWO(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY));
         private Gun gun;
         WhichGun(Gun gun) {
             this.gun = gun;
@@ -92,6 +95,9 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public void move(int commandCode) {
+        if(state == State.DEATH || state == State.DEAD){
+            return;
+        }
         if (state != State.RUN) {
             setState(State.RUN);
         }
@@ -120,6 +126,9 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void setState(State state) {
+        if(this.state == State.DEAD){
+            return;
+        }
         this.state = state;
         switch (state) {
             case STAND -> {
@@ -137,14 +146,31 @@ public class GameActor extends GameObjForAnimator {
             case DEATH -> {
                 animator.setImg("/actor/actorDead.png", 2);
                 animator.setArr(16);
-                animator.setDelayCount(20);
+                animator.setDelayCount(5);
                 animator.setPlayOnce();
+            }
+            case DEAD -> {
+                animator.setArr(0);
             }
         }
     }
 
     @Override
     public void update() {
+        if(life <= 0){
+
+            if(state == State.DEATH && animator.isFinish()){
+                System.out.println("4444444");
+                setState(State.DEAD);
+                return;
+            }
+            if(state != State.DEATH && state != State.DEAD) {
+                setState(State.DEATH);
+            }
+        }
+        if(state == State.DEATH || state == State.DEAD){
+            return;
+        }
         switch (verticalDir) {
             case UP:
                 if (painter().top() < 0) {
@@ -192,6 +218,7 @@ public class GameActor extends GameObjForAnimator {
                 this.collider().centerX(), this.collider().centerY(),dir);
 
         blood.barUpdate(collider().left(), collider().top(), this.life);
+
     }
 
     private void updatePosition() {
@@ -200,6 +227,9 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public void flash(int mouseX, int mouseY, ArrayList<GameObject> arr) {
+        if(state == State.DEATH || state == State.DEAD){
+            return;
+        }
         if (canFlash) {
             delayForFlash.play();
             flashAnimator.setPlayOnce();

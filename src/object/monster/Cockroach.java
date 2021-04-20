@@ -1,21 +1,44 @@
 package object.monster;
 import object.Rect;
 import util.Animator;
+import util.Global;
 
 public class Cockroach extends MonsterAddHitArea {
-    private int moveDistance;
+    private boolean attacking;
+    private boolean move;
+    private int moveOnX;
+    private int moveOnY;
 
     public Cockroach(int x, int y) {
         super(x+30,y+30,100,92,x, y, 150, 150, 5000, 30, 5,false);
         animator = new Animator("/monster/cockroach/run.png",0,150,150,2);
         hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
         animator.setArr(40);
-        moveDistance = 800;
+        move = false;
+        attacking = false;
     }
 
     @Override
     protected void updateComponent() {
-
+        if(attacking) {
+            if (delayForAttack.isPlaying()) {
+                setState(State.ATTACK);
+                attacking = false;
+                move = false;
+            }
+        }
+        if(state == State.RUN){
+            attackMove();
+        }
+        if(delayForAttack.isStop()){
+            if(attacking) {
+                setState(State.RUN);
+            }
+            attacking = true;
+        }
+        if(isChase){
+            forRino = true;
+        }
     }
 
     @Override
@@ -27,12 +50,14 @@ public class Cockroach extends MonsterAddHitArea {
                 animator.setArr(40);
                 animator.setDelayCount(0);
                 animator.setPlayLoop();
+                moveSpeed = 5;
             }
             case ATTACK -> {
                 animator.setImg("/monster/cockroach/eat.png",2);
                 animator.setArr(29);
                 animator.setDelayCount(6);
                 animator.setPlayOnce();
+                moveSpeed = 0;
             }
             case DEATH -> animator.setImg("/monster/cockroach/run.png",2);
         }
@@ -42,63 +67,47 @@ public class Cockroach extends MonsterAddHitArea {
     protected void setHitCollied(int x,int y) {
         hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
     }
-/*
-    @Override
-    public void update(){
-        if(dir == Dir.RIGHT){
-            collider().setLeft(collider().left()-35);
-        }else {
-            collider().setLeft(collider().left()+35);
-        }
-        if(isChase) {
-            chase();
-            return;
-        }
-        isSeeingActor();
-    }
-/*
-    private boolean attack(){
-        if(isChase) {
-            focus = true;
-            setState(State.STAND);
-            if (attackDelay.count()) {
-                setState(State.RUN);
-                animator.setDelayCount(10);
-                int x = Math.abs(Global.actorX - painter().centerX());
-                int y = Math.abs(Global.actorY - painter().centerY());
-                float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
-                this.moveOnX = (int) (Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * moveSpeed * 5); //  正負向量
-                this.moveOnY = (int) (Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * moveSpeed * 5);
-                if (Global.actorY < painter().centerY()) {
-                    this.moveOnY = -moveOnY;
-                }
-                if (Global.actorX < painter().centerX()) {
-                    this.moveOnX = -moveOnX;
-                }
-                moveDistance = (int)Math.sqrt(moveOnX * moveOnX+ moveOnY * moveOnY);
-                changeDir(moveOnX);
-                readyAtk = false;
+
+    private void attackMove(){
+        int x = 0;
+        if(!move) {
+            int r = Global.random(0, 1);
+            if (r == 0) {
+                x = Math.abs(Global.actorX - painter().centerX()) + 50;
+            } else {
+                x = Math.abs(Global.actorX - painter().centerX()) - 50;
             }
-            return true;
-
         }
-        return false;
-    }
-
-    private void atkMove(){
-        if(totalDistance < atkDistance){
-            translate(moveOnX,moveOnY);
-            totalDistance += moveDistance;
-            return;
+        int y = Math.abs(Global.actorY - painter().centerY());
+        float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
+        int moveOnX = (int) (Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * moveSpeed); //  正負向量
+        int moveOnY = (int) (Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * moveSpeed);
+        if (Global.actorY < painter().centerY()) {
+            this.moveOnY = -moveOnY;
         }
-        focus = false;
-        readyAtk = true;
-        attackDelay.play();
-        totalDistance = 0;
-        changeDir(Global.actorX-painter().centerX());
-        animator.setDelayCount(30);
+        if (Global.actorX < painter().centerX()) {
+            this.moveOnX = -moveOnX;
+        }
+        translate(moveOnX,moveOnY);
+        changeDir(moveOnX);
+        move = true;
 
     }
 
- */
+//    private void move(){
+//        if(totalDistance < atkDistance){
+//            translate(moveOnX,moveOnY);
+//            totalDistance += moveDistance;
+//            return;
+//        }
+//        focus = false;
+//        readyAtk = true;
+//        attackDelay.play();
+//        totalDistance = 0;
+//        changeDir(Global.actorX-painter().centerX());
+//        animator.setDelayCount(30);
+//
+//    }
+
+
 }

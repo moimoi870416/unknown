@@ -9,13 +9,14 @@ public class BullBoss extends MonsterAddHitArea {
     private boolean attacking;
 
     public BullBoss(int x, int y) {
-        super(x+150,y+80,100,120,x, y, 384, 384,1000,51,2,false);
+        super(x+150,y+80,100,120,x, y, 384, 384,30000,51,2,false);
         animator = new Animator("/monster/bullboss.png",30,96,96,20);
         delayForAttack = new Delay(60);
         attacking = false;
         setState(State.STAND);
         animator.setDelayCount(30);
     }
+
 
     @Override
     protected void updateComponent() {
@@ -35,6 +36,12 @@ public class BullBoss extends MonsterAddHitArea {
                 }
                 attacking = false;
             }
+        }
+        if(delayForAttack.isStop()){
+            if(attacking == false) {
+                setState(State.WALK);
+            }
+            attacking = true;
         }
     }
 

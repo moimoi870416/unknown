@@ -45,8 +45,9 @@ public class MapScene extends Scene {
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
+        monster.add(new BullBoss(4000 ,500));
 
-        monster.add(new BullBoss(1000,500));
+//        monster.add(new Cockroach(1000,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
 //        monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));
@@ -163,7 +164,7 @@ public class MapScene extends Scene {
             }
         }
 
-        if (Math.random() * 100 < 3 && monster.size() < 200) {
+        if (Math.random() * 100 < 3 && monster.size() < 100) {
             int r = random(0,2);
             if(r == 0) {
                 monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.GOBLIN));

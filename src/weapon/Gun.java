@@ -50,8 +50,8 @@ public class Gun extends GameObjForAnimator {
 
     public enum GunType {
         PISTOL("/weapon/pistol.png", "/actor/pistol3.png",76, 32,28,42, Integer.MAX_VALUE, 15, 15, 60, 0,5),
-        UZI("/weapon/uzi.png", "/actor/uzi3.png",70, 54,29,44, 200, 40, 7, 60, 5,4),
-        AK("/weapon/ak.png", "/actor/ak3.png",70, 54,53,56, 160, 30, 10, 90, 10,3),
+        UZI("/weapon/uzi.png", "/actor/uzi3.png",70, 54,29,44, 360, 40, 7, 60, 5,4),
+        AK("/weapon/ak.png", "/actor/ak3.png",70, 54,53,56, 360, 30, 10, 90, 10,3),
         SNIPER("/weapon/sniper.png", "/actor/sniper3.png",70, 54,66,60, 30, 10, 60, 120, 10,2),
         MACHINE_GUN("/weapon/machine.png", "/actor/machine3.png",70, 54,62,62, 500, 100, 5, 180, 60,1);
 
