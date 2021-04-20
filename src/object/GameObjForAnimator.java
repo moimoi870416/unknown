@@ -24,7 +24,7 @@ public abstract class GameObjForAnimator extends GameObject {
         this.life = life;
         this.atk = atk;
         this.moveSpeed = moveSpeed;
-        dir = Dir.LEFT;
+        dir = Dir.RIGHT;
         state = State.STAND;
         isDie = false;
     }
@@ -64,23 +64,23 @@ public abstract class GameObjForAnimator extends GameObject {
     }
 
     public enum Dir {
-        LEFT,
         RIGHT,
-    }
+        LEFT,
+        }
 
     protected void changeDir(double moveOnX) {
         if (moveOnX > 0) {
-            dir = Dir.LEFT;
-        } else {
             dir = Dir.RIGHT;
+        } else {
+            dir = Dir.LEFT;
         }
     }
 
     protected void changeDir(int moveOnX) {
         if (moveOnX > 0) {
-            dir = Dir.LEFT;
-        } else {
             dir = Dir.RIGHT;
+        } else {
+            dir = Dir.LEFT;
         }
     }
 

@@ -220,7 +220,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
             }
             return;
         }
-        hitAnimator.paintAnimator(g,hitX-30,hitX+70,hitY-50,hitY+50, GameObjForAnimator.Dir.LEFT);
+        hitAnimator.paintAnimator(g,hitX-30,hitX+70,hitY-50,hitY+50, GameObjForAnimator.Dir.RIGHT);
 
     }
 

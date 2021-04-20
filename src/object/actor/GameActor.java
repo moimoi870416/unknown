@@ -43,7 +43,7 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        rotation.paint(g, currentGun.gun, dir);
+        rotation.paint(g, currentGun.gun);
         flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
         blood.paint(g);
     }
@@ -62,10 +62,9 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun {
-        ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY));
+        ONE(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY)),
+        TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
         private Gun gun;
-
         WhichGun(Gun gun) {
             this.gun = gun;
         }
@@ -74,9 +73,9 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void changeDir(int mouseX) {
         if (mouseX > painter().centerX()) {
-            dir = Dir.LEFT;
-        } else {
             dir = Dir.RIGHT;
+        } else {
+            dir = Dir.LEFT;
         }
     }
 
@@ -190,8 +189,7 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.translateForActor();
         updatePosition();
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
-                this.collider().centerX(), this.collider().centerY());
-        System.out.println(life);
+                this.collider().centerX(), this.collider().centerY(),dir);
         blood.barUpdate(collider().left(), collider().top(), this.life);
     }
 
