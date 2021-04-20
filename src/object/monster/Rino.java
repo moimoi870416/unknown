@@ -27,33 +27,40 @@ public class Rino extends Monster{
         focus = false;
         originalAtk = atk;
         clickAtk = true;
+
     }
 
     @Override
     public void setState(State state) {
         this.state = state;
+
         switch (state) {
             case STAND -> {
                 animator.setImg("/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
-                animator.setDelayCount(180);
+                animator.setDelayCount(0);
+                moveSpeed = 0;
+
+
             }
             case WALK -> {
                 animator.setImg("/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
-                animator.setDelayCount(180);
-                atk += atk;
+                animator.setDelayCount(10);
+                atk += atk*0.5;
+                moveSpeed = 2;
             }
             case ATTACK -> {
                 animator.setImg("/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
-                animator.setDelayCount(180);
+                animator.setDelayCount(10);
                 atk = originalAtk;
             }
             case RUN -> {
                 animator.setImg("/monster/rino/Run(52x34).png", 2);
                 animator.setArr(6);
                 animator.setDelayCount(10);
+                moveSpeed = 2;
             }
             case DEATH -> {
                 animator.setImg("/monster/rino/dead(224-64).png", 2);
@@ -66,8 +73,26 @@ public class Rino extends Monster{
         }
     }
 
+//    @Override
+//    public void update(){
+//        if(isChase){
+//            if(readyAtk){
+//                if(!attack()){
+//                    return;
+//                }
+//                chase();
+//                return;
+//            }
+//            atkMove();
+//            return;
+//        }
+//        isSeeingActor();
+//        setState(State.RUN);
+//    }
+
     protected void updateComponent() {
         if(isChase){
+            forRino = true;
             if(readyAtk){
                 if(attack()){
                     return;
@@ -78,14 +103,14 @@ public class Rino extends Monster{
             atkMove();
             return;
         }
-        isSeeingActor();
-        //setState(State.RUN);
     }
 
     private boolean attack(){
         if(Math.abs(painter().centerX() - Global.actorX) < 500 || focus) {
             focus = true;
-            setState(State.STAND);
+            if(state != State.STAND){
+                setState(State.STAND);
+            }
             if (attackDelay.count()) {
                 setState(State.RUN);
                 int x = Math.abs(Global.actorX - painter().centerX());
@@ -100,8 +125,8 @@ public class Rino extends Monster{
                     this.moveOnX = -moveOnX;
                 }
                 moveDistance = (int)Math.sqrt(moveOnX * moveOnX+ moveOnY * moveOnY);
-                changeDir(moveOnX);
                 readyAtk = false;
+                changeDir(moveOnX);
             }
             return true;
 

@@ -60,7 +60,6 @@ public class Rotation {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform t = g2d.getTransform();
         g2d.rotate(Math.toRadians(toDegrees()), actorX, actorY - 20);
-        System.out.println(toDegrees());
         if (isRight()) {
             g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
                     actorX,
