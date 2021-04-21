@@ -19,8 +19,8 @@ public class Global {
 
 
     //地圖大小
-    public static final int MAP_WIDTH = 4096*5;
-    public static final int MAP_HEIGHT = 1024*2;
+    public static final int MAP_WIDTH = 3096;//4096*5;
+    public static int MAP_HEIGHT = 3096;//1024;
     public static final int MAP_UNIT_WIDTH = 4096;
 
     //視窗大小
@@ -36,11 +36,11 @@ public class Global {
         FOREST("/map/map-forest.png"),
         DESERT("/map/map-desert.png"),
         CHANGE("/map/map-change.png"),
-        END("/map/map-boss.png");
+        END("/map/map-boss.png"),
+        LIMIT("/map/map-limit.png");
 
         public String mapPath;
-
-        private MapPath(String paht){
+        MapPath(String paht){
             mapPath = paht;
         }
     }

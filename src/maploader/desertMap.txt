@@ -1,0 +1,5 @@
+deserttree1,-10066432,C:\Users\lin\Desktop\¯À§÷\tree\desert\deserttree1(400-344).png,1,1
+deserttree2,-6711040,C:\Users\lin\Desktop\¯À§÷\tree\desert\deserttree2(400-344).png,1,1
+deserttree3,-205,C:\Users\lin\Desktop\¯À§÷\tree\desert\deserttree3(192-240).png,1,1
+deserttree4,-13312,C:\Users\lin\Desktop\¯À§÷\tree\desert\deserttree4(192-240).png,1,1
+tree1,-10092442,C:\Users\lin\Desktop\¯À§÷\tree\desert\desert-tree1(222-254).png,1,1
