@@ -48,10 +48,7 @@ public class MapScene extends Scene {
         monster = new LinkedList<>();
         //monster.add(new BullBoss(1200,500));
 
-<<<<<<< HEAD
-//        monster.add(new Cockroach(1000,500));
-=======
->>>>>>> 彈跳視窗
+
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
 //        monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));

@@ -16,7 +16,6 @@ public class GameActor extends GameObjForAnimator {
     private Bar blood;
     private Skill skill;
 
-
     public GameActor(String path, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
         animator = new Animator(path, 30, 58, 58, 2);
@@ -208,7 +207,6 @@ public class GameActor extends GameObjForAnimator {
             case NO:
         }
 
-
         skill.skillUpdate();
         currentGun.gun.update();
         currentGun.gun.translateForActor();
@@ -326,7 +324,6 @@ public class GameActor extends GameObjForAnimator {
                 flashInObj(arr);
                 canFlash = false;
             }
-
         }
 
         private void flashInObj(ArrayList<GameObject> arr){

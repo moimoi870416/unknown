@@ -43,7 +43,7 @@ public class Display {
     }
 
     private void skillPaint(Graphics g) {
-
+        if(gameActor.getSkill().)
         g.drawImage(skillFrame1, 1260, 750, null);
         g.drawImage(skillFrame2, 1340, 750, null);
     }
