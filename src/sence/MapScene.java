@@ -45,7 +45,7 @@ public class MapScene extends Scene {
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
-        monster.add(new BullBoss(4000 ,500));
+        //monster.add(new BullBoss(1000,500));
 
 //        monster.add(new Cockroach(1000,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
@@ -281,7 +281,10 @@ public class MapScene extends Scene {
                     gameActor.setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
-                    gameActor.flash(mouseX, mouseY,mapObjArr);
+                    gameActor.getSkill().flash(mouseX, mouseY,mapObjArr);
+                }
+                if(commandCode == Active.SKILL.getCommandCode()){
+                    gameActor.getSkill().heal();
                 }
             }
 

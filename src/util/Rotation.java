@@ -40,20 +40,7 @@ public class Rotation {
             return (ans + 180) % 180;
         }
         return ans - 180;
-//        if (isRight()) {
-//            if (ans > 90) {
-//                return 90f;
-//            } else if (ans < -90) {
-//                return -90f;
-//            }
-//            return ans;
-//        }
-//        if (ans <= 90) {
-//            return 90f;
-//        } else if (ans >= -90) {
-//            return -90f;
-//        }
-//        return ans ;
+
     }
 
     public void paint(Graphics g, Gun gun) {

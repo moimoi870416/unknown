@@ -12,32 +12,24 @@ public class GameActor extends GameObjForAnimator {
     private WhichGun otherGun;
     private Global.Direction verticalDir;
     private Global.Direction horizontalDir;
-    private final int FLASH_MAX_DISTANCE = 300;
-    private Delay delayForFlash;
-    private boolean canFlash;
-    private Animator flashAnimator;
-    private int XForFlash;
-    private int YForFlash;
     private Rotation rotation;
     private Bar blood;
+    private Skill skill;
+
 
     public GameActor(String path, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
         animator = new Animator(path, 30, 58, 58, 2);
         animator.setArr(3);
-        flashAnimator = new Animator("/actor/flash.png", 8, 48, 32, 2);
-        flashAnimator.setArr(4);
-        flashAnimator.setPlayOnce();
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Global.Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
-        delayForFlash = new Delay(600);
-        canFlash = true;
         rotation = new Rotation();
         blood = new Bar();
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
+        skill = new Skill();
     }
 
     @Override
@@ -47,7 +39,7 @@ public class GameActor extends GameObjForAnimator {
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
         rotation.paint(g, currentGun.gun);
-        flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
+        skill.skillPaint(g);
         blood.paint(g);
     }
 
@@ -92,6 +84,10 @@ public class GameActor extends GameObjForAnimator {
 
     public Gun getCurrentGun() {
         return currentGun.gun;
+    }
+
+    public Skill getSkill(){
+        return skill;
     }
 
     public void move(int commandCode) {
@@ -157,10 +153,10 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void update() {
+        blood.barUpdate(collider().left(), collider().top(), this.life);
         if(life <= 0){
 
             if(state == State.DEATH && animator.isFinish()){
-                System.out.println("4444444");
                 setState(State.DEAD);
                 return;
             }
@@ -207,18 +203,14 @@ public class GameActor extends GameObjForAnimator {
                 break;
             case NO:
         }
-        if (delayForFlash.count()) {
-            canFlash = true;
-        }
 
+
+        skill.skillUpdate();
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
                 this.collider().centerX(), this.collider().centerY(),dir);
-
-        blood.barUpdate(collider().left(), collider().top(), this.life);
-
     }
 
     private void updatePosition() {
@@ -226,57 +218,130 @@ public class GameActor extends GameObjForAnimator {
         Global.actorY = collider().bottom();
     }
 
-    public void flash(int mouseX, int mouseY, ArrayList<GameObject> arr) {
-        if(state == State.DEATH || state == State.DEAD){
-            return;
-        }
-        if (canFlash) {
-            delayForFlash.play();
+    public class Skill{
+        private int healCount;
+        private boolean canHeal;
+        private Delay healDelay;
+        private Delay healCD;
+        private final int HP_MAX = 100;
+        private Animator healAnimator;
+        private final int HEAL_HP = 5;
+
+        private final int FLASH_MAX_DISTANCE = 300;
+        private Delay delayForFlash;
+        private boolean canFlash;
+        private Animator flashAnimator;
+        private int XForFlash;
+        private int YForFlash;
+
+        private Skill(){
+            healCount = 0;
+            healDelay = new Delay(45);
+            healDelay.loop();
+            canHeal = false;
+            healCD = new Delay(1800);
+            healAnimator = new Animator("/actor/heal.png",5,128,128,4);
+            healAnimator.setArr(4,2);
+
+            delayForFlash = new Delay(600);
+            canFlash = true;
+            flashAnimator = new Animator("/actor/flash.png", 8, 48, 32, 2);
+            flashAnimator.setArr(4);
             flashAnimator.setPlayOnce();
-            XForFlash = painter().centerX();
-            YForFlash = painter().centerY();
-            int x = Math.abs(mouseX - painter().centerX());
-            int y = Math.abs(mouseY - painter().centerY());
-            if (x == 0 && y == 0) {
+        }
+
+        public void skillUpdate(){
+            if (delayForFlash.count()) {
+                canFlash = true;
+            }
+            healCD.count();
+            if(canHeal){
+                if(healDelay.count()){
+                    heal();
+                }
+            }
+        }
+
+        public void skillPaint(Graphics g){
+            flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
+            if(canHeal) {
+                healAnimator.paintAnimator(g, painter().left() - 35, painter().right() + 35, painter().top() - 35, painter().bottom() + 35, Dir.RIGHT);
+            }
+        }
+
+        public void heal(){
+            if(life == HP_MAX){
                 return;
             }
-            float d = (float) Math.sqrt(x * x + y * y);
-            float distance = d;//計算斜邊,怪物與人物的距離
-            if (distance > FLASH_MAX_DISTANCE) {
-                distance = FLASH_MAX_DISTANCE;
+            if(!canHeal && healCD.isStop()){
+                canHeal = true;
+                healCD.play();
             }
-            float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
-            float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
-            if (mouseY < painter().centerY()) {
-                moveOnY = -moveOnY;
+            if(canHeal) {
+                life += HEAL_HP;
+                healCount++;
+                healAnimator.setPlayOnce();
             }
-            if (mouseX < painter().centerX()) {
-                moveOnX = -moveOnX;
+            if(life > HP_MAX){
+                life = HP_MAX;
             }
-            translate((int) moveOnX, (int) moveOnY);
-            flashInObj(arr);
-            canFlash = false;
-        }
-
-    }
-
-    private void flashInObj(ArrayList<GameObject> arr){
-        for(int i=0 ; i<arr.size() ; i++){
-            if(this.isCollision(arr.get(i))){
-                if(XForFlash < arr.get(i).collider().left()){
-                    offSetX(arr.get(i).collider().left()-collider().width());
-                }
-                if(XForFlash > arr.get(i).collider().right()){
-                    offSetX(arr.get(i).collider().right());
-                }
-                if(YForFlash > arr.get(i).collider().bottom()){
-                    offSetY(arr.get(i).collider().bottom());
-                }
-                if(YForFlash < arr.get(i).collider().top()){
-                    offSetY(arr.get(i).collider().top()-collider().height());
-                }
+            if(healCount >= 10){
+                canHeal = false;
+                healCount = 0;
             }
         }
-    }
 
+        public void flash(int mouseX, int mouseY, ArrayList<GameObject> arr) {
+            if(state == State.DEATH || state == State.DEAD){
+                return;
+            }
+            if (canFlash) {
+                delayForFlash.play();
+                flashAnimator.setPlayOnce();
+                XForFlash = painter().centerX();
+                YForFlash = painter().centerY();
+                int x = Math.abs(mouseX - painter().centerX());
+                int y = Math.abs(mouseY - painter().centerY());
+                if (x == 0 && y == 0) {
+                    return;
+                }
+                float d = (float) Math.sqrt(x * x + y * y);
+                float distance = d;//計算斜邊,怪物與人物的距離
+                if (distance > FLASH_MAX_DISTANCE) {
+                    distance = FLASH_MAX_DISTANCE;
+                }
+                float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
+                float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
+                if (mouseY < painter().centerY()) {
+                    moveOnY = -moveOnY;
+                }
+                if (mouseX < painter().centerX()) {
+                    moveOnX = -moveOnX;
+                }
+                translate((int) moveOnX, (int) moveOnY);
+                flashInObj(arr);
+                canFlash = false;
+            }
+
+        }
+
+        private void flashInObj(ArrayList<GameObject> arr){
+            for(int i=0 ; i<arr.size() ; i++){
+                if(isCollision(arr.get(i))){
+                    if(XForFlash < arr.get(i).collider().left()){
+                        offSetX(arr.get(i).collider().left()-collider().width());
+                    }
+                    if(XForFlash > arr.get(i).collider().right()){
+                        offSetX(arr.get(i).collider().right());
+                    }
+                    if(YForFlash > arr.get(i).collider().bottom()){
+                        offSetY(arr.get(i).collider().bottom());
+                    }
+                    if(YForFlash < arr.get(i).collider().top()){
+                        offSetY(arr.get(i).collider().top()-collider().height());
+                    }
+                }
+            }
+        }
+    }
 }
