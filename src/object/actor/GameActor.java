@@ -1,4 +1,5 @@
 package object.actor;
+
 import object.GameObject;
 import util.*;
 import object.GameObjForAnimator;
@@ -33,7 +34,7 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void paintComponent(Graphics g) {
-        if(state == State.DEAD){
+        if (state == State.DEAD) {
             return;
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
@@ -59,12 +60,13 @@ public class GameActor extends GameObjForAnimator {
         ONE(new Gun(Gun.GunType.UZI, Global.actorX, Global.actorY)),
         TWO(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY));
         private Gun gun;
+
         WhichGun(Gun gun) {
             this.gun = gun;
         }
     }
 
-    public void setMoveSpeed(int moveSpeed){
+    public void setMoveSpeed(int moveSpeed) {
         this.moveSpeed = moveSpeed;
     }
 
@@ -89,12 +91,12 @@ public class GameActor extends GameObjForAnimator {
         return currentGun.gun;
     }
 
-    public Skill getSkill(){
+    public Skill getSkill() {
         return skill;
     }
 
     public void move(int commandCode) {
-        if(state == State.DEATH || state == State.DEAD){
+        if (state == State.DEATH || state == State.DEAD) {
             return;
         }
         if (state != State.RUN) {
@@ -125,7 +127,7 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void setState(State state) {
-        if(this.state == State.DEAD){
+        if (this.state == State.DEAD) {
             return;
         }
         this.state = state;
@@ -157,17 +159,17 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void update() {
         blood.barUpdate(collider().left(), collider().top(), this.life);
-        if(life <= 0){
+        if (life <= 0) {
 
-            if(state == State.DEATH && animator.isFinish()){
+            if (state == State.DEATH && animator.isFinish()) {
                 setState(State.DEAD);
                 return;
             }
-            if(state != State.DEATH && state != State.DEAD) {
+            if (state != State.DEATH && state != State.DEAD) {
                 setState(State.DEATH);
             }
         }
-        if(state == State.DEATH || state == State.DEAD){
+        if (state == State.DEATH || state == State.DEAD) {
             return;
         }
         switch (verticalDir) {
@@ -212,7 +214,7 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.translateForActor();
         updatePosition();
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
-                this.collider().centerX(), this.collider().centerY(),dir);
+                this.collider().centerX(), this.collider().centerY(), dir);
 
     }
 
@@ -221,7 +223,7 @@ public class GameActor extends GameObjForAnimator {
         Global.actorY = collider().bottom();
     }
 
-    public class Skill{
+    public class Skill {
         private int healCount;
         private boolean canHeal;
         private Delay healDelay;
@@ -237,65 +239,65 @@ public class GameActor extends GameObjForAnimator {
         private int XForFlash;
         private int YForFlash;
 
-        private Skill(){
+        private Skill() {
             healCount = 0;
             healDelay = new Delay(45);
             healDelay.loop();
             canHeal = false;
             healCD = new Delay(1800);
-            healAnimator = new Animator("/actor/heal.png",5,128,128,4);
-            healAnimator.setArr(4,2);
+            healAnimator = new Animator("/actor/heal.png", 5, 128, 128, 4);
+            healAnimator.setArr(4, 2);
 
-            delayForFlash = new Delay(120);
+            delayForFlash = new Delay(600);
             canFlash = true;
             flashAnimator = new Animator("/actor/flash.png", 8, 48, 32, 2);
             flashAnimator.setArr(4);
             flashAnimator.setPlayOnce();
         }
 
-        public void skillUpdate(){
+        public void skillUpdate() {
             if (delayForFlash.count()) {
                 canFlash = true;
             }
             healCD.count();
-            if(canHeal){
-                if(healDelay.count()){
+            if (canHeal) {
+                if (healDelay.count()) {
                     heal();
                 }
             }
         }
 
-        public void skillPaint(Graphics g){
+        public void skillPaint(Graphics g) {
             flashAnimator.paintAnimator(g, XForFlash - 24, XForFlash + 24, YForFlash - 16, YForFlash + 16, dir);
-            if(canHeal) {
+            if (canHeal) {
                 healAnimator.paintAnimator(g, painter().left() - 35, painter().right() + 35, painter().top() - 35, painter().bottom() + 35, Dir.RIGHT);
             }
         }
 
-        public void heal(){
-            if(life == HP_MAX){
+        public void heal() {
+            if (life == HP_MAX) {
                 return;
             }
-            if(!canHeal && healCD.isStop()){
+            if (!canHeal && healCD.isStop()) {
                 canHeal = true;
                 healCD.play();
             }
-            if(canHeal) {
+            if (canHeal) {
                 life += HEAL_HP;
                 healCount++;
                 healAnimator.setPlayOnce();
             }
-            if(life > HP_MAX){
+            if (life > HP_MAX) {
                 life = HP_MAX;
             }
-            if(healCount >= 10){
+            if (healCount >= 10) {
                 canHeal = false;
                 healCount = 0;
             }
         }
 
         public void flash(int mouseX, int mouseY, ArrayList<GameObject> arr) {
-            if(state == State.DEATH || state == State.DEAD){
+            if (state == State.DEATH || state == State.DEAD) {
                 return;
             }
             if (canFlash) {
@@ -327,31 +329,39 @@ public class GameActor extends GameObjForAnimator {
             }
         }
 
-        private void flashInObj(ArrayList<GameObject> arr){
-            for(int i=0 ; i<arr.size() ; i++){
-                if(isCollision(arr.get(i))){
-                    if(XForFlash < arr.get(i).collider().left()){
-                        offSetX(arr.get(i).collider().left()-collider().width());
+        private void flashInObj(ArrayList<GameObject> arr) {
+            for (int i = 0; i < arr.size(); i++) {
+                if (isCollision(arr.get(i))) {
+                    if (XForFlash < arr.get(i).collider().left()) {
+                        offSetX(arr.get(i).collider().left() - collider().width());
                     }
-                    if(XForFlash > arr.get(i).collider().right()){
+                    if (XForFlash > arr.get(i).collider().right()) {
                         offSetX(arr.get(i).collider().right());
                     }
-                    if(YForFlash > arr.get(i).collider().bottom()){
+                    if (YForFlash > arr.get(i).collider().bottom()) {
                         offSetY(arr.get(i).collider().bottom());
                     }
-                    if(YForFlash < arr.get(i).collider().top()){
-                        offSetY(arr.get(i).collider().top()-collider().height());
+                    if (YForFlash < arr.get(i).collider().top()) {
+                        offSetY(arr.get(i).collider().top() - collider().height());
                     }
                 }
             }
         }
 
-        public boolean canHeal(){
+        public boolean canHeal() {
             return canHeal;
         }
 
-        public boolean canFlash(){
+        public boolean canFlash() {
             return canFlash;
+        }
+
+        public int getHealCount() {
+            return healCD.getCount();
+        }
+
+        public int getFlashCount() {
+            return delayForFlash.getCount();
         }
     }
 }

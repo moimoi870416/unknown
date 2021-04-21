@@ -19,6 +19,7 @@ public class Display {
     private Image num4;
     private Font font1;
     private Font font2;
+    private Font font3;
     private Image currentGun;
     private Image otherGun;
     private GameActor gameActor;
@@ -43,6 +44,8 @@ public class Display {
         otherGun = ImageController.getInstance().tryGet(gameActor.gunOtherGun().getGunType().forMapPath);
         font1 = new Font("Curlz TM", Font.PLAIN, 20);
         font2 = new Font("Curlz TM", Font.PLAIN, 14);
+        font3 = new Font("Curlz TM", Font.PLAIN, 40);
+
     }
 
 
@@ -76,12 +79,18 @@ public class Display {
             g.drawImage(skillHeal, 1260, 740, null);
         } else {
             g.drawImage(skillNull, 1260, 740, null);
+            g.setFont(font3);
+            g.setColor(Color.red);
+            g.drawString(String.valueOf(30-gameActor.getSkill().getHealCount()/60), 1273, 790);
         }
 
         if (canFlash) {
             g.drawImage(skillFlash, 1340, 740, null);
         } else {
             g.drawImage(skillNull, 1340, 740, null);
+            g.setFont(font3);
+            g.setColor(Color.BLACK);
+            g.drawString(String.valueOf(9-gameActor.getSkill().getFlashCount()/60), 1363, 790);
         }
     }
 
