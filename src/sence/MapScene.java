@@ -13,7 +13,6 @@ import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
 import object.GameObjForAnimator;
-import object.GameObjForPic;
 import object.monster.*;
 import util.Display;
 import controller.ImageController;
@@ -21,7 +20,6 @@ import object.actor.GameActor;
 
 import static util.Global.*;
 
-import util.Global;
 import weapon.Bullet;
 import object.GameObject;
 import util.CommandSolver;
@@ -50,7 +48,7 @@ public class MapScene extends Scene {
 
 
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
-//        monster.add(new Stone(1100,500));
+        monster.add(new Stone(1100, 500));
 //        monster.add(new Cockroach(1400,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.MUSHROOM));
 //        monster.add(new SmallMonster(1000,500,SmallMonster.Type.MUSHROOM));
@@ -149,7 +147,7 @@ public class MapScene extends Scene {
             }
             monster.get(i).update();
             if (monster.get(i).isCollisionWithActor(gameActor)) {
-               monster.get(i).attack(gameActor);
+                monster.get(i).attack(gameActor);
             }
             for (int k = 0; k < mapObjArr.size(); k++) {
                 monster.get(i).isCollider(mapObjArr.get(k));
@@ -196,6 +194,12 @@ public class MapScene extends Scene {
         }
     }
 
+
+    public void displayUpdate() {
+        display.healUpdate(gameActor.getSkill().canHeal());
+        display.flashUpdate(gameActor.getSkill().canFlash());
+    }
+
     @Override
     public void update() {
         mouseUpdate();
@@ -204,6 +208,7 @@ public class MapScene extends Scene {
         monsterUpdate();
         bulletsUpdate();
         shootUpdate();
+        displayUpdate();
         mapInfo.mapUpdate();
         System.out.println(gameActor.collider().centerX());
     }
@@ -220,8 +225,8 @@ public class MapScene extends Scene {
                 listenerMouseY = e.getY();
                 gameActor.getCurrentGun().beginShoot();
                 shooting = true;
-                if(gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
-                    gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed()/2);
+                if (gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
+                    gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed() / 2);
                 }
             }
 
@@ -232,7 +237,7 @@ public class MapScene extends Scene {
             }
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
-                if(shooting) {
+                if (shooting) {
                     if (gameActor.getCurrentGun().shoot()) {
                         this.testBullets.add(new Bullet
                                 (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
@@ -240,7 +245,7 @@ public class MapScene extends Scene {
                                         gameActor.getCurrentGun().getGunType()));
                     }
                 }
-                if(gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                if (gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
                     gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed());
                 }
                 shootCount = 0;
@@ -273,9 +278,9 @@ public class MapScene extends Scene {
                     gameActor.setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
-                    gameActor.getSkill().flash(mouseX, mouseY,mapObjArr);
+                    gameActor.getSkill().flash(mouseX, mouseY, mapObjArr);
                 }
-                if(commandCode == Active.SKILL.getCommandCode()){
+                if (commandCode == Active.SKILL.getCommandCode()) {
                     gameActor.getSkill().heal();
                 }
             }
@@ -386,7 +391,7 @@ public class MapScene extends Scene {
 //            g.drawImage(mapChange,mapWidth*(count+2),0,null);
 //            g.drawImage(mapRight, mapWidth * (count + 3), 0, null);
 //            g.drawImage(mapFinal, mapWidth * (count + 4), 0, null);
-            g.drawImage(mapLimit,0,0,null);
+            g.drawImage(mapLimit, 0, 0, null);
         }
 
         public void mapUpdate() {

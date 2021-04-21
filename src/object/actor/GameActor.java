@@ -213,6 +213,7 @@ public class GameActor extends GameObjForAnimator {
         updatePosition();
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
                 this.collider().centerX(), this.collider().centerY(),dir);
+
     }
 
     private void updatePosition() {
@@ -245,7 +246,7 @@ public class GameActor extends GameObjForAnimator {
             healAnimator = new Animator("/actor/heal.png",5,128,128,4);
             healAnimator.setArr(4,2);
 
-            delayForFlash = new Delay(10);
+            delayForFlash = new Delay(120);
             canFlash = true;
             flashAnimator = new Animator("/actor/flash.png", 8, 48, 32, 2);
             flashAnimator.setArr(4);
@@ -350,7 +351,7 @@ public class GameActor extends GameObjForAnimator {
         }
 
         public boolean canFlash(){
-            return canHeal;
+            return canFlash;
         }
     }
 }

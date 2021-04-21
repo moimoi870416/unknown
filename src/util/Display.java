@@ -10,13 +10,20 @@ public class Display {
 
     private Image gun1Frame;
     private Image gun2Frame;
-    private Image skillFrame1;
-    private Image skillFrame2;
+    private Image skillHeal;
+    private Image skillFlash;
+    private Image skillNull;
+    private Image num1;
+    private Image num2;
+    private Image num3;
+    private Image num4;
     private Font font1;
     private Font font2;
     private Image currentGun;
     private Image otherGun;
     private GameActor gameActor;
+    private boolean canHeal;
+    private boolean canFlash;
     public static boolean isFirstGun;
 
 
@@ -25,8 +32,13 @@ public class Display {
         isFirstGun = true;
         gun1Frame = ImageController.getInstance().tryGet("/display/frame1.png");
         gun2Frame = ImageController.getInstance().tryGet("/display/frame2.png");
-        skillFrame1 = ImageController.getInstance().tryGet("/display/heal.png");
-        skillFrame2 = ImageController.getInstance().tryGet("/display/frame2.png");
+        skillHeal = ImageController.getInstance().tryGet("/display/heal.png");
+        skillFlash = ImageController.getInstance().tryGet("/display/flash.png");
+        skillNull = ImageController.getInstance().tryGet("/display/frame1.png");
+        num1 = ImageController.getInstance().tryGet("/display/FrameNum1.png");
+        num2 = ImageController.getInstance().tryGet("/display/FrameNum2.png");
+        num3 = ImageController.getInstance().tryGet("/display/frameNum3.png");
+        num4 = ImageController.getInstance().tryGet("/display/frameNum4.png");
         currentGun = ImageController.getInstance().tryGet(gameActor.getCurrentGun().getGunType().forMapPath);
         otherGun = ImageController.getInstance().tryGet(gameActor.gunOtherGun().getGunType().forMapPath);
         font1 = new Font("Curlz TM", Font.PLAIN, 20);
@@ -39,35 +51,60 @@ public class Display {
         skillPaint(g);
         framePaint(g);
         gunPaint(g);
+        buttonPaint(g);
+
+    }
+
+    public void healUpdate(boolean canHeal) {
+        this.canHeal = canHeal;
+    }
+
+    public void flashUpdate(boolean canFlash) {
+        this.canFlash = canFlash;
+    }
+
+    private void buttonPaint(Graphics g) {
+        g.drawImage(num1, 1125, 818, null);
+        g.drawImage(num2, 1205, 818, null);
+        g.drawImage(num3, 1285, 818, null);
+        g.drawImage(num4, 1365, 818, null);
 
     }
 
     private void skillPaint(Graphics g) {
-        if(gameActor.getSkill().)
-        g.drawImage(skillFrame1, 1260, 750, null);
-        g.drawImage(skillFrame2, 1340, 750, null);
+        if (!canHeal) {
+            g.drawImage(skillHeal, 1260, 740, null);
+        } else {
+            g.drawImage(skillNull, 1260, 740, null);
+        }
+
+        if (canFlash) {
+            g.drawImage(skillFlash, 1340, 740, null);
+        } else {
+            g.drawImage(skillNull, 1340, 740, null);
+        }
     }
 
     private void framePaint(Graphics g) {
         if (isFirstGun) {
-            g.drawImage(gun1Frame, 1100, 750, null);
-            g.drawImage(gun2Frame, 1180, 750, null);
+            g.drawImage(gun1Frame, 1100, 740, null);
+            g.drawImage(gun2Frame, 1180, 740, null);
             return;
         }
-        g.drawImage(gun2Frame, 1100, 750, null);
-        g.drawImage(gun1Frame, 1180, 750, null);
+        g.drawImage(gun2Frame, 1100, 740, null);
+        g.drawImage(gun1Frame, 1180, 740, null);
 
     }
 
     private void magazinePaint(Graphics g) {
         g.setFont(font1);
         g.setColor(Color.WHITE);
-        g.drawString(gameActor.getCurrentGun().toString(), 1020, 790);
+        g.drawString(gameActor.getCurrentGun().toString(), 1020, 780);
     }
 
     private void gunPaint(Graphics g) {
-        g.drawImage(currentGun, 1100, 760, null);
-        g.drawImage(otherGun, 1180, 760, null);
+        g.drawImage(currentGun, 1100, 750, null);
+        g.drawImage(otherGun, 1180, 750, null);
         surplusBullet(g);
     }
 
@@ -78,10 +115,10 @@ public class Display {
             return;
         }
         if (isFirstGun) {
-            g.drawString(String.valueOf(gameActor.getCurrentGun().getSurplusBullet()), 1140, 815);
+            g.drawString(String.valueOf(gameActor.getCurrentGun().getSurplusBullet()), 1140, 810);
             return;
         }
-        g.drawString(String.valueOf(gameActor.getCurrentGun().getSurplusBullet()), 1220, 815);
+        g.drawString(String.valueOf(gameActor.getCurrentGun().getSurplusBullet()), 1220, 810);
     }
 
 
