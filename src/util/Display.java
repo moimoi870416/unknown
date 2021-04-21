@@ -99,7 +99,7 @@ public class Display {
     private void magazinePaint(Graphics g) {
         g.setFont(font1);
         g.setColor(Color.WHITE);
-        g.drawString(gameActor.getCurrentGun().toString(), 1020, 780);
+        g.drawString(gameActor.getCurrentGun().toString(), 1010, 785);
     }
 
     private void gunPaint(Graphics g) {
