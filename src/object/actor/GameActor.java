@@ -344,5 +344,13 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
         }
+
+        public boolean canHeal(){
+            return canHeal;
+        }
+
+        public boolean canFlash(){
+            return canHeal;
+        }
     }
 }

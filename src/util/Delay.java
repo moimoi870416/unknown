@@ -66,4 +66,8 @@ public class Delay {
         return false;// 還沒觸發
     }
 
+    public int getCount(){
+        return count;
+    }
+
 }
