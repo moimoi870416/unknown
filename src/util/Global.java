@@ -20,7 +20,7 @@ public class Global {
 
     //地圖大小
     public static final int MAP_WIDTH = 4096*5;
-    public static final int MAP_HEIGHT = 1024;
+    public static final int MAP_HEIGHT = 1024*2;
     public static final int MAP_UNIT_WIDTH = 4096;
 
     //視窗大小

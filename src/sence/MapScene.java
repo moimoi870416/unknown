@@ -24,6 +24,7 @@ import static util.Global.*;
 import weapon.Bullet;
 import object.GameObject;
 import util.CommandSolver;
+import weapon.Gun;
 
 public class MapScene extends Scene {
     private ArrayList<GameObject> mapObjArr;
@@ -218,6 +219,9 @@ public class MapScene extends Scene {
                 listenerMouseY = e.getY();
                 gameActor.getCurrentGun().beginShoot();
                 shooting = true;
+                if(gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                    gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed()/2);
+                }
             }
 
             if (shooting && state == CommandSolver.MouseState.DRAGGED) {
@@ -234,6 +238,9 @@ public class MapScene extends Scene {
                                         mouseX, mouseY,
                                         gameActor.getCurrentGun().getGunType()));
                     }
+                }
+                if(gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                    gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed());
                 }
                 shootCount = 0;
 
@@ -280,16 +287,15 @@ public class MapScene extends Scene {
     }
 
     public void mapInit() {
-        mapObjArr = new MapObjController.Builder().setBmpAndTxt("changeMap.bmp", "changeMap.txt")
+        mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
                 //.setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
 //                .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
 //                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
 //                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
 //                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
-
+                
                 .gen()
                 .setMap();
-
     }
 
     private class mapInfo {
@@ -307,7 +313,7 @@ public class MapScene extends Scene {
         private boolean back;
 
         private mapInfo() {
-            mapLeft = ImageController.getInstance().tryGet(MapPath.CHANGE.mapPath);
+            mapLeft = ImageController.getInstance().tryGet(MapPath.DESERT.mapPath);
             mapMiddle = ImageController.getInstance().tryGet(MapPath.DESERT.mapPath);
             mapRight = ImageController.getInstance().tryGet(MapPath.END.mapPath);
             this.count = 0;
@@ -316,7 +322,6 @@ public class MapScene extends Scene {
             thirdStage = false;
             finalStage = false;
             back = false;
-
         }
 
         public void mapPaint(Graphics g) {
@@ -349,6 +354,20 @@ public class MapScene extends Scene {
     }
 }
 
+//開場地圖物件
+//.setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
+//                .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("
+
+//森林地圖物件
+//                .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
+//                //.setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
+
 //過場地圖物件
 //                .setNameAndPath("changetree1","/map/change-tree1(268-272).png",true,new GameObjForPic("/map/change-tree1(268-272).png", 0, 0, 268, 272))
 //                        .setNameAndPath("changetree2","/map/change-tree1(242-271).png",true,new GameObjForPic("/map/change-tree1(242-271).png", 0, 0, 242, 272))
@@ -359,3 +378,16 @@ public class MapScene extends Scene {
 //                        .setNameAndPath("sandbag2","/map/sandbag2(288-80).png",true,new GameObjForPic("/map/sandbag2(288-80).png", 0, 0, 288, 80))
 //                        .setNameAndPath("rocko1","/map/rocko(208-136).png",true,new GameObjForPic("/map/rocko(208-136).png", 0, 0, 208, 136))
 ////                .setNameAndPath("rocko2","/map/rocko(208-120).png",true,new GameObjForPic("/map/rocko(208-120).png", 0, 0, 208, 120))
+
+//BOSS場景
+//                .setNameAndPath("farmhay","/map/farm_hay(184-144).png",true,new GameObjForPic("/map/farm_hay(184-144).png", 0, 0, 184, 144))
+//                        .setNameAndPath("farmhay2","/map/farmhay(72-160).png",true,new GameObjForPic("/map/farmhay(72-160).png", 0, 0, 72, 160))
+//                        .setNameAndPath("signright","/map/signRight(152-104).png",true,new GameObjForPic("/map/signRight(152-104).png", 0, -150, 152, 104))
+//                        .setNameAndPath("warmsign","/map/warmsign(240-160).png",true,new GameObjForPic("/map/warmsign(240-160).png", 0, -150, 240, 160))
+//                        .setNameAndPath("verticlawall1","/map/vertical_wall(24-216).png",true,new GameObjForPic("/map/vertical_wall(24-216).png", 0, 0, 32, 216))
+//                        .setNameAndPath("verticalwall2","/map/vertical_wall2(24-216).png",true,new GameObjForPic("/map/vertical_wall2(24-216).png", 0, 0, 32, 216))
+//                        .setNameAndPath("wall1","/map/horizontal_wall(176-96).png",true,new GameObjForPic("/map/horizontal_wall(176-96).png", 0, 0, 176, 96))
+//                        .setNameAndPath("wall2","/map/horizontal_wall(288-96).png",true,new GameObjForPic("/map/horizontal_wall(288-96).png", 0, 0, 288, 96))
+//                        .setNameAndPath("wall3","/map/horizontal_wall(304-96).png",true,new GameObjForPic("/map/horizontal_wall(304-96).png", 0, 0, 304, 96))
+//                        .setNameAndPath("oasis1","/map/oasis_tree (232-400).png",true,new GameObjForPic("/map/oasis_tree (232-400).png", 110, 0, 200, 400))
+//                        .setNameAndPath("oasis2","/map/oasis_tree2(232-400).png",true,new GameObjForPic("/map/oasis_tree2(232-400).png", 130, 0, 232, 400))

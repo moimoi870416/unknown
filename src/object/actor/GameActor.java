@@ -65,6 +65,10 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
+    public void setMoveSpeed(int moveSpeed){
+        this.moveSpeed = moveSpeed;
+    }
+
     @Override
     public void changeDir(int mouseX) {
         if (mouseX > painter().centerX()) {

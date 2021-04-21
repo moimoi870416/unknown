@@ -1,0 +1,11 @@
+warmsign,-26368,C:\Users\lin\Desktop\¯À§÷\path\warmsign(240-160).png,1,1
+signright,-26266,C:\Users\lin\Desktop\¯À§÷\path\signRight(152-104).png,1,1
+verticlawall1,-52,C:\Users\lin\Desktop\¯À§÷\wall\vertical_wall(24-216).png,1,1
+verticalwall2,-205,C:\Users\lin\Desktop\¯À§÷\wall\vertical_wall2(24-216).png,1,1
+oasis1,-6684775,C:\Users\lin\Desktop\¯À§÷\tree\oasis_tree (232-400).png,1,1
+oasis2,-10027162,C:\Users\lin\Desktop\¯À§÷\tree\oasis_tree2(232-400).png,1,1
+wall1,-3355393,C:\Users\lin\Desktop\¯À§÷\wall\horizontal_wall(176-96).png,1,1
+wall2,-13057,C:\Users\lin\Desktop\¯À§÷\wall\horizontal_wall(288-96).png,1,1
+wall3,-16751002,C:\Users\lin\Desktop\¯À§÷\wall\horizontal_wall(304-96).png,1,1
+farmhay,-26113,C:\Users\lin\Desktop\¯À§÷\path\farm_hay(184-144).png,1,1
+farmhay2,-6749953,C:\Users\lin\Desktop\¯À§÷\path\farmhay(72-160).png,1,1
