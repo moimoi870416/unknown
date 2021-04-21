@@ -8,7 +8,7 @@ public abstract class Monster extends GameObjForAnimator {
     private Delay delayForCollision;
     protected Delay attackDelay;
     private boolean collision;
-    private boolean canAttack;
+    protected boolean canAttack;
     protected Delay delayForAttack;
     protected boolean isOnceAttack;
     protected boolean isChase;

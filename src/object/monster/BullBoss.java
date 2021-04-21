@@ -15,12 +15,12 @@ public class BullBoss extends MonsterAddHitArea {
     private int totalDistance;
     private boolean readyAtk;
     private int atkType;
-    private int count;
+    private int chaseCount;
+    private Delay normalAtkDelay;
 
     public BullBoss(int x, int y) {
         super(x+60,y+40,280,230,x, y, 384, 384,30000,51,2,false);
         animator = new Animator("/monster/bullboss.png",30,96,96,20);
-        delayForAttack = new Delay(75);
         attacking = false;
         setState(State.STAND);
         delayForAttack = new Delay(45);
@@ -30,7 +30,9 @@ public class BullBoss extends MonsterAddHitArea {
         totalDistance = 0;
 
         attackDelay.play();
-        count = 0;
+        chaseCount = 0;
+        normalAtkDelay = new Delay(45);
+        normalAtkDelay.loop();
     }
 
     @Override
@@ -43,18 +45,17 @@ public class BullBoss extends MonsterAddHitArea {
                     }
                     return;
                 }
-                if (isChase) {
-                    forRino = true;
-                    if (readyAtk) {
-                        if (attack()) {
-                            return;
-                        }
-                        chase();
+                forRino = true;
+                if (readyAtk) {
+                    if (criticalAttack()) {
                         return;
                     }
-                    atkMove();
+                    chase();
                     return;
                 }
+                criticalAtkMove();
+                return;
+
             }else {
                 normalAtk();
             }
@@ -88,6 +89,8 @@ public class BullBoss extends MonsterAddHitArea {
                 animator.setDelayCount(5);
                 animator.setPlayOnce();
                 moveSpeed = 3;
+                isOnceAttack = false;
+                canAttack = true;
                 attackDelay = new Delay(30);
 
             }
@@ -97,6 +100,7 @@ public class BullBoss extends MonsterAddHitArea {
                 animator.setPlayOnce();
                 moveSpeed = 4;
                 isOnceAttack = true;
+                canAttack = true;
                 attackDelay = new Delay(60);
             }
             case RUN -> {
@@ -109,21 +113,22 @@ public class BullBoss extends MonsterAddHitArea {
     }
 
     private void normalAtk(){
-        if(Math.abs(painter().centerX() - Global.actorX) > 100){
+        if(Math.abs(painter().centerX() - Global.actorX) > 80){
             if(state != State.RUN){
                 setState(State.RUN);
             }
             chase();
-            count++;
-            if(count >300){
+            chaseCount++;
+            if(chaseCount >300){
                 attacking = false;
-                count = 0;
+                chaseCount = 0;
             }
             return;
         }
         if(state != State.ATTACK){
-            setState(State.ATTACK);
-            isOnceAttack = false;
+            if(normalAtkDelay.count()) {
+                setState(State.ATTACK);
+            }
         }
         if(state == State.ATTACK){
             chase();
@@ -134,7 +139,7 @@ public class BullBoss extends MonsterAddHitArea {
         }
     }
 
-    private boolean attack(){
+    private boolean criticalAttack(){
         if(Math.abs(painter().centerX() - Global.actorX) < 500 || focus) {
             focus = true;
             if (attackDelay.count()) {
@@ -159,7 +164,7 @@ public class BullBoss extends MonsterAddHitArea {
         return false;
     }
 
-    private void atkMove(){
+    private void criticalAtkMove(){
         if(totalDistance < atkDistance){
             translate(moveOnX,moveOnY);
             totalDistance += moveDistance;

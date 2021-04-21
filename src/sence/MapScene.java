@@ -45,7 +45,7 @@ public class MapScene extends Scene {
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
-        //monster.add(new BullBoss(1000,500));
+        monster.add(new BullBoss(1200,500));
 
 //        monster.add(new Cockroach(1000,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
@@ -164,19 +164,19 @@ public class MapScene extends Scene {
             }
         }
 
-        if (Math.random() * 100 < 3 && monster.size() < 100) {
-            int r = random(0,2);
-            if(r == 0) {
-                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.GOBLIN));
-            }else if(r == 1){
-                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.MUSHROOM));
-            }else if(r == 2){
-                monster.add(new Stone(actorX + 1400,random(500,WINDOW_WIDTH)));
-            }
-            if(Math.random() *100 <5) {
-                monster.add(new Rino(actorX + 1400, random(500, WINDOW_WIDTH)));
-            }
-        }
+//        if (Math.random() * 100 < 3 && monster.size() < 100) {
+//            int r = random(0,2);
+//            if(r == 0) {
+//                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.GOBLIN));
+//            }else if(r == 1){
+//                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.MUSHROOM));
+//            }else if(r == 2){
+//                monster.add(new Stone(actorX + 1400,random(500,WINDOW_WIDTH)));
+//            }
+//            if(Math.random() *100 <5) {
+//                monster.add(new Rino(actorX + 1400, random(500, WINDOW_WIDTH)));
+//            }
+//        }
 
     }
 
