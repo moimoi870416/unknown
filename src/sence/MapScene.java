@@ -27,7 +27,6 @@ import util.CommandSolver;
 
 public class MapScene extends Scene {
     private ArrayList<GameObject> mapObjArr;
-    private ArrayList<GameObject> mapObjArr2;
     private LinkedList<Bullet> testBullets;
     private LinkedList<Monster> monster;
     private int listenerMouseX;
@@ -45,7 +44,7 @@ public class MapScene extends Scene {
         testBullets = new LinkedList<>();
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
-        monster.add(new BullBoss(1200,500));
+        //monster.add(new BullBoss(1200,500));
 
 //        monster.add(new Cockroach(1000,500));
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
@@ -89,7 +88,6 @@ public class MapScene extends Scene {
             gameActor.paint(g);
         }
         mapObjArr.forEach(a -> a.paint(g));
-        mapObjArr2.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
@@ -129,9 +127,9 @@ public class MapScene extends Scene {
                                 monster.get(k).setState(GameObjForAnimator.State.DEATH);
                             }
                             if (testBullets.get(i).isPenetrate(life)) {
-//                                testBullets.remove(i);
-//                                i--;
-//                                break;
+                                testBullets.remove(i);
+                                i--;
+                                break;
                             }
                         }
                     }
@@ -153,9 +151,6 @@ public class MapScene extends Scene {
             }
             for (int k = 0; k < mapObjArr.size(); k++) {
                 monster.get(i).isCollider(mapObjArr.get(k));
-            }
-            for (int k = 0; k < mapObjArr2.size(); k++) {
-                gameActor.isCollider(mapObjArr2.get(k));
             }
             if (monster.size() > 1 && i != monster.size() - 1) {
                 if (!gameActor.isCollisionWithActor(monster.get(i))) {
@@ -197,18 +192,7 @@ public class MapScene extends Scene {
         for (int i = 0; i < mapObjArr.size(); i++) {
             gameActor.isCollider(mapObjArr.get(i));
         }
-        for (int i = 0; i < mapObjArr2.size(); i++) {
-            gameActor.isCollider(mapObjArr2.get(i));
-        }
     }
-
-//    public void mapObjUpdate(){
-//        for(int i=0 ; i<mapObjArr.size() ; i++){
-//            if(mapObjArr.get(i).isCollision(gameActor){
-//
-//            }
-//        }
-//    }
 
     @Override
     public void update() {
@@ -296,22 +280,13 @@ public class MapScene extends Scene {
     }
 
     public void mapInit() {
-        mapObjArr = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
-                .setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
-                .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
-                //.setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
-                .gen()
-                .setMap();
-        mapObjArr2 = new MapObjController.Builder().setBmpAndTxt("genMap.bmp", "genMap.txt")
-                .setX(MAP_UNIT_WIDTH)
-                .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
-                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
-                //.setNameAndPath("rock2", "/map/rock-sand1-584-216.png", false, null)
+        mapObjArr = new MapObjController.Builder().setBmpAndTxt("changeMap.bmp", "changeMap.txt")
+                //.setNameAndPath("bananastatue", "/map/banana.png", true, new GameObjForPic("/map/banana.png", 0, 156, 168, 256))
+//                .setNameAndPath("tree1", "/map/tree1-208-336.png", true, new GameObjForPic("/map/tree1-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("tree2", "/map/tree2-208-336.png", true, new GameObjForPic("/map/tree2-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("tree3", "/map/tree3-208-336.png", true, new GameObjForPic("/map/tree3-208-336.png", 0, 0, 208, 336))
+//                .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
+
                 .gen()
                 .setMap();
 
@@ -332,9 +307,9 @@ public class MapScene extends Scene {
         private boolean back;
 
         private mapInfo() {
-            mapLeft = ImageController.getInstance().tryGet(MapPath.BEGIN.mapPath);
-            mapMiddle = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
-            mapRight = ImageController.getInstance().tryGet(MapPath.THIRD.mapPath);
+            mapLeft = ImageController.getInstance().tryGet(MapPath.CHANGE.mapPath);
+            mapMiddle = ImageController.getInstance().tryGet(MapPath.DESERT.mapPath);
+            mapRight = ImageController.getInstance().tryGet(MapPath.END.mapPath);
             this.count = 0;
             firstStage = true;
             secondStage = false;
@@ -351,25 +326,36 @@ public class MapScene extends Scene {
         }
 
         public void mapUpdate() {
-            if (!passing4000X) {
-                if (actorX > 4000) {
-                    mapLeft = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
-                    count++;
-                    passing4000X = true;
-                }
-            }
-            if(!back) {
-                if (actorX > 4000) {
-
-
-                }
-                return;
-            }
-            if(back){
-
-            }
+//            if (!passing4000X) {
+//                if (actorX > 4000) {
+//                    mapLeft = ImageController.getInstance().tryGet(MapPath.SECOND.mapPath);
+//                    count++;
+//                    passing4000X = true;
+//                }
+//            }
+//            if(!back) {
+//                if (actorX > 4000) {
+//
+//
+//                }
+//                return;
+//            }
+//            if(back){
+//
+//            }
         }
 
 
     }
 }
+
+//過場地圖物件
+//                .setNameAndPath("changetree1","/map/change-tree1(268-272).png",true,new GameObjForPic("/map/change-tree1(268-272).png", 0, 0, 268, 272))
+//                        .setNameAndPath("changetree2","/map/change-tree1(242-271).png",true,new GameObjForPic("/map/change-tree1(242-271).png", 0, 0, 242, 272))
+//                        .setNameAndPath("deserttree1","/map/desert-tree1(239-272).png",true,new GameObjForPic("/map/desert-tree1(239-272).png", 0, 0, 239, 272))
+//                        .setNameAndPath("signright","/map/signRightpng(152-104).png",true,new GameObjForPic("/map/signRightpng(152-104).png", 0, 0, 152, 104))
+//                        .setNameAndPath("sandbag1","/map/sandbag1(272-100).png",true,new GameObjForPic("/map/sandbag1(272-100).png", 0, 0, 272, 100))
+//                        .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", true,new GameObjForPic("/map/rock-sand1-584-216.png", 0, -200, 584, 216))
+//                        .setNameAndPath("sandbag2","/map/sandbag2(288-80).png",true,new GameObjForPic("/map/sandbag2(288-80).png", 0, 0, 288, 80))
+//                        .setNameAndPath("rocko1","/map/rocko(208-136).png",true,new GameObjForPic("/map/rocko(208-136).png", 0, 0, 208, 136))
+////                .setNameAndPath("rocko2","/map/rocko(208-120).png",true,new GameObjForPic("/map/rocko(208-120).png", 0, 0, 208, 120))

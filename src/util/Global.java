@@ -33,10 +33,10 @@ public class Global {
 
     public enum MapPath{
         BEGIN("/map/map-begin.png"),
-        SECOND("/map/map-second.png"),
-        THIRD("/map/map-second.png"),
-        FOURTH("/map/map-second.png");
-        //END;
+        FOREST("/map/map-forest.png"),
+        DESERT("/map/map-desert.png"),
+        CHANGE("/map/map-change.png"),
+        END("/map/map-boss.png");
 
         public String mapPath;
 
