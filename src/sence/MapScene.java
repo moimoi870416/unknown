@@ -46,7 +46,6 @@ public class MapScene extends Scene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
 
-
 //        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
 //        monster.add(new Stone(1100,500));
 //        monster.add(new Cockroach(1400,500));
