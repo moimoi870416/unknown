@@ -80,8 +80,8 @@ public class Display {
         } else {
             g.drawImage(skillNull, 1260, 740, null);
             g.setFont(font3);
-            g.setColor(Color.red);
-            g.drawString(String.valueOf(30-gameActor.getSkill().getHealCount()/60), 1273, 790);
+            g.setColor(Color.BLACK);
+            g.drawString(String.valueOf(30-gameActor.getSkill().getHealCount()/60), 1273, 793);
         }
 
         if (canFlash) {
@@ -90,7 +90,7 @@ public class Display {
             g.drawImage(skillNull, 1340, 740, null);
             g.setFont(font3);
             g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(9-gameActor.getSkill().getFlashCount()/60), 1363, 790);
+            g.drawString(String.valueOf(9-gameActor.getSkill().getFlashCount()/60), 1364, 793);
         }
     }
 
