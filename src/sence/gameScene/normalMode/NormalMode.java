@@ -6,9 +6,7 @@ import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
-import object.monster.Rino;
 import object.monster.SmallMonster;
-import object.monster.Stone;
 import sence.GameScene;
 import util.Global;
 import java.awt.*;
@@ -21,7 +19,7 @@ public class NormalMode extends GameScene {
     protected void sceneBeginComponent() {
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        gameActor.add(new GameActor(Actor.FIRST.getPath(), 500, 700));
+        gameActorArr.add(new GameActor(Actor.FIRST.getPath(), 500, 700));
         mapInfo = new NormalModeMapInfo();
         monster.add(new SmallMonster(500,500, SmallMonster.Type.MUSHROOM));
 

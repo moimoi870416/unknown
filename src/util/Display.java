@@ -58,12 +58,8 @@ public class Display {
 
     }
 
-    public void healUpdate(boolean canHeal) {
-        this.canHeal = canHeal;
-    }
-
-    public void flashUpdate(boolean canFlash) {
-        this.canFlash = canFlash;
+    public void displayUpdate(GameActor gameActor) {
+        this.gameActor = gameActor;
     }
 
     private void buttonPaint(Graphics g) {
@@ -75,22 +71,22 @@ public class Display {
     }
 
     private void skillPaint(Graphics g) {
-        if (!canHeal) {
+        if (gameActor.getSkill().getHealCD().isStop()) {
             g.drawImage(skillHeal, 1260, 740, null);
         } else {
             g.drawImage(skillNull, 1260, 740, null);
             g.setFont(font3);
             g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(30-gameActor.getSkill().getHealCount()/60), 1273, 793);
+            g.drawString(String.valueOf(30-gameActor.getSkill().getHealCD().getCount()/60), 1273, 793);
         }
 
-        if (canFlash) {
+        if (gameActor.getSkill().getDelayForFlash().isStop()) {
             g.drawImage(skillFlash, 1340, 740, null);
         } else {
             g.drawImage(skillNull, 1340, 740, null);
             g.setFont(font3);
             g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(9-gameActor.getSkill().getFlashCount()/60), 1364, 793);
+            g.drawString(String.valueOf(9-gameActor.getSkill().getDelayForFlash().getCount()/60), 1364, 793);
         }
     }
 
