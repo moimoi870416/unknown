@@ -19,7 +19,7 @@ public class Global {
 
 
     //地圖大小
-    public static final int MAP_WIDTH = 21504;
+    public static int MAP_WIDTH = 2048;
     public static int MAP_HEIGHT = 1024;
     public static final int MAP_UNIT_WIDTH = 4096;
 

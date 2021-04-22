@@ -45,7 +45,7 @@ public class SmallMonster extends Monster {
     public enum Type{
         GOBLIN("/monster/goblin/goblin88.png",5),
         SLIME("/monster/goblin/goblin88.png",3),
-        MUSHROOM("/monster/goblin/mushroomRun.png",2);
+        MUSHROOM("/monster/goblin/mushroomRun.png",3);
 
         private String path;
         private int speedMove;

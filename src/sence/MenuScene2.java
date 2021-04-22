@@ -6,6 +6,8 @@ import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
+import sence.gameScene.normalMode.BossScene;
+import sence.gameScene.normalMode.NormalMode;
 import util.CommandSolver;
 
 import static util.Global.*;
@@ -153,7 +155,7 @@ public class MenuScene2 extends Scene {
                                 return;
                             }
                             if (limitMode.IsUse(normalMode)) {
-                                SenceController.getSenceController().change(new MapScene());
+                                SenceController.getSenceController().change(new NormalMode());
                             }
                             return;
                         }
