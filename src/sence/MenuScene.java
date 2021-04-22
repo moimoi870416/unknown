@@ -6,6 +6,7 @@ import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
+import sence.gameScene.LimitModel;
 import sence.gameScene.normalMode.NormalMode;
 import util.CommandSolver;
 import util.Delay;
@@ -50,6 +51,7 @@ public class MenuScene extends Scene {
         stateUpdate();
         isSecond = false;
         this.multiPop = new MenuPopupScene(200, 100, 1000, 650);//代表碰撞即點及位置
+
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -97,14 +99,27 @@ public class MenuScene extends Scene {
                 , Style.getGeneralStyle(width, height, path, true, Color.BLACK, 5));
     }
 
+
+    //彈跳視窗
     public void stateUpdate() {
-//
 //       this.labels.get(0).setClickedActionPerformed((int x, int y) -> SceneController.getInstance().change(new SoloScene1()));
-        addThird();
         this.labels.get(1).setClickedActionPerformed((int x, int y) -> {
             this.multiPop.sceneBegin();
             this.multiPop.show();
         });
+        addThird();
+
+    }
+
+    private void sceneChange() {
+        if (isSingle) {
+            if (isNormal) {
+                SenceController.getSenceController().change(new NormalMode());
+                return;
+            }
+            SenceController.getSenceController().change(new LimitModel());
+        }
+
     }
 
     //  碰撞
@@ -142,6 +157,7 @@ public class MenuScene extends Scene {
         labels.add(limitMode);
         labels.add(back);
         isSecond = true;
+
     }
 
     //連線模式
@@ -191,10 +207,10 @@ public class MenuScene extends Scene {
                                 return;
                             }
                             if (normalMode.getIsFocus()) {
-                                isNormal=true;
-                                SenceController.getSenceController().change(new NormalMode());
-                            }
+                                isNormal = true;
 
+                            }
+                            sceneChange();
                             return;
                         }
                         for (int i = 0; i < labels.size(); i++) {
@@ -202,7 +218,7 @@ public class MenuScene extends Scene {
                         }
 
                         if (singleMode.getIsFocus()) {
-                            isSingle=true;
+                            isSingle = true;
                             addSecond();
                         }
                         release();
@@ -265,9 +281,9 @@ public class MenuScene extends Scene {
                 this.multiPop.paint(g);
                 this.addServer.paint(g);
                 this.crateServer.paint(g);
-//                if (this.addServer.getIsFocus()) {
-//                    this.input.paint(g);
-//                }
+                if (this.addServer.getIsFocus()) {
+                    this.input.paint(g);
+                }
             }
 
         }

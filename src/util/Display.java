@@ -81,7 +81,11 @@ public class Display {
             g.drawImage(skillNull, 1260, 740, null);
             g.setFont(font3);
             g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(30-gameActor.getSkill().getHealCount()/60), 1273, 793);
+            if (gameActor.getSkill().getHealCount() / 60 < 20) {
+                g.drawString(String.valueOf(30 - gameActor.getSkill().getHealCount() / 60), 1273, 793);
+            }else{
+                g.drawString(String.valueOf(30 - gameActor.getSkill().getHealCount() / 60), 1278, 793);
+            }
         }
 
         if (canFlash) {
@@ -90,7 +94,10 @@ public class Display {
             g.drawImage(skillNull, 1340, 740, null);
             g.setFont(font3);
             g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(9-gameActor.getSkill().getFlashCount()/60), 1364, 793);
+            if (gameActor.getSkill().getFlashCount() / 60 < 10) {
+                g.drawString(String.valueOf(9 - gameActor.getSkill().getFlashCount() / 60), 1364, 793);
+
+            }
         }
     }
 
