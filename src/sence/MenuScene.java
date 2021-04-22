@@ -27,14 +27,16 @@ public class MenuScene extends Scene {
     private Button normalMode;
     private Button limitMode;
     private boolean isSecond;
+    private boolean isAdd;
     private BackgroundType.BackgroundImage menuImg2;
     private Delay delay;//給封面用的
     private MenuPopupScene multiPop; //跳出視窗
     private Button crateServer;
     private Button addServer;
-    private EditText input;
+    private EditText inputText;
     private boolean isSingle;
     private boolean isNormal;
+    private Style style;
 
     @Override
     public void sceneBegin() {
@@ -48,10 +50,9 @@ public class MenuScene extends Scene {
         multiplayer = new Button(800, 25, Theme.get(1));
         labels.add(singleMode);
         labels.add(multiplayer);
-        stateUpdate();
         isSecond = false;
-        this.multiPop = new MenuPopupScene(200, 100, 1000, 650);//代表碰撞即點及位置
-
+        this.multiPop = new MenuPopupScene(190, 15, 1020, 820);//代表碰撞即點及位置
+        this.isAdd = false;
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -78,7 +79,7 @@ public class MenuScene extends Scene {
         multiPop = null;
         crateServer = null;
         addServer = null;
-        input = null;
+        inputText = null;
     }
 
     //初始化主題
@@ -99,18 +100,7 @@ public class MenuScene extends Scene {
                 , Style.getGeneralStyle(width, height, path, true, Color.BLACK, 5));
     }
 
-
-    //彈跳視窗
-    public void stateUpdate() {
-//       this.labels.get(0).setClickedActionPerformed((int x, int y) -> SceneController.getInstance().change(new SoloScene1()));
-        this.labels.get(1).setClickedActionPerformed((int x, int y) -> {
-            this.multiPop.sceneBegin();
-            this.multiPop.show();
-        });
-        addThird();
-
-    }
-
+    //換背景
     private void sceneChange() {
         if (isSingle) {
             if (isNormal) {
@@ -119,7 +109,6 @@ public class MenuScene extends Scene {
             }
             SenceController.getSenceController().change(new LimitModel());
         }
-
     }
 
     //  碰撞
@@ -157,20 +146,26 @@ public class MenuScene extends Scene {
         labels.add(limitMode);
         labels.add(back);
         isSecond = true;
-
     }
 
-    //連線模式
+    //彈跳視窗
     private void addThird() {
-        crateServer = new Button(300, 200, Theme.get(5));
-        addServer = new Button(900, 200, Theme.get(6));
-        input = new EditText(600, 400, "請按Enter");
-        input.setEditLimit(12);//設定文字輸入長度限制
-        input.setCursorSpeed(10);
-        input.setEditLimit(70);//游標閃爍位置
+        this.labels.get(1).setClickedActionPerformed((int x, int y) -> {
+            this.multiPop.sceneBegin();
+            this.multiPop.show();
+        });
+        crateServer = new Button(400, 200, Theme.get(5));
+        addServer = new Button(800, 200, Theme.get(6));
+        this.style = new Style.StyleRect(300, 100, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/multiButton-3.png")));
+        inputText = new EditText(600, 400, "請按Enter", style);
+        inputText.setEditLimit(12);//設定文字輸入長度限制
+        inputText.setCursorSpeed(10);
+        inputText.setEditLimit(20);//游標閃爍位置
         labels.add(crateServer);
         labels.add(addServer);
-        labels.add(input);
+        labels.add(inputText);
+
     }
 
     //返回釋放
@@ -197,35 +192,44 @@ public class MenuScene extends Scene {
                             for (int i = 5; i < labels.size(); i++) {
                                 isPress(labels.get(i), e.getX(), e.getY());
                             }
-                        }
-                        if (isSecond) {
-                            for (int i = 2; i < labels.size(); i++) {
-                                isPress(labels.get(i), e.getX(), e.getY());
-                            }
-                            if (back.getIsFocus()) {
-                                isSecond = false;
+                            addServer.setClickedActionPerformed((x, y) -> {
+                                System.out.println("!!!!!!!!");
+                                isAdd = true;
+                                this.inputText.isFocus();
+                            });
+                        } else {
+                            if (isSecond) {
+                                for (int i = 2; i < labels.size(); i++) {
+                                    isPress(labels.get(i), e.getX(), e.getY());
+                                }
+                                if (back.getIsFocus()) {
+                                    isSecond = false;
+                                    return;
+                                }
+                                if (normalMode.getIsFocus()) {
+                                    isNormal = true;
+                                }
+                                sceneChange();
                                 return;
                             }
-                            if (normalMode.getIsFocus()) {
-                                isNormal = true;
-
+                            for (int i = 0; i < labels.size(); i++) {
+                                isPress(labels.get(i), e.getX(), e.getY());
                             }
-                            sceneChange();
-                            return;
+                            addThird();
                         }
-                        for (int i = 0; i < labels.size(); i++) {
-                            isPress(labels.get(i), e.getX(), e.getY());
-                        }
-
                         if (singleMode.getIsFocus()) {
                             isSingle = true;
                             addSecond();
+                        } else {
+                            addThird();
                         }
                         release();
                     }
                 }
             }
-        };
+        }
+
+                ;
     }
 
     @Override
@@ -256,7 +260,7 @@ public class MenuScene extends Scene {
 
             @Override
             public void keyTyped(char c, long trigTime) {
-//                ee.keyTyped(c);
+                MenuScene.this.inputText.keyTyped(c);
             }
         };
     }
@@ -266,23 +270,22 @@ public class MenuScene extends Scene {
         //delay才播放
         if (delay.isPlaying()) {
             menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
         } else {
             menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
             if (isSecond) {
                 back.paint(g);
                 normalMode.paint(g);
                 limitMode.paint(g);
-                return;
+            } else {
+                multiplayer.paint(g);
+                singleMode.paint(g);
             }
-            multiplayer.paint(g);
-            singleMode.paint(g);
             if (multiPop.isShow()) {
                 this.multiPop.paint(g);
                 this.addServer.paint(g);
                 this.crateServer.paint(g);
-                if (this.addServer.getIsFocus()) {
-                    this.input.paint(g);
+                if (isAdd) {
+                    this.inputText.paint(g);
                 }
             }
 
@@ -293,5 +296,11 @@ public class MenuScene extends Scene {
     public void update() {
         //更新倒數時間
         delay.count();
+        if (multiPop.isShow()) {
+            if (isAdd) {
+                System.out.println(inputText.getIsFocus());
+            }
+        }
+
     }
 }
