@@ -27,6 +27,11 @@ public class GameObjForPic extends GameObject{
     }
 
     @Override
+    protected void paintDebug(Graphics g) {
+
+    }
+
+    @Override
     public void update() {
 
     }

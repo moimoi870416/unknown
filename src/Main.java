@@ -1,6 +1,7 @@
 import controller.ImageController;
-import sence.MapScene;
+
 import sence.MenuScene;
+
 import util.Global;
 import controller.SenceController;
 import util.CommandSolver;

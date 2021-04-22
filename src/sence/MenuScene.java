@@ -6,6 +6,7 @@ import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
+import sence.gameScene.normalMode.NormalMode;
 import util.CommandSolver;
 import util.Delay;
 
@@ -191,7 +192,7 @@ public class MenuScene extends Scene {
                             }
                             if (normalMode.getIsFocus()) {
                                 isNormal=true;
-                                SenceController.getSenceController().change(new MapScene());
+                                SenceController.getSenceController().change(new NormalMode());
                             }
 
                             return;

@@ -107,6 +107,7 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
     public void translate(int x, int y) {
         collider.translate(x, y);
         painter.translate(x, y);
+
     }
 
     public void translateX(int x) {
@@ -155,13 +156,16 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
 //            g.drawString(this.painter.left() + "," + this.painter.top(), this.painter.left() + 5, this.painter.top() + 12);
 //            g.drawString(this.painter.right() + "," + this.painter.bottom(), this.painter.left() + 5, this.painter.top() + 27);
 //            g.setColor(Color.RED);
+            g.setColor(Color.BLACK);
             g.drawRect(this.painter.left(), this.painter.top(), this.painter.width(), this.painter.height());
             g.setColor(Color.BLUE);
             g.drawRect(this.collider.left(), this.collider.top(), this.collider.width(), this.collider.height());
-            g.setColor(Color.BLACK);
+            paintDebug(g);
+
         }
     }
 
     public abstract void paintComponent(Graphics g);
+    protected abstract void paintDebug(Graphics g);
 
 }

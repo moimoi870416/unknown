@@ -1,6 +1,6 @@
-bananastatue,-256,C:\Users\lin\Desktop\SMOMA_installation_banana.png,5,8
-tree1,-13382656,C:\Users\lin\Desktop\¯À§÷\tree\tree1-208-336.png,2,2
-rock1,-6711040,C:\Users\lin\Desktop\¯À§÷\rock\rock-sand1-424-216.png,9,6
-rock2,-10066432,C:\Users\lin\Desktop\¯À§÷\rock\rock-sand1-584-216.png,9,6
-tree2,-6684775,C:\Users\lin\Desktop\¯À§÷\tree\tree2-208-336.png,1,1
-tree3,-13369447,C:\Users\lin\Desktop\¯À§÷\tree\tree3-208-336.png,1,1
+bananaStatue,-256,C:\Users\lin\IdeaProjects\unknow\resources\map\banana.png,5,8
+tree1,-13382656,C:\Users\lin\IdeaProjects\unknow\resources\map\tree1-208-336.png,2,2
+rock1,-6711040,C:\Users\lin\IdeaProjects\unknow\resources\map\rock-sand1-424-216.png,9,6
+rock2,-10066432,C:\Users\lin\IdeaProjects\unknow\resources\map\rock-sand1-584-216.png,9,6
+tree2,-6684775,C:\Users\lin\IdeaProjects\unknow\resources\map\tree2-208-336.png,1,1
+tree3,-13369447,C:\Users\lin\IdeaProjects\unknow\resources\map\tree3-208-336.png,1,1

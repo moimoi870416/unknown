@@ -16,7 +16,7 @@ public class Rino extends Monster{
     private int originalAtk;
 
     public Rino(int x, int y) {
-        super(x+5,y+6,94,58,x, y, 104,68, 1000, 80, 2,true);
+        super(x+5,y+6,94,58,x, y, 104,68,x+5,y+6,94,58, 1000, 80, 2,true);
 
         animator = new Animator("/monster/rino/Idle2(52x34).png",30,52,34,2);
         animator.setArr(11);

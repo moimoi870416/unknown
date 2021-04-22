@@ -1,8 +1,11 @@
 package object.monster;
 
+import object.Rect;
 import util.Delay;
 import util.Global;
 import object.GameObjForAnimator;
+
+import java.awt.*;
 
 public abstract class Monster extends GameObjForAnimator {
     private Delay delayForCollision;
@@ -14,13 +17,16 @@ public abstract class Monster extends GameObjForAnimator {
     protected boolean isChase;
     protected boolean clickAtk;
     protected boolean forRino;
+    protected Rect hitCollied;
+    protected int hitX;
+    protected int hitY;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack) {
-        this(x, y, width, height, x, y, width, height, life, atk, moveSpeed, isOnceAttack);
+        this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack);
 
     }
 
-    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2, int life, int atk, int moveSpeed, boolean isOnceAttack) {
+    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2,int hitX,int hitY,int hitWidth,int hitHeight, int life, int atk, int moveSpeed, boolean isOnceAttack) {
         super(x, y, width, height, x2, y2, width2, height2, life, atk, moveSpeed);
         attackDelay = new Delay(60);
         isChase = false;
@@ -30,6 +36,9 @@ public abstract class Monster extends GameObjForAnimator {
         collision = true;
         this.isOnceAttack = isOnceAttack;
         forRino = false;
+        hitCollied = Rect.genWithCenter(hitX,hitY,hitWidth,hitHeight);
+        this.hitX = hitCollied.left() - collider().left();
+        this.hitY = hitCollied.top() -collider().top();
     }
 
     public void chase() {
@@ -53,6 +62,7 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
+        transHitArea();
         if (isOut()) {
             return;
         }
@@ -141,5 +151,26 @@ public abstract class Monster extends GameObjForAnimator {
 
     public abstract void setState(State state);
     //public abstract String getType();
+
+    public Rect getHitCollied(){
+        return hitCollied;
+    }
+
+    @Override
+    protected void paintDebug(Graphics g){
+        g.setColor(Color.ORANGE);
+        g.drawRect(this.hitCollied.left(), this.hitCollied.top(), this.hitCollied.width(), this.hitCollied.height());
+
+    }
+
+    private void transHitArea(){
+        int width = hitCollied.width();
+        int height = hitCollied.height();
+        hitCollied.setLeft(collider().left()+this.hitX);
+        hitCollied.setTop(collider().top()+this.hitY);
+        hitCollied.setRight(hitCollied.left()+width);
+        hitCollied.setBottom(hitCollied.top()+height);
+    }
+
 
 }
