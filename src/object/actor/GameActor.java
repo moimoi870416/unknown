@@ -354,20 +354,13 @@ public class GameActor extends GameObjForAnimator {
             }
         }
 
-        public boolean canHeal() {
-            return canHeal;
+        public Delay getHealCD(){
+            return healCD;
         }
 
-        public boolean canFlash() {
-            return canFlash;
+        public Delay getDelayForFlash(){
+            return delayForFlash;
         }
 
-        public int getHealCount() {
-            return healCD.getCount();
-        }
-
-        public int getFlashCount() {
-            return delayForFlash.getCount();
-        }
     }
 }

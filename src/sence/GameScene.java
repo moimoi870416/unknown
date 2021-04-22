@@ -20,7 +20,7 @@ public abstract class GameScene extends Scene{
     protected LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
-    protected ArrayList<GameActor> gameActor;//主角
+    protected ArrayList<GameActor> gameActorArr;//主角
     private Display display;//畫面物件
     private boolean shooting;
     private Camera camera;
@@ -31,12 +31,12 @@ public abstract class GameScene extends Scene{
         mapObjArr = new ArrayList<>();
         monster = new LinkedList<>();
         testBullets = new LinkedList<>();
-        gameActor = new ArrayList<>();
+        gameActorArr = new ArrayList<>();
         sceneBeginComponent();
-        display = new Display(gameActor.get(0));
+        display = new Display(gameActorArr.get(0));
         camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
-                .setChaseObj(gameActor.get(0), 20, 20)
+                .setChaseObj(gameActorArr.get(0), 20, 20)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
     }
@@ -59,8 +59,8 @@ public abstract class GameScene extends Scene{
                 monster.paint(g);
             }
         });
-        if (camera.isCollision(gameActor.get(0))) {
-            gameActor.get(0).paint(g);
+        if (camera.isCollision(gameActorArr.get(0))) {
+            gameActorArr.get(0).paint(g);
         }
         //mapObjArr.forEach(a -> a.paint(g));
         mapObjArr.forEach(object ->{
@@ -90,12 +90,11 @@ public abstract class GameScene extends Scene{
     private void mouseUpdate() {
         mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
         mouseY = listenerMouseY + camera.getCameraWindowY();
-        gameActor.get(0).changeDir(mouseX);
+        gameActorArr.get(0).changeDir(mouseX);
     }
 
     private void displayUpdate(){
-        display.healUpdate(gameActor.get(0).getSkill().canHeal());
-        display.flashUpdate(gameActor.get(0).getSkill().canFlash());
+        display.displayUpdate(gameActorArr.get(0));
     }
 
     private void bulletsUpdate() {
@@ -120,9 +119,9 @@ public abstract class GameScene extends Scene{
                     break;
                 }
             }
-            for(int k=1 ; k<gameActor.size() ; k++){
-                if(testBullets.get(i).isShootingActor(gameActor.get(k))){
-                    gameActor.get(k).offLife(testBullets.get(i).getAtk());
+            for(int k = 1; k< gameActorArr.size() ; k++){
+                if(testBullets.get(i).isShootingActor(gameActorArr.get(k))){
+                    gameActorArr.get(k).offLife(testBullets.get(i).getAtk());
                     i--;
                     break;
                 }
@@ -157,14 +156,14 @@ public abstract class GameScene extends Scene{
                 break;
             }
             monster.get(i).update();
-            if (monster.get(i).isCollisionWithActor(gameActor.get(0))) {
-                monster.get(i).attack(gameActor.get(0));
+            if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+                monster.get(i).attack(gameActorArr.get(0));
             }
             for (int k = 0; k < mapObjArr.size(); k++) {
                 monster.get(i).isCollider(mapObjArr.get(k));
             }
             if (monster.size() > 1 && i != monster.size() - 1) {
-                if (!gameActor.get(0).isCollisionWithActor(monster.get(i))) {
+                if (!gameActorArr.get(0).isCollisionWithActor(monster.get(i))) {
                     monster.get(i).isCollisionWithMonster(monster.get(i + 1));
                 }
             }
@@ -174,21 +173,21 @@ public abstract class GameScene extends Scene{
 
     private void shootUpdate() {
         if (shooting) {
-            if (gameActor.get(0).getCurrentGun().shoot()) {
+            if (gameActorArr.get(0).getCurrentGun().shoot()) {
                 this.testBullets.add(new Bullet
-                        (gameActor.get(0).painter().centerX(), gameActor.get(0).painter().centerY(),
+                        (gameActorArr.get(0).painter().centerX(), gameActorArr.get(0).painter().centerY(),
                                 mouseX, mouseY,
-                                gameActor.get(0).getCurrentGun().getGunType(),
-                                gameActor.get(0)));
+                                gameActorArr.get(0).getCurrentGun().getGunType(),
+                                gameActorArr.get(0)));
                 shootCount++;
             }
         }
     }
 
     private void actorUpdate() {
-        gameActor.get(0).update();
+        gameActorArr.get(0).update();
         for (int i = 0; i < mapObjArr.size(); i++) {
-            gameActor.get(0).isCollider(mapObjArr.get(i));
+            gameActorArr.get(0).isCollider(mapObjArr.get(i));
         }
     }
 
@@ -202,10 +201,10 @@ public abstract class GameScene extends Scene{
             if (state == CommandSolver.MouseState.PRESSED) {
                 listenerMouseX = e.getX();
                 listenerMouseY = e.getY();
-                gameActor.get(0).getCurrentGun().beginShoot();
+                gameActorArr.get(0).getCurrentGun().beginShoot();
                 shooting = true;
-                if(gameActor.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
-                    gameActor.get(0).setMoveSpeed(gameActor.get(0).getCurrentGun().getGunType().getMoveSpeed()/2);
+                if(gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                    gameActorArr.get(0).setMoveSpeed(gameActorArr.get(0).getCurrentGun().getGunType().getMoveSpeed()/2);
                 }
             }
 
@@ -217,20 +216,20 @@ public abstract class GameScene extends Scene{
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
                 if(shooting) {
-                    if (gameActor.get(0).getCurrentGun().shoot()) {
+                    if (gameActorArr.get(0).getCurrentGun().shoot()) {
                         this.testBullets.add(new Bullet
-                                (this.gameActor.get(0).painter().centerX(), this.gameActor.get(0).painter().centerY(),
+                                (this.gameActorArr.get(0).painter().centerX(), this.gameActorArr.get(0).painter().centerY(),
                                         mouseX, mouseY,
-                                        gameActor.get(0).getCurrentGun().getGunType(),
-                                        gameActor.get(0)));
+                                        gameActorArr.get(0).getCurrentGun().getGunType(),
+                                        gameActorArr.get(0)));
                     }
                 }
-                if(gameActor.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
-                    gameActor.get(0).setMoveSpeed(gameActor.get(0).getCurrentGun().getGunType().getMoveSpeed());
+                if(gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                    gameActorArr.get(0).setMoveSpeed(gameActorArr.get(0).getCurrentGun().getGunType().getMoveSpeed());
                 }
                 shootCount = 0;
 
-                gameActor.get(0).getCurrentGun().resetBeginShoot();
+                gameActorArr.get(0).getCurrentGun().resetBeginShoot();
             }
         };
     }
@@ -241,13 +240,13 @@ public abstract class GameScene extends Scene{
             @Override
             public void keyPressed(int commandCode, long trigTime) {
                 if (commandCode >= 1 || commandCode <= 4) {
-                    gameActor.get(0).move(commandCode);
+                    gameActorArr.get(0).move(commandCode);
                 }
                 if (commandCode == Active.RELOADING.getCommandCode()) {
-                    gameActor.get(0).getCurrentGun().reloading();
+                    gameActorArr.get(0).getCurrentGun().reloading();
                 }
                 if (commandCode == Active.NUMBER_ONE.getCommandCode() || commandCode == Active.NUMBER_TWO.getCommandCode()) {
-                    gameActor.get(0).changeGun(commandCode);
+                    gameActorArr.get(0).changeGun(commandCode);
                 }
 
             }
@@ -255,13 +254,13 @@ public abstract class GameScene extends Scene{
             @Override
             public void keyReleased(int commandCode, long trigTime) {
                 if (commandCode >= 1 || commandCode <= 4) {
-                    gameActor.get(0).setState(GameObjForAnimator.State.STAND);
+                    gameActorArr.get(0).setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
-                    gameActor.get(0).getSkill().flash(mouseX, mouseY,mapObjArr);
+                    gameActorArr.get(0).getSkill().flash(mouseX, mouseY,mapObjArr);
                 }
                 if(commandCode == Active.SKILL.getCommandCode()){
-                    gameActor.get(0).getSkill().heal();
+                    gameActorArr.get(0).getSkill().heal();
                 }
             }
 
