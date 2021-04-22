@@ -1,6 +1,7 @@
 package sence;
 
 import camera.Camera;
+import client.ClientClass;
 import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
@@ -76,6 +77,7 @@ public abstract class GameScene extends Scene{
 
     @Override
     public void update() {
+        connectUpdate();
         mouseUpdate();
         monsterUpdate();
         actorUpdate();
@@ -84,8 +86,9 @@ public abstract class GameScene extends Scene{
         bulletsUpdate();
         mapInfo.mapUpdate();
         camera.update();
-
     }
+
+    protected abstract void connectUpdate();
 
     private void mouseUpdate() {
         mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
@@ -185,7 +188,12 @@ public abstract class GameScene extends Scene{
     }
 
     private void actorUpdate() {
+        ArrayList<String> strs =new ArrayList<>();
         gameActorArr.get(0).update();
+        strs.add(gameActorArr.get(0).collider().left()+"");
+        strs.add(gameActorArr.get(0).collider().top()+"");
+        ClientClass.getInstance().sent(NetEvent.CONNECT,strs);
+        ClientClass.getInstance().sent(NetEvent.ACTOR_MOVE,strs);
         for (int i = 0; i < mapObjArr.size(); i++) {
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
         }

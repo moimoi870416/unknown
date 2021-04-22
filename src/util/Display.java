@@ -126,5 +126,4 @@ public class Display {
         g.drawString(String.valueOf(gameActor.getCurrentGun().getSurplusBullet()), 1220, 810);
     }
 
-
 }

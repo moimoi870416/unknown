@@ -31,6 +31,11 @@ public class Global {
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
 
+    public static class NetEvent{
+        public static final int CONNECT = 100;
+        public static final int ACTOR_MOVE = 200;
+    }
+
     public enum MapPath{
         BEGIN("/map/map-begin.png"),
         FOREST("/map/map-forest.png"),

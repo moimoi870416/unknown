@@ -192,7 +192,7 @@ public class MenuScene extends Scene {
                             }
                             if (normalMode.getIsFocus()) {
                                 isNormal=true;
-                                SenceController.getSenceController().change(new NormalMode());
+                                SenceController.getSenceController().change(new ConnectScene());
                             }
 
                             return;
