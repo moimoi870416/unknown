@@ -1,11 +1,10 @@
 package object.monster;
 
-import object.Rect;
 import util.Animator;
 import util.Delay;
 import util.Global;
 
-public class BullBoss extends MonsterAddHitArea {
+public class BullBoss extends Monster {
     private boolean attacking;
     private final int atkDistance = 600;
     private boolean focus;
@@ -19,7 +18,7 @@ public class BullBoss extends MonsterAddHitArea {
     private Delay normalAtkDelay;
 
     public BullBoss(int x, int y) {
-        super(x+60,y+40,280,230,x, y, 384, 384,30000,51,2,false);
+        super(x+60,y+40,280,230,x, y, 384, 384,x+150,y+90,100,90,30000,51,2,false);
         animator = new Animator("/monster/bullboss.png",30,96,96,20);
         attacking = false;
         setState(State.STAND);
@@ -178,10 +177,4 @@ public class BullBoss extends MonsterAddHitArea {
         changeDir(Global.actorX-painter().centerX());
         attacking = false;
     }
-
-    @Override
-    protected void setHitCollied(int x,int y) {
-        hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
-    }
-
 }

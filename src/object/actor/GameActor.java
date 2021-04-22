@@ -43,6 +43,11 @@ public class GameActor extends GameObjForAnimator {
         blood.paint(g);
     }
 
+    @Override
+    protected void paintDebug(Graphics g) {
+
+    }
+
     public void changeGun(int commandCode) {
         if (commandCode == -1) {
             currentGun = WhichGun.ONE;
@@ -58,7 +63,7 @@ public class GameActor extends GameObjForAnimator {
 
     private enum WhichGun {
         ONE(new Gun(Gun.GunType.UZI, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.MACHINE_GUN, Global.actorX, Global.actorY));
+        TWO(new Gun(Gun.GunType.SNIPER, Global.actorX, Global.actorY));
         private Gun gun;
         WhichGun(Gun gun) {
             this.gun = gun;
@@ -274,7 +279,7 @@ public class GameActor extends GameObjForAnimator {
         }
 
         public void heal(){
-            if(life == HP_MAX){
+            if(life == HP_MAX && healCD.isStop()){
                 return;
             }
             if(!canHeal && healCD.isStop()){

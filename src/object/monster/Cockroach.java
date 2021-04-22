@@ -3,16 +3,15 @@ import object.Rect;
 import util.Animator;
 import util.Global;
 
-public class Cockroach extends MonsterAddHitArea {
+public class Cockroach extends Monster {
     private boolean attacking;
     private boolean move;
     private int moveOnX;
     private int moveOnY;
 
     public Cockroach(int x, int y) {
-        super(x+30,y+30,100,92,x, y, 150, 150, 5000, 30, 5,false);
+        super(x+30,y+30,100,92,x, y, 150, 150,x+75,y+30,30,30, 5000, 30, 5,false);
         animator = new Animator("/monster/cockroach/run.png",0,150,150,2);
-        hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
         animator.setArr(40);
         move = false;
         attacking = false;
@@ -61,11 +60,6 @@ public class Cockroach extends MonsterAddHitArea {
             }
             case DEATH -> animator.setImg("/monster/cockroach/run.png",2);
         }
-    }
-
-    @Override
-    protected void setHitCollied(int x,int y) {
-        hitCollied = Rect.genWithCenter(x+75,y+30,30,30);
     }
 
     private void attackMove(){

@@ -199,6 +199,11 @@ public class Camera extends GameObject implements CommandSolver.KeyListener {
     }
 
     @Override
+    protected void paintDebug(Graphics g) {
+
+    }
+
+    @Override
     public void update() {
         if (obj != null) {
             chaseMove(); // 追焦功能

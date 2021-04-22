@@ -8,7 +8,6 @@ package sence;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import camera.Camera;
 import camera.MapInformation;
 import controller.MapObjController;
@@ -18,19 +17,16 @@ import object.monster.*;
 import util.Display;
 import controller.ImageController;
 import object.actor.GameActor;
-
 import static util.Global.*;
-
-import util.Global;
 import weapon.Bullet;
 import object.GameObject;
 import util.CommandSolver;
 import weapon.Gun;
 
 public class MapScene extends Scene {
-    protected ArrayList<GameObject> mapObjArr;
+    private ArrayList<GameObject> mapObjArr;
     private LinkedList<Bullet> testBullets;
-    protected LinkedList<Monster> monster;
+    private LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
     private GameActor gameActor;//主角
@@ -42,12 +38,11 @@ public class MapScene extends Scene {
     @Override
     public void sceneBegin() {
         mapObjArr = new ArrayList<>();
-        mapInfo = new MapInfo();
-        testBullets = new LinkedList<>();
-        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         monster = new LinkedList<>();
+        testBullets = new LinkedList<>();
+        mapInfo = new MapInfo();
+        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         gameActor = new GameActor(Actor.FIRST.getPath(), 300, 700);
-
         this.camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
                 .setChaseObj(gameActor, 20, 20)
@@ -78,12 +73,12 @@ public class MapScene extends Scene {
         if (camera.isCollision(gameActor)) {
             gameActor.paint(g);
         }
-        mapObjArr.forEach(a -> a.paint(g));
-//        mapObjArr.forEach(object ->{
-//            if (camera.isCollision(object)) {
-//                object.paint(g);
-//            }
-//        });
+        //mapObjArr.forEach(a -> a.paint(g));
+        mapObjArr.forEach(object ->{
+            if (camera.isCollision(object)) {
+                object.paint(g);
+            }
+        });
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         camera.end(g);
@@ -115,7 +110,7 @@ public class MapScene extends Scene {
             }
             if (x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
-                    if (testBullets.get(i).isCollied(monster.get(k))) {
+                    if (testBullets.get(i).isColliedInHit(monster.get(k))) {
                         if (monster.get(k).getState() != GameObjForAnimator.State.DEATH) {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
@@ -123,9 +118,9 @@ public class MapScene extends Scene {
                                 monster.get(k).setState(GameObjForAnimator.State.DEATH);
                             }
                             if (testBullets.get(i).isPenetrate(life)) {
-                                testBullets.remove(i);
-                                i--;
-                                break;
+//                                testBullets.remove(i);
+//                                i--;
+//                                break;
                             }
                         }
                     }
@@ -154,20 +149,6 @@ public class MapScene extends Scene {
                 }
             }
         }
-
-//        if (Math.random() * 100 < 3 && monster.size() < 100) {
-//            int r = random(0,2);
-//            if(r == 0) {
-//                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.GOBLIN));
-//            }else if(r == 1){
-//                monster.add(new SmallMonster(actorX + 1400,random(500,WINDOW_WIDTH), SmallMonster.Type.MUSHROOM));
-//            }else if(r == 2){
-//                monster.add(new Stone(actorX + 1400,random(500,WINDOW_WIDTH)));
-//            }
-//            if(Math.random() *100 <5) {
-//                monster.add(new Rino(actorX + 1400, random(500, WINDOW_WIDTH)));
-//            }
-//        }
 
     }
 
@@ -340,6 +321,21 @@ public class MapScene extends Scene {
                         if(actorX > 16384){
                             mapFinal = boss;
                             count = 6;
+//                            if(actorX > 18432){
+//                                camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
+//                                        .setCameraMoveSpeed(2)
+//                                        .setChaseObj(gameActor, 20, 20)
+//                                        .setCameraStartLocation(-WINDOW_WIDTH / 2+18432, -WINDOW_HEIGHT / 2)
+//                                        .gen();
+//                                MAP_HEIGHT = 3072;
+//                            }else {
+//                                camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
+//                                        .setCameraMoveSpeed(2)
+//                                        .setChaseObj(gameActor, 20, 20)
+//                                        .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
+//                                        .gen();
+//                                MAP_HEIGHT = 1024;
+//                            }
                         }
                     }
                 }
@@ -370,6 +366,9 @@ public class MapScene extends Scene {
                     .setNameAndPath("rock1", "/map/rock-sand1-424-216.png", true, new GameObjForPic("/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                     .gen()
                     .setMap());
+
+            monster.add(new BullBoss(1200,500));
+
         }
 
         private void mapForest(int x){
@@ -389,7 +388,7 @@ public class MapScene extends Scene {
                     .setNameAndPath("changetree1","/map/change-tree1(268-272).png",true,new GameObjForPic("/map/change-tree1(268-272).png", 0, 0, 242, 272))
                     .setNameAndPath("changetree2","/map/change-tree1(242-271).png",true,new GameObjForPic("/map/change-tree1(242-271).png", 0, 0, 242, 272))
                     .setNameAndPath("deserttree1","/map/desert-tree1(239-272).png",true,new GameObjForPic("/map/desert-tree1(239-272).png", 0, 0, 239, 272))
-                    .setNameAndPath("signright","/map/signRightpng(152-104).png",true,new GameObjForPic("/map/signRightpng(152-104).png", 0, 0, 152, 104))
+                    .setNameAndPath("signright","/map/signRight(152-104).png",true,new GameObjForPic("/map/signRight(152-104).png", 0, 0, 152, 104))
                     .setNameAndPath("sandbag1","/map/sandbag1(272-100).png",true,new GameObjForPic("/map/sandbag1(272-100).png", 0, 0, 272, 100))
                     .setNameAndPath("rock2", "/map/rock-sand1-584-216.png", true,new GameObjForPic("/map/rock-sand1-584-216.png", 0, -200, 584, 216))
                     .setNameAndPath("sandbag2","/map/sandbag2(288-80).png",true,new GameObjForPic("/map/sandbag2(288-80).png", 0, 0, 288, 80))

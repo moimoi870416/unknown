@@ -180,10 +180,14 @@ public class Gun extends GameObjForAnimator {
         }
     }
 
-
     @Override
     public void paintComponent(Graphics g) {
         g.drawImage(imgForDisplay, positionX, positionY, null);
+    }
+
+    @Override
+    protected void paintDebug(Graphics g) {
+
     }
 
 

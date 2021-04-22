@@ -3,6 +3,7 @@ package weapon;
 import controller.ImageController;
 import object.GameObjForAnimator;
 import object.GameObject;
+import object.Rect;
 import object.monster.Monster;
 import util.Animator;
 import util.Delay;
@@ -32,6 +33,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int hitY;
     private boolean isHit;
     private Delay appear;
+    private Rect collider;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
         img = ImageController.getInstance().tryGet("/weapon/bullet.png");
@@ -191,14 +193,30 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
 //        return false;
     }
 
-    public boolean isCollied(final Monster monster) {
-        float x = (float)Math.abs(monster.collider().centerX()-getCenterX());
-        float y = (float)Math.abs(monster.collider().centerY()-getCenterY());
-        float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
-        if(d < (monster.collider().width()+width)/2){
-            return true;
+//    public boolean isColliedInHit(final Monster monster) {
+//        float x = (float)Math.abs(monster.getHitCollied().centerX()-getCenterX());
+//        float y = (float)Math.abs(monster.getHitCollied().centerY()-getCenterY());
+//        float d = (float)Math.sqrt(x*x+y*y);//計算斜邊
+//        if(d < (monster.collider().width()+width)/2){
+//            return true;
+//        }
+//        return false;
+//    }
+
+    public boolean isColliedInHit(final Monster monster) {
+        if (this.left() > monster.getHitCollied().right()) {
+            return false;
         }
-        return false;
+        if (this.right() < monster.getHitCollied().left()) {
+            return false;
+        }
+        if (this.top() > monster.getHitCollied().bottom()) {
+            return false;
+        }
+        if (this.bottom() < monster.getHitCollied().top()) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isOut() {
