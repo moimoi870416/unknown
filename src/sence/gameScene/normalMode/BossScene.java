@@ -32,6 +32,11 @@ public class BossScene extends GameScene {
         MAP_WIDTH = 1024;
     }
 
+    @Override
+    protected void connectUpdate() {
+
+    }
+
     public class BossMapInfo extends GameScene.MapInfo {
         private Image map;
         public BossMapInfo(){

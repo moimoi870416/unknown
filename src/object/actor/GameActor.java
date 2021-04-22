@@ -16,6 +16,7 @@ public class GameActor extends GameObjForAnimator {
     private Rotation rotation;
     private Bar blood;
     private Skill skill;
+    private int connectID;
 
     public GameActor(String path, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
@@ -82,6 +83,14 @@ public class GameActor extends GameObjForAnimator {
         } else {
             dir = Dir.LEFT;
         }
+    }
+
+    public void setConnectID(int key){
+        this.connectID = key;
+    }
+
+    public int getConnectID() {
+        return connectID;
     }
 
     public void tradeGun(Gun gun) {

@@ -23,6 +23,11 @@ public class LimitModel extends GameScene {
 
     }
 
+    @Override
+    protected void connectUpdate() {
+
+    }
+
     public class LimitModeMapInfo extends GameScene.MapInfo{
         private Image map;
         public LimitModeMapInfo(){

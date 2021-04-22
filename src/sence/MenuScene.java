@@ -104,7 +104,7 @@ public class MenuScene extends Scene {
     private void sceneChange() {
         if (isSingle) {
             if (isNormal) {
-                SenceController.getSenceController().change(new NormalMode());
+                SenceController.getSenceController().change(new ConnectScene());
                 return;
             }
             SenceController.getSenceController().change(new LimitModel());
@@ -214,6 +214,7 @@ public class MenuScene extends Scene {
                             }
                             for (int i = 0; i < labels.size(); i++) {
                                 isPress(labels.get(i), e.getX(), e.getY());
+
                             }
                             addThird();
                         }

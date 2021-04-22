@@ -1,42 +1,113 @@
-package sence.gameScene.normalMode;
-
+package sence;
 
 import camera.MapInformation;
+import client.ClientClass;
+import client.CommandReceiver;
 import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.SmallMonster;
-import sence.GameScene;
+import sence.gameScene.normalMode.NormalMode;
+import server.Server;
 import util.Global;
+
 import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static util.Global.*;
 
-public class NormalMode extends GameScene {
+public class ConnectScene extends GameScene{
+    private int playerCount;
 
 
     @Override
     protected void sceneBeginComponent() {
+        connectLanArea();
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        gameActorArr.add(new GameActor(Actor.FIRST.getPath(), 500, 700));
-        mapInfo = new NormalModeMapInfo();
-        monster.add(new SmallMonster(500,500, SmallMonster.Type.MUSHROOM));
+        mapInfo = new ConnectSceneMapInfo();
+        playerCount = 0;
+        gameActorArr.add(new GameActor(Actor.FIRST.getPath(),500,500));
+        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
 
     }
 
     @Override
     protected void sceneEndComponent() {
-        MAP_WIDTH = 2048;
+
     }
 
     @Override
     protected void connectUpdate() {
+        ClientClass.getInstance().consume(new CommandReceiver() {
+            @Override
+            public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
+                if(serialNum == gameActorArr.get(0).getConnectID()){
+                    return;
+                }
+                switch (commandCode){
+                    case  NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
+                        boolean isBorn = false;
+                        for (int i = 0; i < gameActorArr.size(); i++) {
+                            if (gameActorArr.get(i).getConnectID() == serialNum) {
+                                isBorn = true;
+                                break;
+                            }
+                        }
+                        if (!isBorn) {
+                            gameActorArr.add(new GameActor(Actor.FIRST.getPath(), Integer.parseInt(strs.get(0)),
+                                    Integer.parseInt(strs.get(1))));
+                            gameActorArr.get(playerCount++).setConnectID(serialNum);
+                        }
+                        break;
+                    case NetEvent.ACTOR_MOVE:
+                        for(int i=0 ; i<gameActorArr.size() ; i++){
+                            if(gameActorArr.get(i).getConnectID() == serialNum){
+                                gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
+                                gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
+                            }
+                        }
+                            break;
+                }
+            }
+        });
+    }
+
+    public void connectLanArea(){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("創建伺服器 => 1, 連接其他伺服器 => 2");
+        int opt = sc.nextInt();
+        switch (opt) {
+            case 1:
+                Global.isServer = true;
+                Server.instance().create(12345);
+                Server.instance().start();
+                System.out.println(Server.instance().getLocalAddress()[0]);
+                try {
+                    ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
+                } catch (IOException ex) {
+                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case 2:
+                System.out.println("請輸入主伺服器IP:");
+                try {
+                    ClientClass.getInstance().connect(sc.next(), 12345); // ("SERVER端IP", "SERVER端PORT")
+                } catch (IOException ex) {
+                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+        }
 
     }
 
-    public class NormalModeMapInfo extends GameScene.MapInfo{
-        //之後會有切換圖片的行為，所以先開一個內部類
+    public class ConnectSceneMapInfo extends MapInfo{
         private Image mapLeft;
         private Image mapMiddle;
         private Image mapRight;
@@ -49,7 +120,7 @@ public class NormalMode extends GameScene {
         private final int mapWidth = 2048;
         private int count;
 
-        public NormalModeMapInfo(){
+        public ConnectSceneMapInfo(){
             mapBegin();
             mapForest(4096);
             mapChange(8192);
