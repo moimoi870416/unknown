@@ -22,8 +22,8 @@ public class MenuPopupScene extends PopupWindow {
     public void sceneBegin() {
         backgroundImage = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-3.png"));
         this.style = new Style.StyleRect(300, 100, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("menu/multiButton-3.png")));
-        input = new Button(720, 450, style);
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/multiButton-3.png")));
+        input = new Button(600, 400, style);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MenuPopupScene extends PopupWindow {
 
     @Override
     public void paint(Graphics g) {
-        this.backgroundImage.paintBackground(g, false, true, 0, 0, 1000, 650);
+        this.backgroundImage.paintBackground(g, false, true, 200, 100, 1000, 650);
         this.input.paint(g);
     }
 
