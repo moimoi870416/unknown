@@ -14,7 +14,7 @@ public class LimitModel extends GameScene {
     @Override
     protected void sceneBeginComponent() {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        gameActor = new GameActor(Actor.FIRST.getPath(), 500, 700);
+//        gameActor = new GameActor(Actor.FIRST.getPath(), 500, 700);
         mapInfo = new LimitModeMapInfo();
     }
 

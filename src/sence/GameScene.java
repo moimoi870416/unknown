@@ -20,7 +20,7 @@ public abstract class GameScene extends Scene{
     protected LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
-    protected GameActor gameActor;//主角
+    protected ArrayList<GameActor> gameActor;//主角
     private Display display;//畫面物件
     private boolean shooting;
     private Camera camera;
@@ -31,11 +31,12 @@ public abstract class GameScene extends Scene{
         mapObjArr = new ArrayList<>();
         monster = new LinkedList<>();
         testBullets = new LinkedList<>();
+        gameActor = new ArrayList<>();
         sceneBeginComponent();
-        display = new Display(gameActor);
+        display = new Display(gameActor.get(0));
         camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
                 .setCameraMoveSpeed(2)
-                .setChaseObj(gameActor, 20, 20)
+                .setChaseObj(gameActor.get(0), 20, 20)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
     }
@@ -58,8 +59,8 @@ public abstract class GameScene extends Scene{
                 monster.paint(g);
             }
         });
-        if (camera.isCollision(gameActor)) {
-            gameActor.paint(g);
+        if (camera.isCollision(gameActor.get(0))) {
+            gameActor.get(0).paint(g);
         }
         //mapObjArr.forEach(a -> a.paint(g));
         mapObjArr.forEach(object ->{
@@ -88,7 +89,7 @@ public abstract class GameScene extends Scene{
     private void mouseUpdate() {
         mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
         mouseY = listenerMouseY + camera.getCameraWindowY();
-        gameActor.changeDir(mouseX);
+        gameActor.get(0).changeDir(mouseX);
     }
 
     private void bulletsUpdate() {
@@ -112,6 +113,14 @@ public abstract class GameScene extends Scene{
                     x++;
                     break;
                 }
+            }
+            for(int k=1 ; k<gameActor.size() ; k++){
+                if(testBullets.get(i).isShootingActor(gameActor.get(k))){
+                    gameActor.get(k).offLife(testBullets.get(i).getAtk());
+                    i--;
+                    break;
+                }
+
             }
             if (x == 0) {
                 for (int k = 0; k < monster.size(); k++) {
@@ -142,14 +151,14 @@ public abstract class GameScene extends Scene{
                 break;
             }
             monster.get(i).update();
-            if (monster.get(i).isCollisionWithActor(gameActor)) {
-                monster.get(i).attack(gameActor);
+            if (monster.get(i).isCollisionWithActor(gameActor.get(0))) {
+                monster.get(i).attack(gameActor.get(0));
             }
             for (int k = 0; k < mapObjArr.size(); k++) {
                 monster.get(i).isCollider(mapObjArr.get(k));
             }
             if (monster.size() > 1 && i != monster.size() - 1) {
-                if (!gameActor.isCollisionWithActor(monster.get(i))) {
+                if (!gameActor.get(0).isCollisionWithActor(monster.get(i))) {
                     monster.get(i).isCollisionWithMonster(monster.get(i + 1));
                 }
             }
@@ -159,20 +168,21 @@ public abstract class GameScene extends Scene{
 
     private void shootUpdate() {
         if (shooting) {
-            if (gameActor.getCurrentGun().shoot()) {
+            if (gameActor.get(0).getCurrentGun().shoot()) {
                 this.testBullets.add(new Bullet
-                        (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
+                        (gameActor.get(0).painter().centerX(), gameActor.get(0).painter().centerY(),
                                 mouseX, mouseY,
-                                gameActor.getCurrentGun().getGunType()));
+                                gameActor.get(0).getCurrentGun().getGunType(),
+                                gameActor.get(0)));
                 shootCount++;
             }
         }
     }
 
     private void actorUpdate() {
-        gameActor.update();
+        gameActor.get(0).update();
         for (int i = 0; i < mapObjArr.size(); i++) {
-            gameActor.isCollider(mapObjArr.get(i));
+            gameActor.get(0).isCollider(mapObjArr.get(i));
         }
     }
 
@@ -186,10 +196,10 @@ public abstract class GameScene extends Scene{
             if (state == CommandSolver.MouseState.PRESSED) {
                 listenerMouseX = e.getX();
                 listenerMouseY = e.getY();
-                gameActor.getCurrentGun().beginShoot();
+                gameActor.get(0).getCurrentGun().beginShoot();
                 shooting = true;
-                if(gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
-                    gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed()/2);
+                if(gameActor.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                    gameActor.get(0).setMoveSpeed(gameActor.get(0).getCurrentGun().getGunType().getMoveSpeed()/2);
                 }
             }
 
@@ -201,19 +211,20 @@ public abstract class GameScene extends Scene{
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
                 if(shooting) {
-                    if (gameActor.getCurrentGun().shoot()) {
+                    if (gameActor.get(0).getCurrentGun().shoot()) {
                         this.testBullets.add(new Bullet
-                                (this.gameActor.painter().centerX(), this.gameActor.painter().centerY(),
+                                (this.gameActor.get(0).painter().centerX(), this.gameActor.get(0).painter().centerY(),
                                         mouseX, mouseY,
-                                        gameActor.getCurrentGun().getGunType()));
+                                        gameActor.get(0).getCurrentGun().getGunType(),
+                                        gameActor.get(0)));
                     }
                 }
-                if(gameActor.getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
-                    gameActor.setMoveSpeed(gameActor.getCurrentGun().getGunType().getMoveSpeed());
+                if(gameActor.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                    gameActor.get(0).setMoveSpeed(gameActor.get(0).getCurrentGun().getGunType().getMoveSpeed());
                 }
                 shootCount = 0;
 
-                gameActor.getCurrentGun().resetBeginShoot();
+                gameActor.get(0).getCurrentGun().resetBeginShoot();
             }
         };
     }
@@ -224,13 +235,13 @@ public abstract class GameScene extends Scene{
             @Override
             public void keyPressed(int commandCode, long trigTime) {
                 if (commandCode >= 1 || commandCode <= 4) {
-                    gameActor.move(commandCode);
+                    gameActor.get(0).move(commandCode);
                 }
                 if (commandCode == Active.RELOADING.getCommandCode()) {
-                    gameActor.getCurrentGun().reloading();
+                    gameActor.get(0).getCurrentGun().reloading();
                 }
                 if (commandCode == Active.NUMBER_ONE.getCommandCode() || commandCode == Active.NUMBER_TWO.getCommandCode()) {
-                    gameActor.changeGun(commandCode);
+                    gameActor.get(0).changeGun(commandCode);
                 }
 
             }
@@ -238,13 +249,13 @@ public abstract class GameScene extends Scene{
             @Override
             public void keyReleased(int commandCode, long trigTime) {
                 if (commandCode >= 1 || commandCode <= 4) {
-                    gameActor.setState(GameObjForAnimator.State.STAND);
+                    gameActor.get(0).setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
-                    gameActor.getSkill().flash(mouseX, mouseY,mapObjArr);
+                    gameActor.get(0).getSkill().flash(mouseX, mouseY,mapObjArr);
                 }
                 if(commandCode == Active.SKILL.getCommandCode()){
-                    gameActor.getSkill().heal();
+                    gameActor.get(0).getSkill().heal();
                 }
             }
 

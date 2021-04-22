@@ -4,6 +4,7 @@ import controller.ImageController;
 import object.GameObjForAnimator;
 import object.GameObject;
 import object.Rect;
+import object.actor.GameActor;
 import object.monster.Monster;
 import util.Animator;
 import util.Delay;
@@ -33,12 +34,13 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int hitY;
     private boolean isHit;
     private Delay appear;
-    private Rect collider;
+    private GameActor shooter;
 
-    public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType) {
+    public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType,GameActor shooter) {
         img = ImageController.getInstance().tryGet("/weapon/bullet.png");
         this.x = x;
         this.y = y;
+        this.shooter = shooter;
         setGunBullet(gunType);
         this.atk = bulletType.atk;
         this.MOVE_SPEED = bulletType.speedMove;
@@ -214,6 +216,25 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
             return false;
         }
         if (this.bottom() < monster.getHitCollied().top()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isShootingActor(GameActor gameActor) {
+        if(gameActor == shooter){
+            return false;
+        }
+        if (this.left() > gameActor.collider().right()) {
+            return false;
+        }
+        if (this.right() < gameActor.collider().left()) {
+            return false;
+        }
+        if (this.top() > gameActor.collider().bottom()) {
+            return false;
+        }
+        if (this.bottom() < gameActor.collider().top()) {
             return false;
         }
         return true;

@@ -12,9 +12,7 @@ import object.monster.Stone;
 import sence.GameScene;
 import util.Global;
 import java.awt.*;
-
 import static util.Global.*;
-import static util.Global.MAP_HEIGHT;
 
 public class NormalMode extends GameScene {
 
@@ -23,7 +21,7 @@ public class NormalMode extends GameScene {
     protected void sceneBeginComponent() {
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        gameActor = new GameActor(Actor.FIRST.getPath(), 500, 700);
+        gameActor.add(new GameActor(Actor.FIRST.getPath(), 500, 700));
         mapInfo = new NormalModeMapInfo();
 
     }

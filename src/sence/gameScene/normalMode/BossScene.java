@@ -22,7 +22,7 @@ public class BossScene extends GameScene {
         MAP_HEIGHT = 2048;
         MAP_WIDTH = 2048;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        gameActor = new GameActor(Actor.FIRST.getPath(), 1024, 1900);
+//        gameActor = new GameActor(Actor.FIRST.getPath(), 1024, 1900);
         mapInfo = new BossMapInfo();
     }
 
