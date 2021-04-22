@@ -1,10 +1,6 @@
 import controller.ImageController;
-import menu.BackgroundType;
-import menu.Style;
-import menu.Theme;
 import sence.MapScene;
-import sence.MenuScene1;
-import sence.MenuScene2;
+import sence.MenuScene;
 import util.Global;
 import controller.SenceController;
 import util.CommandSolver;

@@ -4,8 +4,9 @@ import sence.Scene;
 import util.CommandSolver;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
-public class PopupWindow extends Scene {
+public abstract class PopupWindow extends Scene {
 
     private boolean isShow;
     private boolean isCancelable;
@@ -47,7 +48,6 @@ public class PopupWindow extends Scene {
 
     @Override
     public void sceneEnd() {
-
     }
 
     @Override
@@ -57,16 +57,35 @@ public class PopupWindow extends Scene {
 
     @Override
     public CommandSolver.MouseListener mouseListener() {
-        return null;
+        return (MouseEvent e, CommandSolver.MouseState state, long trigTime) -> {
+            if (e == null) {
+                return;
+            }
+            if (isCancelable) { //滑鼠點外面他會hide()
+                isCancelableHide(e, state, trigTime);
+            }
+            e.translatePoint(-x, -y);
+            mouseTrig(e, state, trigTime);
+            if (isShow == false) {
+                sceneEnd();
+            }
+        };
     }
 
     @Override
     public void paint(Graphics g) {
-
     }
 
     @Override
     public void update() {
-
     }
+
+    public void isCancelableHide(MouseEvent e, CommandSolver.MouseState state, long trigTime) {
+        if (state == CommandSolver.MouseState.PRESSED) {
+            if (e.getX() < x || e.getX() > x + width || e.getY() < y || e.getY() > y + height) {
+                hide();
+            }
+        }
+    }
+    protected abstract void mouseTrig(MouseEvent e, CommandSolver.MouseState state, long trigTime);
 }

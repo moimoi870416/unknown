@@ -7,6 +7,7 @@ import menu.*;
 import menu.Button;
 import menu.Label;
 import util.CommandSolver;
+import util.Delay;
 
 import static util.Global.*;
 
@@ -14,8 +15,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class MenuScene2 extends Scene {
-
+public class MenuScene extends Scene {
+    private BackgroundType.BackgroundImage menuImg1;
     private ArrayList<Label> labels;
     private Button singleMode;
     private Button multiplayer;
@@ -23,18 +24,26 @@ public class MenuScene2 extends Scene {
     private Button normalMode;
     private Button limitMode;
     private boolean isSecond;
-    private BackgroundType.BackgroundImage menuImg;
+    private BackgroundType.BackgroundImage menuImg2;
+    private Delay delay;//給封面用的
+    private MenuPopupScene multiPop; //跳出視窗
+    private Button crateServer;
+    private Button addServer;
+    private EditText input;
 
     @Override
     public void sceneBegin() {
-        menuImg = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-10.png"));
+        menuImg1 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-1.png"));
+        menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-2.png"));
+        initTheme();
         labels = new ArrayList<>();
+        delay = new Delay(120);
+        delay.play();
         singleMode = new Button(200, 25, Theme.get(0));
         multiplayer = new Button(800, 25, Theme.get(1));
         labels.add(singleMode);
         labels.add(multiplayer);
         isSecond = false;
-
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -73,6 +82,8 @@ public class MenuScene2 extends Scene {
 
     @Override
     public void sceneEnd() {
+        labels.clear();
+//        singleMode
     }
 
     private boolean isOverLap(Label obj, int eX, int eY) {
@@ -126,12 +137,18 @@ public class MenuScene2 extends Scene {
         isSecond = true;
     }
 
-    private void release(){
-        for(int i=0;i<labels.size() ; i++){
+    private void addThird() {
+        crateServer = new Button(300, 50, Theme.get(5));
+        addServer = new Button(500, 50, Theme.get(6));
+//        labels.add()
+
+    }
+
+    private void release() {
+        for (int i = 0; i < labels.size(); i++) {
             labels.get(i).unFocus();
         }
     }
-
 
     @Override
     public CommandSolver.MouseListener mouseListener() {
@@ -165,7 +182,6 @@ public class MenuScene2 extends Scene {
                         }
                         release();
                     }
-
                 }
             }
         };
@@ -173,19 +189,48 @@ public class MenuScene2 extends Scene {
 
     @Override
     public void paint(Graphics g) {
-        menuImg.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        if (isSecond) {
-            back.paint(g);
-            normalMode.paint(g);
-            limitMode.paint(g);
-            return;
+        if (delay.isPlaying()) {
+            menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        } else {
+            menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            if (isSecond) {
+                back.paint(g);
+                normalMode.paint(g);
+                limitMode.paint(g);
+
+            } else if (multiPop.isShow()) {
+                this.multiPop.paint(g);
+                this.addServer.paint(g);
+                this.crateServer.paint(g);
+                if (this.addServer.getIsFocus()) {
+                    this.input.paint(g);
+                }
+            }
+            multiplayer.paint(g);
+            singleMode.paint(g);
         }
-        multiplayer.paint(g);
-        singleMode.paint(g);
     }
 
     @Override
     public void update() {
+        delay.count();
+    }
+
+    private void initTheme() {
+        Theme.add(setTheme(400, 800, "/menu/button-3.png"));
+        Theme.add(setTheme(400, 800, "/menu/button-4.png"));
+        Theme.add(setTheme(400, 800, "/menu/button-1.png"));
+        Theme.add(setTheme(400, 800, "/menu/button-2.png"));
+        Theme.add(setTheme(100, 50, "/menu/button-0.png"));
+        Theme.add(setTheme(200, 400, "menu/multiButton-1.png"));
+        Theme.add(setTheme(200, 400, "menu/multiButton-2.png"));
 
     }
+
+    public static Theme setTheme(int width, int height, String path) {
+        return new Theme(Style.getGeneralStyle(width, height, path, true, Color.WHITE, 5)
+                , Style.getGeneralStyle(width, height, path, true, new Color(255, 215, 0), 5)
+                , Style.getGeneralStyle(width, height, path, true, Color.BLACK, 5));
+    }
+
 }
