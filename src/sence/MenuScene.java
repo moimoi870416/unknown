@@ -248,7 +248,7 @@ public class MenuScene extends Scene {
 
                         }
 //
-                        release();
+//                        release();
                     }
 
                 }
@@ -285,6 +285,7 @@ public class MenuScene extends Scene {
 
             @Override
             public void keyTyped(char c, long trigTime) {
+                System.out.println(c);
                 MenuScene.this.inputText.keyTyped(c);
             }
         };
@@ -329,7 +330,6 @@ public class MenuScene extends Scene {
     public void update() {
         //更新倒數時間
         delay.count();
-        System.out.println(inputText.getIsFocus());
     }
 
 }

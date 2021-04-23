@@ -32,7 +32,7 @@ public class ConnectController {
         strs.add(gameActor.getLife() + "");//2
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
-        gunSend(gameActor);
+        strs.addAll(gunSend(gameActor));
 //        strs.add(gameActor.getCurrentGun().getGunType().name());//5
 //        strs.add(actorX + "");//6
 //        strs.add(actorY + "");//7
