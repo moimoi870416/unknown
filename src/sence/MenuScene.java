@@ -52,7 +52,7 @@ public class MenuScene extends Scene {
         this.isAdd = false;
         isSingle = false;
         isNormal = false;
-        ModeState = FIRST;
+        ModeState = SECOND;
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -101,11 +101,12 @@ public class MenuScene extends Scene {
 
     private void initStyle() {
         IpStyle = new Style.StyleRect(300, 100, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/IPButton.png")));
-        inputText = new EditText(1100, 700, "請按Enter", IpStyle);
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/IPButton2.png")));
+        inputText = new EditText(825, 500, "請按Enter", IpStyle);
         inputText.setEditLimit(12);//設定文字輸入長度限制
+    inputText.setCursorColor(Color.black);
         inputText.setCursorSpeed(10);
-        inputText.setEditLimit(20);//游標閃爍位置
+        inputText.setEditLimit(200);//游標閃爍位置
     }
 
     //加入所有按鈕

@@ -10,6 +10,7 @@ import util.GameKernel;
 
 import static util.Global.*;
 
+import javax.crypto.Cipher;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;

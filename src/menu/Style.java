@@ -111,10 +111,10 @@ public abstract  class Style {
     public Style() {
         isHaveBorder = false;
         text = "";
-        textColor = Color.white;
+        textColor = Color.black;
         borderColor = Color.black;
         borderThickness = 1;
-        textFont = new Font("TimesRoman", Font.ITALIC, 50);
+        textFont = new Font("TimesRoman", Font.ITALIC, 35);
     }
 
     public Style setText(String text) {

@@ -51,8 +51,9 @@ public class GameActor extends GameObjForAnimator {
 
     }
 
-    public void setIsFirstGun(boolean isFirst) {
-        if (isFirst) {
+
+    public void setIsFirstGun(boolean isFirst){
+        if(isFirst){
             changeGun(-1);
             return;
         }
@@ -380,8 +381,8 @@ public class GameActor extends GameObjForAnimator {
         }
 
 
-        public void heal() {
-            if (life == HP_MAX && !canHeal) {
+        public void heal(){
+            if(life == HP_MAX && !canHeal){
                 return;
             }
             if (!canHeal && healCD.isStop()) {
@@ -436,6 +437,9 @@ public class GameActor extends GameObjForAnimator {
         }
 
         private void flashInObj(ArrayList<GameObject> arr) {
+            if(arr == null){
+                return;
+            }
             for (int i = 0; i < arr.size(); i++) {
                 if (isCollision(arr.get(i))) {
                     if (XForFlash < arr.get(i).collider().left()) {
@@ -460,6 +464,14 @@ public class GameActor extends GameObjForAnimator {
 
         public Delay getDelayForFlash() {
             return delayForFlash;
+        }
+
+        public boolean getCanHeal(){
+            return canHeal;
+        }
+
+        public boolean getCanFlash(){
+            return canFlash;
         }
 
     }
