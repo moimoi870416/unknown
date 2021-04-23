@@ -16,6 +16,8 @@ public class Global {
     public final static int UNIT_Y = 32;
 
     public final static boolean IS_DEBUG = true;
+    //網路
+    public static boolean isServer = false;
 
 
     //地圖大小
@@ -43,16 +45,18 @@ public class Global {
         public static final int ACTOR_HEAL = 206;
 
         public static final int BULLET = 300;
-        public static final int BULLET_MOVE = 301;
-        public static final int BULLET_ATK = 302;
-        public static final int BULLET_STATE = 303;
-        public static final int BULLET_PENETRATION = 304;
+        public static final int BULLET_NEW = 301;
+        public static final int BULLET_MOVE = 302;
+        public static final int BULLET_ATK = 303;
+        public static final int BULLET_STATE = 304;
+        public static final int BULLET_PENETRATION = 305;
 
         public static final int MONSTER = 400;
-        public static final int MONSTER_MOVE = 401;
-        public static final int MONSTER_LIFE = 402;
-        public static final int MONSTER_STATE = 403;
-        public static final int MONSTER_DIR = 404;
+        public static final int MONSTER_NEW = 401;
+        public static final int MONSTER_MOVE = 402;
+        public static final int MONSTER_LIFE = 403;
+        public static final int MONSTER_STATE = 404;
+        public static final int MONSTER_DIR = 405;
 
     }
 
@@ -149,9 +153,6 @@ public class Global {
     public static boolean random(int rate) {
         return random(1, 100) <= rate;
     }
-
-    //網路
-    public static boolean isServer = false;
 
     public static class NetCommandCode {
         public static final int AIRCRAFT_CONNECT = 0;

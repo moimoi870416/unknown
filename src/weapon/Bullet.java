@@ -33,13 +33,13 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int hitY;
     private boolean isHit;
     private Delay appear;
-    private GameActor shooter;
+    private int shooterID;
 
-    public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType,GameActor shooter) {
+    public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType,int shooterID) {
         img = ImageController.getInstance().tryGet("/weapon/bullet.png");
         this.x = x;
         this.y = y;
-        this.shooter = shooter;
+        this.shooterID = shooterID;
         setGunBullet(gunType);
         this.atk = bulletType.atk;
         this.MOVE_SPEED = bulletType.speedMove;
@@ -226,7 +226,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     public boolean isShootingActor(GameActor gameActor) {
-        if(gameActor == shooter){
+        if(gameActor.getConnectID() == shooterID){
             return false;
         }
         if (this.left() > gameActor.collider().right()) {

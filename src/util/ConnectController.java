@@ -7,8 +7,10 @@ import object.GameObjForAnimator;
 import object.actor.GameActor;
 import object.monster.Monster;
 import weapon.Bullet;
+import weapon.Gun;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ConnectController {
     private static ConnectController connectController;
@@ -44,6 +46,23 @@ public class ConnectController {
                 gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
             }
         }
+    }
+
+    public void newBulletSend(GameActor gameActor, int mouseX, int mouseY){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.painter().centerX() + "");
+        strs.add(gameActor.painter().centerY() + "");
+        strs.add(mouseX + "");
+        strs.add(mouseY + "");
+        strs.add(gameActor.getCurrentGun().getGunType() + "");
+        strs.add(gameActor.getConnectID() + "");
+        ClientClass.getInstance().sent(NetEvent.BULLET_NEW, strs);
+    }
+
+    public void newBulletReceive(LinkedList<Bullet> bullets, ArrayList<String> strs){
+        bullets.add(new Bullet(Integer.valueOf(strs.get(0)),Integer.valueOf(strs.get(1)),
+                Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)),
+                        Gun.GunType.valueOf(strs.get(4)),Integer.valueOf(strs.get(5))));
     }
 
     public void bulletSend(Bullet bullet){

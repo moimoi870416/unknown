@@ -19,7 +19,7 @@ import static util.Global.*;
 
 public abstract class GameScene extends Scene {
     protected ArrayList<GameObject> mapObjArr;
-    private LinkedList<Bullet> testBullets;
+    protected LinkedList<Bullet> testBullets;
     protected LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
@@ -187,7 +187,8 @@ public abstract class GameScene extends Scene {
                         (gameActorArr.get(0).painter().centerX(), gameActorArr.get(0).painter().centerY(),
                                 mouseX, mouseY,
                                 gameActorArr.get(0).getCurrentGun().getGunType(),
-                                gameActorArr.get(0)));
+                                gameActorArr.get(0).getConnectID()));
+                ConnectController.getInstance().newBulletSend(gameActorArr.get(0),mouseX,mouseY);
                 shootCount++;
             }
         }
@@ -231,7 +232,7 @@ public abstract class GameScene extends Scene {
                                 (this.gameActorArr.get(0).painter().centerX(), this.gameActorArr.get(0).painter().centerY(),
                                         mouseX, mouseY,
                                         gameActorArr.get(0).getCurrentGun().getGunType(),
-                                        gameActorArr.get(0)));
+                                        gameActorArr.get(0).getConnectID()));
                     }
                 }
                 if (gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
