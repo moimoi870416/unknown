@@ -19,6 +19,12 @@ public class Global {
     //網路
     public static boolean isServer = false;
 
+    public final static int BUTTON_WIDTH = 375;
+    public final static int BUTTON_HEIGHT = 750;
+
+    public final static int BUTTON_X1 = 200;
+    public final static int BUTTON_X2 = 800;
+    public final static int BUTTON_Y = 50;
 
     //地圖大小
     public static int MAP_WIDTH = 2048;
@@ -33,7 +39,7 @@ public class Global {
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
 
-    public static class NetEvent{
+    public static class NetEvent {
         public static final int CONNECT = 100;
 
         public static final int ACTOR = 200;
@@ -60,7 +66,15 @@ public class Global {
 
     }
 
-    public enum MapPath{
+    public enum State {
+        SECOND,
+        THIRD,
+        FOURTH,
+        FIFTH,
+        SIXTH,
+    }
+
+    public enum MapPath {
         BEGIN("/map/map-begin.png"),
         FOREST("/map/map-forest.png"),
         DESERT("/map/map-desert.png"),
@@ -69,15 +83,18 @@ public class Global {
         LIMIT("/map/map-limit.png");
 
         public String mapPath;
-        MapPath(String paht){
+
+        MapPath(String paht) {
             mapPath = paht;
         }
     }
+
 
     public enum Actor{
         FIRST("/actor/actorStand.png",58,58),
         SECOND("/actor/actor2Stand.png",64,77),
         THIRD("/actor/actor3Stand.png",80,82);
+
 
         String path;
         private int width;
