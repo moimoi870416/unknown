@@ -32,7 +32,11 @@ public class ConnectController {
         strs.add(gameActor.getLife() + "");//2
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
-        strs.addAll(gunSend(gameActor));
+        strs.add(gameActor.getCurrentGun().getGunType().name());//5
+        strs.add(actorX + "");//6
+        strs.add(actorY + "");//7
+        strs.add(mouseX + "");//8
+        strs.add(mouseY + "");//9
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
@@ -58,7 +62,14 @@ public class ConnectController {
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
                                                          Integer.valueOf(strs.get(1)),
                                                          Integer.valueOf(strs.get(2)));
-                gunReceive(gameActorArr.get(i),strs);
+                actorX = Integer.valueOf(strs.get(6));
+                actorY = Integer.valueOf(strs.get(7));
+                if(gameActorArr.get(i).getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
+                    gameActorArr.get(i).tradeGun(new Gun(Gun.GunType.valueOf(strs.get(5)),actorX,actorY));
+                }
+                gameActorArr.get(i).getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+                mouseX = Integer.valueOf(strs.get(8));
+                mouseY = Integer.valueOf(strs.get(9));
             }
         }
     }

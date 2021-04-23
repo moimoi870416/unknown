@@ -33,7 +33,10 @@ public class ConnectScene extends GameScene{
         connectLanArea();
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1094a94c9112717dd489653cd042afe820535f1b
         mapInfo = new ConnectSceneMapInfo();
         playerCount = 0;
         gameActorArr.add(new GameActor(Actor.values()[playerCount],500,500));
