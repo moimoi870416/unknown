@@ -67,6 +67,7 @@ public class Global {
     }
 
     public enum State {
+        ZERO,
         FIRST,
         SECOND,
         THIRD,

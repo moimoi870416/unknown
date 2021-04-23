@@ -8,6 +8,7 @@ import weapon.Gun;
 
 import java.awt.*;
 import java.util.ArrayList;
+
 import static util.Global.*;
 
 public class GameActor extends GameObjForAnimator {
@@ -41,8 +42,8 @@ public class GameActor extends GameObjForAnimator {
         isFirstGun = false;
     }
 
-    private void setAnimator(){
-        switch (this.actor){
+    private void setAnimator() {
+        switch (this.actor) {
             case FIRST -> animator = new Animator(actor.getPath(), 30, 58, 58, 2);
             case SECOND -> animator = new Animator(actor.getPath(), 30, 64, 68, 2);
             case THIRD -> animator = new Animator(actor.getPath(), 30, 80, 72, 2);
@@ -50,11 +51,13 @@ public class GameActor extends GameObjForAnimator {
 
     }
 
-    public void setIsFirstGun(boolean isFirst){
-        this.isFirstGun = isFirst;
+    public void setIsFirstGun(boolean isFirst) {
+        if (isFirst) {
+            changeGun(-1);
+            return;
+        }
+        changeGun(-2);
     }
-
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -62,7 +65,7 @@ public class GameActor extends GameObjForAnimator {
             return;
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        rotation.paint(g, currentGun.gun,this);
+        rotation.paint(g, currentGun.gun, this);
         skill.skillPaint(g);
         blood.paint(g);
     }
@@ -72,7 +75,7 @@ public class GameActor extends GameObjForAnimator {
 
     }
 
-    public boolean getIsFirstGun(){
+    public boolean getIsFirstGun() {
         return isFirstGun;
     }
 
@@ -112,7 +115,7 @@ public class GameActor extends GameObjForAnimator {
         }
     }
 
-    public void setConnectID(int key){
+    public void setConnectID(int key) {
         this.connectID = key;
     }
 
@@ -120,7 +123,7 @@ public class GameActor extends GameObjForAnimator {
         return connectID;
     }
 
-    public Bar getBlood(){
+    public Bar getBlood() {
         return blood;
     }
 
@@ -226,7 +229,7 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case THIRD -> {
-                switch (state){
+                switch (state) {
                     case STAND -> {
                         animator.setImg("/actor/actor3Run.png", 2);
                         animator.setArr(16);
@@ -311,12 +314,12 @@ public class GameActor extends GameObjForAnimator {
 
     }
 
-    public void rotationUpdate(int mouseX,int mouseY){
+    public void rotationUpdate(int mouseX, int mouseY) {
         rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
-                this.collider().centerX(), this.collider().centerY(), dir,mouseX,mouseY);
+                this.collider().centerX(), this.collider().centerY(), dir, mouseX, mouseY);
     }
 
-    public Rotation getRotation(){
+    public Rotation getRotation() {
         return rotation;
     }
 
@@ -377,8 +380,8 @@ public class GameActor extends GameObjForAnimator {
         }
 
 
-        public void heal(){
-            if(life == HP_MAX && !canHeal){
+        public void heal() {
+            if (life == HP_MAX && !canHeal) {
                 return;
             }
             if (!canHeal && healCD.isStop()) {
@@ -451,11 +454,11 @@ public class GameActor extends GameObjForAnimator {
             }
         }
 
-        public Delay getHealCD(){
+        public Delay getHealCD() {
             return healCD;
         }
 
-        public Delay getDelayForFlash(){
+        public Delay getDelayForFlash() {
             return delayForFlash;
         }
 

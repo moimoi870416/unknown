@@ -10,8 +10,7 @@ import util.CommandSolver;
 import util.Delay;
 
 import static util.Global.*;
-import static util.Global.State.SECOND;
-import static util.Global.State.THIRD;
+import static util.Global.State.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -39,7 +38,6 @@ public class MenuScene extends Scene {
 
     private State ModeState;//此刻的模式 決定會出現哪些按鈕
 
-    private Delay delay;//給封面用的
     private Style IpStyle;//輸入ip的模式
 
 
@@ -47,8 +45,6 @@ public class MenuScene extends Scene {
     public void sceneBegin() {
         menuImg1 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-1.png"));
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-2.png"));
-        delay = new Delay(120);
-        delay.play();
         this.labels = new ArrayList<>();
         initTheme();
         initStyle();
@@ -56,7 +52,7 @@ public class MenuScene extends Scene {
         this.isAdd = false;
         isSingle = false;
         isNormal = false;
-        ModeState = SECOND;
+        ModeState = FIRST;
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -106,7 +102,7 @@ public class MenuScene extends Scene {
     private void initStyle() {
         IpStyle = new Style.StyleRect(300, 100, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/IPButton.png")));
-        inputText = new EditText(600, 400, "請按Enter", IpStyle);
+        inputText = new EditText(1100, 700, "請按Enter", IpStyle);
         inputText.setEditLimit(12);//設定文字輸入長度限制
         inputText.setCursorSpeed(10);
         inputText.setEditLimit(20);//游標閃爍位置
@@ -144,7 +140,10 @@ public class MenuScene extends Scene {
                     backToSec.unFocus();
                     singleMode.unFocus();
                     multiplayer.unFocus();
+                    inputText.unFocus();
                     ModeState = SECOND;
+                    isAdd = false;
+
                 }
         );
         normalMode.setClickedActionPerformed((x, y) ->
@@ -154,12 +153,13 @@ public class MenuScene extends Scene {
                     backToFou.unFocus();
                     crateServer.unFocus();
                     addServer.unFocus();
-                    ModeState = THIRD;
+                    ModeState = FOURTH;
+                    inputText.unFocus();
+                    isAdd = false;
                 }
-
         );
         crateServer.setClickedActionPerformed((x, y) -> {
-                    ModeState = State.FIFTH;
+                    ModeState = FIFTH;
                 }
         );
         addServer.setClickedActionPerformed((x, y) -> {
@@ -168,9 +168,6 @@ public class MenuScene extends Scene {
                 }
         );
     }
-
-    //返回釋放
-
 
     //換背景
     private void sceneChange() {
@@ -181,6 +178,13 @@ public class MenuScene extends Scene {
             }
             SenceController.getSenceController().change(new ConnectScene());
         }
+        if (isNormal) {
+            SenceController.getSenceController().change(new ConnectScene());
+            return;
+
+        }
+
+
     }
 
     private boolean isOverLap(Label obj, int eX, int eY) {
@@ -286,42 +290,42 @@ public class MenuScene extends Scene {
     @Override
     public void paint(Graphics g) {
         //delay才播放
-        if (delay.isPlaying()) {
-            menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        } else {
-            menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-            switch (ModeState) {
-                case SECOND -> {
-                    singleMode.paint(g);
-                    multiplayer.paint(g);
+
+        menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        switch (ModeState) {
+            case FIRST -> {
+                menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            }
+//                case ZERO ->i
+//
+//
+            case SECOND -> {
+                singleMode.paint(g);
+                multiplayer.paint(g);
+            }
+            case THIRD -> {
+                backToSec.paint(g);
+                normalMode.paint(g);
+                limitMode.paint(g);
+            }
+            case FOURTH -> {
+                backToSec.paint(g);
+                addServer.paint(g);
+                crateServer.paint(g);
+                if (isAdd) {
+                    this.inputText.paint(g);
                 }
-                case THIRD -> {
-                    backToSec.paint(g);
-                    normalMode.paint(g);
-                    limitMode.paint(g);
-                }
-                case FOURTH -> {
-                    backToSec.paint(g);
-                    this.addServer.paint(g);
-                    this.crateServer.paint(g);
-                    limitMode.paint(g);
-                    if (isAdd) {
-                        this.inputText.paint(g);
-                    }
-                }
-                case FIFTH -> {
-                    backToFou.paint(g);
-                    limitMode.paint(g);
-                    normalMode.paint(g);
-                }
+            }
+            case FIFTH -> {
+                backToFou.paint(g);
+                limitMode.paint(g);
+                normalMode.paint(g);
             }
         }
     }
 
     @Override
     public void update() {
-        //更新倒數時間
-        delay.count();
     }
 
 }
