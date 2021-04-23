@@ -407,7 +407,6 @@ public class GameActor extends GameObjForAnimator {
             if (state == State.DEATH || state == State.DEAD) {
                 return;
             }
-            if (canFlash) {
                 delayForFlash.play();
                 flashAnimator.setPlayOnce();
                 XForFlash = painter().centerX();
@@ -432,8 +431,7 @@ public class GameActor extends GameObjForAnimator {
                 }
                 translate((int) moveOnX, (int) moveOnY);
                 flashInObj(arr);
-                canFlash = false;
-            }
+
         }
 
         private void flashInObj(ArrayList<GameObject> arr) {
