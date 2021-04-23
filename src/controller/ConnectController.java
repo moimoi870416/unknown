@@ -32,16 +32,7 @@ public class ConnectController {
         strs.add(gameActor.getLife() + "");//2
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
-<<<<<<< HEAD
-        strs.addAll(gunSend(gameActor));
-//        strs.add(gameActor.getCurrentGun().getGunType().name());//5
-//        strs.add(actorX + "");//6
-//        strs.add(actorY + "");//7
-//        strs.add(mouseX + "");//8
-//        strs.add(mouseY + "");//9
-=======
         strs.addAll(gunSend(gameActor,mouseX,mouseY));
->>>>>>> e5f1d265086593a1a12750ddf4051d8dea7f07db
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
