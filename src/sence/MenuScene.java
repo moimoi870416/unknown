@@ -105,8 +105,8 @@ public class MenuScene extends Scene {
         inputText = new EditText(825, 500, "請按Enter", IpStyle);
         inputText.setEditLimit(12);//設定文字輸入長度限制
     inputText.setCursorColor(Color.black);
-        inputText.setCursorSpeed(10);
-        inputText.setEditLimit(200);//游標閃爍位置
+        inputText.setTranX(50);
+
     }
 
     //加入所有按鈕
