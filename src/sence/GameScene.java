@@ -128,9 +128,9 @@ public abstract class GameScene extends Scene {
                     break;
                 }
             }
-            for (int k = 1; k < gameActorArr.size(); k++) {
+            for (int k = 0; k < gameActorArr.size(); k++) {
                 if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
-                    gameActorArr.get(k).offLife(testBullets.get(i).getAtk());
+                    gameActorArr.get(k).offLife(testBullets.get(i).getAtk()/2);
                     i--;
                     break;
                 }

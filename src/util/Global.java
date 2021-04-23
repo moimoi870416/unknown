@@ -49,6 +49,8 @@ public class Global {
         public static final int ACTOR_DIR = 204;
         public static final int ACTOR_FLASH = 205;
         public static final int ACTOR_HEAL = 206;
+        public static final int ACTOR_BAR_LEFT = 207;
+        public static final int ACTOR_BAR_TOP = 208;
 
         public static final int BULLET = 300;
         public static final int BULLET_NEW = 301;
@@ -63,6 +65,7 @@ public class Global {
         public static final int MONSTER_LIFE = 403;
         public static final int MONSTER_STATE = 404;
         public static final int MONSTER_DIR = 405;
+
 
     }
 
