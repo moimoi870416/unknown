@@ -40,10 +40,10 @@ public class ConnectController {
     private ArrayList<String> gunSend(GameActor gameActor){
         ArrayList<String> strs = new ArrayList<>();
         strs.add(gameActor.getCurrentGun().getGunType().name());//5
-        strs.add(actorX + "");
-        strs.add((actorY-28) + "");
-        strs.add(mouseX + "");
-        strs.add(mouseY + "");
+        strs.add(actorX + "");//6
+        strs.add(actorY + "");//7
+        strs.add(mouseX + "");//8
+        strs.add(mouseY + "");//9
         return strs;
     }
 
@@ -58,17 +58,22 @@ public class ConnectController {
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
                                                          Integer.valueOf(strs.get(1)),
                                                          Integer.valueOf(strs.get(2)));
-                //gunReceive(gameActorArr.get(i),strs);
+                gunReceive(gameActorArr.get(i),strs);
             }
         }
     }
-//
-//    private void gunReceive(GameActor gameActor,ArrayList<String> strs){
-//        if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
-//            gameActor.tradeGun(new Gun());
-//        }
-//
-//    }
+
+    private void gunReceive(GameActor gameActor,ArrayList<String> strs){
+        actorX = Integer.valueOf(strs.get(6));
+        actorY = Integer.valueOf(strs.get(7));
+        if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
+            gameActor.tradeGun(new Gun(Gun.GunType.valueOf(strs.get(5)),actorX,actorY));
+        }
+        gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(3)));
+        mouseX = Integer.valueOf(strs.get(9));
+        mouseY = Integer.valueOf(strs.get(10));
+
+    }
 
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY){
         ArrayList<String> strs = new ArrayList<>();
