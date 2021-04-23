@@ -33,6 +33,7 @@ public class ConnectController {
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
         strs.addAll(gunSend(gameActor,mouseX,mouseY));
+        strs.addAll(skillSend(gameActor));
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
@@ -44,6 +45,13 @@ public class ConnectController {
         strs.add(gameActor.collider().bottom() + "");//7
         strs.add(mouseX + "");//8
         strs.add(mouseY + "");//9
+        return strs;
+    }
+
+    private ArrayList<String> skillSend(GameActor gameActor){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.getSkill().getCanHeal() + "");//10
+        strs.add(gameActor.getSkill().getCanFlash() + "");//11
         return strs;
     }
 
@@ -59,6 +67,7 @@ public class ConnectController {
                                                          Integer.valueOf(strs.get(1)),
                                                          Integer.valueOf(strs.get(2)));
                 gunReceive(gameActorArr.get(i),strs);
+                skillReceive(gameActorArr.get(i),strs);
 
             }
         }
@@ -72,6 +81,15 @@ public class ConnectController {
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(),Integer.valueOf(strs.get(8)),Integer.valueOf(strs.get(9)));
 
+    }
+
+    private void skillReceive(GameActor gameActor,ArrayList<String> strs){
+        if(Boolean.valueOf(strs.get(10))){
+            gameActor.getSkill().heal();
+        }
+        if(!Boolean.valueOf(strs.get(11))){
+            gameActor.getSkill().flash(Integer.valueOf(strs.get(8)),Integer.valueOf(strs.get(9)),null);
+        }
     }
 
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY){
