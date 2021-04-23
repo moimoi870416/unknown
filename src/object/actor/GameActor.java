@@ -20,6 +20,7 @@ public class GameActor extends GameObjForAnimator {
     private Skill skill;
     private int connectID;
     private Actor actor;
+    private boolean isFirstGun;
     private int mouseX;
     private int mouseY;
 
@@ -37,6 +38,7 @@ public class GameActor extends GameObjForAnimator {
         blood = new Bar(actor);
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
+        isFirstGun = false;
     }
 
     private void setAnimator(){
@@ -47,6 +49,12 @@ public class GameActor extends GameObjForAnimator {
         }
 
     }
+
+    public void setIsFirstGun(boolean isFirst){
+        this.isFirstGun = isFirst;
+    }
+
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -64,15 +72,19 @@ public class GameActor extends GameObjForAnimator {
 
     }
 
+    public boolean getIsFirstGun(){
+        return getIsFirstGun();
+    }
+
     public void changeGun(int commandCode) {
         if (commandCode == -1) {
             currentGun = WhichGun.ONE;
             otherGun = WhichGun.TWO;
-            Display.isFirstGun = true;
+            isFirstGun = true;
         } else if (commandCode == -2) {
             currentGun = WhichGun.TWO;
             otherGun = WhichGun.ONE;
-            Display.isFirstGun = false;
+            isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
     }
