@@ -69,7 +69,7 @@ public class ConnectController {
         if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
             gameActor.tradeGun(new Gun(Gun.GunType.valueOf(strs.get(5)),actorX,actorY));
         }
-        gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(3)));
+        gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         mouseX = Integer.valueOf(strs.get(8));
         mouseY = Integer.valueOf(strs.get(9));
 
