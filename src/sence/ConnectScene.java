@@ -33,11 +33,6 @@ public class ConnectScene extends GameScene{
         connectLanArea();
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        monster.add(new SmallMonster(1000,500, SmallMonster.Type.GOBLIN));
-        monster.add(new SmallMonster(1000,500, SmallMonster.Type.MUSHROOM));
-        monster.add(new Stone( 500,510));
-        monster.add(new Rino(2000,500));
-        monster.add(new BullBoss(10000,500));
         mapInfo = new ConnectSceneMapInfo();
         playerCount = 0;
         gameActorArr.add(new GameActor(Actor.values()[playerCount],500,500));
