@@ -1,11 +1,13 @@
 package object.monster;
 
 import object.Rect;
+import object.actor.GameActor;
 import util.Delay;
 import util.Global;
 import object.GameObjForAnimator;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class Monster extends GameObjForAnimator {
     private Delay delayForCollision;
@@ -20,6 +22,7 @@ public abstract class Monster extends GameObjForAnimator {
     protected Rect hitCollied;
     protected int hitX;
     protected int hitY;
+    protected GameActor gameActor;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack) {
         this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack);
@@ -42,18 +45,18 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
     public void chase() {
-        float x = Math.abs(Global.actorX - painter().centerX());
-        float y = Math.abs(Global.actorY - painter().centerY()-10);
+        float x = Math.abs(gameActor.collider().centerX() - painter().centerX());
+        float y = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
         if (x <= 20 && y <= 20) {
             return;
         }
         float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
         float moveOnX = (float) (Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * this.moveSpeed); //  正負向量
         float moveOnY = (float) (Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * this.moveSpeed);
-        if (Global.actorY < painter().centerY()) {
+        if (gameActor.collider().bottom() < painter().centerY()) {
             moveOnY = -moveOnY;
         }
-        if (Global.actorX < painter().centerX()) {
+        if (gameActor.collider().centerX() < painter().centerX()) {
             moveOnX = -moveOnX;
         }
         translate((int) moveOnX, (int) moveOnY);
@@ -87,6 +90,21 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         isSeeingActor();
+    }
+
+    public void whoIsNear(ArrayList<GameActor> gameActorArr){
+        float x = Math.abs(gameActor.collider().centerX() - painter().centerX());
+        float y = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
+        float c = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
+        for(int i=0 ; i<gameActorArr.size() ; i++){
+            float dx = Math.abs(gameActorArr.get(i).collider().centerX() - painter().centerX());
+            float dy = Math.abs(gameActorArr.get(i).collider().bottom() - painter().centerY()-10);
+            float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
+            if(dc < c){
+                gameActor = gameActorArr.get(i);
+            }
+        }
+
     }
 
     public void attack(GameObjForAnimator gameObjForAnimator) {

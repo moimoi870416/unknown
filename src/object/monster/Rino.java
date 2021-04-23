@@ -106,22 +106,22 @@ public class Rino extends Monster{
     }
 
     private boolean attack(){
-        if(Math.abs(painter().centerX() - Global.actorX) < 500 || focus) {
+        if(Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
             if(state != State.STAND){
                 setState(State.STAND);
             }
             if (attackDelay.count()) {
                 setState(State.RUN);
-                int x = Math.abs(Global.actorX - painter().centerX());
-                int y = Math.abs(Global.actorY - painter().centerY());
+                int x = Math.abs(gameActor.collider().centerX() - painter().centerX());
+                int y = Math.abs(gameActor.collider().bottom() - painter().centerY());
                 float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
                 this.moveOnX = (int) (Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * moveSpeed * 5); //  正負向量
                 this.moveOnY = (int) (Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * moveSpeed * 5);
-                if (Global.actorY < painter().centerY()) {
+                if (gameActor.collider().bottom() < painter().centerY()) {
                     this.moveOnY = -moveOnY;
                 }
-                if (Global.actorX < painter().centerX()) {
+                if (gameActor.collider().centerX() < painter().centerX()) {
                     this.moveOnX = -moveOnX;
                 }
                 moveDistance = (int)Math.sqrt(moveOnX * moveOnX+ moveOnY * moveOnY);
@@ -144,7 +144,7 @@ public class Rino extends Monster{
         readyAtk = true;
         attackDelay.play();
         totalDistance = 0;
-        changeDir(Global.actorX-painter().centerX());
+        changeDir(gameActor.collider().centerX()-painter().centerX());
         animator.setDelayCount(30);
 
     }

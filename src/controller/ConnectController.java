@@ -70,8 +70,8 @@ public class ConnectController {
             gameActor.tradeGun(new Gun(Gun.GunType.valueOf(strs.get(5)),actorX,actorY));
         }
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(3)));
-        mouseX = Integer.valueOf(strs.get(9));
-        mouseY = Integer.valueOf(strs.get(10));
+        mouseX = Integer.valueOf(strs.get(8));
+        mouseY = Integer.valueOf(strs.get(9));
 
     }
 
@@ -106,6 +106,10 @@ public class ConnectController {
 
     }
 
+    public void newMonsterSend(LinkedList<Monster> monsters){
+
+    }
+
     public void monsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
         strs.add(monster.collider().left() + "");
@@ -116,7 +120,7 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.MONSTER, strs);
     }
 
-    public void monsterReceive(){
+    public void monsterReceive(LinkedList<Monster> monster,ArrayList<String> strs){
 
     }
 
