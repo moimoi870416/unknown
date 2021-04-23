@@ -58,6 +58,7 @@ public class ConnectController {
         strs.add(gameActor.getConnectID() + "");
         strs.add(mouseX + "");
         strs.add(mouseY + "");
+        System.out.println("send FLASH");
         ClientClass.getInstance().sent(NetEvent.ACTOR_FLASH, strs);
     }
 
@@ -104,6 +105,7 @@ public class ConnectController {
             if (gameActorArr.get(i).getConnectID() == serialNum) {
                 if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                     gameActorArr.get(i).getSkill().flash(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)),null);
+                    System.out.println("receive FLASH");
                 }
             }
         }
@@ -127,17 +129,9 @@ public class ConnectController {
     }
 
     public void bulletSend(Bullet bullet){
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(bullet.left() + "");
-        strs.add(bullet.top() + "");
-        strs.add(bullet.getAtk() + "");
-        strs.add(bullet.getState() + "");
-        strs.add(bullet.getPenetration() + "");
-        ClientClass.getInstance().sent(NetEvent.BULLET, strs);
     }
 
     public void bulletReceive(){
-
     }
 
     public void newMonsterSend(LinkedList<Monster> monsters){

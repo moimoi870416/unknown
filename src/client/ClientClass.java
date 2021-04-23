@@ -100,9 +100,9 @@ public class ClientClass {
             try {
                 String str = dis.readUTF();
                 String strarr[] = str.split(",");
-                if (Global.IS_DEBUG) {
-                    System.out.println(str);
-                }
+//                if (Global.IS_DEBUG) {
+//                    System.out.println(str);
+//                }
                 int serialNum = Integer.parseInt(strarr[0]);//id
 
                 int commandCode = Integer.parseInt(strarr[1]);//協議的編號

@@ -276,8 +276,9 @@ public abstract class GameScene extends Scene {
                 if (commandCode >= 1 || commandCode <= 4) {
                     gameActorArr.get(0).setState(GameObjForAnimator.State.STAND);
                 }
-                if (commandCode == Active.SPACE.getCommandCode()) {
+                if (commandCode == Active.SPACE.getCommandCode() && gameActorArr.get(0).getSkill().getDelayForFlash().isStop()) {
                     gameActorArr.get(0).getSkill().flash(mouseX, mouseY, mapObjArr);
+                    ConnectController.getInstance().flashSend(gameActorArr.get(0),mouseX,mouseY);
 
                 }
                 if (commandCode == Active.SKILL.getCommandCode() && gameActorArr.get(0).getSkill().getHealCD().isStop()) {
