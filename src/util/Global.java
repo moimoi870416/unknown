@@ -5,9 +5,6 @@ public class Global {
     public static final int UPDATE_TIMES_PER_SEC = 60;
     public static final int FRAME_LIMIT = 60;
 
-    public static int mouseX;
-    public static int mouseY;
-
     public static int actorX;
     public static int actorY;
     public static int shootCount = 0;

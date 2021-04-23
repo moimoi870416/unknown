@@ -20,6 +20,8 @@ public class GameActor extends GameObjForAnimator {
     private Skill skill;
     private int connectID;
     private Actor actor;
+    private int mouseX;
+    private int mouseY;
 
     public GameActor(Actor actor, final int x, final int y) {
         super(x, y, actor.getWidth(), actor.getHeight(), 100, 10, 3);
@@ -52,7 +54,7 @@ public class GameActor extends GameObjForAnimator {
             return;
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        rotation.paint(g, currentGun.gun);
+        rotation.paint(g, currentGun.gun,this);
         skill.skillPaint(g);
         blood.paint(g);
     }
@@ -294,9 +296,12 @@ public class GameActor extends GameObjForAnimator {
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
-        rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
-                this.collider().centerX(), this.collider().centerY(), dir);
 
+    }
+
+    public void rotationUpdate(int mouseX,int mouseY){
+        rotation.rotationUpdate(this.collider().centerX(), this.collider().centerY(),
+                this.collider().centerX(), this.collider().centerY(), dir,mouseX,mouseY);
     }
 
     public Rotation getRotation(){

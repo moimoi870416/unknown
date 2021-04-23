@@ -2,6 +2,7 @@ package util;
 
 import controller.ImageController;
 import object.GameObjForAnimator;
+import object.actor.GameActor;
 import weapon.Gun;
 
 import java.awt.*;
@@ -16,17 +17,14 @@ public class Rotation {
     private float fixedX; //定住的位置
     private float fixedY;
     private GameObjForAnimator.Dir direction;
+    private int mouseX;
+    private int mouseY;
 
     public float angleBetweenTwoPointWithFixedPoint() {
         float angle1 = (float) Math.atan2((startPointY - fixedY), (startPointX - fixedX));
-        float angle2 = (float) Math.atan2((mouseY - fixedY), (mouseX - fixedX));
+        float angle2 = (float) Math.atan2((this.mouseY - fixedY), (this.mouseX - fixedX));
         return angle2 - angle1;
-    }
 
-    public float angleBetweenTwoPointWithFixedPoint(int x,int y) {
-        float angle1 = (float) Math.atan2((startPointY - fixedY), (startPointX - fixedX));
-        float angle2 = (float) Math.atan2((y - fixedY), (x - fixedX));
-        return angle2 - angle1;
     }
 
     public boolean isRight() {
@@ -48,26 +46,26 @@ public class Rotation {
 
     }
 
-    public void paint(Graphics g, Gun gun) {
+    public void paint(Graphics g, Gun gun, GameActor gameActor) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform t = g2d.getTransform();
-        g2d.rotate(Math.toRadians(toDegrees()), actorX, actorY - 20);
+        g2d.rotate(Math.toRadians(toDegrees()), gameActor.painter().centerX(), gameActor.painter().bottom() - 20);
         if (isRight()) {
             g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
-                    actorX,
-                    actorY -35,
-                    actorX + gun.getGunType().getWidthForActor(),
-                    actorY + gun.getGunType().getHeightForActor() / 2 - 35,
+                    gameActor.painter().centerX(),
+                    gameActor.painter().bottom() -35,
+                    gameActor.painter().centerX() + gun.getGunType().getWidthForActor(),
+                    gameActor.painter().bottom() + gun.getGunType().getHeightForActor() / 2 - 35,
                     0,
                     0,
                     gun.getGunType().getWidthForActor(),
                     gun.getGunType().getHeightForActor() / 2-2, null);
         } else {
             g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
-                    actorX - gun.getGunType().getWidthForActor(),
-                    actorY-35,
-                    actorX,
-                    actorY-35 + gun.getGunType().getHeightForActor() / 2,
+                    gameActor.painter().centerX() - gun.getGunType().getWidthForActor(),
+                    gameActor.painter().bottom()-35,
+                    gameActor.painter().centerX(),
+                    gameActor.painter().bottom()-35 + gun.getGunType().getHeightForActor() / 2,
                     0,
                     gun.getGunType().getHeightForActor() / 2,
                     gun.getGunType().getWidthForActor(),
@@ -76,8 +74,10 @@ public class Rotation {
         g2d.setTransform(t);
     }
 
-    public void rotationUpdate(float startPointX, float startPointY, float fixedX, float fixedY, GameObjForAnimator.Dir dir) {
+    public void rotationUpdate(float startPointX, float startPointY, float fixedX, float fixedY, GameObjForAnimator.Dir dir,int mouseX,int mouseY) {
         direction = dir;
+        this.mouseX = mouseX;
+        this.mouseY = mouseY;
 
         if(dir == GameObjForAnimator.Dir.RIGHT){
             this.startPointX = startPointX;

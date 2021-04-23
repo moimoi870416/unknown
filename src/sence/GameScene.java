@@ -28,6 +28,8 @@ public abstract class GameScene extends Scene {
     private boolean shooting;
     private Camera camera;
     protected MapInfo mapInfo;
+    private int mouseX;
+    private int mouseY;
 
     @Override
     public void sceneBegin() {
@@ -97,9 +99,9 @@ public abstract class GameScene extends Scene {
     protected abstract void connectUpdate();
 
     private void mouseUpdate() {
-        mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
-        mouseY = listenerMouseY + camera.getCameraWindowY();
-        gameActorArr.get(0).changeDir(mouseX);
+        this.mouseX = listenerMouseX + camera.getCameraWindowX();//滑鼠的絕對座標 ((listenerMouse是滑鼠監聽的回傳值
+        this.mouseY = listenerMouseY + camera.getCameraWindowY();
+        gameActorArr.get(0).changeDir(this.mouseX);
     }
 
     private void displayUpdate() {
@@ -201,6 +203,7 @@ public abstract class GameScene extends Scene {
 
     private void actorUpdate() {
         gameActorArr.get(0).update();
+        gameActorArr.get(0).rotationUpdate(mouseX,mouseY);
         ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);
         for (int i = 0; i < mapObjArr.size(); i++) {
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
