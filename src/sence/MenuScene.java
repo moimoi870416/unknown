@@ -20,15 +20,18 @@ public class MenuScene extends Scene {
     private BackgroundType.BackgroundImage menuImg1;//封面
     private BackgroundType.BackgroundImage menuImg2; //背景圖
 
+    private Button enter;
+    private Button enter2;
     private Button singleMode;//單人
     private Button multiplayer;//多人
     private Button normalMode;//一般模式
     private Button limitMode;//極限
-    private Button backToSec;//返回狀態二
     private Button crateServer;//創建房間
     private Button addServer;   //加入房間
     private EditText inputText;//輸入ip
-    private Button backToFou;//返回
+    private Button backToFir;//返回狀態二
+    private Button backToSec;//返回狀態二
+    private Button backToFou;//返回四
 
     private ArrayList<Label> labels;
 
@@ -52,7 +55,7 @@ public class MenuScene extends Scene {
         this.isAdd = false;
         isSingle = false;
         isNormal = false;
-        ModeState = SECOND;
+        ModeState = FIRST;
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -70,6 +73,9 @@ public class MenuScene extends Scene {
         labels.clear();
         menuImg1 = null;
         menuImg2 = null;
+        enter = null;
+        enter2 = null;
+        backToFir = null;
         singleMode = null;
         multiplayer = null;
         backToSec = null;
@@ -97,6 +103,8 @@ public class MenuScene extends Scene {
         Theme.add(setTheme(100, 50, "/menu/button-5.png"));
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/menu/button-6.png"));
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/menu/button-7.png"));
+        Theme.add(setTheme(300, 100, "/menu/button-00.png"));
+        Theme.add(setTheme(300, 100, "/menu/button-001.png"));
     }
 
     private void initStyle() {
@@ -104,9 +112,8 @@ public class MenuScene extends Scene {
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/IPButton2.png")));
         inputText = new EditText(825, 500, "請按Enter", IpStyle);
         inputText.setEditLimit(12);//設定文字輸入長度限制
-    inputText.setCursorColor(Color.black);
+        inputText.setCursorColor(Color.black);
         inputText.setTranX(50);
-
     }
 
     //加入所有按鈕
@@ -115,46 +122,68 @@ public class MenuScene extends Scene {
         multiplayer = new Button(BUTTON_X2, BUTTON_Y, Theme.get(1));
         normalMode = new Button(BUTTON_X1, BUTTON_Y, Theme.get(2));
         limitMode = new Button(BUTTON_X2, BUTTON_Y, Theme.get(3));
-        backToSec = new Button(50, BUTTON_Y, Theme.get(4));
+
         crateServer = new Button(BUTTON_X1, BUTTON_Y, Theme.get(5));
         addServer = new Button(BUTTON_X2, BUTTON_Y, Theme.get(6));
+
+        enter = new Button(1100, 700, Theme.get(7));
+        enter2 = new Button(50, 700, Theme.get(8));
+        backToFir = new Button(50, BUTTON_Y, Theme.get(4));
+        backToSec = new Button(50, BUTTON_Y, Theme.get(4));
         backToFou = new Button(50, BUTTON_Y, Theme.get(4));
+
         this.labels.add(singleMode);
         this.labels.add(multiplayer);
         this.labels.add(normalMode);
         this.labels.add(limitMode);
-        this.labels.add(backToSec);
+
         this.labels.add(crateServer);
         this.labels.add(addServer);
         this.labels.add(inputText);
+
+        this.labels.add(enter);
+        this.labels.add(enter2);
+        this.labels.add(backToFir);
+        this.labels.add(backToSec);
         this.labels.add(backToFou);
     }
 
     private void changState() {
+        enter.setClickedActionPerformed((x, y) ->
+                ModeState = SECOND);
+//        enter2.setClickedActionPerformed((x, y) ->
+//                );
+        backToFir.setClickedActionPerformed((x, y) -> {
+                    ModeState = FIRST;
+                    backToFir.unFocus();
+                    singleMode.unFocus();
+                    multiplayer.unFocus();
+                    enter.unFocus();
+                }
+        );
         singleMode.setClickedActionPerformed((x, y) -> {
+            ModeState = THIRD;
             isSingle = true;
-            ModeState = State.THIRD;
         });
         multiplayer.setClickedActionPerformed((x, y) ->
-                ModeState = State.FOURTH);
+                ModeState = FOURTH);
         backToSec.setClickedActionPerformed((x, y) -> {
+                    ModeState = SECOND;
                     backToSec.unFocus();
                     singleMode.unFocus();
                     multiplayer.unFocus();
                     inputText.unFocus();
-                    ModeState = SECOND;
                     isAdd = false;
-
                 }
         );
         normalMode.setClickedActionPerformed((x, y) ->
                 isNormal = true);
 
         backToFou.setClickedActionPerformed((x, y) -> {
+                    ModeState = FOURTH;
                     backToFou.unFocus();
                     crateServer.unFocus();
                     addServer.unFocus();
-                    ModeState = FOURTH;
                     inputText.unFocus();
                     isAdd = false;
                 }
@@ -225,7 +254,12 @@ public class MenuScene extends Scene {
                     case CLICKED -> {
                         changState();
                         switch (ModeState) {
+                            case FIRST -> {
+                                isPress(enter, e);
+                                isPress(enter2,e);
+                            }
                             case SECOND -> {
+                                isPress(backToFir, e);
                                 isPress(singleMode, e);
                                 isPress(multiplayer, e);
                             }
@@ -296,11 +330,14 @@ public class MenuScene extends Scene {
         switch (ModeState) {
             case FIRST -> {
                 menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                enter.paint(g);
+                enter2.paint(g);
             }
 //                case ZERO ->i
 //
 //
             case SECOND -> {
+                backToFir.paint(g);
                 singleMode.paint(g);
                 multiplayer.paint(g);
             }
