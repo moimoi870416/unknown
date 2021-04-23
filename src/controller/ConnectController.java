@@ -58,17 +58,17 @@ public class ConnectController {
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
                                                          Integer.valueOf(strs.get(1)),
                                                          Integer.valueOf(strs.get(2)));
-                gunReceive(gameActorArr.get(i),strs);
+                //gunReceive(gameActorArr.get(i),strs);
             }
         }
     }
-
-    private void gunReceive(GameActor gameActor,ArrayList<String> strs){
-        if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
-            gameActor.tradeGun(new Gun());
-        }
-
-    }
+//
+//    private void gunReceive(GameActor gameActor,ArrayList<String> strs){
+//        if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
+//            gameActor.tradeGun(new Gun());
+//        }
+//
+//    }
 
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY){
         ArrayList<String> strs = new ArrayList<>();

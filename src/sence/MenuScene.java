@@ -228,6 +228,7 @@ public class MenuScene extends Scene {
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
                                 isPress(backToSec, e);
+                                sceneChange();
                             }
                             case FOURTH -> {
                                 isPress(backToTir, e);
