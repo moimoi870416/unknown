@@ -6,7 +6,6 @@ import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
-import sence.gameScene.LimitModel;
 import util.CommandSolver;
 import util.Delay;
 
@@ -35,7 +34,7 @@ public class MenuScene extends Scene {
 
     private boolean isSingle;//是不是單人
     private boolean isNormal;//是不是一般
-    private boolean isCrate;  //是不是創建房間
+    private boolean isAdd;  //是不是創建房間
 
     private State ModeState;//此刻的模式絕 決定會出現哪些按鈕
 
@@ -53,7 +52,7 @@ public class MenuScene extends Scene {
         initTheme();
         initStyle();
         addLabels();
-        this.isCrate = false;
+        this.isAdd = false;
         isSingle = false;
         isNormal = false;
         ModeState = SECOND;
@@ -107,6 +106,7 @@ public class MenuScene extends Scene {
         IpStyle = new Style.StyleRect(300, 100, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/IPButton.png")));
         inputText = new EditText(600, 400, "請按Enter", IpStyle);
+        inputText.unlockEdit();
         inputText.setEditLimit(12);//設定文字輸入長度限制
         inputText.setCursorSpeed(10);
         inputText.setEditLimit(20);//游標閃爍位置
@@ -121,7 +121,7 @@ public class MenuScene extends Scene {
         backToSec = new Button(50, BUTTON_Y, Theme.get(4));
         crateServer = new Button(BUTTON_X1, BUTTON_Y, Theme.get(5));
         addServer = new Button(BUTTON_X2, BUTTON_Y, Theme.get(6));
-        backToSec = new Button(50, BUTTON_Y, Theme.get(4));
+        backToTir = new Button(50, BUTTON_Y, Theme.get(4));
         this.labels.add(singleMode);
         this.labels.add(multiplayer);
         this.labels.add(normalMode);
@@ -143,31 +143,30 @@ public class MenuScene extends Scene {
         });
         multiplayer.setClickedActionPerformed((x, y) ->
                 ModeState = State.FOURTH);
-        normalMode.setClickedActionPerformed((x, y) ->
-                isNormal = true);
         backToSec.setClickedActionPerformed((x, y) ->
                 ModeState = SECOND
         );
-        crateServer.setClickedActionPerformed((x, y) -> {
-                    isCrate = true;
-                    ModeState = State.THIRD;
-                }
-        );
+        normalMode.setClickedActionPerformed((x, y) ->
+                isNormal = true);
+
         backToTir.setClickedActionPerformed((x, y) ->
                 ModeState = SECOND
         );
-//        addServer.setClickedActionPerformed((x, y) ->
-//
-//        );
+        crateServer.setClickedActionPerformed((x, y) -> {
+                    ModeState = State.THIRD;
+                }
 
-//        addServer.setClickedActionPerformed((x, y) ->
-//                );
-
+        );
+        addServer.setClickedActionPerformed((x, y) -> {
+                    isAdd = true;
+                    inputText.isFocus();
+                }
+        );
     }
 
     //返回釋放
     private void release() {
-        for (int i = 0; i <  this.labels.size(); i++) {
+        for (int i = 0; i < this.labels.size(); i++) {
             this.labels.get(i).unFocus();
         }
     }
@@ -179,7 +178,7 @@ public class MenuScene extends Scene {
                 SenceController.getSenceController().change(new ConnectScene());
                 return;
             }
-            SenceController.getSenceController().change(new LimitModel());
+            SenceController.getSenceController().change(new ConnectScene());
         }
     }
 
@@ -197,7 +196,7 @@ public class MenuScene extends Scene {
     }
 
     private void isPress(Label obj, final MouseEvent e) {
-        if (isOverLap(obj,e.getX(), e.getY())) {
+        if (isOverLap(obj, e.getX(), e.getY())) {
             obj.isFocus();
             if (obj.getClickedAction() != null) {
                 obj.clickedActionPerformed();
@@ -207,43 +206,38 @@ public class MenuScene extends Scene {
         }
     }
 
-
     //滑鼠監聽
     @Override
     public CommandSolver.MouseListener mouseListener() {
-        return new CommandSolver.MouseListener() {
-            @Override
-            public void mouseTrig(final MouseEvent e, final CommandSolver.MouseState state, final long trigTime) {
-                if (state != null) {
-                    switch (state) {
-                        case MOVED -> {
-                            for (int i = 0; i < labels.size(); i++) {
-                                System.out.println("label" + labels.get(i));
-                                isMove(labels.get(i),e);
-                            }
+        return (final MouseEvent e, final CommandSolver.MouseState state, final long trigTime) -> {
+            if (state != null) {
+                switch (state) {
+                    case MOVED -> {
+                        for (int i = 0; i < labels.size(); i++) {
+                            isMove(labels.get(i), e);
                         }
-                        case PRESSED -> {
-                            changState();
-                            switch (ModeState) {
-                                case SECOND -> {
-                                    isPress( singleMode,e);
-                                    isPress(multiplayer,e);
-                                }
-                                case THIRD -> {
-                                    isPress( normalMode,e);
-                                    isPress( limitMode,e);
-                                    isPress( backToSec,e);
-                                }
-                                case FOURTH -> {
-                                    isPress( backToTir,e);
-                                    isPress(crateServer,e);
-                                    isPress( addServer,e);
-                                }
-                            }
-                            release();
-                        }
-
                     }
+                    case PRESSED -> {
+                        changState();
+                        switch (ModeState) {
+                            case SECOND -> {
+                                isPress(singleMode, e);
+                                isPress(multiplayer, e);
+                            }
+                            case THIRD -> {
+                                isPress(normalMode, e);
+                                isPress(limitMode, e);
+                                isPress(backToSec, e);
+                            }
+                            case FOURTH -> {
+                                isPress(backToTir, e);
+                                isPress(crateServer, e);
+                                isPress(addServer, e);
+                            }
+                        }
+                        release();
+                    }
+
                 }
             }
         };
@@ -304,7 +298,7 @@ public class MenuScene extends Scene {
                     backToTir.paint(g);
                     this.addServer.paint(g);
                     this.crateServer.paint(g);
-                    if (!isCrate) {
+                    if (isAdd) {
                         this.inputText.paint(g);
                     }
                 }
@@ -318,6 +312,7 @@ public class MenuScene extends Scene {
     public void update() {
         //更新倒數時間
         delay.count();
+        System.out.println(inputText.getIsFocus());
 
     }
 
