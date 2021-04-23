@@ -78,7 +78,13 @@ public class ConnectScene extends GameScene{
                             break;
                     case NetEvent.BULLET_NEW:
                         ConnectController.getInstance().newBulletReceive(testBullets,strs);
-
+                        break;
+                    case NetEvent.ACTOR_HEAL:
+                        ConnectController.getInstance().healReceive(gameActorArr,serialNum,strs);
+                        break;
+                    case NetEvent.ACTOR_FLASH:
+                        ConnectController.getInstance().flashReceive(gameActorArr,serialNum,strs);
+                        break;
                 }
             }
         });

@@ -473,5 +473,7 @@ public class GameActor extends GameObjForAnimator {
             return canFlash;
         }
 
+
+
     }
 }
