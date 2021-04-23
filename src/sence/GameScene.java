@@ -128,10 +128,7 @@ public abstract class GameScene extends Scene {
                     break;
                 }
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> f1a7ffe08b0baaea469b7b20d9d971357318afd0
             for (int k = 0; k < gameActorArr.size(); k++) {
                 if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
                     gameActorArr.get(k).offLife(testBullets.get(i).getAtk()/2);

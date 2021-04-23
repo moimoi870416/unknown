@@ -18,7 +18,7 @@ public class Main {
     public static void main(final String[] args) {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
-        SenceController.getSenceController().change(new MenuScene());
+        SenceController.getSenceController().change(new ConnectScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()
