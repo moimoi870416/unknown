@@ -11,6 +11,7 @@ import util.Delay;
 
 import static util.Global.*;
 import static util.Global.State.SECOND;
+import static util.Global.State.THIRD;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -106,7 +107,6 @@ public class MenuScene extends Scene {
         IpStyle = new Style.StyleRect(300, 100, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/IPButton.png")));
         inputText = new EditText(600, 400, "請按Enter", IpStyle);
-        inputText.unlockEdit();
         inputText.setEditLimit(12);//設定文字輸入長度限制
         inputText.setCursorSpeed(10);
         inputText.setEditLimit(20);//游標閃爍位置
@@ -150,16 +150,17 @@ public class MenuScene extends Scene {
                 isNormal = true);
 
         backToTir.setClickedActionPerformed((x, y) ->
-                ModeState = SECOND
+                ModeState = THIRD
         );
         crateServer.setClickedActionPerformed((x, y) -> {
-                    ModeState = State.THIRD;
+                    ModeState = State.FIFTH;
                 }
 
         );
         addServer.setClickedActionPerformed((x, y) -> {
+                    ModeState = State.SIXTH;
                     isAdd = true;
-                    inputText.isFocus();
+
                 }
         );
     }
@@ -217,12 +218,14 @@ public class MenuScene extends Scene {
                             isMove(labels.get(i), e);
                         }
                     }
-                    case PRESSED -> {
+                    case CLICKED -> {
                         changState();
                         switch (ModeState) {
                             case SECOND -> {
-                                isPress(singleMode, e);
-                                isPress(multiplayer, e);
+                                inputText.isFocus();
+                                isPress(inputText, e);
+//                                isPress(singleMode, e);
+//                                isPress(multiplayer, e);
                             }
                             case THIRD -> {
                                 isPress(normalMode, e);
@@ -231,11 +234,20 @@ public class MenuScene extends Scene {
                                 sceneChange();
                             }
                             case FOURTH -> {
-                                isPress(backToTir, e);
+                                isPress(backToSec, e);
                                 isPress(crateServer, e);
                                 isPress(addServer, e);
+
                             }
+                            case FIFTH -> {
+                                isPress(backToTir, e);
+                                isPress(normalMode, e);
+                                isPress(limitMode, e);
+                            }
+                            case SIXTH -> isPress(inputText, e);
+
                         }
+//
                         release();
                     }
 
@@ -285,10 +297,12 @@ public class MenuScene extends Scene {
             menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         } else {
             menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
             switch (ModeState) {
                 case SECOND -> {
-                    singleMode.paint(g);
-                    multiplayer.paint(g);
+                    this.inputText.paint(g);
+//                    singleMode.paint(g);
+//                    multiplayer.paint(g);
                 }
                 case THIRD -> {
                     backToSec.paint(g);
@@ -296,15 +310,17 @@ public class MenuScene extends Scene {
                     limitMode.paint(g);
                 }
                 case FOURTH -> {
-                    backToTir.paint(g);
+                    backToSec.paint(g);
                     this.addServer.paint(g);
                     this.crateServer.paint(g);
-                    if (isAdd) {
-                        this.inputText.paint(g);
-                    }
+
                 }
                 case FIFTH -> {
+                    backToTir.paint(g);
+                    normalMode.paint(g);
+                    limitMode.paint(g);
                 }
+                case SIXTH -> this.inputText.paint(g);
             }
         }
     }
@@ -314,7 +330,6 @@ public class MenuScene extends Scene {
         //更新倒數時間
         delay.count();
         System.out.println(inputText.getIsFocus());
-
     }
 
 }

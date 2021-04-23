@@ -70,6 +70,7 @@ public class Global {
     }
 
     public enum State {
+        FIRST,
         SECOND,
         THIRD,
         FOURTH,
@@ -93,10 +94,10 @@ public class Global {
     }
 
 
-    public enum Actor{
-        FIRST("/actor/actorStand.png",58,58),
-        SECOND("/actor/actor2Stand.png",64,77),
-        THIRD("/actor/actor3Stand.png",80,82);
+    public enum Actor {
+        FIRST("/actor/actorStand.png", 58, 58),
+        SECOND("/actor/actor2Stand.png", 64, 77),
+        THIRD("/actor/actor3Stand.png", 80, 82);
 
 
         String path;
@@ -107,15 +108,15 @@ public class Global {
             return path;
         }
 
-        public int getWidth(){
+        public int getWidth() {
             return width;
         }
 
-        public int getHeight(){
+        public int getHeight() {
             return height;
         }
 
-        Actor(String path,int width,int height) {
+        Actor(String path, int width, int height) {
             this.path = path;
             this.width = width;
             this.height = height;

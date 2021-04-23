@@ -38,7 +38,7 @@ public class Main {
                         .add(KeyEvent.VK_SPACE, Global.Active.SPACE.getCommandCode())
                         .add(KeyEvent.VK_F, Global.Active.SKILL.getCommandCode())
                         .add(KeyEvent.VK_E, Global.Active.CATCH_ITEM.getCommandCode())
-                        .next().keyCleanMode()
+                        .next().trackChar().keyCleanMode()
                         .subscribe(sc))
                 //鍵盤監聽
                 //遊戲的主程式
