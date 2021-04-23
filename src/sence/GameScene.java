@@ -201,7 +201,7 @@ public abstract class GameScene extends Scene {
 
     private void actorUpdate() {
         gameActorArr.get(0).update();
-        ConnectController.getInstance().actorSend(gameActorArr.get(0));
+        ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);
         for (int i = 0; i < mapObjArr.size(); i++) {
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
         }
