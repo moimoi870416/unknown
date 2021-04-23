@@ -23,6 +23,11 @@ public class Rotation {
         return angle2 - angle1;
     }
 
+    public float angleBetweenTwoPointWithFixedPoint(int x,int y) {
+        float angle1 = (float) Math.atan2((startPointY - fixedY), (startPointX - fixedX));
+        float angle2 = (float) Math.atan2((y - fixedY), (x - fixedX));
+        return angle2 - angle1;
+    }
 
     public boolean isRight() {
         if (direction == GameObjForAnimator.Dir.RIGHT) {

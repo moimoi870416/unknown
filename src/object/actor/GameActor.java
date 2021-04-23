@@ -299,6 +299,10 @@ public class GameActor extends GameObjForAnimator {
 
     }
 
+    public Rotation getRotation(){
+        return rotation;
+    }
+
     private void updatePosition() {
         Global.actorX = collider().centerX();
         Global.actorY = collider().bottom();
