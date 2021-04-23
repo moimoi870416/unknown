@@ -33,7 +33,7 @@ public class ConnectController {
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
-        ClientClass.getInstance().sent(NetEvent.ACTOR_MOVE, strs);
+        ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
 
     public void actorReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){

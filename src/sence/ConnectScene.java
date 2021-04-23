@@ -31,7 +31,7 @@ public class ConnectScene extends GameScene{
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new ConnectSceneMapInfo();
         playerCount = 0;
-        gameActorArr.add(new GameActor(Actor.SECOND,500,500));
+        gameActorArr.add(new GameActor(Actor.values()[playerCount],500,500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
 
     }
@@ -51,6 +51,9 @@ public class ConnectScene extends GameScene{
                 }
                 switch (commandCode){
                     case  NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
+                        if (playerCount >= 3){
+                            break;
+                        }
                         boolean isBorn = false;
                         for (int i = 0; i < gameActorArr.size(); i++) {
                             if (gameActorArr.get(i).getConnectID() == serialNum) {
@@ -59,7 +62,7 @@ public class ConnectScene extends GameScene{
                             }
                         }
                         if (!isBorn) {
-                            gameActorArr.add(new GameActor(Actor.SECOND, Integer.parseInt(strs.get(0)),
+                            gameActorArr.add(new GameActor(Actor.values()[playerCount], Integer.parseInt(strs.get(0)),
                                     Integer.parseInt(strs.get(1))));
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }

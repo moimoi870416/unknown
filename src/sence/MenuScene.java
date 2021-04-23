@@ -48,7 +48,7 @@ public class MenuScene extends Scene {
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-2.png"));
         delay = new Delay(120);
         delay.play();
-
+        labels = new ArrayList<>();
         initTheme();
         initStyle();
         addLabels();
@@ -185,32 +185,28 @@ public class MenuScene extends Scene {
         }
     }
 
-    //  碰撞
-    private boolean isOverLap(Label obj, int eX, int eY) {
-        return eX <= obj.right() && eX >= obj.left() && eY >= obj.top() && eY <= obj.bottom();
-    }
 
     //確認滑鼠移動判定
-    private void isMove(Label obj, int eX, int eY) {
-        if (isOverLap(obj, eX, eY)) {
-            obj.isHover();
+    public void isMove(final MouseEvent e, final Label label) {
+        if (e.getX() <= label.right() && e.getX() >= label.left() && e.getY() >= label.top() && e.getY() <= label.bottom()) {
+            label.isHover();
         } else {
-            obj.unHover();
+            label.unHover();
+            label.unFocus();
         }
     }
 
     //確認滑鼠點擊判定
-    private void isPress(Label obj, int eX, int eY) {
-        if (isOverLap(obj, eX, eY)) {
-            obj.isFocus();
-            if (obj.getClickedAction() != null) {
-                obj.clickedActionPerformed();
+    public void isPress(final MouseEvent e, final Label label) {
+        if (e.getX() <= label.right() && e.getX() >= label.left() && e.getY() >= label.top() && e.getY() <= label.bottom()) {
+            label.isFocus();
+            if (label.getClickedAction() != null) {
+                label.clickedActionPerformed();
             }
         } else {
-            obj.unFocus();
+            label.unFocus();
         }
     }
-
 
     //滑鼠監聽
     @Override
@@ -220,14 +216,25 @@ public class MenuScene extends Scene {
                 switch (state) {
                     case MOVED -> {
                         for (int i = 0; i < labels.size(); i++) {
-                            isMove(labels.get(i), e.getX(), e.getY());
+                            isMove(e, labels.get(i));
                         }
                     }
                     case PRESSED -> {
                         changState();
                         switch (this.state) {
                             case SECOND -> {
-                                isPress(singleMode, e.getX(), e.getY());
+                                isPress(e, singleMode);
+                                isPress(e, multiplayer);
+                            }
+                            case THIRD -> {
+                                isPress(e, normalMode);
+                                isPress(e, limitMode);
+                                isPress(e, backToSec);
+                            }
+                            case FOURTH -> {
+                                isPress(e, backToTir);
+                                isPress(e, crateServer);
+                                isPress(e, addServer);
                             }
                         }
                         release();
