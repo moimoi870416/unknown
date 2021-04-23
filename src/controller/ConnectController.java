@@ -65,9 +65,6 @@ public class ConnectController {
     }
 
     private void gunReceive(GameActor gameActor,ArrayList<String> strs){
-        if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
-            gameActor.tradeGun(new Gun(Gun.GunType.valueOf(strs.get(5)),Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))));
-        }
         gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));

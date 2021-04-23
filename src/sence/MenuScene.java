@@ -25,11 +25,11 @@ public class MenuScene extends Scene {
     private Button multiplayer;//多人
     private Button normalMode;//一般模式
     private Button limitMode;//極限
-    private Button backToSec;//返回
+    private Button backToSec;//返回狀態二
     private Button crateServer;//創建房間
     private Button addServer;   //加入房間
     private EditText inputText;//輸入ip
-    private Button backToTir;//返回
+    private Button backToFou;//返回
 
     private ArrayList<Label> labels;
 
@@ -37,7 +37,7 @@ public class MenuScene extends Scene {
     private boolean isNormal;//是不是一般
     private boolean isAdd;  //是不是創建房間
 
-    private State ModeState;//此刻的模式絕 決定會出現哪些按鈕
+    private State ModeState;//此刻的模式 決定會出現哪些按鈕
 
     private Delay delay;//給封面用的
     private Style IpStyle;//輸入ip的模式
@@ -71,18 +71,18 @@ public class MenuScene extends Scene {
 
     @Override
     public void sceneEnd() {
-//        labels.clear();
-//        menuImg1 = null;
-//        menuImg2 = null;
-//        singleMode = null;
-//        multiplayer = null;
-//        backToSec = null;
-//        normalMode = null;
-//        limitMode = null;
-//        crateServer = null;
-//        addServer = null;
-//        inputText = null;
-//        backToTir = null;
+        labels.clear();
+        menuImg1 = null;
+        menuImg2 = null;
+        singleMode = null;
+        multiplayer = null;
+        backToSec = null;
+        normalMode = null;
+        limitMode = null;
+        crateServer = null;
+        addServer = null;
+        inputText = null;
+        backToFou = null;
     }
 
     //設定主題
@@ -121,7 +121,7 @@ public class MenuScene extends Scene {
         backToSec = new Button(50, BUTTON_Y, Theme.get(4));
         crateServer = new Button(BUTTON_X1, BUTTON_Y, Theme.get(5));
         addServer = new Button(BUTTON_X2, BUTTON_Y, Theme.get(6));
-        backToTir = new Button(50, BUTTON_Y, Theme.get(4));
+        backToFou = new Button(50, BUTTON_Y, Theme.get(4));
         this.labels.add(singleMode);
         this.labels.add(multiplayer);
         this.labels.add(normalMode);
@@ -130,12 +130,9 @@ public class MenuScene extends Scene {
         this.labels.add(crateServer);
         this.labels.add(addServer);
         this.labels.add(inputText);
-        this.labels.add(backToTir);
+        this.labels.add(backToFou);
     }
 
-    //一般或極限模式地圖選擇
-
-    //彈跳視窗
     private void changState() {
         singleMode.setClickedActionPerformed((x, y) -> {
             isSingle = true;
@@ -143,34 +140,37 @@ public class MenuScene extends Scene {
         });
         multiplayer.setClickedActionPerformed((x, y) ->
                 ModeState = State.FOURTH);
-        backToSec.setClickedActionPerformed((x, y) ->
-                ModeState = SECOND
+        backToSec.setClickedActionPerformed((x, y) -> {
+                    backToSec.unFocus();
+                    singleMode.unFocus();
+                    multiplayer.unFocus();
+                    ModeState = SECOND;
+                }
         );
         normalMode.setClickedActionPerformed((x, y) ->
                 isNormal = true);
 
-        backToTir.setClickedActionPerformed((x, y) ->
-                ModeState = THIRD
+        backToFou.setClickedActionPerformed((x, y) -> {
+                    backToFou.unFocus();
+                    crateServer.unFocus();
+                    addServer.unFocus();
+                    ModeState = THIRD;
+                }
+
         );
         crateServer.setClickedActionPerformed((x, y) -> {
                     ModeState = State.FIFTH;
                 }
-
         );
         addServer.setClickedActionPerformed((x, y) -> {
-                    ModeState = State.SIXTH;
                     isAdd = true;
-
+                    inputText.isFocus();
                 }
         );
     }
 
     //返回釋放
-    private void release() {
-        for (int i = 0; i < this.labels.size(); i++) {
-            this.labels.get(i).unFocus();
-        }
-    }
+
 
     //換背景
     private void sceneChange() {
@@ -182,7 +182,6 @@ public class MenuScene extends Scene {
             SenceController.getSenceController().change(new ConnectScene());
         }
     }
-
 
     private boolean isOverLap(Label obj, int eX, int eY) {
         return eX <= obj.right() && eX >= obj.left() && eY >= obj.top() && eY <= obj.bottom();
@@ -222,10 +221,8 @@ public class MenuScene extends Scene {
                         changState();
                         switch (ModeState) {
                             case SECOND -> {
-                                inputText.isFocus();
-                                isPress(inputText, e);
-//                                isPress(singleMode, e);
-//                                isPress(multiplayer, e);
+                                isPress(singleMode, e);
+                                isPress(multiplayer, e);
                             }
                             case THIRD -> {
                                 isPress(normalMode, e);
@@ -240,17 +237,13 @@ public class MenuScene extends Scene {
 
                             }
                             case FIFTH -> {
-                                isPress(backToTir, e);
+                                isPress(backToFou, e);
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
+                                isPress(inputText, e);
                             }
-                            case SIXTH -> isPress(inputText, e);
-
                         }
-//
-//                        release();
                     }
-
                 }
             }
         };
@@ -285,7 +278,6 @@ public class MenuScene extends Scene {
 
             @Override
             public void keyTyped(char c, long trigTime) {
-                System.out.println(c);
                 MenuScene.this.inputText.keyTyped(c);
             }
         };
@@ -298,12 +290,10 @@ public class MenuScene extends Scene {
             menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         } else {
             menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
             switch (ModeState) {
                 case SECOND -> {
-                    this.inputText.paint(g);
-//                    singleMode.paint(g);
-//                    multiplayer.paint(g);
+                    singleMode.paint(g);
+                    multiplayer.paint(g);
                 }
                 case THIRD -> {
                     backToSec.paint(g);
@@ -314,14 +304,16 @@ public class MenuScene extends Scene {
                     backToSec.paint(g);
                     this.addServer.paint(g);
                     this.crateServer.paint(g);
-
+                    limitMode.paint(g);
+                    if (isAdd) {
+                        this.inputText.paint(g);
+                    }
                 }
                 case FIFTH -> {
-                    backToTir.paint(g);
-                    normalMode.paint(g);
+                    backToFou.paint(g);
                     limitMode.paint(g);
+                    normalMode.paint(g);
                 }
-                case SIXTH -> this.inputText.paint(g);
             }
         }
     }
