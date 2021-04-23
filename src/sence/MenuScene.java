@@ -49,7 +49,7 @@ public class MenuScene extends Scene {
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/menu-2.png"));
         delay = new Delay(120);
         delay.play();
-        labels = new ArrayList<>();
+        this.labels = new ArrayList<>();
         initTheme();
         initStyle();
         addLabels();
@@ -71,18 +71,18 @@ public class MenuScene extends Scene {
 
     @Override
     public void sceneEnd() {
-        labels.clear();
-        menuImg1 = null;
-        menuImg2 = null;
-        singleMode = null;
-        multiplayer = null;
-        backToSec = null;
-        normalMode = null;
-        limitMode = null;
-        crateServer = null;
-        addServer = null;
-        inputText = null;
-        backToTir = null;
+//        labels.clear();
+//        menuImg1 = null;
+//        menuImg2 = null;
+//        singleMode = null;
+//        multiplayer = null;
+//        backToSec = null;
+//        normalMode = null;
+//        limitMode = null;
+//        crateServer = null;
+//        addServer = null;
+//        inputText = null;
+//        backToTir = null;
     }
 
     //設定主題
@@ -122,15 +122,15 @@ public class MenuScene extends Scene {
         crateServer = new Button(BUTTON_X1, BUTTON_Y, Theme.get(5));
         addServer = new Button(BUTTON_X2, BUTTON_Y, Theme.get(6));
         backToSec = new Button(50, BUTTON_Y, Theme.get(4));
-        labels.add(singleMode);
-        labels.add(multiplayer);
-        labels.add(normalMode);
-        labels.add(limitMode);
-        labels.add(backToSec);
-        labels.add(crateServer);
-        labels.add(addServer);
-        labels.add(inputText);
-        labels.add(backToTir);
+        this.labels.add(singleMode);
+        this.labels.add(multiplayer);
+        this.labels.add(normalMode);
+        this.labels.add(limitMode);
+        this.labels.add(backToSec);
+        this.labels.add(crateServer);
+        this.labels.add(addServer);
+        this.labels.add(inputText);
+        this.labels.add(backToTir);
     }
 
     //一般或極限模式地圖選擇
@@ -167,8 +167,8 @@ public class MenuScene extends Scene {
 
     //返回釋放
     private void release() {
-        for (int i = 0; i < labels.size(); i++) {
-            labels.get(i).unFocus();
+        for (int i = 0; i <  this.labels.size(); i++) {
+            this.labels.get(i).unFocus();
         }
     }
 
@@ -184,27 +184,29 @@ public class MenuScene extends Scene {
     }
 
 
-    //確認滑鼠移動判定
-    public void isMove(final MouseEvent e, final Label label) {
-        if (e.getX() <= label.right() && e.getX() >= label.left() && e.getY() >= label.top() && e.getY() <= label.bottom()) {
-            label.isHover();
+    private boolean isOverLap(Label obj, int eX, int eY) {
+        return eX <= obj.right() && eX >= obj.left() && eY >= obj.top() && eY <= obj.bottom();
+    }
+
+    private void isMove(Label obj, final MouseEvent e) {
+        if (isOverLap(obj, e.getX(), e.getY())) {
+            obj.isHover();
         } else {
-            label.unHover();
-            label.unFocus();
+            obj.unHover();
         }
     }
 
-    //確認滑鼠點擊判定
-    public void isPress(final MouseEvent e, final Label label) {
-        if (e.getX() <= label.right() && e.getX() >= label.left() && e.getY() >= label.top() && e.getY() <= label.bottom()) {
-            label.isFocus();
-            if (label.getClickedAction() != null) {
-                label.clickedActionPerformed();
+    private void isPress(Label obj, final MouseEvent e) {
+        if (isOverLap(obj,e.getX(), e.getY())) {
+            obj.isFocus();
+            if (obj.getClickedAction() != null) {
+                obj.clickedActionPerformed();
             }
         } else {
-            label.unFocus();
+            obj.unFocus();
         }
     }
+
 
     //滑鼠監聽
     @Override
@@ -217,25 +219,25 @@ public class MenuScene extends Scene {
                         case MOVED -> {
                             for (int i = 0; i < labels.size(); i++) {
                                 System.out.println("label" + labels.get(i));
-//                                isMove(e, labels.get(i));
+                                isMove(labels.get(i),e);
                             }
                         }
                         case PRESSED -> {
                             changState();
                             switch (ModeState) {
                                 case SECOND -> {
-                                    isPress(e, singleMode);
-                                    isPress(e, multiplayer);
+                                    isPress( singleMode,e);
+                                    isPress(multiplayer,e);
                                 }
                                 case THIRD -> {
-                                    isPress(e, normalMode);
-                                    isPress(e, limitMode);
-                                    isPress(e, backToSec);
+                                    isPress( normalMode,e);
+                                    isPress( limitMode,e);
+                                    isPress( backToSec,e);
                                 }
                                 case FOURTH -> {
-                                    isPress(e, backToTir);
-                                    isPress(e, crateServer);
-                                    isPress(e, addServer);
+                                    isPress( backToTir,e);
+                                    isPress(crateServer,e);
+                                    isPress( addServer,e);
                                 }
                             }
                             release();
