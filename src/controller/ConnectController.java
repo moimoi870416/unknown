@@ -32,6 +32,8 @@ public class ConnectController {
         strs.add(gameActor.getLife() + "");//2
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
+        strs.add(gameActor.collider().left() + "");//5
+        strs.add(gameActor.collider().top() + "");//6
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
@@ -44,6 +46,9 @@ public class ConnectController {
                 gameActorArr.get(i).offLife(Integer.valueOf(strs.get(2)));
                 gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+                gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(5)),
+                                                         Integer.valueOf(strs.get(6)),
+                                                         Integer.valueOf(strs.get(2)));
             }
         }
     }

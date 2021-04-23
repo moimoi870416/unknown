@@ -51,7 +51,11 @@ public class ConnectScene extends GameScene{
                 }
                 switch (commandCode){
                     case  NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
+<<<<<<< HEAD
                         if (playerCount >= 3){
+=======
+                        if(playerCount >= 3){
+>>>>>>> f1a7ffe08b0baaea469b7b20d9d971357318afd0
                             break;
                         }
                         boolean isBorn = false;

@@ -1,5 +1,6 @@
 package object.actor;
 
+import controller.ConnectController;
 import object.GameObject;
 import util.*;
 import object.GameObjForAnimator;
@@ -103,6 +104,10 @@ public class GameActor extends GameObjForAnimator {
 
     public int getConnectID() {
         return connectID;
+    }
+
+    public Bar getBlood(){
+        return blood;
     }
 
     public void tradeGun(Gun gun) {
