@@ -23,6 +23,7 @@ public abstract class Monster extends GameObjForAnimator {
     protected int hitX;
     protected int hitY;
     protected GameActor gameActor;
+    private int nearest;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack) {
         this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack);
@@ -42,6 +43,7 @@ public abstract class Monster extends GameObjForAnimator {
         hitCollied = Rect.genWithCenter(hitX,hitY,hitWidth,hitHeight);
         this.hitX = hitCollied.left() - collider().left();
         this.hitY = hitCollied.top() -collider().top();
+        nearest = 50000;
     }
 
     public void chase() {
@@ -92,18 +94,13 @@ public abstract class Monster extends GameObjForAnimator {
         isSeeingActor();
     }
 
-    public void whoIsNear(ArrayList<GameActor> gameActorArr){
-        float x = Math.abs(gameActor.collider().centerX() - painter().centerX());
-        float y = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
-        float c = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
-        for(int i=0 ; i<gameActorArr.size() ; i++){
-            float dx = Math.abs(gameActorArr.get(i).collider().centerX() - painter().centerX());
-            float dy = Math.abs(gameActorArr.get(i).collider().bottom() - painter().centerY()-10);
+    public void whoIsNear(GameActor gameActor){
+            float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
+            float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
             float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
-            if(dc < c){
-                gameActor = gameActorArr.get(i);
+            if(dc < nearest){
+                this.gameActor = gameActor;
             }
-        }
 
     }
 

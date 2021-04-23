@@ -167,7 +167,9 @@ public abstract class GameScene extends Scene {
                 break;
             }
             monster.get(i).update();
-            monster.get(i).whoIsNear(gameActorArr);
+            for(int k=0 ; k<gameActorArr.size() ; k++) {
+                monster.get(i).whoIsNear(gameActorArr.get(k));
+            }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));
             }
