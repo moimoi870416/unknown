@@ -71,6 +71,8 @@ public class ConnectController {
         gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+        gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
+                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(),Integer.valueOf(strs.get(8)),Integer.valueOf(strs.get(9)));
 
     }
 
