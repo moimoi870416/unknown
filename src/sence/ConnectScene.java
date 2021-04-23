@@ -34,7 +34,7 @@ public class ConnectScene extends GameScene{
         mapInfo = new ConnectSceneMapInfo();
         monster.add(new Stone(500,500));
         playerCount = 0;
-        gameActorArr.add(new GameActor(Actor.THIRD,500,500));
+        gameActorArr.add(new GameActor(Actor.SECOND,500,500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
 
     }
