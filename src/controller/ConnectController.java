@@ -33,7 +33,6 @@ public class ConnectController {
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
         strs.addAll(gunSend(gameActor,mouseX,mouseY));
-        strs.addAll(skillSend(gameActor));
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
@@ -48,12 +47,20 @@ public class ConnectController {
         return strs;
     }
 
-    private ArrayList<String> skillSend(GameActor gameActor){
+    public void healSend(GameActor gameActor){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.getSkill().getCanHeal() + "");//10
-        strs.add(gameActor.getSkill().getCanFlash() + "");//11
-        return strs;
+        strs.add(gameActor.getConnectID() + "");
+        ClientClass.getInstance().sent(NetEvent.ACTOR_HEAL, strs);
     }
+
+    public void flashSend(GameActor gameActor,int mouseX,int mouseY){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.getConnectID() + "");
+        strs.add(mouseX + "");
+        strs.add(mouseY + "");
+        ClientClass.getInstance().sent(NetEvent.ACTOR_FLASH, strs);
+    }
+
 
     public void actorReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
         for(int i=0 ; i<gameActorArr.size() ; i++){
@@ -67,7 +74,6 @@ public class ConnectController {
                                                          Integer.valueOf(strs.get(1)),
                                                          Integer.valueOf(strs.get(2)));
                 gunReceive(gameActorArr.get(i),strs);
-                skillReceive(gameActorArr.get(i),strs);
 
             }
         }
@@ -83,12 +89,23 @@ public class ConnectController {
 
     }
 
-    private void skillReceive(GameActor gameActor,ArrayList<String> strs){
-        if(Boolean.valueOf(strs.get(10))){
-            gameActor.getSkill().heal();
+    public void healReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
+        for(int i=0 ; i<gameActorArr.size() ; i++) {
+            if (gameActorArr.get(i).getConnectID() == serialNum) {
+                if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
+                    gameActorArr.get(i).getSkill().heal();
+                }
+            }
         }
-        if(!Boolean.valueOf(strs.get(11))){
-            gameActor.getSkill().flash(Integer.valueOf(strs.get(8)),Integer.valueOf(strs.get(9)),null);
+    }
+
+    public void flashReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
+        for(int i=0 ; i<gameActorArr.size() ; i++) {
+            if (gameActorArr.get(i).getConnectID() == serialNum) {
+                if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
+                    gameActorArr.get(i).getSkill().flash(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)),null);
+                }
+            }
         }
     }
 

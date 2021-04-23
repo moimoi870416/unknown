@@ -278,9 +278,11 @@ public abstract class GameScene extends Scene {
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
                     gameActorArr.get(0).getSkill().flash(mouseX, mouseY, mapObjArr);
+
                 }
                 if (commandCode == Active.SKILL.getCommandCode() && gameActorArr.get(0).getSkill().getHealCD().isStop()) {
                     gameActorArr.get(0).getSkill().heal();
+                    ConnectController.getInstance().healSend(gameActorArr.get(0));
                 }
             }
 
