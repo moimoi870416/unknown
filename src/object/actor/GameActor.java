@@ -73,7 +73,7 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public boolean getIsFirstGun(){
-        return getIsFirstGun();
+        return isFirstGun;
     }
 
     public void changeGun(int commandCode) {
