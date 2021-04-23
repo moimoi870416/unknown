@@ -214,7 +214,6 @@ public class MenuScene extends Scene {
                             }
                             for (int i = 0; i < labels.size(); i++) {
                                 isPress(labels.get(i), e.getX(), e.getY());
-
                             }
                             addThird();
                         }

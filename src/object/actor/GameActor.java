@@ -7,6 +7,7 @@ import weapon.Gun;
 
 import java.awt.*;
 import java.util.ArrayList;
+import static util.Global.*;
 
 public class GameActor extends GameObjForAnimator {
     private WhichGun currentGun;
@@ -17,20 +18,31 @@ public class GameActor extends GameObjForAnimator {
     private Bar blood;
     private Skill skill;
     private int connectID;
+    private Actor actor;
 
-    public GameActor(String path, final int x, final int y) {
+    public GameActor(Actor actor, final int x, final int y) {
         super(x, y, 58, 58, 100, 10, 3);
-        animator = new Animator(path, 30, 58, 58, 2);
-        animator.setArr(3);
+        this.actor = actor;
+        setAnimator();
+        setState(State.STAND);
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
-        verticalDir = horizontalDir = Global.Direction.NO;
+        verticalDir = horizontalDir = Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
         rotation = new Rotation();
         blood = new Bar();
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
+    }
+
+    private void setAnimator(){
+        switch (this.actor){
+            case FIRST -> animator = new Animator(actor.getPath(), 30, 58, 58, 2);
+            case SECOND -> animator = new Animator(actor.getPath(), 30, 64, 77, 2);
+            case THIRD -> animator = new Animator(actor.getPath(), 30, 80, 72, 2);
+        }
+
     }
 
     @Override
@@ -145,27 +157,77 @@ public class GameActor extends GameObjForAnimator {
             return;
         }
         this.state = state;
-        switch (state) {
-            case STAND -> {
-                animator.setImg("/actor/actorStand.png", 2);
-                animator.setArr(3);
-                animator.setDelayCount(30);
-                animator.setPlayLoop();
+        switch (actor) {
+            case FIRST -> {
+                switch (state) {
+                    case STAND -> {
+                        animator.setImg("/actor/actorStand.png", 2);
+                        animator.setArr(3);
+                        animator.setDelayCount(30);
+                        animator.setPlayLoop();
+                    }
+                    case RUN -> {
+                        animator.setImg("/actor/run.png", 2);
+                        animator.setArr(4);
+                        animator.setDelayCount(10);
+                        animator.setPlayLoop();
+                    }
+                    case DEATH -> {
+                        animator.setImg("/actor/actorDead.png", 2);
+                        animator.setArr(16);
+                        animator.setDelayCount(5);
+                        animator.setPlayOnce();
+                    }
+                    case DEAD -> animator.setArr(0);
+
+                }
             }
-            case RUN -> {
-                animator.setImg("/actor/run.png", 2);
-                animator.setArr(4);
-                animator.setDelayCount(10);
-                animator.setPlayLoop();
+            case SECOND -> {
+                switch (state) {
+                    case STAND -> {
+                        animator.setImg("/actor/actor2Stand.png", 2);
+                        animator.setArr(15);
+                        animator.setDelayCount(15);
+                        animator.setPlayLoop();
+                    }
+                    case RUN -> {
+                        animator.setImg("/actor/actor2Run.png", 2);
+                        animator.setArr(21);
+                        animator.setDelayCount(10);
+                        animator.setPlayLoop();
+                    }
+                    case DEATH -> {
+                        animator.setImg("/actor/actor2Dead (2).png", 2);
+                        animator.setArr(6);
+                        animator.setDelayCount(30);
+                        animator.setPlayOnce();
+                    }
+                    case DEAD -> animator.setArr(0);
+
+                }
             }
-            case DEATH -> {
-                animator.setImg("/actor/actorDead.png", 2);
-                animator.setArr(16);
-                animator.setDelayCount(5);
-                animator.setPlayOnce();
-            }
-            case DEAD -> {
-                animator.setArr(0);
+            case THIRD -> {
+                switch (state){
+                    case STAND -> {
+                        animator.setImg("/actor/actor3Stand.png", 2);
+                        animator.setArr(16);
+                        animator.setDelayCount(15);
+                        animator.setPlayLoop();
+                    }
+                    case RUN -> {
+                        animator.setImg("/actor/actor3Run.png", 2);
+                        animator.setArr(16);
+                        animator.setDelayCount(15);
+                        animator.setPlayLoop();
+                    }
+                    case DEATH -> {
+                        animator.setImg("/actor/actor3Dead.png", 2);
+                        animator.setArr(6);
+                        animator.setDelayCount(30);
+                        animator.setPlayOnce();
+                    }
+                    case DEAD -> animator.setArr(0);
+                }
             }
         }
     }
