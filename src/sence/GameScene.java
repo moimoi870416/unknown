@@ -128,6 +128,7 @@ public abstract class GameScene extends Scene {
                     break;
                 }
             }
+<<<<<<< HEAD
             if(x == 0){
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
@@ -135,6 +136,15 @@ public abstract class GameScene extends Scene {
                         i--;
                         break;
                     }
+=======
+
+            for (int k = 0; k < gameActorArr.size(); k++) {
+                if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
+                    gameActorArr.get(k).offLife(testBullets.get(i).getAtk()/2);
+                    i--;
+                    break;
+                }
+>>>>>>> 240fc3ba3882e83f521612712ed34966310530ef
 
                 }
             }
