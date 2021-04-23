@@ -91,6 +91,7 @@ public class GameActor extends GameObjForAnimator {
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
+        ConnectController.getInstance().changeGunSend(this,commandCode);
     }
 
     private enum WhichGun {
@@ -308,7 +309,7 @@ public class GameActor extends GameObjForAnimator {
             case NO:
         }
 
-        skill.skillUpdate();
+//        skill.skillUpdate();
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();

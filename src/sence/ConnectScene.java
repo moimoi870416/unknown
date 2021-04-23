@@ -7,10 +7,6 @@ import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
-import object.monster.BullBoss;
-import object.monster.Rino;
-import object.monster.SmallMonster;
-import object.monster.Stone;
 import server.Server;
 import controller.ConnectController;
 import util.Global;
@@ -84,6 +80,12 @@ public class ConnectScene extends GameScene{
                         break;
                     case NetEvent.ACTOR_FLASH:
                         ConnectController.getInstance().flashReceive(gameActorArr,serialNum,strs);
+                        break;
+                    case NetEvent.ACTOR_CHANGE_GUN:
+                        ConnectController.getInstance().changeGunReceive(gameActorArr,serialNum,strs);
+                        break;
+                    case NetEvent.MONSTER_NEW:
+                        ConnectController.getInstance().newMonsterReceive(monster,strs);
                         break;
                 }
             }

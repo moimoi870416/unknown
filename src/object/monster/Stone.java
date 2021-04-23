@@ -6,7 +6,7 @@ public class Stone extends Monster{
     private boolean dead;
 
     public Stone(int x, int y) {
-        super(x, y, 32, 27,800,10,2,false);
+        super(x, y, 32, 27,800,10,2,false,3);
         animator = new Animator("/monster/rock/rockRun(32x28).png",15,32,27,2);
         animator.setArr(14);
         dead = false;

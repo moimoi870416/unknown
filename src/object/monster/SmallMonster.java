@@ -6,7 +6,7 @@ public class SmallMonster extends Monster {
     private Type type;
 
     public SmallMonster(int x, int y,Type type) {
-        super(x, y, 32, 32,500,10,type.speedMove,false);
+        super(x, y, 32, 32,500,10,type.speedMove,false,type.typeCode);
         animator = new Animator(type.path,15,16,16,2);
         animator.setArr(6);
         this.type = type;
@@ -43,16 +43,18 @@ public class SmallMonster extends Monster {
     }
 
     public enum Type{
-        GOBLIN("/monster/goblin/goblin88.png",5),
-        SLIME("/monster/goblin/goblin88.png",3),
-        MUSHROOM("/monster/goblin/mushroomRun.png",3);
+        GOBLIN("/monster/goblin/goblin88.png",5,4),
+        SLIME("/monster/goblin/goblin88.png",3,5),
+        MUSHROOM("/monster/goblin/mushroomRun.png",3,6);
 
         private String path;
         private int speedMove;
+        private int typeCode;
 
-        Type(String path,int speedMove){
+        Type(String path,int speedMove,int typeCode){
             this.path = path;
             this.speedMove = speedMove;
+            this.typeCode = typeCode;
         }
     }
 }
