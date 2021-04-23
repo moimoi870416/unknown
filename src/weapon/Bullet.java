@@ -3,7 +3,6 @@ package weapon;
 import controller.ImageController;
 import object.GameObjForAnimator;
 import object.GameObject;
-import object.Rect;
 import object.actor.GameActor;
 import object.monster.Monster;
 import util.Animator;
@@ -140,12 +139,17 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         if(state != State.FLYING){
             return;
         }
-        offSet(moveOnX,moveOnY);
+        transLate(moveOnX,moveOnY);
     }
 
-    public void offSet(final double x, final double y) {
+    public void transLate(final double x, final double y) {
         this.x += x;
         this.y += y;
+    }
+
+    public final void offSet(int x,int y){
+        this.x = x;
+        this.y = y;
     }
 
     public double getCenterX() {
@@ -292,5 +296,9 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         hitX = (int)left();
         hitY = (int)top();
         isHit = true;
+    }
+
+    public int getPenetration(){
+        return penetration;
     }
 }

@@ -11,6 +11,7 @@ import object.monster.SmallMonster;
 import object.monster.Stone;
 import sence.gameScene.normalMode.NormalMode;
 import server.Server;
+import util.ConnectController;
 import util.Global;
 
 import java.awt.*;
@@ -67,13 +68,8 @@ public class ConnectScene extends GameScene{
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }
                         break;
-                    case NetEvent.ACTOR_MOVE:
-                        for(int i=0 ; i<gameActorArr.size() ; i++){
-                            if(gameActorArr.get(i).getConnectID() == serialNum){
-                                gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
-                                gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
-                            }
-                        }
+                    case NetEvent.ACTOR:
+                        ConnectController.getInstance().actorReceive(gameActorArr,serialNum,strs);
                             break;
                 }
             }

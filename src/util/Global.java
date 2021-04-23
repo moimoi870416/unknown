@@ -34,22 +34,25 @@ public class Global {
     public static class NetEvent{
         public static final int CONNECT = 100;
 
-        public static final int ACTOR_MOVE = 200;
-        public static final int ACTOR_LIFE = 201;
-        public static final int ACTOR_STATE = 202;
-        public static final int ACTOR_DIR = 203;
-        public static final int ACTOR_FLASH = 204;
-        public static final int ACTOR_HEAL = 205;
+        public static final int ACTOR = 200;
+        public static final int ACTOR_MOVE = 201;
+        public static final int ACTOR_LIFE = 202;
+        public static final int ACTOR_STATE = 203;
+        public static final int ACTOR_DIR = 204;
+        public static final int ACTOR_FLASH = 205;
+        public static final int ACTOR_HEAL = 206;
 
-        public static final int BULLET_MOVE = 300;
-        public static final int BULLET_ATK = 301;
-        public static final int BULLET_STATE = 302;
-        public static final int BULLET_PENETRATION = 303;
+        public static final int BULLET = 300;
+        public static final int BULLET_MOVE = 301;
+        public static final int BULLET_ATK = 302;
+        public static final int BULLET_STATE = 303;
+        public static final int BULLET_PENETRATION = 304;
 
-        public static final int MONSTER_MOVE = 400;
-        public static final int MONSTER_LIFE = 401;
-        public static final int MONSTER_STATE = 402;
-        public static final int MONSTER_DIR = 403;
+        public static final int MONSTER = 400;
+        public static final int MONSTER_MOVE = 401;
+        public static final int MONSTER_LIFE = 402;
+        public static final int MONSTER_STATE = 403;
+        public static final int MONSTER_DIR = 404;
 
     }
 

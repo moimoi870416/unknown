@@ -1,12 +1,12 @@
 package sence;
 
 import camera.Camera;
-import client.ClientClass;
 import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
 import object.monster.Monster;
 import util.CommandSolver;
+import util.ConnectController;
 import util.Display;
 import weapon.Bullet;
 import weapon.Gun;
@@ -194,12 +194,8 @@ public abstract class GameScene extends Scene {
     }
 
     private void actorUpdate() {
-        ArrayList<String> strs = new ArrayList<>();
         gameActorArr.get(0).update();
-        strs.add(gameActorArr.get(0).collider().left() + "");
-        strs.add(gameActorArr.get(0).collider().top() + "");
-        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
-        ClientClass.getInstance().sent(NetEvent.ACTOR_MOVE, strs);
+        ConnectController.getInstance().actorSend(gameActorArr.get(0));
         for (int i = 0; i < mapObjArr.size(); i++) {
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
         }
@@ -273,7 +269,7 @@ public abstract class GameScene extends Scene {
                 if (commandCode == Active.SPACE.getCommandCode()) {
                     gameActorArr.get(0).getSkill().flash(mouseX, mouseY, mapObjArr);
                 }
-                if (commandCode == Active.SKILL.getCommandCode()) {
+                if (commandCode == Active.SKILL.getCommandCode() && gameActorArr.get(0).getSkill().getHealCD().isStop()) {
                     gameActorArr.get(0).getSkill().heal();
                 }
             }

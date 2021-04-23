@@ -75,12 +75,20 @@ public abstract class GameObjForAnimator extends GameObject {
         }
     }
 
+    public void setDir(Dir dir){
+        this.dir = dir;
+    }
+
     protected void changeDir(int moveOnX) {
         if (moveOnX > 0) {
             dir = Dir.RIGHT;
         } else {
             dir = Dir.LEFT;
         }
+    }
+
+    public Dir getDir(){
+        return dir;
     }
 
     public void offLife(int atk){

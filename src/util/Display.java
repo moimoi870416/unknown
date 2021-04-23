@@ -23,8 +23,6 @@ public class Display {
     private Image currentGun;
     private Image otherGun;
     private GameActor gameActor;
-    private boolean canHeal;
-    private boolean canFlash;
     public static boolean isFirstGun;
 
 

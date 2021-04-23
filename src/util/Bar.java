@@ -11,8 +11,8 @@ public class Bar {
     private int height;
     private int life;
 
-    public Bar() {
-        this.width = 60;
+    public Bar(Global.Actor actor) {
+        this.width = actor.getWidth();
         this.height = 7;
     }
 

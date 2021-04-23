@@ -31,7 +31,7 @@ public class GameActor extends GameObjForAnimator {
         verticalDir = horizontalDir = Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
         rotation = new Rotation();
-        blood = new Bar();
+        blood = new Bar(actor);
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
     }
