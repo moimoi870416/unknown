@@ -11,6 +11,7 @@ import util.CommandSolver;
 import util.Delay;
 
 import static util.Global.*;
+import static util.Global.State.SECOND;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -36,7 +37,7 @@ public class MenuScene extends Scene {
     private boolean isNormal;//是不是一般
     private boolean isCrate;  //是不是創建房間
 
-    private State state;//此刻的模式絕 決定會出現哪些按鈕
+    private State ModeState;//此刻的模式絕 決定會出現哪些按鈕
 
     private Delay delay;//給封面用的
     private Style IpStyle;//輸入ip的模式
@@ -52,11 +53,10 @@ public class MenuScene extends Scene {
         initTheme();
         initStyle();
         addLabels();
-
         this.isCrate = false;
         isSingle = false;
         isNormal = false;
-        state = State.SECOND;
+        ModeState = SECOND;
 //        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
         //使用格式：
         //第一行： new Label and set all the Style(normal & hover & focused )
@@ -74,7 +74,6 @@ public class MenuScene extends Scene {
         labels.clear();
         menuImg1 = null;
         menuImg2 = null;
-
         singleMode = null;
         multiplayer = null;
         backToSec = null;
@@ -84,6 +83,13 @@ public class MenuScene extends Scene {
         addServer = null;
         inputText = null;
         backToTir = null;
+    }
+
+    //設定主題
+    public static Theme setTheme(int width, int height, String path) {
+        return new Theme(Style.getGeneralStyle(width, height, path, true, Color.WHITE, 5)
+                , Style.getGeneralStyle(width, height, path, true, new Color(255, 215, 0), 5)
+                , Style.getGeneralStyle(width, height, path, true, Color.BLACK, 5));
     }
 
     //初始化主題
@@ -106,13 +112,6 @@ public class MenuScene extends Scene {
         inputText.setEditLimit(20);//游標閃爍位置
     }
 
-    //設定主題
-    public static Theme setTheme(int width, int height, String path) {
-        return new Theme(Style.getGeneralStyle(width, height, path, true, Color.WHITE, 5)
-                , Style.getGeneralStyle(width, height, path, true, new Color(255, 215, 0), 5)
-                , Style.getGeneralStyle(width, height, path, true, Color.BLACK, 5));
-    }
-
     //加入所有按鈕
     private void addLabels() {
         singleMode = new Button(BUTTON_X1, BUTTON_Y, Theme.get(0));
@@ -123,7 +122,6 @@ public class MenuScene extends Scene {
         crateServer = new Button(BUTTON_X1, BUTTON_Y, Theme.get(5));
         addServer = new Button(BUTTON_X2, BUTTON_Y, Theme.get(6));
         backToSec = new Button(50, BUTTON_Y, Theme.get(4));
-
         labels.add(singleMode);
         labels.add(multiplayer);
         labels.add(normalMode);
@@ -141,22 +139,22 @@ public class MenuScene extends Scene {
     private void changState() {
         singleMode.setClickedActionPerformed((x, y) -> {
             isSingle = true;
-            state = State.THIRD;
+            ModeState = State.THIRD;
         });
         multiplayer.setClickedActionPerformed((x, y) ->
-                state = State.FOURTH);
+                ModeState = State.FOURTH);
         normalMode.setClickedActionPerformed((x, y) ->
                 isNormal = true);
         backToSec.setClickedActionPerformed((x, y) ->
-                state = State.SECOND
+                ModeState = SECOND
         );
         crateServer.setClickedActionPerformed((x, y) -> {
                     isCrate = true;
-                    state = State.THIRD;
+                    ModeState = State.THIRD;
                 }
         );
         backToTir.setClickedActionPerformed((x, y) ->
-                state = State.SECOND
+                ModeState = SECOND
         );
 //        addServer.setClickedActionPerformed((x, y) ->
 //
@@ -211,35 +209,39 @@ public class MenuScene extends Scene {
     //滑鼠監聽
     @Override
     public CommandSolver.MouseListener mouseListener() {
-        return (MouseEvent e, CommandSolver.MouseState state, long trigTime) -> {
-            if (state != null) {
-                switch (state) {
-                    case MOVED -> {
-                        for (int i = 0; i < labels.size(); i++) {
-                            isMove(e, labels.get(i));
-                        }
-                    }
-                    case PRESSED -> {
-                        changState();
-                        switch (this.state) {
-                            case SECOND -> {
-                                isPress(e, singleMode);
-                                isPress(e, multiplayer);
-                            }
-                            case THIRD -> {
-                                isPress(e, normalMode);
-                                isPress(e, limitMode);
-                                isPress(e, backToSec);
-                            }
-                            case FOURTH -> {
-                                isPress(e, backToTir);
-                                isPress(e, crateServer);
-                                isPress(e, addServer);
+        return new CommandSolver.MouseListener() {
+            @Override
+            public void mouseTrig(final MouseEvent e, final CommandSolver.MouseState state, final long trigTime) {
+                if (state != null) {
+                    switch (state) {
+                        case MOVED -> {
+                            for (int i = 0; i < labels.size(); i++) {
+                                System.out.println("label" + labels.get(i));
+//                                isMove(e, labels.get(i));
                             }
                         }
-                        release();
-                    }
+                        case PRESSED -> {
+                            changState();
+                            switch (ModeState) {
+                                case SECOND -> {
+                                    isPress(e, singleMode);
+                                    isPress(e, multiplayer);
+                                }
+                                case THIRD -> {
+                                    isPress(e, normalMode);
+                                    isPress(e, limitMode);
+                                    isPress(e, backToSec);
+                                }
+                                case FOURTH -> {
+                                    isPress(e, backToTir);
+                                    isPress(e, crateServer);
+                                    isPress(e, addServer);
+                                }
+                            }
+                            release();
+                        }
 
+                    }
                 }
             }
         };
@@ -286,7 +288,7 @@ public class MenuScene extends Scene {
             menuImg1.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         } else {
             menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-            switch (state) {
+            switch (ModeState) {
                 case SECOND -> {
                     singleMode.paint(g);
                     multiplayer.paint(g);
