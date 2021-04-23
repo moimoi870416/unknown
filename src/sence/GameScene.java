@@ -62,7 +62,8 @@ public abstract class GameScene extends Scene {
                 monster.paint(g);
             }
         });
-        for (int i = 0; i < gameActorArr.size(); i++) {
+
+        for(int i=0 ; i<gameActorArr.size() ; i++){
             if (camera.isCollision(gameActorArr.get(i))) {
                 gameActorArr.get(i).paint(g);
             }

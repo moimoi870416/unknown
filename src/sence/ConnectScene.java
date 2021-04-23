@@ -8,6 +8,7 @@ import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.SmallMonster;
+import object.monster.Stone;
 import sence.gameScene.normalMode.NormalMode;
 import server.Server;
 import util.Global;
@@ -31,8 +32,9 @@ public class ConnectScene extends GameScene{
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new ConnectSceneMapInfo();
+        monster.add(new Stone(500,500));
         playerCount = 0;
-        gameActorArr.add(new GameActor(Actor.FIRST.getPath(),500,500));
+        gameActorArr.add(new GameActor(Actor.SECOND,500,500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
 
     }
@@ -60,7 +62,7 @@ public class ConnectScene extends GameScene{
                             }
                         }
                         if (!isBorn) {
-                            gameActorArr.add(new GameActor(Actor.FIRST.getPath(), Integer.parseInt(strs.get(0)),
+                            gameActorArr.add(new GameActor(Actor.SECOND, Integer.parseInt(strs.get(0)),
                                     Integer.parseInt(strs.get(1))));
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }

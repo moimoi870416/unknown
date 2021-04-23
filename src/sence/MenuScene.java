@@ -229,7 +229,6 @@ public class MenuScene extends Scene {
                             case SECOND -> {
                                 isPress(singleMode, e.getX(), e.getY());
                             }
-
                         }
                         release();
                     }

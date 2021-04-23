@@ -39,7 +39,24 @@ public class Global {
 
     public static class NetEvent {
         public static final int CONNECT = 100;
+
         public static final int ACTOR_MOVE = 200;
+        public static final int ACTOR_LIFE = 201;
+        public static final int ACTOR_STATE = 202;
+        public static final int ACTOR_DIR = 203;
+        public static final int ACTOR_FLASH = 204;
+        public static final int ACTOR_HEAL = 205;
+
+        public static final int BULLET_MOVE = 300;
+        public static final int BULLET_ATK = 301;
+        public static final int BULLET_STATE = 302;
+        public static final int BULLET_PENETRATION = 303;
+
+        public static final int MONSTER_MOVE = 400;
+        public static final int MONSTER_LIFE = 401;
+        public static final int MONSTER_STATE = 402;
+        public static final int MONSTER_DIR = 403;
+
     }
 
     public enum State {
@@ -65,19 +82,33 @@ public class Global {
         }
     }
 
-    public enum Actor {
-        FIRST("/actor/actorStand.png"),
-        SECOND("/actor/actorrun.png"),
-        THIRD("/actor/actorrun.png");
+
+    public enum Actor{
+        FIRST("/actor/actorStand.png",58,58),
+        SECOND("/actor/actor2Stand.png",64,77),
+        THIRD("/actor/actor3Stand.png",80,82);
+
 
         String path;
+        private int width;
+        private int height;
 
         public String getPath() {
             return path;
         }
 
-        Actor(String path) {
+        public int getWidth(){
+            return width;
+        }
+
+        public int getHeight(){
+            return height;
+        }
+
+        Actor(String path,int width,int height) {
             this.path = path;
+            this.width = width;
+            this.height = height;
         }
     }
 
