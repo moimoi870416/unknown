@@ -32,10 +32,19 @@ public class ConnectController {
         strs.add(gameActor.getLife() + "");//2
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
-        strs.add(gameActor.collider().left() + "");//5
-        strs.add(gameActor.collider().top() + "");//6
+        strs.addAll(gunSend(gameActor));
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
+    }
+
+    private ArrayList<String> gunSend(GameActor gameActor){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.getCurrentGun().getGunType().name());//5
+        strs.add(actorX + "");
+        strs.add((actorY-28) + "");
+        strs.add(mouseX + "");
+        strs.add(mouseY + "");
+        return strs;
     }
 
     public void actorReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
@@ -46,11 +55,19 @@ public class ConnectController {
                 gameActorArr.get(i).offLife(Integer.valueOf(strs.get(2)));
                 gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
-                gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(5)),
-                                                         Integer.valueOf(strs.get(6)),
+                gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
+                                                         Integer.valueOf(strs.get(1)),
                                                          Integer.valueOf(strs.get(2)));
+                gunReceive(gameActorArr.get(i),strs);
             }
         }
+    }
+
+    private void gunReceive(GameActor gameActor,ArrayList<String> strs){
+        if(gameActor.getCurrentGun().getGunType() != Gun.GunType.valueOf(strs.get(5))){
+            gameActor.tradeGun(new Gun());
+        }
+
     }
 
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY){
