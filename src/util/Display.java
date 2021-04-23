@@ -23,7 +23,7 @@ public class Display {
     private Image currentGun;
     private Image otherGun;
     private GameActor gameActor;
-    public static boolean isFirstGun;
+    public boolean isFirstGun;
 
 
     public Display(GameActor gameActor) {
@@ -58,6 +58,7 @@ public class Display {
 
     public void displayUpdate(GameActor gameActor) {
         this.gameActor = gameActor;
+        this.isFirstGun = gameActor.getIsFirstGun();
     }
 
     private void buttonPaint(Graphics g) {

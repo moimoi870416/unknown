@@ -39,7 +39,7 @@ public class ConnectController {
 
     private ArrayList<String> gunSend(GameActor gameActor,int mouseX,int mouseY){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.getCurrentGun().getGunType().name());//5
+        strs.add(gameActor.getIsFirstGun() + "");//5
         strs.add(gameActor.collider().centerX() + "");//6
         strs.add(gameActor.collider().bottom() + "");//7
         strs.add(mouseX + "");//8
@@ -65,6 +65,7 @@ public class ConnectController {
     }
 
     private void gunReceive(GameActor gameActor,ArrayList<String> strs){
+        gameActor.setIsFirstGun(Boolean.valueOf(strs.get(5)));
         gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
