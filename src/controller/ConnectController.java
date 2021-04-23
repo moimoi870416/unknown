@@ -1,4 +1,4 @@
-package util;
+package controller;
 
 import client.ClientClass;
 import static util.Global.*;

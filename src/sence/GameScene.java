@@ -6,7 +6,7 @@ import object.GameObject;
 import object.actor.GameActor;
 import object.monster.Monster;
 import util.CommandSolver;
-import util.ConnectController;
+import controller.ConnectController;
 import util.Display;
 import weapon.Bullet;
 import weapon.Gun;
@@ -233,6 +233,7 @@ public abstract class GameScene extends Scene {
                                         mouseX, mouseY,
                                         gameActorArr.get(0).getCurrentGun().getGunType(),
                                         gameActorArr.get(0).getConnectID()));
+                        ConnectController.getInstance().newBulletSend(gameActorArr.get(0),mouseX,mouseY);
                     }
                 }
                 if (gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
