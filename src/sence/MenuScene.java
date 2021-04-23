@@ -46,8 +46,8 @@ public class MenuScene extends Scene {
         labels = new ArrayList<>();
         delay = new Delay(120);
         delay.play();
-        singleMode = new Button(200, 25, Theme.get(0));
-        multiplayer = new Button(800, 25, Theme.get(1));
+        singleMode = new Button(200, 50, Theme.get(0));
+        multiplayer = new Button(800, 50, Theme.get(1));
         labels.add(singleMode);
         labels.add(multiplayer);
         isSecond = false;
@@ -84,13 +84,13 @@ public class MenuScene extends Scene {
 
     //初始化主題
     private void initTheme() {
-        Theme.add(setTheme(400, 800, "/menu/button-3.png"));
-        Theme.add(setTheme(400, 800, "/menu/button-4.png"));
-        Theme.add(setTheme(400, 800, "/menu/button-1.png"));
-        Theme.add(setTheme(400, 800, "/menu/button-2.png"));
+        Theme.add(setTheme(375, 750, "/menu/play-1.png"));
+        Theme.add(setTheme(375, 750, "/menu/button-4.png"));
+        Theme.add(setTheme(375, 750, "/menu/button-1.png"));
+        Theme.add(setTheme(375, 750, "/menu/button-2.png"));
         Theme.add(setTheme(100, 50, "/menu/button-0.png"));
-        Theme.add(setTheme(200, 400, "/menu/multiButton-1.png"));
-        Theme.add(setTheme(200, 400, "/menu/multiButton-2.png"));
+        Theme.add(setTheme(375, 750, "/menu/multiButton-1.png"));
+        Theme.add(setTheme(375, 750, "/menu/multiButton-2.png"));
     }
 
     //設定主題
@@ -139,8 +139,8 @@ public class MenuScene extends Scene {
 
     //一般或極限模式地圖選擇
     private void addSecond() {
-        normalMode = new Button(200, 25, Theme.get(2));
-        limitMode = new Button(800, 25, Theme.get(3));
+        normalMode = new Button(200, 50, Theme.get(2));
+        limitMode = new Button(800, 50, Theme.get(3));
         back = new Button(50, 50, Theme.get(4));
         labels.add(normalMode);
         labels.add(limitMode);
@@ -154,8 +154,8 @@ public class MenuScene extends Scene {
             this.multiPop.sceneBegin();
             this.multiPop.show();
         });
-        crateServer = new Button(400, 200, Theme.get(5));
-        addServer = new Button(800, 200, Theme.get(6));
+        crateServer = new Button(200, 50, Theme.get(5));
+        addServer = new Button(800, 50, Theme.get(6));
         this.style = new Style.StyleRect(300, 100, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/menu/multiButton-3.png")));
         inputText = new EditText(600, 400, "請按Enter", style);

@@ -10,12 +10,14 @@ import util.CommandSolver;
 import util.Display;
 import weapon.Bullet;
 import weapon.Gun;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 import static util.Global.*;
 
-public abstract class GameScene extends Scene{
+public abstract class GameScene extends Scene {
     protected ArrayList<GameObject> mapObjArr;
     private LinkedList<Bullet> testBullets;
     protected LinkedList<Monster> monster;
@@ -60,6 +62,7 @@ public abstract class GameScene extends Scene{
                 monster.paint(g);
             }
         });
+
         for(int i=0 ; i<gameActorArr.size() ; i++){
             if (camera.isCollision(gameActorArr.get(i))) {
                 gameActorArr.get(i).paint(g);
@@ -67,7 +70,7 @@ public abstract class GameScene extends Scene{
         }
 
         //mapObjArr.forEach(a -> a.paint(g));
-        mapObjArr.forEach(object ->{
+        mapObjArr.forEach(object -> {
             if (camera.isCollision(object)) {
                 object.paint(g);
             }
@@ -99,7 +102,7 @@ public abstract class GameScene extends Scene{
         gameActorArr.get(0).changeDir(mouseX);
     }
 
-    private void displayUpdate(){
+    private void displayUpdate() {
         display.displayUpdate(gameActorArr.get(0));
     }
 
@@ -125,8 +128,8 @@ public abstract class GameScene extends Scene{
                     break;
                 }
             }
-            for(int k = 1; k< gameActorArr.size() ; k++){
-                if(testBullets.get(i).isShootingActor(gameActorArr.get(k))){
+            for (int k = 1; k < gameActorArr.size(); k++) {
+                if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
                     gameActorArr.get(k).offLife(testBullets.get(i).getAtk());
                     i--;
                     break;
@@ -191,12 +194,12 @@ public abstract class GameScene extends Scene{
     }
 
     private void actorUpdate() {
-        ArrayList<String> strs =new ArrayList<>();
+        ArrayList<String> strs = new ArrayList<>();
         gameActorArr.get(0).update();
-        strs.add(gameActorArr.get(0).collider().left()+"");
-        strs.add(gameActorArr.get(0).collider().top()+"");
-        ClientClass.getInstance().sent(NetEvent.CONNECT,strs);
-        ClientClass.getInstance().sent(NetEvent.ACTOR_MOVE,strs);
+        strs.add(gameActorArr.get(0).collider().left() + "");
+        strs.add(gameActorArr.get(0).collider().top() + "");
+        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
+        ClientClass.getInstance().sent(NetEvent.ACTOR_MOVE, strs);
         for (int i = 0; i < mapObjArr.size(); i++) {
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
         }
@@ -214,8 +217,8 @@ public abstract class GameScene extends Scene{
                 listenerMouseY = e.getY();
                 gameActorArr.get(0).getCurrentGun().beginShoot();
                 shooting = true;
-                if(gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
-                    gameActorArr.get(0).setMoveSpeed(gameActorArr.get(0).getCurrentGun().getGunType().getMoveSpeed()/2);
+                if (gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
+                    gameActorArr.get(0).setMoveSpeed(gameActorArr.get(0).getCurrentGun().getGunType().getMoveSpeed() / 2);
                 }
             }
 
@@ -226,7 +229,7 @@ public abstract class GameScene extends Scene{
             }
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
-                if(shooting) {
+                if (shooting) {
                     if (gameActorArr.get(0).getCurrentGun().shoot()) {
                         this.testBullets.add(new Bullet
                                 (this.gameActorArr.get(0).painter().centerX(), this.gameActorArr.get(0).painter().centerY(),
@@ -235,7 +238,7 @@ public abstract class GameScene extends Scene{
                                         gameActorArr.get(0)));
                     }
                 }
-                if(gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN){
+                if (gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
                     gameActorArr.get(0).setMoveSpeed(gameActorArr.get(0).getCurrentGun().getGunType().getMoveSpeed());
                 }
                 shootCount = 0;
@@ -268,9 +271,9 @@ public abstract class GameScene extends Scene{
                     gameActorArr.get(0).setState(GameObjForAnimator.State.STAND);
                 }
                 if (commandCode == Active.SPACE.getCommandCode()) {
-                    gameActorArr.get(0).getSkill().flash(mouseX, mouseY,mapObjArr);
+                    gameActorArr.get(0).getSkill().flash(mouseX, mouseY, mapObjArr);
                 }
-                if(commandCode == Active.SKILL.getCommandCode()){
+                if (commandCode == Active.SKILL.getCommandCode()) {
                     gameActorArr.get(0).getSkill().heal();
                 }
             }
@@ -282,7 +285,7 @@ public abstract class GameScene extends Scene{
         };
     }
 
-    protected abstract class MapInfo{
+    protected abstract class MapInfo {
 
         public abstract void mapPaint(Graphics g);
 
