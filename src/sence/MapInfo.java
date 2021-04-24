@@ -1,45 +1,50 @@
-package sence.gameScene.normalMode;
+package sence;
 
-
-import camera.MapInformation;
 import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
-import object.actor.GameActor;
-import sence.ConnectScene;
-import sence.GameScene;
+import object.GameObject;
 import util.Global;
+
 import java.awt.*;
 import java.util.ArrayList;
+
 import static util.Global.*;
 
-public class NormalMode extends ConnectScene {
+public class MapInfo {
+    private boolean isNormal;
+    ArrayList<GameObject> mapObjArr;
+    private NormalMap normalMap;
+    private LimitMap limitMap;
 
-    public NormalMode(){
-        gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.FIRST,500,500));
+    public MapInfo(boolean isNormal, ArrayList<GameObject> mapObjArr){
+        this.mapObjArr = mapObjArr;
+        this.isNormal = isNormal;
+        if(isNormal){
+            normalMap = new NormalMap();
+            return;
+        }
+        limitMap = new LimitMap();
     }
 
-    public NormalMode(ArrayList<GameActor> gameActorArr){
-        this.gameActorArr = gameActorArr;
+    public void mapPaint(Graphics g){
+        if(isNormal){
+            normalMap.mapPaint(g);
+            return;
+        }
+        limitMap.mapPaint(g);
+
     }
 
-    @Override
-    protected void gameSceneBegin() {
-        MAP_WIDTH = 19000;
-        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        mapInfo = new NormalModeMapInfo();
-
-        //monster.add(new SmallMonster(500,500, SmallMonster.Type.MUSHROOM));
+    public void mapUpdate(){
+        if(isNormal){
+            normalMap.mapUpdate();
+            return;
+        }
+        limitMap.mapUpdate();
     }
 
-    @Override
-    protected void gameSceneEnd() {
-        MAP_WIDTH = 2048;
-    }
-
-    public class NormalModeMapInfo extends GameScene.MapInfo{
-        //之後會有切換圖片的行為，所以先開一個內部類
+    private class NormalMap {
         private Image mapLeft;
         private Image mapMiddle;
         private Image mapRight;
@@ -51,8 +56,9 @@ public class NormalMode extends ConnectScene {
         private Image boss;
         private final int mapWidth = 2048;
         private int count;
+        private ArrayList<GameObject> mapObjArr;
 
-        public NormalModeMapInfo(){
+        private NormalMap(){
             mapBegin();
             mapForest(4096);
             mapChange(8192);
@@ -72,7 +78,6 @@ public class NormalMode extends ConnectScene {
             this.count = 0;
         }
 
-        @Override
         public void mapPaint(Graphics g) {
             g.drawImage(mapLeft, mapWidth * count, 0, null);
             g.drawImage(mapMiddle, mapWidth * (count + 1), 0, null);
@@ -80,7 +85,6 @@ public class NormalMode extends ConnectScene {
             g.drawImage(mapFinal,mapWidth * (count +3),0,null);
         }
 
-        @Override
         public void mapUpdate() {
             if(actorX > 4096){
                 mapLeft = forest;
@@ -203,6 +207,21 @@ public class NormalMode extends ConnectScene {
                     .setNameAndPath("oasis2", "/pictures/map/oasis_tree2(232-400).png",true,new GameObjForPic("/pictures/map/oasis_tree2(232-400).png", 130, 0, 232, 400))
                     .gen()
                     .setMap());
+        }
+    }
+
+    private class LimitMap{
+
+        private LimitMap(){
+
+        }
+
+        private void mapPaint(Graphics g){
+
+        }
+
+        private void mapUpdate(){
+
         }
     }
 }

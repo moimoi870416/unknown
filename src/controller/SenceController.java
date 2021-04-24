@@ -29,7 +29,6 @@ public class SenceController implements GameKernel.PaintInterface, GameKernel.Up
             scene.sceneBegin();
         }
         this.currentScene = scene;
-        this.currentScene.setSc(this);
     }
 
     @Override

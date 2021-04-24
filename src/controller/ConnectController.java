@@ -5,7 +5,7 @@ import static util.Global.*;
 
 import object.GameObjForAnimator;
 import object.actor.GameActor;
-import object.monster.Monster;
+import object.monster.*;
 import weapon.Bullet;
 import weapon.Gun;
 
@@ -39,12 +39,18 @@ public class ConnectController {
 
     private ArrayList<String> gunSend(GameActor gameActor,int mouseX,int mouseY){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.getIsFirstGun() + "");//5
         strs.add(gameActor.collider().centerX() + "");//6
         strs.add(gameActor.collider().bottom() + "");//7
         strs.add(mouseX + "");//8
         strs.add(mouseY + "");//9
         return strs;
+    }
+
+    public void changeGunSend(GameActor gameActor, int commandCode){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.getConnectID() + "");//0
+        strs.add(commandCode + "");//1
+        ClientClass.getInstance().sent(NetEvent.ACTOR_CHANGE_GUN, strs);
     }
 
     public void healSend(GameActor gameActor){
@@ -81,7 +87,6 @@ public class ConnectController {
     }
 
     private void gunReceive(GameActor gameActor,ArrayList<String> strs){
-        gameActor.setIsFirstGun(Boolean.valueOf(strs.get(5)));
         gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
@@ -111,6 +116,14 @@ public class ConnectController {
         }
     }
 
+    public void changeGunReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
+        for(int i=0 ; i<gameActorArr.size() ; i++) {
+            if (gameActorArr.get(i).getConnectID() == serialNum) {
+                gameActorArr.get(i).changeGun(Integer.valueOf(strs.get(1)));
+            }
+        }
+    }
+
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY){
         ArrayList<String> strs = new ArrayList<>();
         strs.add(gameActor.painter().centerX() + "");
@@ -134,8 +147,36 @@ public class ConnectController {
     public void bulletReceive(){
     }
 
-    public void newMonsterSend(LinkedList<Monster> monsters){
+    public void newMonsterSend(Monster monster,int commandCode){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(commandCode +"");//0
+        strs.add(monster.painter().left() +"");//1
+        strs.add(monster.painter().top() +"");//2
+        ClientClass.getInstance().sent(NetEvent.MONSTER_NEW, strs);
+    }
 
+    public void newMonsterReceive(LinkedList<Monster> monsters,ArrayList<String> strs){
+        switch (Integer.valueOf(strs.get(0))){
+            case 0 -> monsters.add(new BullBoss(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
+            case 1 -> monsters.add(new Cockroach(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
+            case 2 -> monsters.add(new Rino(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
+            case 3 -> monsters.add(new Stone(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
+            case 4 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
+            case 5 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
+            case 6 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
+        }
+
+
+    }
+
+    public void bossAtkTypeSend(int typeCode){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(typeCode +"");//0
+        ClientClass.getInstance().sent(NetEvent.MONSTER_BOSS_ATTACK_TYPE, strs);
+    }
+
+    public void bossAtkTypeReceive(Monster monster,ArrayList<String> strs){
+        monster.setAtkType(Integer.valueOf(strs.get(0)));
     }
 
     public void monsterSend(Monster monster){

@@ -4,7 +4,6 @@ import camera.MapInformation;
 import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
-import object.actor.GameActor;
 import object.monster.BullBoss;
 import sence.GameScene;
 import static util.Global.*;
@@ -53,22 +52,21 @@ public class BossScene extends GameScene {
         @Override
         public void mapUpdate() {
 
-
         }
 
         private void mapBoss(){
             mapObjArr.addAll(new MapObjController.Builder().setBmpAndTxt("bossMap.bmp", "bossMap.txt")
-                    .setNameAndPath("farmhay","/map/farm_hay(184-144).png",true,new GameObjForPic("/map/farm_hay(184-144).png", 0, 0, 184, 144))
-                    .setNameAndPath("farmhay2","/map/farmhay(72-160).png",true,new GameObjForPic("/map/farmhay(72-160).png", 0, 0, 72, 160))
-                    .setNameAndPath("signright","/map/signRight(152-104).png",true,new GameObjForPic("/map/signRight(152-104).png", 0, -150, 152, 104))
-                    .setNameAndPath("warmsign","/map/warmsign(240-160).png",true,new GameObjForPic("/map/warmsign(240-160).png", 0, -150, 240, 160))
-                    .setNameAndPath("verticlawall1","/map/vertical_wall(24-216).png",true,new GameObjForPic("/map/vertical_wall(24-216).png", 0, 0, 32, 216))
-                    .setNameAndPath("verticalwall2","/map/vertical_wall2(24-216).png",true,new GameObjForPic("/map/vertical_wall2(24-216).png", 0, 0, 32, 216))
-                    .setNameAndPath("wall1","/map/horizontal_wall(176-96).png",true,new GameObjForPic("/map/horizontal_wall(176-96).png", 0, 0, 176, 96))
-                    .setNameAndPath("wall2","/map/horizontal_wall(288-96).png",true,new GameObjForPic("/map/horizontal_wall(288-96).png", 0, 0, 288, 96))
-                    .setNameAndPath("wall3","/map/horizontal_wall(304-96).png",true,new GameObjForPic("/map/horizontal_wall(304-96).png", 0, 0, 304, 96))
-                    .setNameAndPath("oasis1","/map/oasis_tree (232-400).png",true,new GameObjForPic("/map/oasis_tree (232-400).png", 110, 0, 200, 400))
-                    .setNameAndPath("oasis2","/map/oasis_tree2(232-400).png",true,new GameObjForPic("/map/oasis_tree2(232-400).png", 130, 0, 232, 400))
+                    .setNameAndPath("farmhay", "/pictures/map/farm_hay(184-144).png",true,new GameObjForPic("/pictures/map/farm_hay(184-144).png", 0, 0, 184, 144))
+                    .setNameAndPath("farmhay2", "/pictures/map/farmhay(72-160).png",true,new GameObjForPic("/pictures/map/farmhay(72-160).png", 0, 0, 72, 160))
+                    .setNameAndPath("signright", "/pictures/map/signRight(152-104).png",true,new GameObjForPic("/pictures/map/signRight(152-104).png", 0, -150, 152, 104))
+                    .setNameAndPath("warmsign", "/pictures/map/warmsign(240-160).png",true,new GameObjForPic("/pictures/map/warmsign(240-160).png", 0, -150, 240, 160))
+                    .setNameAndPath("verticlawall1", "/pictures/map/vertical_wall(24-216).png",true,new GameObjForPic("/pictures/map/vertical_wall(24-216).png", 0, 0, 32, 216))
+                    .setNameAndPath("verticalwall2", "/pictures/map/vertical_wall2(24-216).png",true,new GameObjForPic("/pictures/map/vertical_wall2(24-216).png", 0, 0, 32, 216))
+                    .setNameAndPath("wall1", "/pictures/map/horizontal_wall(176-96).png",true,new GameObjForPic("/pictures/map/horizontal_wall(176-96).png", 0, 0, 176, 96))
+                    .setNameAndPath("wall2", "/pictures/map/horizontal_wall(288-96).png",true,new GameObjForPic("/pictures/map/horizontal_wall(288-96).png", 0, 0, 288, 96))
+                    .setNameAndPath("wall3", "/pictures/map/horizontal_wall(304-96).png",true,new GameObjForPic("/pictures/map/horizontal_wall(304-96).png", 0, 0, 304, 96))
+                    .setNameAndPath("oasis1", "/pictures/map/oasis_tree (232-400).png",true,new GameObjForPic("/pictures/map/oasis_tree (232-400).png", 110, 0, 200, 400))
+                    .setNameAndPath("oasis2", "/pictures/map/oasis_tree2(232-400).png",true,new GameObjForPic("/pictures/map/oasis_tree2(232-400).png", 130, 0, 232, 400))
                     .gen()
                     .setMap());
         }

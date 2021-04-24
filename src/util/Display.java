@@ -29,15 +29,15 @@ public class Display {
     public Display(GameActor gameActor) {
         this.gameActor = gameActor;
         isFirstGun = true;
-        gun1Frame = ImageController.getInstance().tryGet("/display/frame1.png");
-        gun2Frame = ImageController.getInstance().tryGet("/display/frame2.png");
-        skillHeal = ImageController.getInstance().tryGet("/display/heal.png");
-        skillFlash = ImageController.getInstance().tryGet("/display/flash.png");
-        skillNull = ImageController.getInstance().tryGet("/display/frame1.png");
-        num1 = ImageController.getInstance().tryGet("/display/FrameNum1.png");
-        num2 = ImageController.getInstance().tryGet("/display/FrameNum2.png");
-        num3 = ImageController.getInstance().tryGet("/display/frameNum3.png");
-        num4 = ImageController.getInstance().tryGet("/display/frameNum4.png");
+        gun1Frame = ImageController.getInstance().tryGet("/pictures/display/frame1.png");
+        gun2Frame = ImageController.getInstance().tryGet("/pictures/display/frame2.png");
+        skillHeal = ImageController.getInstance().tryGet("/pictures/display/heal.png");
+        skillFlash = ImageController.getInstance().tryGet("/pictures/display/flash.png");
+        skillNull = ImageController.getInstance().tryGet("/pictures/display/frame1.png");
+        num1 = ImageController.getInstance().tryGet("/pictures/display/FrameNum1.png");
+        num2 = ImageController.getInstance().tryGet("/pictures/display/FrameNum2.png");
+        num3 = ImageController.getInstance().tryGet("/pictures/display/frameNum3.png");
+        num4 = ImageController.getInstance().tryGet("/pictures/display/frameNum4.png");
         currentGun = ImageController.getInstance().tryGet(gameActor.getCurrentGun().getGunType().forMapPath);
         otherGun = ImageController.getInstance().tryGet(gameActor.gunOtherGun().getGunType().forMapPath);
         font1 = new Font("Curlz TM", Font.PLAIN, 20);

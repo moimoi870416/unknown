@@ -14,6 +14,7 @@ public class Global {
 
     public final static boolean IS_DEBUG = true;
     //網路
+    public static boolean isSingle = true;
     public static boolean isServer = false;
 
     public final static int BUTTON_WIDTH = 375;
@@ -48,6 +49,7 @@ public class Global {
         public static final int ACTOR_HEAL = 206;
         public static final int ACTOR_BAR_LEFT = 207;
         public static final int ACTOR_BAR_TOP = 208;
+        public static final int ACTOR_CHANGE_GUN = 209;
 
         public static final int BULLET = 300;
         public static final int BULLET_NEW = 301;
@@ -62,6 +64,7 @@ public class Global {
         public static final int MONSTER_LIFE = 403;
         public static final int MONSTER_STATE = 404;
         public static final int MONSTER_DIR = 405;
+        public static final int MONSTER_BOSS_ATTACK_TYPE = 406;
 
 
     }
@@ -77,12 +80,12 @@ public class Global {
     }
 
     public enum MapPath {
-        BEGIN("/map/map-begin.png"),
-        FOREST("/map/map-forest.png"),
-        DESERT("/map/map-desert.png"),
-        CHANGE("/map/map-change.png"),
-        END("/map/map-boss.png"),
-        LIMIT("/map/map-limit.png");
+        BEGIN("/pictures/map/map-begin.png"),
+        FOREST("/pictures/map/map-forest.png"),
+        DESERT("/pictures/map/map-desert.png"),
+        CHANGE("/pictures/map/map-change.png"),
+        END("/pictures/map/map-boss.png"),
+        LIMIT("/pictures/map/map-limit.png");
 
         public String mapPath;
 
@@ -93,9 +96,9 @@ public class Global {
 
 
     public enum Actor {
-        FIRST("/actor/actorStand.png", 58, 58),
-        SECOND("/actor/actor2Stand.png", 64, 77),
-        THIRD("/actor/actor3Stand.png", 80, 82);
+        FIRST("/pictures/actor/actorStand.png", 58, 58),
+        SECOND("/pictures/actor/actor2Stand.png", 64, 77),
+        THIRD("/pictures/actor/actor3Stand.png", 80, 82);
 
 
         String path;
@@ -137,7 +140,8 @@ public class Global {
         SKILL(30),
         RELOADING(31),
         CATCH_ITEM(32),
-        SPACE(5);
+        SPACE(5),
+        ENTER(100);
 
         private int commandCode;
 

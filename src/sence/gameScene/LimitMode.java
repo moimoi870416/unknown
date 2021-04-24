@@ -3,28 +3,36 @@ package sence.gameScene;
 import camera.MapInformation;
 import controller.ImageController;
 import object.actor.GameActor;
+import sence.ConnectScene;
 import sence.GameScene;
 import static util.Global.*;
 import java.awt.*;
+import java.util.ArrayList;
+
 import static util.Global.MAP_HEIGHT;
 import static util.Global.MAP_WIDTH;
 
-public class LimitModel extends GameScene {
+public class LimitMode extends ConnectScene {
+
+    public LimitMode(){
+        gameActorArr = new ArrayList<>();
+        gameActorArr.add(new GameActor(Actor.FIRST,1024,1024));
+    }
+
+    public LimitMode(ArrayList<GameActor> gameActorArr){
+        this.gameActorArr = gameActorArr;
+    }
+
 
     @Override
-    protected void sceneBeginComponent() {
+    protected void gameSceneBegin() {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
 //        gameActor = new GameActor(Actor.FIRST.getPath(), 500, 700);
         mapInfo = new LimitModeMapInfo();
     }
 
     @Override
-    protected void sceneEndComponent() {
-
-    }
-
-    @Override
-    protected void connectUpdate() {
+    protected void gameSceneEnd() {
 
     }
 

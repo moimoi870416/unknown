@@ -1,5 +1,6 @@
 package object.monster;
 
+import controller.ConnectController;
 import object.Rect;
 import object.actor.GameActor;
 import util.Delay;
@@ -7,7 +8,6 @@ import util.Global;
 import object.GameObjForAnimator;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public abstract class Monster extends GameObjForAnimator {
     private Delay delayForCollision;
@@ -24,13 +24,14 @@ public abstract class Monster extends GameObjForAnimator {
     protected int hitY;
     protected GameActor gameActor;
     private int nearest;
+    protected int atkType;
 
-    public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack) {
-        this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack);
+    public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
+        this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack,typeCode);
 
     }
 
-    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2,int hitX,int hitY,int hitWidth,int hitHeight, int life, int atk, int moveSpeed, boolean isOnceAttack) {
+    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2,int hitX,int hitY,int hitWidth,int hitHeight, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
         super(x, y, width, height, x2, y2, width2, height2, life, atk, moveSpeed);
         attackDelay = new Delay(60);
         isChase = false;
@@ -44,6 +45,7 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitX = hitCollied.left() - collider().left();
         this.hitY = hitCollied.top() -collider().top();
         nearest = 50000;
+        ConnectController.getInstance().newMonsterSend(this,typeCode);
     }
 
     public void chase() {
@@ -187,5 +189,8 @@ public abstract class Monster extends GameObjForAnimator {
         hitCollied.setBottom(hitCollied.top()+height);
     }
 
+    public void setAtkType(int typeCode){
+        atkType = typeCode;
+    }
 
 }
