@@ -24,6 +24,7 @@ public abstract class Monster extends GameObjForAnimator {
     protected int hitY;
     protected GameActor gameActor;
     private int nearest;
+    protected int atkType;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
         this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack,typeCode);
@@ -186,6 +187,10 @@ public abstract class Monster extends GameObjForAnimator {
         hitCollied.setTop(collider().top()+this.hitY);
         hitCollied.setRight(hitCollied.left()+width);
         hitCollied.setBottom(hitCollied.top()+height);
+    }
+
+    public void setAtkType(int typeCode){
+        atkType = typeCode;
     }
 
 }

@@ -1,5 +1,6 @@
 package object.monster;
 
+import controller.ConnectController;
 import util.Animator;
 import util.Delay;
 import util.Global;
@@ -13,7 +14,6 @@ public class BullBoss extends Monster {
     private int moveDistance;
     private int totalDistance;
     private boolean readyAtk;
-    private int atkType;
     private int chaseCount;
     private Delay normalAtkDelay;
 
@@ -60,8 +60,12 @@ public class BullBoss extends Monster {
             }
             return;
         }
-        atkType = Global.random(0,3);
         attacking = true;
+        if(Global.isServer) {
+            atkType = Global.random(0, 3);
+            ConnectController.getInstance().bossAtkTypeSend(atkType);
+        }
+
     }
 
     @Override
@@ -80,6 +84,7 @@ public class BullBoss extends Monster {
             }
             case DEATH -> {
                 animator.setArr(6,10);
+                animator.setDelayCount(30);
                 animator.setPlayOnce();
                 moveSpeed = 0;
             }
@@ -177,4 +182,6 @@ public class BullBoss extends Monster {
         changeDir(gameActor.collider().centerX()-painter().centerX());
         attacking = false;
     }
+
+
 }

@@ -169,6 +169,16 @@ public class ConnectController {
 
     }
 
+    public void bossAtkTypeSend(int typeCode){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(typeCode +"");//0
+        ClientClass.getInstance().sent(NetEvent.MONSTER_BOSS_ATTACK_TYPE, strs);
+    }
+
+    public void bossAtkTypeReceive(Monster monster,ArrayList<String> strs){
+        monster.setAtkType(Integer.valueOf(strs.get(0)));
+    }
+
     public void monsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
         strs.add(monster.collider().left() + "");
