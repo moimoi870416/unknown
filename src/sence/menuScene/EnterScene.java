@@ -47,20 +47,11 @@ public class EnterScene extends Scene {
         this.isAdd = isAdd;
         gameActorArr = new ArrayList<>();
         playerCount = 0;
-<<<<<<< HEAD
-        this.start = new Button(1100, 700, Theme.get(9));
-        System.out.println(isSingle + "" + isNormal + "" + isAdd + "" + isServer);
         gameActorArr.add(new GameActor(Global.Actor.FIRST, 500, 500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
         ArrayList<String> strs = new ArrayList<>();
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
-=======
-        gameActorArr.add(new GameActor(Global.Actor.FIRST,500,500));
-        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
-        ArrayList<String> strs = new ArrayList<>();
-        ClientClass.getInstance().sent(Global.NetEvent.CONNECT,strs);
 
->>>>>>> ba543a7e38f3e643bd6f4353162508001063fb61
     }
 
     private void initStyle() {
@@ -86,13 +77,10 @@ public class EnterScene extends Scene {
 
     @Override
     public void sceneBegin() {
-<<<<<<< HEAD
+        this.start = new Button(1100, 700, Theme.get(9));
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
         initStyle();
-=======
 
-
->>>>>>> ba543a7e38f3e643bd6f4353162508001063fb61
     }
 
     @Override
@@ -115,17 +103,9 @@ public class EnterScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-<<<<<<< HEAD
-                if (commandCode == Global.Active.ENTER.getCommandCode()) {
-                    if (isServer) {
-                        if (isNormal) {
-                            ConnectController.getInstance().changeSceneSend(isNormal);
-                        }
-=======
                 if(commandCode == Global.Active.ENTER.getCommandCode()){
                     if(isServer) {
                         ConnectController.getInstance().changeSceneSend(isNormal);
->>>>>>> ba543a7e38f3e643bd6f4353162508001063fb61
                     }
                 }
             }
@@ -170,15 +150,12 @@ public class EnterScene extends Scene {
         ClientClass.getInstance().consume(new CommandReceiver() {
             @Override
             public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
-<<<<<<< HEAD
-                System.out.println(serialNum);
-                if (serialNum == gameActorArr.get(0).getConnectID()) {
-=======
+
+
                 if(commandCode == Global.NetEvent.EVENT_CHANGE_SCENE){
                     ConnectController.getInstance().changeSceneReceive(strs,gameActorArr);
                 }
                 if(serialNum == gameActorArr.get(0).getConnectID()){
->>>>>>> ba543a7e38f3e643bd6f4353162508001063fb61
                     return;
                 }
                 switch (commandCode) {
@@ -194,21 +171,13 @@ public class EnterScene extends Scene {
                             }
                         }
                         if (!isBorn) {
-<<<<<<< HEAD
-                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount], 0,
-=======
-                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount],0,
->>>>>>> ba543a7e38f3e643bd6f4353162508001063fb61
-                                    0));
+                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount],0, 0));
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }
                         break;
-<<<<<<< HEAD
                     case Global.NetEvent.EVENT_CHANGE_SCENE:
                         ConnectController.getInstance().changeSceneReceive(strs, gameActorArr);
-=======
 
->>>>>>> ba543a7e38f3e643bd6f4353162508001063fb61
                 }
             }
         });
