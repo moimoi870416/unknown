@@ -308,7 +308,7 @@ public class GameActor extends GameObjForAnimator {
             case NO:
         }
 
-        skill.skillUpdate();
+//        skill.skillUpdate();
         currentGun.gun.update();
         currentGun.gun.translateForActor();
         updatePosition();
