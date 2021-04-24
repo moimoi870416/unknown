@@ -369,7 +369,6 @@ public class MenuScene extends Scene {
 
     @Override
     public void update() {
-        System.out.println(inputText.getIsFocus());
     }
 
     private void crateConnectLanArea() {
