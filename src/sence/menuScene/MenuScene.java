@@ -54,7 +54,6 @@ public class MenuScene extends Scene {
     private State ModeState;//此刻的模式 決定會出現哪些按鈕
     private Style IpStyle;//輸入ip的模式
 
-
     @Override
     public void sceneBegin() {
         menuImg0 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-0.png"));
@@ -275,7 +274,9 @@ public class MenuScene extends Scene {
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
                                 isPress(backToSec, e);
-                                singleSceneChange();
+                                if(singleMode.IsUse(limitMode)){
+                                    singleSceneChange();
+                                }
                             }
                             case FOURTH -> {
                                 isPress(backToSec, e);

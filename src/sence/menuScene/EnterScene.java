@@ -49,10 +49,10 @@ public class EnterScene extends Scene {
         playerCount = 0;
         gameActorArr.add(new GameActor(Global.Actor.FIRST, 500, 500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
-
     }
 
     private void initStyle() {
+        this.start = new Button(1100, 720, Theme.get(9));
         playStyle1Light = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-1.png")));
         playStyle2Light = new Style.StyleRect(325, 600, true,
@@ -63,19 +63,18 @@ public class EnterScene extends Scene {
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2Drank.png")));
         playStyle3Drank = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-3Drank.png")));
-        play1 = new Label(100, BUTTON_Y, playStyle1Light);
+        play1 = new Label(100, 90, playStyle1Light);
         if (isServer) {
-            play2 = new Label(500, BUTTON_Y, playStyle2Drank);
-            play3 = new Label(900, BUTTON_Y, playStyle3Drank);
+            play2 = new Label(550, 90, playStyle2Drank);
+            play3 = new Label(1000, 90, playStyle3Drank);
             return;
         }
-        play2 = new Label(500, BUTTON_Y, playStyle2Light);
-        play3 = new Label(900, BUTTON_Y, playStyle3Drank);
+        play2 = new Label(550, 90, playStyle2Light);
+        play3 = new Label(1000, 90, playStyle3Drank);
     }
 
     @Override
     public void sceneBegin() {
-        this.start = new Button(1100, 700, Theme.get(9));
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
         initStyle();
         start.setClickedActionPerformed((x, y) -> {
