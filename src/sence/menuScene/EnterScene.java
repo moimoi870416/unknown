@@ -48,6 +48,7 @@ public class EnterScene extends Scene {
 
     @Override
     public void sceneBegin() {
+        gameActorArr.add(new GameActor(Global.Actor.FIRST,500,500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
     }
 

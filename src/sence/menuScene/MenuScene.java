@@ -204,12 +204,14 @@ public class MenuScene extends Scene {
         crateServer.setClickedActionPerformed((x, y) -> {
                     ModeState = FIFTH;
                     isServer = true;
+                    crateConnectLanArea();
                 }
         );
         addServer.setClickedActionPerformed((x, y) -> {
                     isAdd = true;
                     inputText.isFocus();
                 }
+
         );
     }
 
@@ -267,8 +269,7 @@ public class MenuScene extends Scene {
                                 isPress(enter, e);
                                 isPress(enter2, e);
                             }
-                            case ZERO ->
-                                isPress(backToFir,e);
+                            case ZERO -> isPress(backToFir, e);
                             case SECOND -> {
                                 isPress(backToFir, e);
                                 isPress(singleMode, e);
@@ -284,15 +285,15 @@ public class MenuScene extends Scene {
                                 isPress(backToSec, e);
                                 isPress(crateServer, e);
                                 isPress(addServer, e);
-//                                connectLanArea();
-//                                SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
                             }
                             case FIFTH -> {
                                 isPress(backToFou, e);
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
                                 isPress(inputText, e);
-                                multiSceneChange();
+                                if (normalMode.IsUse(limitMode)) {
+                                    multiSceneChange();
+                                }
                             }
                         }
                     }
@@ -308,20 +309,12 @@ public class MenuScene extends Scene {
             @Override
             public void keyPressed(final int commandCode, final long trigTime) {
 //                moveKey(commandCode); //偵測目前鍵盤位置
-//                switch (commandCode) {
-//                    case Global.ENTER:
-//                        if (MenuScene.this.input.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
-//                            MenuScene.this.connectIP = MenuScene.this.input.getEditText();
-//                            MenuScene.this.input.unFocus();
-//                            try {
-//                                ClientClass.getInstance().connect(MenuScene.this.connectIP, 12345); // ("SERVER端IP", "SERVER端PORT")
-//                                SceneController.getInstance().change(new WaitScene());
-//                            } catch (final IOException ex) {
-//                                System.out.println("輸入錯誤");
-//                            }
-//                            break;
-//                        }
-//                }
+                if (commandCode == Active.ENTER.getCommandCode()) {
+                    if (MenuScene.this.inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
+                        MenuScene.this.inputText.unFocus();
+                        addConnectLanArea();
+                    }
+                }
             }
 
             @Override
@@ -382,59 +375,34 @@ public class MenuScene extends Scene {
     public void update() {
     }
 
-    private void connectLanArea() {
+    private void crateConnectLanArea() {
         Scanner sc = new Scanner(System.in);
 
-        if (isServer) {
-            Server.instance().create(12345);
-            Server.instance().start();
-            System.out.println(Server.instance().getLocalAddress()[0]);
-            try {
-                ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
-            } catch (IOException ex) {
-                Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return;
-        }
-        System.out.println("請輸入主伺服器IP:");
+        Server.instance().create(12345);
+        Server.instance().start();
+        System.out.println(Server.instance().getLocalAddress()[0]);
         try {
-            ClientClass.getInstance().connect(sc.next(), 12345); // ("SERVER端IP", "SERVER端PORT")
+            ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
         } catch (IOException ex) {
             Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
+    private void addConnectLanArea() {
+        try {
+            ClientClass.getInstance().connect(inputText.getEditText(), 12345); // ("SERVER端IP", "SERVER端PORT")
+            SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+
 }
 
-//    private void connectLanArea(){
-//        Scanner sc = new Scanner(System.in);
-//
-//        System.out.println("創建伺服器 => 1, 連接其他伺服器 => 2");
-//        int opt = sc.nextInt();
-//        switch (opt) {
-//            case 1:
-//                Global.isServer = true;
-//                Server.instance().create(12345);
-//                Server.instance().start();
-//                System.out.println(Server.instance().getLocalAddress()[0]);
-//                try {
-//                    ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
-//                } catch (IOException ex) {
-//                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case 2:
-//                System.out.println("請輸入主伺服器IP:");
-//                try {
-//                    ClientClass.getInstance().connect(sc.next(), 12345); // ("SERVER端IP", "SERVER端PORT")
-//                } catch (IOException ex) {
-//                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//        }
-//
-//    }
+
 
 
 
