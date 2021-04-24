@@ -215,6 +215,9 @@ public class ClientClass {
         if(Global.isSingle){
             return;
         }
+        if(strs == null){
+            strs = new ArrayList<>();
+        }
         if (socket != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(100);//指定大小, 避免字節太大
             DataOutputStream dos = new DataOutputStream(baos);
