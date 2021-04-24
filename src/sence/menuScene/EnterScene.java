@@ -49,8 +49,6 @@ public class EnterScene extends Scene {
         playerCount = 0;
         gameActorArr.add(new GameActor(Global.Actor.FIRST, 500, 500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
-        ArrayList<String> strs = new ArrayList<>();
-        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
 
     }
 
@@ -80,6 +78,11 @@ public class EnterScene extends Scene {
         this.start = new Button(1100, 700, Theme.get(9));
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
         initStyle();
+        start.setClickedActionPerformed((x, y) -> {
+            if(isServer){
+                ConnectController.getInstance().changeSceneSend(isNormal);
+            }
+        });
 
     }
 
@@ -122,9 +125,12 @@ public class EnterScene extends Scene {
             if (state != null) {
                 switch (state) {
                     case MOVED -> isMove(start, e);
-                    case CLICKED -> isPress(start, e);
+                    case PRESSED ->
+                        isPress(start, e);
+
                 }
             }
+
         };
     }
 
@@ -142,6 +148,7 @@ public class EnterScene extends Scene {
 
     @Override
     public void update() {
+        ClientClass.getInstance().sent(NetEvent.CONNECT,null);
         connectUpdate();
     }
 

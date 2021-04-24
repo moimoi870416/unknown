@@ -22,6 +22,7 @@ public abstract class ConnectScene extends GameScene{
 
     @Override
     protected void sceneEndComponent() {
+
         gameSceneEnd();
     }
 

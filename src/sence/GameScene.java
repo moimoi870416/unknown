@@ -202,7 +202,6 @@ public abstract class GameScene extends Scene {
     private void actorUpdate() {
         for(int i=0 ; i<gameActorArr.size() ; i++){
             gameActorArr.get(i).getSkill().skillUpdate();
-            System.out.println(i+"///"+gameActorArr.get(i).getConnectID());
         }
         gameActorArr.get(0).update();
         gameActorArr.get(0).rotationUpdate(mouseX,mouseY);
