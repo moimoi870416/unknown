@@ -122,6 +122,7 @@ public class EnterScene extends Scene {
                     case PRESSED -> isPress(start, e);
                 }
             }
+
         };
     }
 
@@ -139,7 +140,6 @@ public class EnterScene extends Scene {
 
     @Override
     public void update() {
-
         ClientClass.getInstance().sent(NetEvent.CONNECT, null);
         connectUpdate();
     }
