@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MenuScene extends Scene {
+    private BackgroundType.BackgroundImage menuImg0;//說明
     private BackgroundType.BackgroundImage menuImg1;//封面
     private BackgroundType.BackgroundImage menuImg2; //背景圖
 
@@ -39,23 +40,23 @@ public class MenuScene extends Scene {
     private Button crateServer;//創建房間
     private Button addServer;   //加入房間
     private EditText inputText;//輸入ip
-    private Button backToFir;//返回狀態二
+    private Button backToFir;//返回狀態一
     private Button backToSec;//返回狀態二
     private Button backToFou;//返回四
 
     private ArrayList<Label> labels;
 
-//    private boolean isSingle;//是不是單人
+    //    private boolean isSingle;//是不是單人
     private boolean isNormal;//是不是一般
     private boolean isAdd;  //是不是創建房間
 
     private State ModeState;//此刻的模式 決定會出現哪些按鈕
-
     private Style IpStyle;//輸入ip的模式
 
 
     @Override
     public void sceneBegin() {
+        menuImg0 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-0.png"));
         menuImg1 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-1.png"));
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
         this.labels = new ArrayList<>();
@@ -120,7 +121,7 @@ public class MenuScene extends Scene {
     private void initStyle() {
         IpStyle = new Style.StyleRect(300, 100, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/IPButton2.png")));
-        inputText = new EditText(825, 500, "請按Enter", IpStyle);
+        inputText = new EditText(825, 500, "", IpStyle);
         inputText.setEditLimit(12);//設定文字輸入長度限制
         inputText.setCursorColor(Color.black);
         inputText.setTranX(50);
@@ -161,8 +162,9 @@ public class MenuScene extends Scene {
     private void changState() {
         enter.setClickedActionPerformed((x, y) ->
                 ModeState = SECOND);
-//        enter2.setClickedActionPerformed((x, y) ->
-//                );
+        enter2.setClickedActionPerformed((x, y) ->
+                ModeState = ZERO
+        );
         backToFir.setClickedActionPerformed((x, y) -> {
                     ModeState = FIRST;
                     backToFir.unFocus();
@@ -202,22 +204,24 @@ public class MenuScene extends Scene {
         crateServer.setClickedActionPerformed((x, y) -> {
                     ModeState = FIFTH;
                     isServer = true;
+                    crateConnectLanArea();
                 }
         );
         addServer.setClickedActionPerformed((x, y) -> {
                     isAdd = true;
                     inputText.isFocus();
                 }
+
         );
     }
 
     //換背景
     private void multiSceneChange() {
-        SenceController.getSenceController().change(new EnterScene(isSingle,isNormal,isAdd));
+        SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
     }
 
-    private void singleSceneChange(){
-        if(isNormal){
+    private void singleSceneChange() {
+        if (isNormal) {
             SenceController.getSenceController().change(new NormalMode());
             return;
         }
@@ -263,8 +267,9 @@ public class MenuScene extends Scene {
                         switch (ModeState) {
                             case FIRST -> {
                                 isPress(enter, e);
-                                isPress(enter2,e);
+                                isPress(enter2, e);
                             }
+                            case ZERO -> isPress(backToFir, e);
                             case SECOND -> {
                                 isPress(backToFir, e);
                                 isPress(singleMode, e);
@@ -280,15 +285,15 @@ public class MenuScene extends Scene {
                                 isPress(backToSec, e);
                                 isPress(crateServer, e);
                                 isPress(addServer, e);
-                                connectLanArea();
-                                SenceController.getSenceController().change(new EnterScene(isSingle,isNormal,isAdd));
                             }
                             case FIFTH -> {
                                 isPress(backToFou, e);
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
                                 isPress(inputText, e);
-                                multiSceneChange();
+                                if (normalMode.IsUse(limitMode)) {
+                                    multiSceneChange();
+                                }
                             }
                         }
                     }
@@ -304,20 +309,12 @@ public class MenuScene extends Scene {
             @Override
             public void keyPressed(final int commandCode, final long trigTime) {
 //                moveKey(commandCode); //偵測目前鍵盤位置
-//                switch (commandCode) {
-//                    case Global.ENTER:
-//                        if (MenuScene.this.input.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
-//                            MenuScene.this.connectIP = MenuScene.this.input.getEditText();
-//                            MenuScene.this.input.unFocus();
-//                            try {
-//                                ClientClass.getInstance().connect(MenuScene.this.connectIP, 12345); // ("SERVER端IP", "SERVER端PORT")
-//                                SceneController.getInstance().change(new WaitScene());
-//                            } catch (final IOException ex) {
-//                                System.out.println("輸入錯誤");
-//                            }
-//                            break;
-//                        }
-//                }
+                if (commandCode == Active.ENTER.getCommandCode()) {
+                    if (MenuScene.this.inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
+                        MenuScene.this.inputText.unFocus();
+                        addConnectLanArea();
+                    }
+                }
             }
 
             @Override
@@ -342,9 +339,12 @@ public class MenuScene extends Scene {
                 enter.paint(g);
                 enter2.paint(g);
             }
-//                case ZERO ->i
-//
-//
+            case ZERO -> {
+                menuImg0.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                backToFir.paint(g);
+            }
+
+
             case SECOND -> {
                 backToFir.paint(g);
                 singleMode.paint(g);
@@ -375,59 +375,34 @@ public class MenuScene extends Scene {
     public void update() {
     }
 
-    private void connectLanArea(){
+    private void crateConnectLanArea() {
         Scanner sc = new Scanner(System.in);
 
-        if(isServer){
-            Server.instance().create(12345);
-            Server.instance().start();
-            System.out.println(Server.instance().getLocalAddress()[0]);
-            try {
-                ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
-            } catch (IOException ex) {
-                Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return;
-        }
-        System.out.println("請輸入主伺服器IP:");
+        Server.instance().create(12345);
+        Server.instance().start();
+        System.out.println(Server.instance().getLocalAddress()[0]);
         try {
-            ClientClass.getInstance().connect(sc.next(), 12345); // ("SERVER端IP", "SERVER端PORT")
+            ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
         } catch (IOException ex) {
             Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
+    private void addConnectLanArea() {
+        try {
+            ClientClass.getInstance().connect(inputText.getEditText(), 12345); // ("SERVER端IP", "SERVER端PORT")
+            SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+
 }
 
-//    private void connectLanArea(){
-//        Scanner sc = new Scanner(System.in);
-//
-//        System.out.println("創建伺服器 => 1, 連接其他伺服器 => 2");
-//        int opt = sc.nextInt();
-//        switch (opt) {
-//            case 1:
-//                Global.isServer = true;
-//                Server.instance().create(12345);
-//                Server.instance().start();
-//                System.out.println(Server.instance().getLocalAddress()[0]);
-//                try {
-//                    ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
-//                } catch (IOException ex) {
-//                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//            case 2:
-//                System.out.println("請輸入主伺服器IP:");
-//                try {
-//                    ClientClass.getInstance().connect(sc.next(), 12345); // ("SERVER端IP", "SERVER端PORT")
-//                } catch (IOException ex) {
-//                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                break;
-//        }
-//
-//    }
+
 
 
 
