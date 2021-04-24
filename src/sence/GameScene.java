@@ -63,7 +63,6 @@ public abstract class GameScene extends Scene {
                 monster.paint(g);
             }
         });
-
         for(int i=0 ; i<gameActorArr.size() ; i++){
             if (camera.isCollision(gameActorArr.get(i))) {
                 gameActorArr.get(i).paint(g);
@@ -205,7 +204,7 @@ public abstract class GameScene extends Scene {
             gameActorArr.get(i).getSkill().skillUpdate();
             System.out.println(i+"///"+gameActorArr.get(i).getConnectID());
         }
-            gameActorArr.get(0).update();
+        gameActorArr.get(0).update();
         gameActorArr.get(0).rotationUpdate(mouseX,mouseY);
         ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);
         for (int i = 0; i < mapObjArr.size(); i++) {
