@@ -66,6 +66,11 @@ public class Global {
         public static final int MONSTER_DIR = 405;
         public static final int MONSTER_BOSS_ATTACK_TYPE = 406;
 
+        public static final int EVENT_CHANGE_SCENE = 500;
+        public static final int EVENT_SCENE_MODE = 501;
+        public static final int SCENE_NORMAL_MODE = 502;
+        public static final int SCENE_LIMIT_MODE = 503;
+
 
     }
 

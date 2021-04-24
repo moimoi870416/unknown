@@ -2,7 +2,6 @@ package sence;
 
 import client.ClientClass;
 import client.CommandReceiver;
-import controller.SenceController;
 import object.actor.GameActor;
 import controller.ConnectController;
 import java.util.ArrayList;
@@ -11,14 +10,22 @@ import java.util.ArrayList;
 import static util.Global.*;
 
 public abstract class ConnectScene extends GameScene{
-    protected int playerCount;
 
 
     @Override
     protected void sceneBeginComponent() {
         gameSceneBegin();
-        playerCount = 0;
-
+        ArrayList<GameActor> test = new ArrayList<>();
+        if(!isSingle){
+            for(int i=0 ; i<gameActorArr.size() ; i++){
+                switch (gameActorArr.get(i).getConnectID()){
+                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
+                    case 101 -> test.add(new GameActor(Actor.SECOND,500,510));
+                    case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
+                }
+            }
+            gameActorArr = test;
+        }
     }
 
     protected abstract void gameSceneBegin();
@@ -42,24 +49,6 @@ public abstract class ConnectScene extends GameScene{
                     return;
                 }
                 switch (commandCode){
-                    case  NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
-
-                        if (playerCount >= 3){
-                            break;
-                        }
-                        boolean isBorn = false;
-                        for (int i = 0; i < gameActorArr.size(); i++) {
-                            if (gameActorArr.get(i).getConnectID() == serialNum) {
-                                isBorn = true;
-                                break;
-                            }
-                        }
-                        if (!isBorn) {
-                            gameActorArr.add(new GameActor(Actor.values()[playerCount], Integer.parseInt(strs.get(0)),
-                                    Integer.parseInt(strs.get(1))));
-                            gameActorArr.get(playerCount++).setConnectID(serialNum);
-                        }
-                        break;
                     case NetEvent.ACTOR:
                         ConnectController.getInstance().actorReceive(gameActorArr,serialNum,strs);
                             break;

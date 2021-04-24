@@ -160,6 +160,7 @@ public class ClientClass {
         DataOutputStream dos = new DataOutputStream(baos);
         try {
             dos.writeUTF(ID + ",-1");
+            ID--;
             byte[] buf = baos.toByteArray();
             DatagramPacket dp = new DatagramPacket(buf, buf.length, new InetSocketAddress(serverIP, disconnectPort));
             if (ds != null) {

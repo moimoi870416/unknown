@@ -6,6 +6,8 @@ import static util.Global.*;
 import object.GameObjForAnimator;
 import object.actor.GameActor;
 import object.monster.*;
+import sence.gameScene.LimitMode;
+import sence.gameScene.normalMode.NormalMode;
 import weapon.Bullet;
 import weapon.Gun;
 
@@ -193,5 +195,17 @@ public class ConnectController {
 
     }
 
+    public void changeSceneSend(boolean isNormal){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(isNormal + "");
+        ClientClass.getInstance().sent(NetEvent.EVENT_CHANGE_SCENE, strs);
+    }
 
+    public void changeSceneReceive(ArrayList<String> strs){
+        if(Boolean.valueOf(strs.get(0))){
+            SenceController.getSenceController().change(new NormalMode());
+            return;
+        }
+        SenceController.getSenceController().change(new LimitMode());
+    }
 }
