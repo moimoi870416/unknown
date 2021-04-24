@@ -53,16 +53,16 @@ public class EnterScene extends Scene {
     }
 
     private void initStyle() {
-        playStyle1Light = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+        playStyle1Light = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-1.png")));
-        playStyle2Light = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+        playStyle2Light = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2.png")));
-        playStyle3Light = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/Play-1.png")));
-        playStyle2Drank = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2.png")));
-        playStyle3Drank = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/Play-1.png")));
+        playStyle3Light = new Style.StyleRect(325, 600, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/Play-3.png")));
+        playStyle2Drank = new Style.StyleRect(325, 600, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2Drank.png")));
+        playStyle3Drank = new Style.StyleRect(325, 600, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-3Drank.png")));
         play1 = new Label(100, BUTTON_Y, playStyle1Light);
         if (isServer) {
             play2 = new Label(500, BUTTON_Y, playStyle2Drank);
@@ -79,7 +79,7 @@ public class EnterScene extends Scene {
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
         initStyle();
         start.setClickedActionPerformed((x, y) -> {
-            if(isServer){
+            if(isServer) {
                 ConnectController.getInstance().changeSceneSend(isNormal);
             }
         });
@@ -101,16 +101,10 @@ public class EnterScene extends Scene {
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
-
             }
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-                if(commandCode == Global.Active.ENTER.getCommandCode()){
-                    if(isServer) {
-                        ConnectController.getInstance().changeSceneSend(isNormal);
-                    }
-                }
             }
 
             @Override
@@ -125,9 +119,7 @@ public class EnterScene extends Scene {
             if (state != null) {
                 switch (state) {
                     case MOVED -> isMove(start, e);
-                    case PRESSED ->
-                        isPress(start, e);
-
+                    case PRESSED -> isPress(start, e);
                 }
             }
 
@@ -148,7 +140,7 @@ public class EnterScene extends Scene {
 
     @Override
     public void update() {
-        ClientClass.getInstance().sent(NetEvent.CONNECT,null);
+        ClientClass.getInstance().sent(NetEvent.CONNECT, null);
         connectUpdate();
     }
 
