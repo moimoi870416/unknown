@@ -32,7 +32,9 @@ public class EnterScene extends Scene {
     private Style playStyle3Drank;//人物3的暗圖
     private Label play1;
     private Label play2;
+    private Label play2d;
     private Label play3;
+    private Label play3d;
 
     private ArrayList<GameActor> gameActorArr;
     private boolean isSingle;
@@ -58,19 +60,16 @@ public class EnterScene extends Scene {
         playStyle2Light = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2.png")));
         playStyle3Light = new Style.StyleRect(325, 600, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/Play-3.png")));
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-3.png")));
         playStyle2Drank = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2Drank.png")));
         playStyle3Drank = new Style.StyleRect(325, 600, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-3Drank.png")));
         play1 = new Label(100, 90, playStyle1Light);
-        if (isServer) {
-            play2 = new Label(550, 90, playStyle2Drank);
-            play3 = new Label(1000, 90, playStyle3Drank);
-            return;
-        }
         play2 = new Label(550, 90, playStyle2Light);
-        play3 = new Label(1000, 90, playStyle3Drank);
+        play2d = new Label(550, 90, playStyle2Drank);
+        play3 = new Label(1000, 90, playStyle3Light);
+        play3d = new Label(1000, 90, playStyle3Drank);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class EnterScene extends Scene {
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
         initStyle();
         start.setClickedActionPerformed((x, y) -> {
-            if(isServer) {
+            if (isServer) {
                 ConnectController.getInstance().changeSceneSend(isNormal);
             }
         });
@@ -101,11 +100,9 @@ public class EnterScene extends Scene {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
             }
-
             @Override
             public void keyReleased(int commandCode, long trigTime) {
             }
-
             @Override
             public void keyTyped(char c, long trigTime) {
             }
@@ -132,9 +129,16 @@ public class EnterScene extends Scene {
             start.paint(g);
         }
         play1.paint(g);
-        play2.paint(g);
-        play3.paint(g);
-
+        if (playerCount == 1) {
+            play2d.paint(g);
+            play3d.paint(g);
+        } else if (playerCount == 2) {
+            play2.paint(g);
+            play3d.paint(g);
+        } else {
+            play2.paint(g);
+            play3.paint(g);
+        }
     }
 
     @Override
@@ -143,17 +147,16 @@ public class EnterScene extends Scene {
         connectUpdate();
     }
 
-
     protected void connectUpdate() {
         ClientClass.getInstance().consume(new CommandReceiver() {
             @Override
             public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
 
 
-                if(commandCode == Global.NetEvent.EVENT_CHANGE_SCENE){
-                    ConnectController.getInstance().changeSceneReceive(strs,gameActorArr);
+                if (commandCode == Global.NetEvent.EVENT_CHANGE_SCENE) {
+                    ConnectController.getInstance().changeSceneReceive(strs, gameActorArr);
                 }
-                if(serialNum == gameActorArr.get(0).getConnectID()){
+                if (serialNum == gameActorArr.get(0).getConnectID()) {
                     return;
                 }
                 switch (commandCode) {
@@ -169,7 +172,7 @@ public class EnterScene extends Scene {
                             }
                         }
                         if (!isBorn) {
-                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount],0, 0));
+                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount], 0, 0));
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }
                         break;
