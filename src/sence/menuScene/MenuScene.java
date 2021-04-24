@@ -13,7 +13,7 @@ import sence.gameScene.LimitMode;
 import sence.gameScene.normalMode.NormalMode;
 import server.Server;
 import util.CommandSolver;
-import util.Global;
+
 
 import static util.Global.*;
 import static util.Global.State.*;
@@ -68,21 +68,12 @@ public class MenuScene extends Scene {
         isSingle = false;
         isNormal = false;
         ModeState = FIRST;
-//        b.setClickedActionPerformed((int x, int y) -> System.out.println("ClickedAction"));
-        //使用格式：
-        //第一行： new Label and set all the Style(normal & hover & focused )
-        //第一行：set MouseListener and KeyListener
-        //一定要分開設定
-//        this.ee = new EditText(430, 290, "請在此輸入");
-//        ee.setStyleNormal(eNormal);
-//        ee.setStyleHover(eHover);
-//        ee.setStyleFocus(et);
-//        ee.setEditLimit(10);   //設定文字輸入長度限制
     }
 
     @Override
     public void sceneEnd() {
         labels.clear();
+        menuImg0 = null;
         menuImg1 = null;
         menuImg2 = null;
         enter = null;
@@ -90,13 +81,15 @@ public class MenuScene extends Scene {
         backToFir = null;
         singleMode = null;
         multiplayer = null;
-        backToSec = null;
         normalMode = null;
         limitMode = null;
         crateServer = null;
         addServer = null;
         inputText = null;
+        backToFir = null;
+        backToSec = null;
         backToFou = null;
+        connectIP = null;
     }
 
     //設定主題
@@ -107,7 +100,7 @@ public class MenuScene extends Scene {
     }
 
     //初始化主題
-    private void initTheme() {
+    public static void initTheme() {
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/pictures/menu/button-1.png"));
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/pictures/menu/button-2.png"));
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/pictures/menu/button-3.png"));
@@ -115,8 +108,9 @@ public class MenuScene extends Scene {
         Theme.add(setTheme(100, 50, "/pictures/menu/button-5.png"));
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/pictures/menu/button-6.png"));
         Theme.add(setTheme(BUTTON_WIDTH, BUTTON_HEIGHT, "/pictures/menu/button-7.png"));
-        Theme.add(setTheme(300, 100, "/pictures/menu/button-00.png"));
-        Theme.add(setTheme(300, 100, "/pictures/menu/button-001.png"));
+        Theme.add(setTheme(LABEL_WIDTH, LABEL_HEIGHT, "/pictures/menu/button-00.png"));
+        Theme.add(setTheme(LABEL_WIDTH, LABEL_HEIGHT, "/pictures/menu/button-001.png"));
+        Theme.add(setTheme(LABEL_WIDTH, LABEL_HEIGHT, "/pictures/menu/button-002.png"));
     }
 
     private void initStyle() {
@@ -127,6 +121,7 @@ public class MenuScene extends Scene {
         inputText.setCursorColor(Color.black);
         inputText.setTranX(50);
     }
+
 
     //加入所有按鈕
     private void addLabels() {
@@ -312,11 +307,12 @@ public class MenuScene extends Scene {
 //                moveKey(commandCode); //偵測目前鍵盤位置
                 if (commandCode == Active.ENTER.getCommandCode()) {
 //                    if (MenuScene.this.inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
-                        connectIP = inputText.getEditText();
-                        inputText.unFocus();
-                        addConnectLanArea();
+                    connectIP = inputText.getEditText();
+                    inputText.unFocus();
+                    addConnectLanArea();
                 }
             }
+//            }
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
@@ -331,8 +327,6 @@ public class MenuScene extends Scene {
 
     @Override
     public void paint(Graphics g) {
-        //delay才播放
-
         menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         switch (ModeState) {
             case FIRST -> {
@@ -374,11 +368,11 @@ public class MenuScene extends Scene {
 
     @Override
     public void update() {
+        System.out.println(inputText.getIsFocus());
     }
 
     private void crateConnectLanArea() {
         Scanner sc = new Scanner(System.in);
-
         Server.instance().create(12345);
         Server.instance().start();
         System.out.println(Server.instance().getLocalAddress()[0]);
@@ -387,7 +381,6 @@ public class MenuScene extends Scene {
         } catch (IOException ex) {
             Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void addConnectLanArea() {
@@ -398,7 +391,6 @@ public class MenuScene extends Scene {
             Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
 
 

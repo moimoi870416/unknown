@@ -24,6 +24,10 @@ public class Global {
     public final static int BUTTON_X2 = 800;
     public final static int BUTTON_Y = 50;
 
+    public final static int LABEL_WIDTH = 300;
+    public final static int LABEL_HEIGHT = 100;
+
+
     //地圖大小
     public static int MAP_WIDTH = 2048;
     public static int MAP_HEIGHT = 1024;

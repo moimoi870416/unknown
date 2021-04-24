@@ -3,61 +3,92 @@ package sence.menuScene;
 import client.ClientClass;
 import client.CommandReceiver;
 import controller.ConnectController;
-import controller.SenceController;
+import controller.ImageController;
+import menu.BackgroundType;
+
+import menu.Button;
+import menu.Label;
 import menu.Style;
+import menu.Theme;
 import object.actor.GameActor;
-import sence.ConnectScene;
+
 import sence.Scene;
-import sence.gameScene.LimitMode;
-import sence.gameScene.normalMode.NormalMode;
-import server.Server;
+
 import util.CommandSolver;
 import util.Global;
 
 import java.awt.*;
-import java.io.IOException;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static util.Global.isServer;
-import static util.Global.isSingle;
+import static util.Global.*;
 
 public class EnterScene extends Scene {
-    private Style playStyle1Light;//人物的
-    private Style playStyle2Drank;//人物的
-    private Style playStyle2Light;//人物的
-    private Style playStyle3Light;//人物的
-    private Style playStyle3Drank;//人物的
+    private BackgroundType.BackgroundImage menuImg2; //背景圖
+    private Style playStyle1Light;//人物1
+    private Style playStyle2Light;//人物2的亮圖
+    private Style playStyle2Drank;//人物2的暗圖
+    private Style playStyle3Light;//人物3的亮圖
+    private Style playStyle3Drank;//人物3的暗圖
+    private Label play1;
+    private Label play2;
+    private Label play3;
 
     private ArrayList<GameActor> gameActorArr;
     private boolean isSingle;
     private boolean isNormal;
     private boolean isAdd;
     private int playerCount;
+    private Button start;
 
-    public EnterScene(boolean isSingle,boolean isNormal,boolean isAdd){
+    public EnterScene(boolean isSingle, boolean isNormal, boolean isAdd) {
         this.isSingle = isSingle;
         this.isNormal = isNormal;
         this.isAdd = isAdd;
         gameActorArr = new ArrayList<>();
         playerCount = 0;
+        this.start = new Button(1100, 700, Theme.get(9));
+        System.out.println(isSingle + "" + isNormal + "" + isAdd + "" + isServer);
+        gameActorArr.add(new GameActor(Global.Actor.FIRST, 500, 500));
+        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
+        ArrayList<String> strs = new ArrayList<>();
+        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
     }
 
-    //設定圖片
-    public Style seStyle(int width, int height, String path) {
-        return new Style.StyleRect(width, height, path);
+    private void initStyle() {
+        playStyle1Light = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-1.png")));
+        playStyle2Light = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2.png")));
+        playStyle3Light = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/Play-1.png")));
+        playStyle2Drank = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2.png")));
+        playStyle3Drank = new Style.StyleRect(BUTTON_WIDTH, BUTTON_HEIGHT, true,
+                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/Play-1.png")));
+        play1 = new Label(100, BUTTON_Y, playStyle1Light);
+        if (isServer) {
+            play2 = new Label(500, BUTTON_Y, playStyle2Drank);
+            play3 = new Label(900, BUTTON_Y, playStyle3Drank);
+            return;
+        }
+        play2 = new Label(500, BUTTON_Y, playStyle2Light);
+        play3 = new Label(900, BUTTON_Y, playStyle3Drank);
     }
 
     @Override
     public void sceneBegin() {
-        gameActorArr.add(new GameActor(Global.Actor.FIRST,500,500));
-        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
+        menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
+        initStyle();
     }
 
     @Override
     public void sceneEnd() {
+        menuImg2 = null;
+        play1 = null;
+        play2 = null;
+        play3 = null;
+        start = null;
 
     }
 
@@ -71,9 +102,9 @@ public class EnterScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-                if(commandCode == Global.Active.ENTER.getCommandCode()){
-                    if(isServer) {
-                        if(isNormal) {
+                if (commandCode == Global.Active.ENTER.getCommandCode()) {
+                    if (isServer) {
+                        if (isNormal) {
                             ConnectController.getInstance().changeSceneSend(isNormal);
                         }
                     }
@@ -82,7 +113,6 @@ public class EnterScene extends Scene {
 
             @Override
             public void keyTyped(char c, long trigTime) {
-
             }
         };
     }
@@ -90,11 +120,24 @@ public class EnterScene extends Scene {
     @Override
     public CommandSolver.MouseListener mouseListener() {
         return (e, state, trigTime) -> {
+            if (state != null) {
+                switch (state) {
+                    case MOVED -> isMove(start, e);
+                    case CLICKED -> isPress(start, e);
+                }
+            }
         };
     }
 
     @Override
     public void paint(Graphics g) {
+        menuImg2.paintBackground(g, false, true, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        if (isServer) {
+            start.paint(g);
+        }
+        play1.paint(g);
+        play2.paint(g);
+        play3.paint(g);
 
     }
 
@@ -108,12 +151,13 @@ public class EnterScene extends Scene {
         ClientClass.getInstance().consume(new CommandReceiver() {
             @Override
             public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
-                if(serialNum == gameActorArr.get(0).getConnectID()){
+                System.out.println(serialNum);
+                if (serialNum == gameActorArr.get(0).getConnectID()) {
                     return;
                 }
-                switch (commandCode){
-                    case  Global.NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
-                        if (playerCount >= 3){
+                switch (commandCode) {
+                    case Global.NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
+                        if (playerCount >= 3) {
                             break;
                         }
                         boolean isBorn = false;
@@ -124,16 +168,39 @@ public class EnterScene extends Scene {
                             }
                         }
                         if (!isBorn) {
-                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount], Integer.parseInt(strs.get(0)),
-                                    Integer.parseInt(strs.get(1))));
+                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount], 0,
+                                    0));
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }
                         break;
                     case Global.NetEvent.EVENT_CHANGE_SCENE:
-                        ConnectController.getInstance().changeSceneReceive(strs,gameActorArr);
+                        ConnectController.getInstance().changeSceneReceive(strs, gameActorArr);
                 }
             }
         });
+    }
+
+    private boolean isOverLap(Label obj, int eX, int eY) {
+        return eX <= obj.right() && eX >= obj.left() && eY >= obj.top() && eY <= obj.bottom();
+    }
+
+    private void isMove(Label obj, final MouseEvent e) {
+        if (isOverLap(obj, e.getX(), e.getY())) {
+            obj.isHover();
+        } else {
+            obj.unHover();
+        }
+    }
+
+    private void isPress(Label obj, final MouseEvent e) {
+        if (isOverLap(obj, e.getX(), e.getY())) {
+            obj.isFocus();
+            if (obj.getClickedAction() != null) {
+                obj.clickedActionPerformed();
+            }
+        } else {
+            obj.unFocus();
+        }
     }
 
 }

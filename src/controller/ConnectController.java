@@ -90,12 +90,11 @@ public class ConnectController {
     }
 
     private void gunReceive(GameActor gameActor,ArrayList<String> strs){
-        gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
-        gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
+        gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(5)),Integer.valueOf(strs.get(6))-28);
+        gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(5)),Integer.valueOf(strs.get(6))-28);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
-                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(),Integer.valueOf(strs.get(8)),Integer.valueOf(strs.get(9)));
-
+                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(),Integer.valueOf(strs.get(7)),Integer.valueOf(strs.get(8)));
     }
 
     public void healReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
@@ -213,6 +212,9 @@ public class ConnectController {
                     case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
                 }
             }
+            for(int i=0 ; i<test.size() ; i++){
+                test.get(i).setConnectID(100+i);
+            }
             SenceController.getSenceController().change(new NormalMode(test));
             return;
         }
@@ -222,6 +224,9 @@ public class ConnectController {
                 case 101 -> test.add(new GameActor(Actor.SECOND,1025,1024));
                 case 102 -> test.add(new GameActor(Actor.THIRD,1035,1024));
             }
+        }
+        for(int i=0 ; i<test.size() ; i++){
+            test.get(i).setConnectID(100+i);
         }
         SenceController.getSenceController().change(new LimitMode(test));
     }
