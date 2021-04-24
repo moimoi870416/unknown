@@ -7,6 +7,9 @@ import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
+import object.monster.Rino;
+import object.monster.SmallMonster;
+import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
 import util.Global;
@@ -31,9 +34,12 @@ public class NormalMode extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
         if(isServer) {
-            monster.add(new BullBoss(3000,500));
+//            monster.add(new BullBoss(3000,500));
+            monster.add(new SmallMonster(2000,500, SmallMonster.Type.MUSHROOM));
+            monster.add(new Stone(5000,500));
+            monster.add(new Rino(10000,500));
         }
-        //monster.add(new SmallMonster(500,500, SmallMonster.Type.MUSHROOM));
+
     }
 
     @Override
