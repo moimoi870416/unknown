@@ -1,6 +1,7 @@
-package sence;
+package sence.menuScene;
 
 import menu.Style;
+import sence.Scene;
 import util.CommandSolver;
 
 import java.awt.*;

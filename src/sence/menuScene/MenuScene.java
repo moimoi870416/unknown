@@ -1,4 +1,4 @@
-package sence;
+package sence.menuScene;
 
 import controller.ImageController;
 
@@ -6,8 +6,10 @@ import controller.SenceController;
 import menu.*;
 import menu.Button;
 import menu.Label;
+import sence.Scene;
+import sence.gameScene.LimitMode;
+import sence.gameScene.normalMode.NormalMode;
 import util.CommandSolver;
-import util.Delay;
 
 import static util.Global.*;
 import static util.Global.State.*;
@@ -35,7 +37,7 @@ public class MenuScene extends Scene {
 
     private ArrayList<Label> labels;
 
-    private boolean isSingle;//是不是單人
+//    private boolean isSingle;//是不是單人
     private boolean isNormal;//是不是一般
     private boolean isAdd;  //是不是創建房間
 
@@ -203,13 +205,13 @@ public class MenuScene extends Scene {
     private void sceneChange() {
         if (isSingle) {
             if (isNormal) {
-                SenceController.getSenceController().change(new ConnectScene());
+                SenceController.getSenceController().change(new NormalMode());
                 return;
             }
-            SenceController.getSenceController().change(new ConnectScene());
+            SenceController.getSenceController().change(new LimitMode());
         }
         if (isNormal) {
-            SenceController.getSenceController().change(new ConnectScene());
+            SenceController.getSenceController().change(new NormalMode());
             return;
 
         }

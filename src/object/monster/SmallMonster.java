@@ -33,7 +33,7 @@ public class SmallMonster extends Monster {
                 }
             }
             case DEATH -> {
-                animator.setImg("/monster/goblin/goblindead.png",2);
+                animator.setImg("/pictures/monster/goblin/goblindead.png",2);
                 animator.setArr(4);
                 animator.setWidthAndHeightSize(16,16);
                 animator.setPlayOnce();
@@ -43,9 +43,9 @@ public class SmallMonster extends Monster {
     }
 
     public enum Type{
-        GOBLIN("/monster/goblin/goblin88.png",5,4),
-        SLIME("/monster/goblin/goblin88.png",3,5),
-        MUSHROOM("/monster/goblin/mushroomRun.png",3,6);
+        GOBLIN("/pictures/monster/goblin/goblin88.png",5,4),
+        SLIME("/pictures/monster/goblin/goblin88.png",3,5),
+        MUSHROOM("/pictures/monster/goblin/mushroomRun.png",3,6);
 
         private String path;
         private int speedMove;

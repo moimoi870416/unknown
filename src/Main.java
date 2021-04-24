@@ -1,7 +1,6 @@
 import controller.ImageController;
 
-import sence.ConnectScene;
-import sence.MenuScene;
+import sence.menuScene.MenuScene;
 
 import util.Global;
 import controller.SenceController;
@@ -10,7 +9,6 @@ import util.GameKernel;
 
 import static util.Global.*;
 
-import javax.crypto.Cipher;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -48,7 +46,7 @@ public class Main {
                 .ups(UPDATE_TIMES_PER_SEC)
                 .update(sc)
                 .gen();
-        Image mouse1 = ImageController.getInstance().tryGet("/targeter.png");
+        Image mouse1 = ImageController.getInstance().tryGet("/pictures/targeter.png");
         Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(mouse1, new Point(10, 10), "mouse1");
         jFrame.setCursor(cursor);
         jFrame.setTitle("Game 8th");//視窗標題

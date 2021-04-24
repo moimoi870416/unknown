@@ -3,7 +3,6 @@ package object.monster;
 
 import util.Animator;
 import util.Delay;
-import util.Global;
 
 public class Rino extends Monster{
     private boolean readyAtk;
@@ -18,7 +17,7 @@ public class Rino extends Monster{
     public Rino(int x, int y) {
         super(x+5,y+6,94,58,x, y, 104,68,x+5,y+6,94,58, 1000, 80, 2,true,2);
 
-        animator = new Animator("/monster/rino/Idle2(52x34).png",30,52,34,2);
+        animator = new Animator("/pictures/monster/rino/Idle2(52x34).png",30,52,34,2);
         animator.setArr(11);
         readyAtk = true;
         attackDelay = new Delay(180);
@@ -36,7 +35,7 @@ public class Rino extends Monster{
 
         switch (state) {
             case STAND -> {
-                animator.setImg("/monster/rino/Idle2(52x34).png", 2);
+                animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
                 animator.setDelayCount(0);
                 moveSpeed = 0;
@@ -44,26 +43,26 @@ public class Rino extends Monster{
 
             }
             case WALK -> {
-                animator.setImg("/monster/rino/Idle2(52x34).png", 2);
+                animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
                 animator.setDelayCount(10);
                 atk += atk*0.5;
                 moveSpeed = 2;
             }
             case ATTACK -> {
-                animator.setImg("/monster/rino/Idle2(52x34).png", 2);
+                animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
                 animator.setDelayCount(10);
                 atk = originalAtk;
             }
             case RUN -> {
-                animator.setImg("/monster/rino/Run(52x34).png", 2);
+                animator.setImg("/pictures/monster/rino/Run(52x34).png", 2);
                 animator.setArr(6);
                 animator.setDelayCount(10);
                 moveSpeed = 2;
             }
             case DEATH -> {
-                animator.setImg("/monster/rino/dead(224-64).png", 2);
+                animator.setImg("/pictures/monster/rino/dead(224-64).png", 2);
                 animator.setWidthAndHeightSize(32,32);
                 animator.setArr(7);
                 animator.setDelayCount(10);

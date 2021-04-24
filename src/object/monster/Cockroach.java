@@ -1,5 +1,4 @@
 package object.monster;
-import object.Rect;
 import util.Animator;
 import util.Global;
 
@@ -11,7 +10,7 @@ public class Cockroach extends Monster {
 
     public Cockroach(int x, int y) {
         super(x+30,y+30,100,92,x, y, 150, 150,x+75,y+30,30,30, 5000, 30, 5,false,1);
-        animator = new Animator("/monster/cockroach/run.png",0,150,150,2);
+        animator = new Animator("/pictures/monster/cockroach/run.png",0,150,150,2);
         animator.setArr(40);
         move = false;
         attacking = false;
@@ -45,20 +44,20 @@ public class Cockroach extends Monster {
         this.state = state;
         switch (state){
             case RUN -> {
-                animator.setImg("/monster/cockroach/run.png",2);
+                animator.setImg("/pictures/monster/cockroach/run.png",2);
                 animator.setArr(40);
                 animator.setDelayCount(0);
                 animator.setPlayLoop();
                 moveSpeed = 5;
             }
             case ATTACK -> {
-                animator.setImg("/monster/cockroach/eat.png",2);
+                animator.setImg("/pictures/monster/cockroach/eat.png",2);
                 animator.setArr(29);
                 animator.setDelayCount(6);
                 animator.setPlayOnce();
                 moveSpeed = 0;
             }
-            case DEATH -> animator.setImg("/monster/cockroach/run.png",2);
+            case DEATH -> animator.setImg("/pictures/monster/cockroach/run.png",2);
         }
     }
 

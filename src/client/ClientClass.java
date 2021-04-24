@@ -211,6 +211,9 @@ public class ClientClass {
 
     //傳送封包
     public void sent(int commandCode, ArrayList<String> strs) {
+        if(Global.isSingle){
+            return;
+        }
         if (socket != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(100);//指定大小, 避免字節太大
             DataOutputStream dos = new DataOutputStream(baos);

@@ -185,19 +185,19 @@ public class GameActor extends GameObjForAnimator {
             case FIRST -> {
                 switch (state) {
                     case STAND -> {
-                        animator.setImg("/actor/actorStand.png", 2);
+                        animator.setImg("/pictures/actor/actorStand.png", 2);
                         animator.setArr(3);
                         animator.setDelayCount(30);
                         animator.setPlayLoop();
                     }
                     case RUN -> {
-                        animator.setImg("/actor/run.png", 2);
+                        animator.setImg("/pictures/actor/run.png", 2);
                         animator.setArr(4);
                         animator.setDelayCount(10);
                         animator.setPlayLoop();
                     }
                     case DEATH -> {
-                        animator.setImg("/actor/actorDead.png", 2);
+                        animator.setImg("/pictures/actor/actorDead.png", 2);
                         animator.setArr(16);
                         animator.setDelayCount(5);
                         animator.setPlayOnce();
@@ -209,19 +209,19 @@ public class GameActor extends GameObjForAnimator {
             case SECOND -> {
                 switch (state) {
                     case STAND -> {
-                        animator.setImg("/actor/actor2Stand(2).png", 2);
+                        animator.setImg("/pictures/actor/actor2Stand(2).png", 2);
                         animator.setArr(12);
                         animator.setDelayCount(10);
                         animator.setPlayLoop();
                     }
                     case RUN -> {
-                        animator.setImg("/actor/actor2Run(2).png", 2);
+                        animator.setImg("/pictures/actor/actor2Run(2).png", 2);
                         animator.setArr(5);
                         animator.setDelayCount(10);
                         animator.setPlayLoop();
                     }
                     case DEATH -> {
-                        animator.setImg("/actor/actor2Dead (2).png", 2);
+                        animator.setImg("/pictures/actor/actor2Dead (2).png", 2);
                         animator.setArr(6);
                         animator.setDelayCount(30);
                         animator.setPlayOnce();
@@ -233,19 +233,19 @@ public class GameActor extends GameObjForAnimator {
             case THIRD -> {
                 switch (state) {
                     case STAND -> {
-                        animator.setImg("/actor/actor3Run.png", 2);
+                        animator.setImg("/pictures/actor/actor3Run.png", 2);
                         animator.setArr(16);
                         animator.setDelayCount(10);
                         animator.setPlayLoop();
                     }
                     case RUN -> {
-                        animator.setImg("/actor/actor3Run(2).png", 2);
+                        animator.setImg("/pictures/actor/actor3Run(2).png", 2);
                         animator.setArr(5);
                         animator.setDelayCount(10);
                         animator.setPlayLoop();
                     }
                     case DEATH -> {
-                        animator.setImg("/actor/actor3Dead.png", 2);
+                        animator.setImg("/pictures/actor/actor3Dead.png", 2);
                         animator.setArr(6);
                         animator.setDelayCount(30);
                         animator.setPlayOnce();
@@ -352,12 +352,12 @@ public class GameActor extends GameObjForAnimator {
             healDelay.loop();
             canHeal = false;
             healCD = new Delay(1800);
-            healAnimator = new Animator("/actor/heal.png", 5, 128, 128, 4);
+            healAnimator = new Animator("/pictures/actor/heal.png", 5, 128, 128, 4);
             healAnimator.setArr(4, 2);
 
             delayForFlash = new Delay(600);
             canFlash = true;
-            flashAnimator = new Animator("/actor/flash.png", 8, 48, 32, 2);
+            flashAnimator = new Animator("/pictures/actor/flash.png", 8, 48, 32, 2);
             flashAnimator.setArr(4);
             flashAnimator.setPlayOnce();
         }
