@@ -7,10 +7,21 @@ import sence.ConnectScene;
 import sence.GameScene;
 import static util.Global.*;
 import java.awt.*;
+import java.util.ArrayList;
+
 import static util.Global.MAP_HEIGHT;
 import static util.Global.MAP_WIDTH;
 
 public class LimitMode extends ConnectScene {
+
+    public LimitMode(){
+        gameActorArr = new ArrayList<>();
+        gameActorArr.add(new GameActor(Actor.FIRST,1024,1024));
+    }
+
+    public LimitMode(ArrayList<GameActor> gameActorArr){
+        this.gameActorArr = gameActorArr;
+    }
 
 
     @Override

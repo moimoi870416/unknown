@@ -14,4 +14,5 @@ public abstract class Scene implements GameKernel.PaintInterface, GameKernel.Upd
 
     public abstract CommandSolver.MouseListener mouseListener();
 
+
 }

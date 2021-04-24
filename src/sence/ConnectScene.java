@@ -2,29 +2,22 @@ package sence;
 
 import client.ClientClass;
 import client.CommandReceiver;
+import controller.SenceController;
 import object.actor.GameActor;
-import server.Server;
 import controller.ConnectController;
-import util.Global;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import static util.Global.*;
 
 public abstract class ConnectScene extends GameScene{
-    private int playerCount;
+    protected int playerCount;
 
 
     @Override
     protected void sceneBeginComponent() {
         gameSceneBegin();
-        connectLanArea();
         playerCount = 0;
-        gameActorArr.add(new GameActor(Actor.values()[playerCount],500,500));
-        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
 
     }
 
@@ -91,35 +84,6 @@ public abstract class ConnectScene extends GameScene{
                 }
             }
         });
-    }
-
-    public void connectLanArea(){
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("創建伺服器 => 1, 連接其他伺服器 => 2");
-        int opt = sc.nextInt();
-        switch (opt) {
-            case 1:
-                Global.isServer = true;
-                Server.instance().create(12345);
-                Server.instance().start();
-                System.out.println(Server.instance().getLocalAddress()[0]);
-                try {
-                    ClientClass.getInstance().connect("127.0.0.1", 12345); // ("SERVER端IP", "SERVER端PORT")
-                } catch (IOException ex) {
-                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case 2:
-                System.out.println("請輸入主伺服器IP:");
-                try {
-                    ClientClass.getInstance().connect(sc.next(), 12345); // ("SERVER端IP", "SERVER端PORT")
-                } catch (IOException ex) {
-                    Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
-
     }
 
 }

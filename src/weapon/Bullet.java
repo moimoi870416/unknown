@@ -36,7 +36,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     private int shooterID;
 
     public Bullet(final int x, final int y, int mouseX,int mouseY, Gun.GunType gunType,int shooterID) {
-        img = ImageController.getInstance().tryGet("/weapon/bullet.png");
+        img = ImageController.getInstance().tryGet("/pictures/weapon/bullet.png");
         this.x = x;
         this.y = y;
         this.shooterID = shooterID;
@@ -58,7 +58,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         state = State.FLYING;
         setAngle(mouseX,mouseY);
         setDistanceDeviation();
-        hitAnimator = new Animator("/weapon/blood(100-100).png",0,100,100,2);
+        hitAnimator = new Animator("/pictures/weapon/blood(100-100).png",0,100,100,2);
         hitAnimator.setArr(14);
         isHit = false;
         appear = new Delay(4);

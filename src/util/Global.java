@@ -140,7 +140,8 @@ public class Global {
         SKILL(30),
         RELOADING(31),
         CATCH_ITEM(32),
-        SPACE(5);
+        SPACE(5),
+        ENTER(100);
 
         private int commandCode;
 

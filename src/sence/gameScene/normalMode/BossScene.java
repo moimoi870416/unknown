@@ -52,7 +52,6 @@ public class BossScene extends GameScene {
         @Override
         public void mapUpdate() {
 
-
         }
 
         private void mapBoss(){

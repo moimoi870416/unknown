@@ -36,7 +36,6 @@ public abstract class GameScene extends Scene {
         mapObjArr = new ArrayList<>();
         monster = new LinkedList<>();
         testBullets = new LinkedList<>();
-        gameActorArr = new ArrayList<>();
         sceneBeginComponent();
         display = new Display(gameActorArr.get(0));
         camera = new Camera.Builder(WINDOW_WIDTH, WINDOW_HEIGHT)
