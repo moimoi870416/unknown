@@ -43,6 +43,11 @@ public class EnterScene extends Scene {
         this.isAdd = isAdd;
         gameActorArr = new ArrayList<>();
         playerCount = 0;
+        gameActorArr.add(new GameActor(Global.Actor.FIRST,500,500));
+        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
+        ArrayList<String> strs = new ArrayList<>();
+        ClientClass.getInstance().sent(Global.NetEvent.CONNECT,strs);
+
     }
 
     //設定圖片
@@ -52,8 +57,8 @@ public class EnterScene extends Scene {
 
     @Override
     public void sceneBegin() {
-        gameActorArr.add(new GameActor(Global.Actor.FIRST,500,500));
-        gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
+
+
     }
 
     @Override
@@ -73,9 +78,7 @@ public class EnterScene extends Scene {
             public void keyReleased(int commandCode, long trigTime) {
                 if(commandCode == Global.Active.ENTER.getCommandCode()){
                     if(isServer) {
-                        if(isNormal) {
-                            ConnectController.getInstance().changeSceneSend(isNormal);
-                        }
+                        ConnectController.getInstance().changeSceneSend(isNormal);
                     }
                 }
             }
@@ -108,6 +111,9 @@ public class EnterScene extends Scene {
         ClientClass.getInstance().consume(new CommandReceiver() {
             @Override
             public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
+                if(commandCode == Global.NetEvent.EVENT_CHANGE_SCENE){
+                    ConnectController.getInstance().changeSceneReceive(strs,gameActorArr);
+                }
                 if(serialNum == gameActorArr.get(0).getConnectID()){
                     return;
                 }
@@ -124,13 +130,12 @@ public class EnterScene extends Scene {
                             }
                         }
                         if (!isBorn) {
-                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount], Integer.parseInt(strs.get(0)),
-                                    Integer.parseInt(strs.get(1))));
+                            gameActorArr.add(new GameActor(Global.Actor.values()[playerCount],0,
+                                    0));
                             gameActorArr.get(playerCount++).setConnectID(serialNum);
                         }
                         break;
-                    case Global.NetEvent.EVENT_CHANGE_SCENE:
-                        ConnectController.getInstance().changeSceneReceive(strs,gameActorArr);
+
                 }
             }
         });

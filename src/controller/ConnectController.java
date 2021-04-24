@@ -40,14 +40,7 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
 
-    private ArrayList<String> gunSend(GameActor gameActor,int mouseX,int mouseY){
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.collider().centerX() + "");//6
-        strs.add(gameActor.collider().bottom() + "");//7
-        strs.add(mouseX + "");//8
-        strs.add(mouseY + "");//9
-        return strs;
-    }
+
 
     public void changeGunSend(GameActor gameActor, int commandCode){
         ArrayList<String> strs = new ArrayList<>();
@@ -89,12 +82,21 @@ public class ConnectController {
         }
     }
 
+    private ArrayList<String> gunSend(GameActor gameActor,int mouseX,int mouseY){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.collider().centerX() + "");//5
+        strs.add(gameActor.collider().bottom() + "");//6
+        strs.add(mouseX + "");//7
+        strs.add(mouseY + "");//8
+        return strs;
+    }
+
     private void gunReceive(GameActor gameActor,ArrayList<String> strs){
-        gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
-        gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)),Integer.valueOf(strs.get(7))-28);
+        gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(5)),Integer.valueOf(strs.get(6))-28);
+        gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(5)),Integer.valueOf(strs.get(6))-28);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
-                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(),Integer.valueOf(strs.get(8)),Integer.valueOf(strs.get(9)));
+                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(),Integer.valueOf(strs.get(7)),Integer.valueOf(strs.get(8)));
 
     }
 
@@ -208,10 +210,13 @@ public class ConnectController {
         if(Boolean.valueOf(strs.get(0))){
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 switch (gameActorArr.get(i).getConnectID()){
-                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
+                    case 100 -> test.add(new GameActor(Actor.FIRST, 500, 500));
                     case 101 -> test.add(new GameActor(Actor.SECOND,500,510));
                     case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
                 }
+            }
+            for(int i=0 ; i<test.size() ; i++){
+                test.get(i).setConnectID(100+i);
             }
             SenceController.getSenceController().change(new NormalMode(test));
             return;
@@ -222,6 +227,9 @@ public class ConnectController {
                 case 101 -> test.add(new GameActor(Actor.SECOND,1025,1024));
                 case 102 -> test.add(new GameActor(Actor.THIRD,1035,1024));
             }
+        }
+        for(int i=0 ; i<test.size() ; i++){
+            test.get(i).setConnectID(100+i);
         }
         SenceController.getSenceController().change(new LimitMode(test));
     }
