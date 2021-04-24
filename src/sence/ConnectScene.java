@@ -24,7 +24,6 @@ public abstract class ConnectScene extends GameScene {
 
     @Override
     protected void sceneEndComponent() {
-
         gameSceneEnd();
     }
 
@@ -32,7 +31,6 @@ public abstract class ConnectScene extends GameScene {
 
     @Override
     protected void connectUpdate() {
-        System.out.println(isSingle);
         if (isSingle) {
             return;
         }

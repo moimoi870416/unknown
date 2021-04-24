@@ -45,7 +45,9 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitX = hitCollied.left() - collider().left();
         this.hitY = hitCollied.top() -collider().top();
         nearest = 50000;
-        ConnectController.getInstance().newMonsterSend(this,typeCode);
+        if(Global.isServer) {
+            ConnectController.getInstance().newMonsterSend(this, typeCode);
+        }
     }
 
     public void chase() {
