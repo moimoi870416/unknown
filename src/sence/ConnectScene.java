@@ -15,17 +15,7 @@ public abstract class ConnectScene extends GameScene{
     @Override
     protected void sceneBeginComponent() {
         gameSceneBegin();
-        ArrayList<GameActor> test = new ArrayList<>();
-        if(!isSingle){
-            for(int i=0 ; i<gameActorArr.size() ; i++){
-                switch (gameActorArr.get(i).getConnectID()){
-                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
-                    case 101 -> test.add(new GameActor(Actor.SECOND,500,510));
-                    case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
-                }
-            }
-            gameActorArr = test;
-        }
+
     }
 
     protected abstract void gameSceneBegin();

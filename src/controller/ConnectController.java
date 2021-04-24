@@ -6,6 +6,7 @@ import static util.Global.*;
 import object.GameObjForAnimator;
 import object.actor.GameActor;
 import object.monster.*;
+import sence.GameScene;
 import sence.gameScene.LimitMode;
 import sence.gameScene.normalMode.NormalMode;
 import weapon.Bullet;
@@ -201,11 +202,27 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.EVENT_CHANGE_SCENE, strs);
     }
 
-    public void changeSceneReceive(ArrayList<String> strs){
+    public void changeSceneReceive(ArrayList<String> strs, ArrayList<GameActor> gameActorArr){
+        ArrayList<GameActor> test = new ArrayList<>();
+
         if(Boolean.valueOf(strs.get(0))){
-            SenceController.getSenceController().change(new NormalMode());
+            for(int i=0 ; i<gameActorArr.size() ; i++){
+                switch (gameActorArr.get(i).getConnectID()){
+                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
+                    case 101 -> test.add(new GameActor(Actor.SECOND,500,510));
+                    case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
+                }
+            }
+            SenceController.getSenceController().change(new NormalMode(test));
             return;
         }
-        SenceController.getSenceController().change(new LimitMode());
+        for(int i=0 ; i<gameActorArr.size() ; i++){
+            switch (gameActorArr.get(i).getConnectID()){
+                case 100 -> test.add(new GameActor(Actor.FIRST,1015,1024));
+                case 101 -> test.add(new GameActor(Actor.SECOND,1025,1024));
+                case 102 -> test.add(new GameActor(Actor.THIRD,1035,1024));
+            }
+        }
+        SenceController.getSenceController().change(new LimitMode(test));
     }
 }

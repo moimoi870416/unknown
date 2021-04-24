@@ -130,7 +130,7 @@ public class EnterScene extends Scene {
                         }
                         break;
                     case Global.NetEvent.EVENT_CHANGE_SCENE:
-                        ConnectController.getInstance().changeSceneReceive(strs);
+                        ConnectController.getInstance().changeSceneReceive(strs,gameActorArr);
                 }
             }
         });
