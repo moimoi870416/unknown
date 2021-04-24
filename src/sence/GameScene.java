@@ -133,6 +133,7 @@ public abstract class GameScene extends Scene {
                     if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
                         gameActorArr.get(k).offLife(testBullets.get(i).getAtk() / 4);
                         i--;
+                        x++;
                         break;
                     }
 
@@ -160,29 +161,30 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
-        for (int i = 0; i < monster.size(); i++) {
-            if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                monster.remove(i);
-                i--;
-                break;
-            }
-            monster.get(i).update();
-            for(int k=0 ; k<gameActorArr.size() ; k++) {
-                monster.get(i).whoIsNear(gameActorArr.get(k));
-            }
-            if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
-                monster.get(i).attack(gameActorArr.get(0));
-            }
-            for (int k = 0; k < mapObjArr.size(); k++) {
-                monster.get(i).isCollider(mapObjArr.get(k));
-            }
-            if (monster.size() > 1 && i != monster.size() - 1) {
-                if (!gameActorArr.get(0).isCollisionWithActor(monster.get(i))) {
-                    monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+        if(isServer) {
+            for (int i = 0; i < monster.size(); i++) {
+                if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
+                    monster.remove(i);
+                    i--;
+                    break;
                 }
-            }
-        }
+                monster.get(i).update();
 
+                if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+                    monster.get(i).attack(gameActorArr.get(0));
+                }
+                for (int k = 0; k < mapObjArr.size(); k++) {
+                    monster.get(i).isCollider(mapObjArr.get(k));
+                }
+                if (monster.size() > 1 && i != monster.size() - 1) {
+                    if (!gameActorArr.get(0).isCollisionWithActor(monster.get(i))) {
+                        monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+                    }
+                }
+                ConnectController.getInstance().monsterSend(monster.get(i),i);
+            }
+
+        }
     }
 
     private void shootUpdate() {

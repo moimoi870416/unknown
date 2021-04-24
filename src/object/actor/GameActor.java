@@ -30,6 +30,7 @@ public class GameActor extends GameObjForAnimator {
         this.actor = actor;
         setAnimator();
         setState(State.STAND);
+        setGun();
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
         currentGun.gun.translate(painter().centerX(), painter().centerY());
@@ -40,6 +41,23 @@ public class GameActor extends GameObjForAnimator {
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
         isFirstGun = false;
+    }
+    private void setGun(){
+        switch (actor){
+            case FIRST -> {
+                WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL,collider().centerX(),collider().bottom());
+                WhichGun.TWO.gun = new Gun(Gun.GunType.SNIPER,collider().centerX(),collider().bottom());
+            }
+            case SECOND -> {
+                WhichGun.ONE.gun = new Gun(Gun.GunType.UZI,collider().centerX(),collider().bottom());
+                WhichGun.TWO.gun = new Gun(Gun.GunType.AK,collider().centerX(),collider().bottom());
+            }
+            case THIRD -> {
+                WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL,collider().centerX(),collider().bottom());
+                WhichGun.TWO.gun = new Gun(Gun.GunType.MACHINE_GUN,collider().centerX(),collider().bottom());
+            }
+        }
+
     }
 
     private void setAnimator() {

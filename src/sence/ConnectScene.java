@@ -62,6 +62,8 @@ public abstract class ConnectScene extends GameScene {
                     case NetEvent.MONSTER_BOSS_ATTACK_TYPE:
                         ConnectController.getInstance().bossAtkTypeReceive(monster.getLast(), strs);
                         break;
+                    case NetEvent.MONSTER:
+                        ConnectController.getInstance().monsterReceive(monster, strs);
                 }
             }
         });

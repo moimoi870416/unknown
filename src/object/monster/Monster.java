@@ -99,6 +99,7 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
     public void whoIsNear(GameActor gameActor){
+<<<<<<< HEAD
             float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
             float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
             float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
@@ -106,6 +107,18 @@ public abstract class Monster extends GameObjForAnimator {
                 nearest = dc;
                 this.gameActor = gameActor;
             }
+=======
+        if(!isChase){
+            return;
+        }
+        float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
+        float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
+        float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
+        if(dc < nearest){
+            nearest = dc;
+            this.gameActor = gameActor;
+        }
+>>>>>>> 775aacec03dcc41ba8446e2b912208c2db44f700
 
     }
 
@@ -183,7 +196,7 @@ public abstract class Monster extends GameObjForAnimator {
 
     }
 
-    private void transHitArea(){
+    public void transHitArea(){
         int width = hitCollied.width();
         int height = hitCollied.height();
         hitCollied.setLeft(collider().left()+this.hitX);
