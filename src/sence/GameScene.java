@@ -204,12 +204,7 @@ public abstract class GameScene extends Scene {
         for(int i=0 ; i<gameActorArr.size() ; i++){
             gameActorArr.get(i).getSkill().skillUpdate();
         }
-<<<<<<< HEAD
             gameActorArr.get(0).update();
-
-=======
-        gameActorArr.get(0).update();
->>>>>>> 31feb5c3e2d149f1c4a94eff614469be661886fa
         gameActorArr.get(0).rotationUpdate(mouseX,mouseY);
         ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);
         for (int i = 0; i < mapObjArr.size(); i++) {
