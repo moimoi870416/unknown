@@ -170,6 +170,7 @@ public abstract class GameScene extends Scene {
                 if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                     monster.get(i).attack(gameActorArr.get(0));
                 }
+                System.out.println(monster.get(0).getState());
                 if(isServer) {
                     for(int k=0 ; k<gameActorArr.size() ; k++){
                         monster.get(i).whoIsNear(gameActorArr.get(k));
