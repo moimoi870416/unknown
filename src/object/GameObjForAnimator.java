@@ -93,15 +93,13 @@ public abstract class GameObjForAnimator extends GameObject {
         this.life -= atk;
     }
 
-<<<<<<< HEAD
+
     public void setLife(int life){
         this.life = life;
     }
 
     public int getLife(){
-=======
-    public int getLife() {
->>>>>>> 063cc903f541c051a177e1543937fecc5737d300
+
         return life;
     }
 
