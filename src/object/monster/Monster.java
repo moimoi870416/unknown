@@ -80,14 +80,6 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         updateComponent();
-        if (delayForCollision.count()) {
-            collision = true;
-        }
-        if (isOnceAttack) {
-            if (delayForAttack.count()) {
-                canAttack = true;
-            }
-        }
         if(forRino){
             return;
         }
@@ -96,10 +88,18 @@ public abstract class Monster extends GameObjForAnimator {
         }
     }
 
-    public void whoIsNear(GameActor gameActor){
-        if(state == State.DEATH || state == State.DEAD){
-            return;
+    public void updateForConnect(){
+        if (delayForCollision.count()) {
+            collision = true;
         }
+        if (isOnceAttack) {
+            if (delayForAttack.count()) {
+                canAttack = true;
+            }
+        }
+    }
+
+    public void whoIsNear(GameActor gameActor){
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
         float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
         float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
