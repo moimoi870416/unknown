@@ -64,8 +64,8 @@ public abstract class ConnectScene extends GameScene {
                     case NetEvent.MONSTER:
                         ConnectController.getInstance().monsterReceive(monster, strs);
                         break;
-                    case  NetEvent.MONSTER_DEAD:
-                        ConnectController.getInstance().monsterDeadReceive(monster,strs);
+                    case NetEvent.MONSTER_DEAD:
+                        ConnectController.getInstance().monsterDeadReceive(monster, strs);
                         break;
                     case NetEvent.MONSTER_IS_CHASE:
                         ConnectController.getInstance().monsterIsChaseReceive(monster,strs);
@@ -73,5 +73,4 @@ public abstract class ConnectScene extends GameScene {
             }
         });
     }
-
 }
