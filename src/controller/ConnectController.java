@@ -295,7 +295,7 @@ public class ConnectController {
     public void monsterStateReceive(LinkedList<Monster> monster, ArrayList<String> strs){
         for(int i=0 ; i<monster.size() ; i++){
             if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
-                monster.get(i).setStateComponent(GameObjForAnimator.State.valueOf(strs.get(1)));
+                monster.get(i).setMonsterState(GameObjForAnimator.State.valueOf(strs.get(1)));
             }
         }
     }

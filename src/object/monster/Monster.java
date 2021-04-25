@@ -93,7 +93,7 @@ public abstract class Monster extends GameObjForAnimator {
         }
     }
 
-    public void setStateComponent(State state){
+    public void setMonsterState(State state){
         setState(state);
         ConnectController.getInstance().monsterStateSend(state,connectID);
     }
@@ -122,7 +122,7 @@ public abstract class Monster extends GameObjForAnimator {
         }
 
         if(nearest <Global.WINDOW_WIDTH/2){
-            setStateComponent(State.RUN);
+            setMonsterState(State.RUN);
             isChase = true;
             ConnectController.getInstance().monsterBooleanSend(isChase,connectID,"isChase");
         }

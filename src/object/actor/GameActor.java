@@ -37,7 +37,7 @@ public class GameActor extends GameObjForAnimator {
         blood = new Bar(actor);
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
-        isFirstGun = false;
+        isFirstGun = true;
     }
     private void setGun(){
         switch (actor){
@@ -62,14 +62,20 @@ public class GameActor extends GameObjForAnimator {
             case FIRST -> {
                 animator = new Animator(actor.getPath(), 30, 58, 58, 2);
                 animator.setArr(3);
+                animator.setDelayCount(30);
+                animator.setPlayLoop();
             }
             case SECOND -> {
                 animator = new Animator(actor.getPath(), 30, 64, 68, 2);
-                animator.setArr(4);
+                animator.setArr(12);
+                animator.setDelayCount(10);
+                animator.setPlayLoop();
             }
             case THIRD -> {
                 animator = new Animator(actor.getPath(), 30, 80, 72, 2);
                 animator.setArr(16);
+                animator.setDelayCount(10);
+                animator.setPlayLoop();
             }
         }
 
@@ -115,6 +121,9 @@ public class GameActor extends GameObjForAnimator {
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
+        if(currentGun == WhichGun.ONE){
+            return;
+        }
         ConnectController.getInstance().changeGunSend(this,commandCode);
     }
 

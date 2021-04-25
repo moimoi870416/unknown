@@ -55,10 +55,7 @@ public abstract class GameObjForAnimator extends GameObject {
 
     public void setState(State state){
         if(this.state == state){
-            if(!animator.isFinish()){
                 return;
-            }
-
         }
         this.state = state;
         if(animator == null){
