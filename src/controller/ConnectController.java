@@ -201,7 +201,7 @@ public class ConnectController {
                 monster.get(i).offSetY(Integer.valueOf(strs.get(2)));
                 monster.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 monster.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
-                monster.get(i).transHitArea();ㄇ
+                monster.get(i).transHitArea();
             }
         }
     }
@@ -234,5 +234,15 @@ public class ConnectController {
         }
 
         SenceController.getSenceController().change(new LimitMode(test));
+    }
+
+    public void monsterDeadSend(int key){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(key + "");
+        ClientClass.getInstance().sent(NetEvent.MONSTER_DEAD, strs);
+    }
+
+    public void monsterDeadReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+        monster.remove(Integer.valueOf(strs.get(0)));
     }
 }
