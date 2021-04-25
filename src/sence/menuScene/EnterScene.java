@@ -130,17 +130,31 @@ public class EnterScene extends Scene {
             g.drawImage(play2d, 550, 90, null);
             g.drawImage(play3d, 1000, 90, null);
         } else if (playerCount == 2) {
-           if(isServer){
-               g.drawImage(play1o, 100, 90, null);
-               g.drawImage(play2l, 550, 90, null);
-               g.drawImage(play3d, 1000, 90, null);
-               return;
-           }
+            if (isServer) {
+                g.drawImage(play1o, 100, 90, null);
+                g.drawImage(play2l, 550, 90, null);
+                g.drawImage(play3d, 1000, 90, null);
+                return;
+            }
             g.drawImage(play1l, 100, 90, null);
             g.drawImage(play2o, 550, 90, null);
             g.drawImage(play3d, 1000, 90, null);
         } else {
-
+            for (int i = 0; i < gameActorArr.size(); i++) {
+                if (gameActorArr.get(i).getConnectID() == 100) {
+                    g.drawImage(play1o, 100, 90, null);
+                    g.drawImage(play2l, 550, 90, null);
+                    g.drawImage(play3l, 1000, 90, null);
+                } else if (gameActorArr.get(i).getConnectID() == 101) {
+                    g.drawImage(play1l, 100, 90, null);
+                    g.drawImage(play2o, 550, 90, null);
+                    g.drawImage(play3l, 1000, 90, null);
+                } else {
+                    g.drawImage(play1l, 100, 90, null);
+                    g.drawImage(play2l, 550, 90, null);
+                    g.drawImage(play3o, 1000, 90, null);
+                }
+            }
         }
     }
 
@@ -163,7 +177,7 @@ public class EnterScene extends Scene {
                 }
                 switch (commandCode) {
                     case Global.NetEvent.CONNECT: //自行定義所接收之指令代碼需要做什麼任務
-                        if (playerCount >= 3) {
+                        if (playerCount >= 4) {
                             break;
                         }
                         boolean isBorn = false;
