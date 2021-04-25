@@ -86,6 +86,7 @@ public abstract class GameScene extends Scene {
         connectUpdate();
         mouseUpdate();
         monsterUpdate();
+        System.out.println(monster.size());
         actorUpdate();
         displayUpdate();
         shootUpdate();
@@ -164,7 +165,9 @@ public abstract class GameScene extends Scene {
 
             for (int i = 0; i < monster.size(); i++) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                    ConnectController.getInstance().monsterDeadSend(i);
+                    //ConnectController.getInstance().monsterDeadSend(i);
+                    monster.remove(i);
+                    i--;
                     break;
                 }
                 if(isServer) {
@@ -172,9 +175,7 @@ public abstract class GameScene extends Scene {
                         monster.get(i).whoIsNear(gameActorArr.get(k));
                     }
                     monster.get(i).update();
-                    if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
-                        monster.get(i).attack(gameActorArr.get(0));
-                    }
+
 
                     for (int k = 0; k < mapObjArr.size(); k++) {
                         monster.get(i).isCollider(mapObjArr.get(k));
@@ -186,7 +187,9 @@ public abstract class GameScene extends Scene {
                     }
                     ConnectController.getInstance().monsterSend(monster.get(i),i);
                 }
-
+                if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+                    monster.get(i).attack(gameActorArr.get(0));
+                }
         }
     }
 
