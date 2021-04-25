@@ -168,6 +168,7 @@ public abstract class GameScene extends Scene {
                     ConnectController.getInstance().monsterDeadSend(i);
                     break;
                 }
+<<<<<<< HEAD
                 if(monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD){
                     break;
                 }
@@ -178,6 +179,40 @@ public abstract class GameScene extends Scene {
                     }
                     if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                         monster.get(i).attack(gameActorArr.get(0));
+=======
+                for(int k=0 ; k<gameActorArr.size() ; k++){
+                    monster.get(i).whoIsNear(gameActorArr.get(k));
+                }
+                monster.get(i).update();
+                if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+                    monster.get(i).attack(gameActorArr.get(0));
+                }
+<<<<<<< HEAD
+                System.out.println(monster.get(0).getState());
+                if(isServer) {
+                    for(int k=0 ; k<gameActorArr.size() ; k++){
+                        monster.get(i).whoIsNear(gameActorArr.get(k));
+                    }
+                    monster.get(i).update();
+//                    if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+//                        monster.get(i).attack(gameActorArr.get(0));
+//                    }
+                    for (int k = 0; k < mapObjArr.size(); k++) {
+                        monster.get(i).isCollider(mapObjArr.get(k));
+                    }
+                    if (monster.size() > 1 && i != monster.size() - 1) {
+                        if (!gameActorArr.get(0).isCollisionWithActor(monster.get(i))) {
+                            monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+                        }
+=======
+                for (int k = 0; k < mapObjArr.size(); k++) {
+                    monster.get(i).isCollider(mapObjArr.get(k));
+                }
+                if (monster.size() > 1 && i != monster.size() - 1) {
+                    if (!gameActorArr.get(0).isCollisionWithActor(monster.get(i))) {
+                        monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+>>>>>>> 0a3035b963fd4159259b5a241274ef5c1ce269e5
+>>>>>>> 51af9526330c706a4206bf1827731d66f934535e
                     }
                     for (int k = 0; k < mapObjArr.size(); k++) {
                         monster.get(i).isCollider(mapObjArr.get(k));
