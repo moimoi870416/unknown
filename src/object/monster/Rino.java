@@ -39,8 +39,6 @@ public class Rino extends Monster{
                 animator.setArr(11);
                 animator.setDelayCount(0);
                 moveSpeed = 0;
-
-
             }
             case WALK -> {
                 animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
@@ -74,26 +72,10 @@ public class Rino extends Monster{
 
     @Override
     protected void updateForDelay() {
-<<<<<<< HEAD
-=======
+
  
     }
 
-    protected void updateComponent() {
->>>>>>> 2b4ccaed7a376315087202e10f510c1860d194d2
-//        if(isChase){
-//            forRino = true;
-//            if(readyAtk){
-//                if(attack()){
-//                    return;
-//                }
-//                chase();
-//                return;
-//            }
-//            atkMove();
-//            return;
-//        }
-    }
 
     protected void updateComponent() {
         if(isChase){
