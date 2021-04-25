@@ -25,6 +25,7 @@ public abstract class Monster extends GameObjForAnimator {
     protected GameActor gameActor;
     private float nearest;
     protected int atkType;
+    protected int connectID;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
         this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack,typeCode);
@@ -45,6 +46,7 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitX = hitCollied.left() - collider().left();
         this.hitY = hitCollied.top() -collider().top();
         nearest = 50000f;
+        connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
         if(Global.isServer) {
             ConnectController.getInstance().newMonsterSend(this, typeCode);
         }
@@ -200,6 +202,10 @@ public abstract class Monster extends GameObjForAnimator {
 
     public void setAtkType(int typeCode){
         atkType = typeCode;
+    }
+
+    public int getConnectID(){
+        return connectID;
     }
 
 }

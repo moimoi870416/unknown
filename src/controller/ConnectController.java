@@ -248,6 +248,11 @@ public class ConnectController {
     }
 
     public void monsterDeadReceive(LinkedList<Monster> monster,ArrayList<String> strs){
-        monster.remove(Integer.valueOf(strs.get(0)));
+        for(int i=0 ; i<monster.size() ; i++){
+            if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
+                monster.remove(i);
+                return;
+            }
+        }
     }
 }
