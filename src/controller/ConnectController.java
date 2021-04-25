@@ -182,9 +182,9 @@ public class ConnectController {
         monster.setAtkType(Integer.valueOf(strs.get(0)));
     }
 
-    public void monsterSend(Monster monster,int count){
+    public void monsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(count +"");//0
+        strs.add(monster.getConnectID() +"");//0
         strs.add(monster.collider().left() + "");//1
         strs.add(monster.collider().top() + "");//2
         strs.add(monster.getState() + "");//3
@@ -194,7 +194,7 @@ public class ConnectController {
 
     public void monsterReceive(LinkedList<Monster> monster,ArrayList<String> strs){
         for(int i=0 ; i<monster.size() ; i++){
-            if(Integer.valueOf(strs.get(0)) == i){
+            if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                 monster.get(i).offSetX(Integer.valueOf(strs.get(1)));
                 monster.get(i).offSetY(Integer.valueOf(strs.get(2)));
                 monster.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
