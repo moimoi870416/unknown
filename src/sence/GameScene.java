@@ -164,19 +164,19 @@ public abstract class GameScene extends Scene {
     private void monsterUpdate() {
             for (int i = 0; i < monster.size(); i++) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                    ConnectController.getInstance().monsterDeadSend(i);
+                    //ConnectController.getInstance().monsterDeadSend(i);
+                    monster.remove(i);
+                    i--;
                     break;
                 }
                 if(monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD){
                     break;
                 }
+                monster.get(i).updateForConnect();
                 if(isServer) {
                     monster.get(i).update();
                     for (int k = 0; k < gameActorArr.size(); k++) {
                         monster.get(i).whoIsNear(gameActorArr.get(k));
-                    }
-                    if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
-                        monster.get(i).attack(gameActorArr.get(0));
                     }
                     for (int k = 0; k < mapObjArr.size(); k++) {
                         monster.get(i).isCollider(mapObjArr.get(k));
@@ -189,8 +189,10 @@ public abstract class GameScene extends Scene {
                         }
                     }
                     ConnectController.getInstance().monsterSend(monster.get(i), i);
-                    }
-
+                }
+                if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+                    monster.get(i).attack(gameActorArr.get(0));
+                }
 
         }
     }
@@ -215,9 +217,21 @@ public abstract class GameScene extends Scene {
         }
         gameActorArr.get(0).update();
         gameActorArr.get(0).rotationUpdate(mouseX,mouseY);
-        ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);
-        for (int i = 0; i < mapObjArr.size(); i++) {
+        ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);//傳送自己的資料
+        for (int i = 0; i < mapObjArr.size(); i++) {//場景物件碰撞
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
+        }
+        if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEAD){//死亡畫面追蹤
+            if(gameActorArr.size() == 2) {
+                camera.setObj(gameActorArr.get(1));
+                gameActorArr.get(0).offSetX(gameActorArr.get(1).collider().left());
+                gameActorArr.get(0).offSetY(gameActorArr.get(1).collider().top());
+                if (gameActorArr.get(1).getLife() <= 0 && gameActorArr.size() == 3) {
+                    camera.setObj(gameActorArr.get(2));
+                    gameActorArr.get(0).offSetX(gameActorArr.get(2).collider().left());
+                    gameActorArr.get(0).offSetY(gameActorArr.get(2).collider().top());
+                }
+            }
         }
     }
 

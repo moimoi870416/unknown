@@ -170,8 +170,6 @@ public class ConnectController {
             case 5 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
             case 6 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
         }
-
-
     }
 
     public void bossAtkTypeSend(int typeCode){
@@ -230,7 +228,14 @@ public class ConnectController {
             return;
         }
         for(int i=0 ; i<gameActorArr.size() ; i++){
-
+            switch (gameActorArr.get(i).getConnectID()){
+                case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
+                case 101 -> test.add(new GameActor(Actor.SECOND,500,525));
+                case 102 -> test.add(new GameActor(Actor.THIRD,500,550));
+            }
+        }
+        for(int i=0 ; i<gameActorArr.size() ; i++){
+            test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
         }
 
         SenceController.getSenceController().change(new LimitMode(test));

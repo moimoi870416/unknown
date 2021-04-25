@@ -80,6 +80,15 @@ public abstract class Monster extends GameObjForAnimator {
             return;
         }
         updateComponent();
+        if(forRino){
+            return;
+        }
+        if (isChase) {
+            chase();
+        }
+    }
+
+    public void updateForConnect(){
         if (delayForCollision.count()) {
             collision = true;
         }
@@ -87,12 +96,6 @@ public abstract class Monster extends GameObjForAnimator {
             if (delayForAttack.count()) {
                 canAttack = true;
             }
-        }
-        if(forRino){
-            return;
-        }
-        if (isChase) {
-            chase();
         }
     }
 
