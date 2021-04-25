@@ -75,6 +75,14 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
+        if (delayForCollision.count()) {
+            collision = true;
+        }
+        if (isOnceAttack) {
+            if (delayForAttack.count()) {
+                canAttack = true;
+            }
+        }
         transHitArea();
         if (isOut()) {
             return;
@@ -99,15 +107,15 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
     public void updateForConnect(){
-        if (delayForCollision.count()) {
-            collision = true;
-        }
-        if (isOnceAttack) {
-            if (delayForAttack.count()) {
-                canAttack = true;
-            }
-        }
-        updateForDelay();
+//        if (delayForCollision.count()) {
+//            collision = true;
+//        }
+//        if (isOnceAttack) {
+//            if (delayForAttack.count()) {
+//                canAttack = true;
+//            }
+//        }
+//        updateForDelay();
     }
 
     protected abstract void updateForDelay();
