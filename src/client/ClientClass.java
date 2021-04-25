@@ -194,13 +194,15 @@ public class ClientClass {
     //接收封包，使用前要實現CommandReceiver
     public void consume(CommandReceiver cr) {//消化緩衝區裡的指令
         if (commandMap != null) {
-            for (int key : commandMap.keySet()) {
-                List<Command> ll = commandMap.get(key);
-                synchronized (ll) {
-                    for (Command command : ll) {
-                        cr.receive(key, command.num, command.strs);//執行指令
+            synchronized (commandMap) {
+                for (int key : commandMap.keySet()) {
+                    List<Command> ll = commandMap.get(key);
+                    synchronized (ll) {
+                        for (Command command : ll) {
+                            cr.receive(key, command.num, command.strs);//執行指令
+                        }
+                        ll.clear();//執行完刪除指令
                     }
-                    ll.clear();//執行完刪除指令
                 }
             }
         }
