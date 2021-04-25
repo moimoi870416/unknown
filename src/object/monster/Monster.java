@@ -93,13 +93,11 @@ public abstract class Monster extends GameObjForAnimator {
         }
         if (isChase) {
             chase();
-            return;
         }
-        isSeeingActor();
     }
 
     public void whoIsNear(GameActor gameActor){
-        if(!isChase){
+        if(state == State.DEATH || state == State.DEAD){
             return;
         }
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
@@ -108,6 +106,11 @@ public abstract class Monster extends GameObjForAnimator {
         if(dc < nearest){
             nearest = dc;
             this.gameActor = gameActor;
+        }
+
+        if(nearest <Global.WINDOW_WIDTH/2){
+            setState(State.RUN);
+            isChase = true;
         }
 
     }
@@ -134,12 +137,12 @@ public abstract class Monster extends GameObjForAnimator {
 
     protected abstract void updateComponent();
 
-    protected void isSeeingActor() {
-        if (Math.abs(Global.actorX - painter().centerX()) < Global.WINDOW_WIDTH / 2) {
-            setState(State.RUN);
-            isChase = true;
-        }
-    }
+//    protected void isSeeingActor() {
+//        if (Math.abs(Global.actorX - painter().centerX()) < Global.WINDOW_WIDTH / 2) {
+//            setState(State.RUN);
+//            isChase = true;
+//        }
+//    }
 
 
     public void isCollisionWithMonster(Monster other) {
