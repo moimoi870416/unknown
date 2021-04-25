@@ -74,6 +74,13 @@ public class Rino extends Monster{
 
     @Override
     protected void updateForDelay() {
+<<<<<<< HEAD
+=======
+ 
+    }
+
+    protected void updateComponent() {
+>>>>>>> 2b4ccaed7a376315087202e10f510c1860d194d2
 //        if(isChase){
 //            forRino = true;
 //            if(readyAtk){

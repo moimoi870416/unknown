@@ -305,7 +305,7 @@ public abstract class GameScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-                if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH || gameActorArr.get(0).getState() == GameObjForAnimator.State.DEAD){
+                if (gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH || gameActorArr.get(0).getState() == GameObjForAnimator.State.DEAD) {
                     return;
                 }
                 if (commandCode >= 1 || commandCode <= 4) {
@@ -336,7 +336,7 @@ public abstract class GameScene extends Scene {
         public abstract void mapUpdate();
     }
 
-    private class EffectView{
+    private class EffectView {
         private Image victory;
         private Image defeat;
         private Image warning;
@@ -349,24 +349,25 @@ public abstract class GameScene extends Scene {
             defeat = ImageController.getInstance().tryGet("/pictures/effect/fail.png");
         }
 
-        private void effectPaint(Graphics g){
-            if(isNobodyAlive){
-                g.drawImage(defeat,camera.getCameraWindowX()+220,camera.getCameraWindowY()+200,null);
+        private void effectPaint(Graphics g) {
+            if (isNobodyAlive) {
+                g.drawImage(defeat, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
             }
 
         }
 
-        private void effectUpdate(){
+        private void effectUpdate() {
             int sum = 0;
-            for(int i=0 ; i<gameActorArr.size() ; i++){
+            for (int i = 0; i < gameActorArr.size(); i++) {
                 sum += gameActorArr.get(i).getLife();
                 System.out.println(gameActorArr.get(i).getLife());
 
             }
-
-            if(sum <= 0){
+            if (sum <= 0) {
                 isNobodyAlive = true;
+
             }else {
+
                 isNobodyAlive = false;
             }
         }
