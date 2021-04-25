@@ -97,6 +97,9 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
     public void whoIsNear(GameActor gameActor){
+        if(state == State.DEATH || state == State.DEAD){
+            return;
+        }
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
         float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
         float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
@@ -104,6 +107,7 @@ public abstract class Monster extends GameObjForAnimator {
             nearest = dc;
             this.gameActor = gameActor;
         }
+
         if(nearest <Global.WINDOW_WIDTH/2){
             setState(State.RUN);
             isChase = true;
