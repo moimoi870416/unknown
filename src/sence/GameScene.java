@@ -198,7 +198,6 @@ public abstract class GameScene extends Scene {
                 monster.get(i).attack(gameActorArr.get(0));
             }
         }
-
     }
 
     private void shootUpdate() {
