@@ -34,6 +34,16 @@ public class Stone extends Monster{
 
     @Override
     protected void setStateComponent() {
+<<<<<<< HEAD
+=======
+        if(life <= 0){
+
+            this.state = State.CRITICAL;
+            moveSpeed = 0;
+            atk = 0;
+            life = Integer.MAX_VALUE;
+        }
+>>>>>>> 60e9c99e006c87453a22d99e851550a8c741bb50
         switch (this.state) {
             case CRITICAL -> {
                 if(!dead) {

@@ -29,12 +29,12 @@ public abstract class Monster extends GameObjForAnimator {
     protected boolean readyAtk;
     private int typeCode;
 
-    public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
-        this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack,typeCode);
+    public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack, int typeCode) {
+        this(x, y, width, height, x, y, width, height, x, y, width, height, life, atk, moveSpeed, isOnceAttack, typeCode);
 
     }
 
-    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2,int hitX,int hitY,int hitWidth,int hitHeight, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
+    public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2, int hitX, int hitY, int hitWidth, int hitHeight, int life, int atk, int moveSpeed, boolean isOnceAttack, int typeCode) {
         super(x, y, width, height, x2, y2, width2, height2, life, atk, moveSpeed);
         attackDelay = new Delay(60);
         isChase = false;
@@ -44,11 +44,12 @@ public abstract class Monster extends GameObjForAnimator {
         collision = true;
         this.isOnceAttack = isOnceAttack;
         forRino = false;
-        hitCollied = Rect.genWithCenter(hitX,hitY,hitWidth,hitHeight);
+        hitCollied = Rect.genWithCenter(hitX, hitY, hitWidth, hitHeight);
         this.hitX = hitCollied.left() - collider().left();
-        this.hitY = hitCollied.top() -collider().top();
+        this.hitY = hitCollied.top() - collider().top();
         nearest = 50000f;
         connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
+
         this.typeCode = typeCode;
         if(Global.isServer) {
             ConnectController.getInstance().newMonsterSend(this, typeCode);
@@ -58,7 +59,7 @@ public abstract class Monster extends GameObjForAnimator {
 
     public void chase() {
         float x = Math.abs(gameActor.collider().centerX() - painter().centerX());
-        float y = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
+        float y = Math.abs(gameActor.collider().bottom() - painter().centerY() - 10);
         if (x <= 20 && y <= 20) {
             return;
         }
@@ -91,11 +92,11 @@ public abstract class Monster extends GameObjForAnimator {
         }
         if (state == State.DEATH) {
             isChase = false;
-            ConnectController.getInstance().monsterBooleanSend(isChase,connectID,"isChase");
+            ConnectController.getInstance().monsterBooleanSend(isChase, connectID, "isChase");
             return;
         }
         updateComponent();
-        if(forRino){
+        if (forRino) {
             return;
         }
         if (isChase) {
@@ -103,14 +104,15 @@ public abstract class Monster extends GameObjForAnimator {
         }
     }
 
-    public void setMonsterState(State state){
+    public void setMonsterState(State state) {
         setState(state);
+
         if(Global.isServer) {
             ConnectController.getInstance().monsterStateSend(state, connectID);
         }
     }
 
-    public void updateForConnect(){
+    public void updateForConnect() {
 //        if (delayForCollision.count()) {
 //            collision = true;
 //        }
@@ -124,18 +126,23 @@ public abstract class Monster extends GameObjForAnimator {
 
     protected abstract void updateForDelay();
 
-    public void whoIsNear(GameActor gameActor){
+    public void whoIsNear(GameActor gameActor) {
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
-        float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
+        float dy = Math.abs(gameActor.collider().bottom() - painter().centerY() - 10);
         float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
-        if(dc < nearest){
+        if (dc < nearest) {
             nearest = dc;
             this.gameActor = gameActor;
         }
 
+<<<<<<< HEAD
         if(nearest <Global.WINDOW_WIDTH/2){
+=======
+        if (nearest < Global.WINDOW_WIDTH / 2) {
+//            setMonsterState(State.RUN);
+>>>>>>> 60e9c99e006c87453a22d99e851550a8c741bb50
             isChase = true;
-            ConnectController.getInstance().monsterBooleanSend(isChase,connectID,"isChase");
+            ConnectController.getInstance().monsterBooleanSend(isChase, connectID, "isChase");
         }
 
     }
@@ -201,47 +208,47 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
 
-    public Rect getHitCollied(){
+    public Rect getHitCollied() {
         return hitCollied;
     }
 
     @Override
-    protected void paintDebug(Graphics g){
+    protected void paintDebug(Graphics g) {
         g.setColor(Color.ORANGE);
         g.drawRect(this.hitCollied.left(), this.hitCollied.top(), this.hitCollied.width(), this.hitCollied.height());
 
     }
 
-    public void transHitArea(){
+    public void transHitArea() {
         int width = hitCollied.width();
         int height = hitCollied.height();
-        hitCollied.setLeft(collider().left()+this.hitX);
-        hitCollied.setTop(collider().top()+this.hitY);
-        hitCollied.setRight(hitCollied.left()+width);
-        hitCollied.setBottom(hitCollied.top()+height);
+        hitCollied.setLeft(collider().left() + this.hitX);
+        hitCollied.setTop(collider().top() + this.hitY);
+        hitCollied.setRight(hitCollied.left() + width);
+        hitCollied.setBottom(hitCollied.top() + height);
     }
 
-    public void setAtkType(int typeCode){
+    public void setAtkType(int typeCode) {
         atkType = typeCode;
     }
 
-    public int getConnectID(){
+    public int getConnectID() {
         return connectID;
     }
 
-    public void setIsChase(boolean isChase){
+    public void setIsChase(boolean isChase) {
         this.isChase = isChase;
     }
 
-    public void setForRino(boolean isTrue){
+    public void setForRino(boolean isTrue) {
         this.forRino = isTrue;
     }
 
-    public void setFocus(boolean isTure){
+    public void setFocus(boolean isTure) {
         this.focus = isTure;
     }
 
-    public void setReadyAtk(boolean isTure){
+    public void setReadyAtk(boolean isTure) {
         this.readyAtk = isTure;
     }
 
