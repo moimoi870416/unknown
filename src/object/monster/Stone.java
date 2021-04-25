@@ -37,9 +37,6 @@ public class Stone extends Monster{
         if(life <= 0){
 
             this.state = State.CRITICAL;
-            if(Global.isServer){
-                ConnectController.getInstance().monsterStateSend(state,connectID);
-            }
             moveSpeed = 0;
             atk = 0;
             life = Integer.MAX_VALUE;

@@ -138,7 +138,7 @@ public abstract class GameScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
-                        if(testBullets.get(i).getAtk() >=100){
+                        if (testBullets.get(i).getAtk() >= 100) {
                             gameActorArr.get(k).setLife(1);
                             i--;
                             x++;
@@ -159,6 +159,10 @@ public abstract class GameScene extends Scene {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
+                                if (monster.get(k).getTypeCode() == 3) {
+                                    monster.get(k).setMonsterState(GameObjForAnimator.State.CRITICAL);
+                                    return;
+                                }
                                 monster.get(k).setMonsterState(GameObjForAnimator.State.DEATH);
                             }
                             if (testBullets.get(i).isPenetrate(life)) {
@@ -176,7 +180,7 @@ public abstract class GameScene extends Scene {
     private void monsterUpdate() {
 
         for (int i = 0; i < monster.size(); i++) {
-            if (isServer||isSingle) {
+            if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                     ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
                     monster.remove(i);
@@ -188,7 +192,7 @@ public abstract class GameScene extends Scene {
                 break;
             }
             monster.get(i).updateForConnect();
-            if (isServer||isSingle) {
+            if (isServer || isSingle) {
                 monster.get(i).update();
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     monster.get(i).whoIsNear(gameActorArr.get(k));

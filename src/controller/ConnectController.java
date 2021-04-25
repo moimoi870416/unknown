@@ -287,8 +287,9 @@ public class ConnectController {
 
     public void monsterStateSend(GameObjForAnimator.State state,int connectID){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(connectID + "");
-        strs.add(state +"");
+        strs.add(connectID + "");//0
+        strs.add(state +"");//1
+        System.out.println(state);
         ClientClass.getInstance().sent(NetEvent.MONSTER_STATE, strs);
     }
 
