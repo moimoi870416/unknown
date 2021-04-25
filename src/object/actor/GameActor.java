@@ -27,7 +27,7 @@ public class GameActor extends GameObjForAnimator {
         super(x, y, actor.getWidth(), actor.getHeight(), 100, 10, 3);
         this.actor = actor;
         setAnimator();
-        setState(State.STAND);
+//        setState(State.STAND);
         setGun();
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
@@ -60,9 +60,18 @@ public class GameActor extends GameObjForAnimator {
 
     private void setAnimator() {
         switch (this.actor) {
-            case FIRST -> animator = new Animator(actor.getPath(), 30, 58, 58, 2);
-            case SECOND -> animator = new Animator(actor.getPath(), 30, 64, 68, 2);
-            case THIRD -> animator = new Animator(actor.getPath(), 30, 80, 72, 2);
+            case FIRST -> {
+                animator = new Animator(actor.getPath(), 30, 58, 58, 2);
+                animator.setArr(3);
+            }
+            case SECOND -> {
+                animator = new Animator(actor.getPath(), 30, 64, 68, 2);
+                animator.setArr(4);
+            }
+            case THIRD -> {
+                animator = new Animator(actor.getPath(), 30, 80, 72, 2);
+                animator.setArr(16);
+            }
         }
 
     }
@@ -193,7 +202,7 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void setStateComponent() {
-        if (this.state == State.DEAD) {
+        if (this.state == State.DEAD || actor == null) {
             return;
         }
         ConnectController.getInstance().actorStateSend(connectID,state);

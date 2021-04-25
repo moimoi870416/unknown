@@ -24,7 +24,7 @@ public class EditText extends Label {
     //edit
     private int editLimit;
     private String editText;
-    private int tranX=0;
+    private int tranX = 0;
 
     private void init(String hint) {
         isEditable = true;
@@ -68,7 +68,7 @@ public class EditText extends Label {
 
     // 使用者更改游標閃爍速度
     public void setCursorSpeed(int frame) {
-        cursorSpeed=new Delay(frame);
+        cursorSpeed = new Delay(frame);
     }
 
     // 使用者更改游標顏色
@@ -85,7 +85,9 @@ public class EditText extends Label {
         this.defaultText = hint;
     }
 
-    public void setTranX(int x){this.tranX=x;}
+    public void setTranX(int x) {
+        this.tranX = x;
+    }
 
     @Override
     public void isFocus() {
@@ -159,7 +161,7 @@ public class EditText extends Label {
         super.paint(g);
         g.setFont(this.getPaintStyle().getTextFont()); //預設提示文字與輸入文字字型大小一樣
         g.setColor((editText.length() == 0) ? defaultTextColor : this.getPaintStyle().getTextColor());
-        g.drawString((editText.length() == 0 && getIsFocus()) ? defaultText : editText, super.getX()+tranX, super.getY() + super.height() / 2 + g.getFontMetrics().getDescent());
+        g.drawString((editText.length() == 0 && getIsFocus()) ? defaultText : editText, super.getX() + tranX, super.getY() + super.height() / 2 + g.getFontMetrics().getDescent());
 
         if (super.getIsFocus() && isEditable) {
             if (cursorSpeed.count()) {
@@ -169,13 +171,17 @@ public class EditText extends Label {
                 g.setColor(cursorColor);
                 int stringWidth = g.getFontMetrics().stringWidth(editText);
                 cursorHeight = g.getFontMetrics().getAscent();
-                g.fillRect(super.getX() + 1 + stringWidth+tranX, super.getY() + super.height() / 2 - (cursorHeight + g.getFontMetrics().getDescent()) / 2, cursorWidth, cursorHeight);
+                g.fillRect(super.getX() + 1 + stringWidth + tranX, super.getY() + super.height() / 2 - (cursorHeight + g.getFontMetrics().getDescent()) / 2, cursorWidth, cursorHeight);
             }
         }
     }
 
     public String getEditText() {
         return this.editText;
+    }
+
+    public void setEditText(String editText) {
+        this.editText = editText;
     }
 
     @Override

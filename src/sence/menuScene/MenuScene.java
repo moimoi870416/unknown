@@ -22,7 +22,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -309,8 +308,7 @@ public class MenuScene extends Scene {
             public void keyPressed(final int commandCode, final long trigTime) {
 //                moveKey(commandCode); //偵測目前鍵盤位置
                 if (commandCode == Active.ENTER.getCommandCode()) {
-//                    if (MenuScene.this.inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
-
+//                    if (inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
                     if (IS_DEBUG) {
                         connectIP = "192.168.1.19";
                         addConnectLanArea();
@@ -390,17 +388,14 @@ public class MenuScene extends Scene {
     }
 
     private void addConnectLanArea() {
-
         try {
             ClientClass.getInstance().connect(connectIP, 12345); // ("SERVER端IP", "SERVER端PORT")
             SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
         } catch (IOException ex) {
+            addServer.unFocus();
+            isAdd = false;
+            inputText.setEditText("");
             Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
-
-
-
-
-

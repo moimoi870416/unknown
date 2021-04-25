@@ -157,7 +157,7 @@ public class Gun extends GameObjForAnimator {
             canShoot = false;
         }
     }
-    
+
 
     @Override
     public void update() {
