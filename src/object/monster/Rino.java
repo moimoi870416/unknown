@@ -29,10 +29,7 @@ public class Rino extends Monster {
 
     @Override
     protected void setStateComponent() {
-<<<<<<< HEAD
-=======
-        System.out.println(state);
->>>>>>> b2499c67b4e7a1a733f33e73813340b0484cc3b1
+
         switch (state) {
             case STAND -> {
                 animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
