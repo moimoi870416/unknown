@@ -158,7 +158,6 @@ public class Gun extends GameObjForAnimator {
         }
     }
 
-
     @Override
     public void update() {
         if (reloadingDelay.count()) {

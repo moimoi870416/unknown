@@ -27,7 +27,6 @@ public class GameActor extends GameObjForAnimator {
         super(x, y, actor.getWidth(), actor.getHeight(), 100, 10, 3);
         this.actor = actor;
         setAnimator();
-//        setState(State.STAND);
         setGun();
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
@@ -38,7 +37,7 @@ public class GameActor extends GameObjForAnimator {
         blood = new Bar(actor);
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
-        isFirstGun = false;
+        isFirstGun = true;
     }
     private void setGun(){
         switch (actor){
@@ -66,11 +65,16 @@ public class GameActor extends GameObjForAnimator {
             }
             case SECOND -> {
                 animator = new Animator(actor.getPath(), 30, 64, 68, 2);
-                animator.setArr(4);
+                animator.setArr(12);
+                animator.setDelayCount(10);
+                animator.setPlayLoop();
             }
             case THIRD -> {
                 animator = new Animator(actor.getPath(), 30, 80, 72, 2);
                 animator.setArr(16);
+                animator.setDelayCount(10);
+                animator.setPlayLoop();
+
             }
         }
 
@@ -116,6 +120,9 @@ public class GameActor extends GameObjForAnimator {
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
+        if(currentGun == WhichGun.ONE){
+            return;
+        }
         ConnectController.getInstance().changeGunSend(this,commandCode);
     }
 
@@ -206,7 +213,7 @@ public class GameActor extends GameObjForAnimator {
             return;
         }
         ConnectController.getInstance().actorStateSend(connectID,state);
-        switch (actor) {
+        switch (this.actor) {
             case FIRST -> {
                 switch (this.state) {
                     case STAND -> {
