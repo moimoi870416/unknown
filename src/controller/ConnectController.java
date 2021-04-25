@@ -202,6 +202,7 @@ public class ConnectController {
                 monster.get(i).offSetY(Integer.valueOf(strs.get(2)));
                 monster.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 monster.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+                monster.get(i).transHitArea();
             }
         }
     }

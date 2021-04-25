@@ -93,21 +93,20 @@ public abstract class Monster extends GameObjForAnimator {
         }
         if (isChase) {
             chase();
-            return;
         }
-        isSeeingActor();
     }
 
     public void whoIsNear(GameActor gameActor){
-        if(!isChase){
-            return;
-        }
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
         float dy = Math.abs(gameActor.collider().bottom() - painter().centerY()-10);
         float dc = (float) Math.sqrt(dx * dx + dy * dy);//計算斜邊,怪物與人物的距離
         if(dc < nearest){
             nearest = dc;
             this.gameActor = gameActor;
+        }
+        if(nearest <Global.WINDOW_WIDTH/2){
+            setState(State.RUN);
+            isChase = true;
         }
 
     }
@@ -134,12 +133,12 @@ public abstract class Monster extends GameObjForAnimator {
 
     protected abstract void updateComponent();
 
-    protected void isSeeingActor() {
-        if (Math.abs(Global.actorX - painter().centerX()) < Global.WINDOW_WIDTH / 2) {
-            setState(State.RUN);
-            isChase = true;
-        }
-    }
+//    protected void isSeeingActor() {
+//        if (Math.abs(Global.actorX - painter().centerX()) < Global.WINDOW_WIDTH / 2) {
+//            setState(State.RUN);
+//            isChase = true;
+//        }
+//    }
 
 
     public void isCollisionWithMonster(Monster other) {
