@@ -64,12 +64,12 @@ public abstract class ConnectScene extends GameScene {
                         break;
                     case NetEvent.MONSTER:
                         ConnectController.getInstance().monsterReceive(monster, strs);
-                    case  NetEvent.MONSTER_DEAD:
-                        ConnectController.getInstance().monsterDeadReceive(monster,strs);
-
+                        break;
+                    case NetEvent.MONSTER_DEAD:
+                        ConnectController.getInstance().monsterDeadReceive(monster, strs);
+                        break;
                 }
             }
         });
     }
-
 }
