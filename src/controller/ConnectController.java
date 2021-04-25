@@ -235,4 +235,14 @@ public class ConnectController {
 
         SenceController.getSenceController().change(new LimitMode(test));
     }
+
+    public void monsterDeadSend(int key){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(key + "");
+        ClientClass.getInstance().sent(NetEvent.MONSTER_DEAD, strs);
+    }
+
+    public void monsterDeadReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+        monster.remove(Integer.valueOf(strs.get(0)));
+    }
 }
