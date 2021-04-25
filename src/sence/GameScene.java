@@ -192,10 +192,6 @@ public abstract class GameScene extends Scene {
                         }
                     }
                 }
-<<<<<<< HEAD
-            }
-=======
-
                 ConnectController.getInstance().monsterSend(monster.get(i));
                 
             }
@@ -203,7 +199,6 @@ public abstract class GameScene extends Scene {
                 monster.get(i).attack(gameActorArr.get(0));
             }
         }
->>>>>>> 96deff769fc405ee8f2b72034fce90d86f718a88
     }
 
     private void shootUpdate() {
