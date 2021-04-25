@@ -26,7 +26,7 @@ public abstract class GameObjForAnimator extends GameObject {
         this.atk = atk;
         this.moveSpeed = moveSpeed;
         dir = Dir.RIGHT;
-        state = State.STAND;
+        setState(State.STAND);
         isDie = false;
     }
 
@@ -54,10 +54,16 @@ public abstract class GameObjForAnimator extends GameObject {
     }
 
     public void setState(State state){
-        if(!animator.isFinish() && this.state == state){
-            return;
+        if(this.state == state){
+            if(!animator.isFinish()){
+                return;
+            }
+
         }
         this.state = state;
+        if(animator == null){
+            return;
+        }
         setStateComponent();
     }
 
