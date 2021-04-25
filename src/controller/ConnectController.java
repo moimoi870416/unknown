@@ -70,7 +70,7 @@ public class ConnectController {
             if(gameActorArr.get(i).getConnectID() == serialNum){
                 gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
                 gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
-                gameActorArr.get(i).offLife(Integer.valueOf(strs.get(2)));
+                gameActorArr.get(i).setLife(Integer.valueOf(strs.get(2)));
                 gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
