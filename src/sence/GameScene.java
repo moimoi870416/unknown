@@ -159,11 +159,7 @@ public abstract class GameScene extends Scene {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
-<<<<<<< HEAD
                                 if(monster.get(k).getTypeCode() == 3){
-=======
-                                if (monster.get(k).getTypeCode() == 3) {
->>>>>>> 60e9c99e006c87453a22d99e851550a8c741bb50
                                     monster.get(k).setMonsterState(GameObjForAnimator.State.CRITICAL);
                                     return;
                                 }
