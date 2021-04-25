@@ -75,7 +75,7 @@ public class BullBoss extends Monster {
 
 
     @Override
-    public void setStateComponent() {
+    protected void setStateComponent() {
         switch (this.state){
             case STAND -> {
                 int r = Global.random(0,1);

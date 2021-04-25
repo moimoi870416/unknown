@@ -28,7 +28,8 @@ public class Rino extends Monster {
     }
 
     @Override
-    public void setStateComponent() {
+    protected void setStateComponent() {
+        System.out.println(state);
         switch (state) {
             case STAND -> {
                 animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
@@ -92,10 +93,10 @@ public class Rino extends Monster {
         if (Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
             ConnectController.getInstance().monsterBooleanSend(focus, connectID, "focus");
-            if (state != State.STAND) {
-                setState(State.STAND);
-            }
+            setState(State.STAND);
+
             if (attackDelay.count()) {
+                System.out.println("!!!!!!!!!!!!!");
                 setState(State.RUN);
                 int x = Math.abs(gameActor.collider().centerX() - painter().centerX());
                 int y = Math.abs(gameActor.collider().bottom() - painter().centerY());
