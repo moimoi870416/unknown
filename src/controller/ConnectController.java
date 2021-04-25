@@ -146,17 +146,12 @@ public class ConnectController {
                         Gun.GunType.valueOf(strs.get(4)),Integer.valueOf(strs.get(5))));
     }
 
-    public void bulletSend(Bullet bullet){
-    }
-
-    public void bulletReceive(){
-    }
-
     public void newMonsterSend(Monster monster,int commandCode){
         ArrayList<String> strs = new ArrayList<>();
         strs.add(commandCode +"");//0
         strs.add(monster.painter().left() +"");//1
         strs.add(monster.painter().top() +"");//2
+        strs.add(monster.getConnectID() + "");//3
         ClientClass.getInstance().sent(NetEvent.MONSTER_NEW, strs);
     }
 
@@ -170,6 +165,7 @@ public class ConnectController {
             case 5 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
             case 6 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
         }
+        monsters.getLast().setConnectID(Integer.valueOf(strs.get(3)));
     }
 
     public void bossAtkTypeSend(int typeCode){
