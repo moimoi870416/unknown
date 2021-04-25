@@ -33,8 +33,8 @@ public class BossScene extends ConnectScene {
     @Override
     protected void gameSceneBegin() {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-        MAP_WIDTH = 3096;
-        MAP_HEIGHT = 3096;
+        MAP_WIDTH = 2048;
+        MAP_HEIGHT = 2048;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if(isServer) {
