@@ -174,8 +174,9 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
+
         for (int i = 0; i < monster.size(); i++) {
-            if (isServer) {
+            if (isServer||isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                     ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
                     monster.remove(i);
@@ -187,7 +188,7 @@ public abstract class GameScene extends Scene {
                 break;
             }
             monster.get(i).updateForConnect();
-            if (isServer) {
+            if (isServer||isSingle) {
                 monster.get(i).update();
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     monster.get(i).whoIsNear(gameActorArr.get(k));

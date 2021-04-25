@@ -38,8 +38,6 @@ public class Stone extends Monster{
             atk = 0;
             life = Integer.MAX_VALUE;
         }
-        ConnectController.getInstance().monsterStateSend(state,connectID);
-
         switch (this.state) {
             case CRITICAL -> {
                 if(!dead) {
