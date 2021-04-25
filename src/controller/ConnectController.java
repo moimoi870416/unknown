@@ -249,4 +249,19 @@ public class ConnectController {
             }
         }
     }
+
+    public void monsterIsChaseSend(boolean isChase,int connectID){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(connectID + "");
+        strs.add(isChase + "");
+        ClientClass.getInstance().sent(NetEvent.MONSTER_IS_CHASE, strs);
+    }
+
+    public void monsterIsChaseReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+        for(int i=0 ; i<monster.size() ; i++){
+            if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
+                monster.get(i).setIsChase(Boolean.valueOf(strs.get(1)));
+            }
+        }
+    }
 }

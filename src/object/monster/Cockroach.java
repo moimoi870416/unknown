@@ -17,6 +17,11 @@ public class Cockroach extends Monster {
     }
 
     @Override
+    protected void updateForDelay() {
+
+    }
+
+    @Override
     protected void updateComponent() {
         if(attacking) {
             if (delayForAttack.isPlaying()) {

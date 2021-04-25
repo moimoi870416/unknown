@@ -98,6 +98,7 @@ public abstract class GameObjForAnimator extends GameObject {
     }
 
     public int getLife() {
+
         return life;
     }
 

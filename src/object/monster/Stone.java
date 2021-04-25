@@ -14,6 +14,11 @@ public class Stone extends Monster{
     }
 
     @Override
+    protected void updateForDelay() {
+
+    }
+
+    @Override
     protected void updateComponent() {
         if(animator.isFinish()){
             animator.setImg("/pictures/monster/rock/rockDead(22x18).png",2);

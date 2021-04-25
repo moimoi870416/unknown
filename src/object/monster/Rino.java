@@ -72,11 +72,16 @@ public class Rino extends Monster{
         }
     }
 
-//    @Override
-//    public void update(){
+    @Override
+    protected void updateForDelay() {
+ 
+    }
+
+    protected void updateComponent() {
 //        if(isChase){
+//            forRino = true;
 //            if(readyAtk){
-//                if(!attack()){
+//                if(attack()){
 //                    return;
 //                }
 //                chase();
@@ -85,23 +90,6 @@ public class Rino extends Monster{
 //            atkMove();
 //            return;
 //        }
-//        isSeeingActor();
-//        setState(State.RUN);
-//    }
-
-    protected void updateComponent() {
-        if(isChase){
-            forRino = true;
-            if(readyAtk){
-                if(attack()){
-                    return;
-                }
-                chase();
-                return;
-            }
-            atkMove();
-            return;
-        }
     }
 
     private boolean attack(){
