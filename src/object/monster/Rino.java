@@ -16,7 +16,6 @@ public class Rino extends Monster{
 
     public Rino(int x, int y) {
         super(x+5,y+6,94,58,x, y, 104,68,x+5,y+6,94,58, 1000, 80, 2,true,2);
-
         animator = new Animator("/pictures/monster/rino/Idle2(52x34).png",30,52,34,2);
         animator.setArr(11);
         readyAtk = true;
@@ -26,12 +25,12 @@ public class Rino extends Monster{
         focus = false;
         originalAtk = atk;
         clickAtk = true;
-
     }
 
     @Override
     public void setState(State state) {
         this.state = state;
+
         ConnectController.getInstance().monsterStateSend(state,connectID);
         switch (state) {
             case STAND -> {
@@ -73,7 +72,6 @@ public class Rino extends Monster{
     @Override
     protected void updateForDelay() {
 
- 
     }
 
 
@@ -119,7 +117,6 @@ public class Rino extends Monster{
                 changeDir(moveOnX);
             }
             return true;
-
         }
         return false;
     }
@@ -138,6 +135,5 @@ public class Rino extends Monster{
         totalDistance = 0;
         changeDir(gameActor.collider().centerX()-painter().centerX());
         animator.setDelayCount(30);
-
     }
 }

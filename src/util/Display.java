@@ -25,7 +25,6 @@ public class Display {
     private GameActor gameActor;
     public boolean isFirstGun;
 
-
     public Display(GameActor gameActor) {
         this.gameActor = gameActor;
         isFirstGun = true;
@@ -43,7 +42,6 @@ public class Display {
         font1 = new Font("Curlz TM", Font.PLAIN, 20);
         font2 = new Font("Curlz TM", Font.PLAIN, 14);
         font3 = new Font("Curlz TM", Font.PLAIN, 40);
-
     }
 
 
@@ -53,7 +51,6 @@ public class Display {
         framePaint(g);
         gunPaint(g);
         buttonPaint(g);
-
     }
 
     public void displayUpdate(GameActor gameActor) {
