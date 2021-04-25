@@ -199,6 +199,9 @@ public class MenuScene extends Scene {
         crateServer.setClickedActionPerformed((x, y) -> {
                     ModeState = FIFTH;
                     isServer = true;
+                    isAdd = false;
+                    inputText.unFocus();
+                    addServer.unFocus();
                     crateConnectLanArea();
                 }
         );
@@ -206,7 +209,6 @@ public class MenuScene extends Scene {
                     isAdd = true;
                     inputText.isFocus();
                 }
-
         );
     }
 
@@ -274,7 +276,7 @@ public class MenuScene extends Scene {
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
                                 isPress(backToSec, e);
-                                if(singleMode.IsUse(limitMode)){
+                                if (singleMode.IsUse(limitMode)) {
                                     singleSceneChange();
                                 }
                             }
@@ -308,6 +310,12 @@ public class MenuScene extends Scene {
 //                moveKey(commandCode); //偵測目前鍵盤位置
                 if (commandCode == Active.ENTER.getCommandCode()) {
 //                    if (MenuScene.this.inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
+
+                    if (IS_DEBUG) {
+                        connectIP = "192.168.1.19";
+                        addConnectLanArea();
+                        return;
+                    }
                     connectIP = inputText.getEditText();
                     inputText.unFocus();
                     addConnectLanArea();
@@ -340,7 +348,6 @@ public class MenuScene extends Scene {
                 backToFir.paint(g);
             }
 
-
             case SECOND -> {
                 backToFir.paint(g);
                 singleMode.paint(g);
@@ -372,7 +379,6 @@ public class MenuScene extends Scene {
     }
 
     private void crateConnectLanArea() {
-        Scanner sc = new Scanner(System.in);
         Server.instance().create(12345);
         Server.instance().start();
         System.out.println(Server.instance().getLocalAddress()[0]);
@@ -384,6 +390,7 @@ public class MenuScene extends Scene {
     }
 
     private void addConnectLanArea() {
+
         try {
             ClientClass.getInstance().connect(connectIP, 12345); // ("SERVER端IP", "SERVER端PORT")
             SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));

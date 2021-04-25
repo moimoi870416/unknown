@@ -25,16 +25,14 @@ import static util.Global.*;
 
 public class EnterScene extends Scene {
     private BackgroundType.BackgroundImage menuImg2; //背景圖
-    private Style playStyle1Light;//人物1
-    private Style playStyle2Light;//人物2的亮圖
-    private Style playStyle2Drank;//人物2的暗圖
-    private Style playStyle3Light;//人物3的亮圖
-    private Style playStyle3Drank;//人物3的暗圖
-    private Label play1;
-    private Label play2;
-    private Label play2d;
-    private Label play3;
-    private Label play3d;
+    private Image play1o;
+    private Image play1l;
+    private Image play2l;
+    private Image play2d;
+    private Image play2o;
+    private Image play3o;
+    private Image play3l;
+    private Image play3d;
 
     private ArrayList<GameActor> gameActorArr;
     private boolean isSingle;
@@ -53,29 +51,11 @@ public class EnterScene extends Scene {
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
     }
 
-    private void initStyle() {
-        this.start = new Button(1100, 720, Theme.get(9));
-        playStyle1Light = new Style.StyleRect(325, 600, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-1.png")));
-        playStyle2Light = new Style.StyleRect(325, 600, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2.png")));
-        playStyle3Light = new Style.StyleRect(325, 600, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-3.png")));
-        playStyle2Drank = new Style.StyleRect(325, 600, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-2Drank.png")));
-        playStyle3Drank = new Style.StyleRect(325, 600, true,
-                new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/play-3Drank.png")));
-        play1 = new Label(100, 90, playStyle1Light);
-        play2 = new Label(550, 90, playStyle2Light);
-        play2d = new Label(550, 90, playStyle2Drank);
-        play3 = new Label(1000, 90, playStyle3Light);
-        play3d = new Label(1000, 90, playStyle3Drank);
-    }
-
     @Override
     public void sceneBegin() {
         menuImg2 = new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/menu-2.png"));
-        initStyle();
+        addImg();
+        this.start = new Button(1100, 720, Theme.get(9));
         start.setClickedActionPerformed((x, y) -> {
             if (isServer) {
                 ConnectController.getInstance().changeSceneSend(isNormal);
@@ -87,11 +67,26 @@ public class EnterScene extends Scene {
     @Override
     public void sceneEnd() {
         menuImg2 = null;
-        play1 = null;
-        play2 = null;
-        play3 = null;
         start = null;
+        play1o = null;
+        play1l = null;
+        play2l = null;
+        play2d = null;
+        play2o = null;
+        play3l = null;
+        play3o = null;
+        play3d = null;
+    }
 
+    private void addImg() {
+        play1l = ImageController.getInstance().tryGet("/pictures/menu/play-1.png");
+        play1o = ImageController.getInstance().tryGet("/pictures/menu/play-1own.png");
+        play2l = ImageController.getInstance().tryGet("/pictures/menu/play-2.png");
+        play2o = ImageController.getInstance().tryGet("/pictures/menu/play-2own.png");
+        play2d = ImageController.getInstance().tryGet("/pictures/menu/play-2Drank.png");
+        play3l = ImageController.getInstance().tryGet("/pictures/menu/play-3.png");
+        play3o = ImageController.getInstance().tryGet("/pictures/menu/play-3own.png");
+        play3d = ImageController.getInstance().tryGet("/pictures/menu/play-3Drank.png");
     }
 
     @Override
@@ -100,9 +95,11 @@ public class EnterScene extends Scene {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
             }
+
             @Override
             public void keyReleased(int commandCode, long trigTime) {
             }
+
             @Override
             public void keyTyped(char c, long trigTime) {
             }
@@ -128,16 +125,22 @@ public class EnterScene extends Scene {
         if (isServer) {
             start.paint(g);
         }
-        play1.paint(g);
         if (playerCount == 1) {
-            play2d.paint(g);
-            play3d.paint(g);
+            g.drawImage(play1o, 100, 90, null);
+            g.drawImage(play2d, 550, 90, null);
+            g.drawImage(play3d, 1000, 90, null);
         } else if (playerCount == 2) {
-            play2.paint(g);
-            play3d.paint(g);
+           if(isServer){
+               g.drawImage(play1o, 100, 90, null);
+               g.drawImage(play2l, 550, 90, null);
+               g.drawImage(play3d, 1000, 90, null);
+               return;
+           }
+            g.drawImage(play1l, 100, 90, null);
+            g.drawImage(play2o, 550, 90, null);
+            g.drawImage(play3d, 1000, 90, null);
         } else {
-            play2.paint(g);
-            play3.paint(g);
+
         }
     }
 
@@ -151,7 +154,6 @@ public class EnterScene extends Scene {
         ClientClass.getInstance().consume(new CommandReceiver() {
             @Override
             public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
-
 
                 if (commandCode == Global.NetEvent.EVENT_CHANGE_SCENE) {
                     ConnectController.getInstance().changeSceneReceive(strs, gameActorArr);
