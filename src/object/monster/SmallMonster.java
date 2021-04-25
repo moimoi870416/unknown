@@ -1,5 +1,6 @@
 package object.monster;
 
+import controller.ConnectController;
 import util.Animator;
 
 public class SmallMonster extends Monster {
@@ -27,6 +28,7 @@ public class SmallMonster extends Monster {
     @Override
     public void setState(State state){
         this.state = state;
+        ConnectController.getInstance().monsterStateSend(state,connectID);
         switch (this.state){
             case RUN -> {
                 animator.setImg(type.path, 2);

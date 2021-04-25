@@ -1,5 +1,6 @@
 package object.monster;
 
+import controller.ConnectController;
 import util.Animator;
 
 public class Stone extends Monster{
@@ -32,10 +33,12 @@ public class Stone extends Monster{
     public void setState(State state) {
         if(life <= 0){
             this.state = State.CRITICAL;
+            ConnectController.getInstance().monsterStateSend(state,connectID);
             moveSpeed = 0;
             atk = 0;
             life = Integer.MAX_VALUE;
         }
+        ConnectController.getInstance().monsterStateSend(state,connectID);
 
         switch (this.state) {
             case CRITICAL -> {

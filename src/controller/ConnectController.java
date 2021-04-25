@@ -250,17 +250,39 @@ public class ConnectController {
         }
     }
 
-    public void monsterIsChaseSend(boolean isChase,int connectID){
+    public void monsterBooleanSend(boolean isTrue, int connectID, String type){
         ArrayList<String> strs = new ArrayList<>();
+        strs.add(type);
         strs.add(connectID + "");
-        strs.add(isChase + "");
+        strs.add(isTrue + "");
         ClientClass.getInstance().sent(NetEvent.MONSTER_IS_CHASE, strs);
     }
 
-    public void monsterIsChaseReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+    public void monsterBooleanReceive(LinkedList<Monster> monster, ArrayList<String> strs){
+        for(int i=0 ; i<monster.size() ; i++){
+            if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(1))){
+                switch (strs.get(0)){
+                   case "isChase" ->monster.get(i).setIsChase(Boolean.valueOf(strs.get(2)));
+                   case "forRino" ->monster.get(i).setForRino(Boolean.valueOf(strs.get(2)));
+                   case "focus" ->monster.get(i).setFocus(Boolean.valueOf(strs.get(2)));
+                   case "readyAtk" ->monster.get(i).setReadyAtk(Boolean.valueOf(strs.get(2)));
+                }
+
+            }
+        }
+    }
+
+    public void monsterStateSend(GameObjForAnimator.State state,int connectID){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(connectID + "");
+        strs.add(state +"");
+        ClientClass.getInstance().sent(NetEvent.MONSTER_STATE, strs);
+    }
+
+    public void monsterStateReceive(LinkedList<Monster> monster, ArrayList<String> strs){
         for(int i=0 ; i<monster.size() ; i++){
             if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
-                monster.get(i).setIsChase(Boolean.valueOf(strs.get(1)));
+                monster.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(1)));
             }
         }
     }

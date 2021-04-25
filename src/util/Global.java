@@ -71,6 +71,7 @@ public class Global {
         public static final int MONSTER_BOSS_ATTACK_TYPE = 406;
         public static final int MONSTER_DEAD = 407;
         public static final int MONSTER_IS_CHASE = 408;
+        public static final int MONSTER_FOR_RINO = 409;
 
         public static final int EVENT_CHANGE_SCENE = 500;
         public static final int EVENT_SCENE_MODE = 501;

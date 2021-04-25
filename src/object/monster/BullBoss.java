@@ -76,6 +76,7 @@ public class BullBoss extends Monster {
     @Override
     public void setState(State state) {
         this.state = state;
+        ConnectController.getInstance().monsterStateSend(state,connectID);
         switch (state){
             case STAND -> {
                 int r = Global.random(0,1);

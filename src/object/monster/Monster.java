@@ -26,6 +26,8 @@ public abstract class Monster extends GameObjForAnimator {
     private float nearest;
     protected int atkType;
     protected int connectID;
+    protected boolean focus;
+    protected boolean readyAtk;
 
     public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack,int typeCode) {
         this(x, y, width, height, x, y, width, height,x,y,width,height, life, atk, moveSpeed, isOnceAttack,typeCode);
@@ -81,7 +83,7 @@ public abstract class Monster extends GameObjForAnimator {
         }
         if (state == State.DEATH) {
             isChase = false;
-            ConnectController.getInstance().monsterIsChaseSend(isChase,connectID);
+            ConnectController.getInstance().monsterBooleanSend(isChase,connectID,"isChase");
             return;
         }
         updateComponent();
@@ -119,7 +121,7 @@ public abstract class Monster extends GameObjForAnimator {
         if(nearest <Global.WINDOW_WIDTH/2){
             setState(State.RUN);
             isChase = true;
-            ConnectController.getInstance().monsterIsChaseSend(isChase,connectID);
+            ConnectController.getInstance().monsterBooleanSend(isChase,connectID,"isChase");
         }
 
     }
@@ -219,4 +221,15 @@ public abstract class Monster extends GameObjForAnimator {
         this.isChase = isChase;
     }
 
+    public void setForRino(boolean isTrue){
+        this.forRino = isTrue;
+    }
+
+    public void setFocus(boolean isTure){
+        this.focus = isTure;
+    }
+
+    public void setReadyAtk(boolean isTure){
+        this.readyAtk = isTure;
+    }
 }
