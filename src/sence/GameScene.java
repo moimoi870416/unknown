@@ -192,18 +192,13 @@ public abstract class GameScene extends Scene {
                         }
                     }
                 }
-<<<<<<< HEAD
-            }
-=======
-
                 ConnectController.getInstance().monsterSend(monster.get(i));
-                
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));
             }
         }
->>>>>>> 96deff769fc405ee8f2b72034fce90d86f718a88
+
     }
 
     private void shootUpdate() {
