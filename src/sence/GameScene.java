@@ -159,7 +159,7 @@ public abstract class GameScene extends Scene {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
-                                monster.get(k).setState(GameObjForAnimator.State.DEATH);
+                                monster.get(k).setStateComponent(GameObjForAnimator.State.DEATH);
                             }
                             if (testBullets.get(i).isPenetrate(life)) {
 //                                testBullets.remove(i);
@@ -206,7 +206,6 @@ public abstract class GameScene extends Scene {
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));
-                gameActorArr.get(0).setLife(100);
             }
         }
     }

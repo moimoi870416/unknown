@@ -41,7 +41,7 @@ public class NormalMode extends ConnectScene {
             monster.add(new SmallMonster(9600,500, SmallMonster.Type.GOBLIN));
             monster.add(new Stone(10000,500));
             monster.add(new SmallMonster(9500,500, SmallMonster.Type.GOBLIN));
-            monster.add(new Rino(10100,500));
+            monster.add(new Rino(2000,500));
         }
     }
 

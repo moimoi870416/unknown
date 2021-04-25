@@ -6,16 +6,13 @@ import static util.Global.*;
 import object.GameObjForAnimator;
 import object.actor.GameActor;
 import object.monster.*;
-import sence.GameScene;
 import sence.gameScene.LimitMode;
-import sence.gameScene.normalMode.BossScene;
 import sence.gameScene.normalMode.NormalMode;
 import weapon.Bullet;
 import weapon.Gun;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class ConnectController {
     private static ConnectController connectController;
@@ -40,6 +37,21 @@ public class ConnectController {
         strs.addAll(gunSend(gameActor,mouseX,mouseY));
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
+    }
+
+    public void actorStateSend(int connectID, GameObjForAnimator.State state){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(connectID + "");//0
+        strs.add(state + "");//1
+        ClientClass.getInstance().sent(NetEvent.ACTOR_STATE, strs);
+    }
+
+    public void actorStateReceive(ArrayList<GameActor> gameActorArr,ArrayList<String> strs){
+        for(int i=0 ; i<gameActorArr.size() ; i++){
+            if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
+                gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(1)));
+            }
+        }
     }
 
 
@@ -72,7 +84,7 @@ public class ConnectController {
                 gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
                 gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
                 gameActorArr.get(i).setLife(Integer.valueOf(strs.get(2)));
-                gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
+                //gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
                                                          Integer.valueOf(strs.get(1)),
@@ -192,7 +204,7 @@ public class ConnectController {
             if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                 monster.get(i).offSetX(Integer.valueOf(strs.get(1)));
                 monster.get(i).offSetY(Integer.valueOf(strs.get(2)));
-                monster.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
+                //monster.get(i).setStateComponent(GameObjForAnimator.State.valueOf(strs.get(3)));
                 monster.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
                 monster.get(i).transHitArea();
             }
@@ -211,15 +223,15 @@ public class ConnectController {
         if(Boolean.valueOf(strs.get(0))){
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 switch (gameActorArr.get(i).getConnectID()){
-                    case 100 -> test.add(new GameActor(Actor.FIRST,200,200));
-                    case 101 -> test.add(new GameActor(Actor.SECOND,1000,2000));
-                    case 102 -> test.add(new GameActor(Actor.THIRD,1500,200));
+                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
+                    case 101 -> test.add(new GameActor(Actor.SECOND,500,500));
+                    case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
                 }
             }
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
             }
-            SenceController.getSenceController().change(new BossScene(test));
+            SenceController.getSenceController().change(new NormalMode(test));
             return;
         }
         for(int i=0 ; i<gameActorArr.size() ; i++){
@@ -283,7 +295,7 @@ public class ConnectController {
     public void monsterStateReceive(LinkedList<Monster> monster, ArrayList<String> strs){
         for(int i=0 ; i<monster.size() ; i++){
             if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
-                monster.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(1)));
+                monster.get(i).setStateComponent(GameObjForAnimator.State.valueOf(strs.get(1)));
             }
         }
     }

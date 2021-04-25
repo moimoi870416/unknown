@@ -1,5 +1,6 @@
 package object;
 
+import controller.ConnectController;
 import util.Animator;
 
 import java.awt.*;
@@ -13,6 +14,7 @@ public abstract class GameObjForAnimator extends GameObject {
     protected State state;
     protected boolean isDie;
     private GameObject nearestObj;
+    protected int connectID;
 
     public GameObjForAnimator(int x, int y, int width, int height, int life, int atk, int moveSpeed) {
         this(x, y, width, height, x, y, width, height, life, atk, moveSpeed);
@@ -51,7 +53,15 @@ public abstract class GameObjForAnimator extends GameObject {
         DEAD
     }
 
-    public abstract void setState(State state);
+    public void setState(State state){
+        if(!animator.isFinish() && this.state == state){
+            return;
+        }
+        this.state = state;
+        setStateComponent();
+    }
+
+    protected abstract void setStateComponent();
 
     public State getState() {
         return state;

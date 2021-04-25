@@ -26,9 +26,7 @@ public class SmallMonster extends Monster {
     }
 
     @Override
-    public void setState(State state){
-        this.state = state;
-        ConnectController.getInstance().monsterStateSend(state,connectID);
+    protected void setStateComponent() {
         switch (this.state){
             case RUN -> {
                 animator.setImg(type.path, 2);
@@ -46,7 +44,6 @@ public class SmallMonster extends Monster {
                 animator.setPlayOnce();
             }
         }
-
     }
 
     public enum Type{

@@ -159,7 +159,7 @@ public class Gun extends GameObjForAnimator {
     }
 
     @Override
-    public void setState(State state) {
+    public void setStateComponent(State state) {
 
     }
 
