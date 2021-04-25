@@ -44,28 +44,6 @@ public class Cockroach extends Monster {
         }
     }
 
-    @Override
-    public void setState(State state) {
-        this.state = state;
-        switch (state){
-            case RUN -> {
-                animator.setImg("/pictures/monster/cockroach/run.png",2);
-                animator.setArr(40);
-                animator.setDelayCount(0);
-                animator.setPlayLoop();
-                moveSpeed = 5;
-            }
-            case ATTACK -> {
-                animator.setImg("/pictures/monster/cockroach/eat.png",2);
-                animator.setArr(29);
-                animator.setDelayCount(6);
-                animator.setPlayOnce();
-                moveSpeed = 0;
-            }
-            case DEATH -> animator.setImg("/pictures/monster/cockroach/run.png",2);
-        }
-    }
-
     private void attackMove(){
         int x = 0;
         if(!move) {
@@ -90,6 +68,28 @@ public class Cockroach extends Monster {
         changeDir(moveOnX);
         move = true;
 
+    }
+
+    @Override
+    protected void setStateComponent() {
+        this.state = state;
+        switch (state){
+            case RUN -> {
+                animator.setImg("/pictures/monster/cockroach/run.png",2);
+                animator.setArr(40);
+                animator.setDelayCount(0);
+                animator.setPlayLoop();
+                moveSpeed = 5;
+            }
+            case ATTACK -> {
+                animator.setImg("/pictures/monster/cockroach/eat.png",2);
+                animator.setArr(29);
+                animator.setDelayCount(6);
+                animator.setPlayOnce();
+                moveSpeed = 0;
+            }
+            case DEATH -> animator.setImg("/pictures/monster/cockroach/run.png",2);
+        }
     }
 
 //    private void move(){

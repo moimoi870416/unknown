@@ -30,7 +30,7 @@ public class Stone extends Monster{
     }
 
     @Override
-    public void setState(State state) {
+    protected void setStateComponent() {
         if(life <= 0){
             this.state = State.CRITICAL;
             ConnectController.getInstance().monsterStateSend(state,connectID);
@@ -52,8 +52,5 @@ public class Stone extends Monster{
                 }
             }
         }
-
     }
-
-
 }

@@ -54,7 +54,7 @@ public class BossScene extends ConnectScene {
         public BossMapInfo(){
             map = ImageController.getInstance().tryGet(MapPath.END.mapPath);
             mapBoss();
-            monster.add(new BullBoss(1024,1024));
+            //monster.add(new BullBoss(1024,1024));
         }
 
         @Override

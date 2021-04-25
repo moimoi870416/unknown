@@ -28,10 +28,7 @@ public class Rino extends Monster {
     }
 
     @Override
-    public void setState(State state) {
-        this.state = state;
-
-        ConnectController.getInstance().monsterStateSend(state, connectID);
+    public void setStateComponent() {
         switch (state) {
             case STAND -> {
                 animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);

@@ -19,7 +19,6 @@ public class GameActor extends GameObjForAnimator {
     private Rotation rotation;
     private Bar blood;
     private Skill skill;
-    private int connectID;
     private Actor actor;
     private boolean isFirstGun;
 
@@ -193,14 +192,14 @@ public class GameActor extends GameObjForAnimator {
     }
 
     @Override
-    public void setState(State state) {
+    public void setStateComponent() {
         if (this.state == State.DEAD) {
             return;
         }
-        this.state = state;
+        ConnectController.getInstance().actorStateSend(connectID,state);
         switch (actor) {
             case FIRST -> {
-                switch (state) {
+                switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actorStand.png", 2);
                         animator.setArr(3);
@@ -224,7 +223,7 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case SECOND -> {
-                switch (state) {
+                switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actor2Stand(2).png", 2);
                         animator.setArr(12);
@@ -248,7 +247,7 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case THIRD -> {
-                switch (state) {
+                switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actor3Run.png", 2);
                         animator.setArr(16);

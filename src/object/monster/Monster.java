@@ -25,7 +25,6 @@ public abstract class Monster extends GameObjForAnimator {
     protected GameActor gameActor;
     private float nearest;
     protected int atkType;
-    protected int connectID;
     protected boolean focus;
     protected boolean readyAtk;
 
@@ -51,7 +50,6 @@ public abstract class Monster extends GameObjForAnimator {
         connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
         if(Global.isServer) {
             ConnectController.getInstance().newMonsterSend(this, typeCode);
-
         }
 
     }
@@ -95,6 +93,11 @@ public abstract class Monster extends GameObjForAnimator {
         }
     }
 
+    public void setStateComponent(State state){
+        setState(state);
+        ConnectController.getInstance().monsterStateSend(state,connectID);
+    }
+
     public void updateForConnect(){
         if (delayForCollision.count()) {
             collision = true;
@@ -119,7 +122,7 @@ public abstract class Monster extends GameObjForAnimator {
         }
 
         if(nearest <Global.WINDOW_WIDTH/2){
-            setState(State.RUN);
+            setStateComponent(State.RUN);
             isChase = true;
             ConnectController.getInstance().monsterBooleanSend(isChase,connectID,"isChase");
         }
@@ -186,8 +189,6 @@ public abstract class Monster extends GameObjForAnimator {
 
     }
 
-    public abstract void setState(State state);
-    //public abstract String getType();
 
     public Rect getHitCollied(){
         return hitCollied;

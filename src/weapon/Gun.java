@@ -157,11 +157,7 @@ public class Gun extends GameObjForAnimator {
             canShoot = false;
         }
     }
-
-    @Override
-    public void setState(State state) {
-
-    }
+    
 
     @Override
     public void update() {
@@ -184,6 +180,11 @@ public class Gun extends GameObjForAnimator {
     @Override
     public void paintComponent(Graphics g) {
         g.drawImage(imgForDisplay, positionX, positionY, null);
+    }
+
+    @Override
+    protected void setStateComponent() {
+
     }
 
     @Override
