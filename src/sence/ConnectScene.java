@@ -2,7 +2,6 @@ package sence;
 
 import client.ClientClass;
 import client.CommandReceiver;
-import object.actor.GameActor;
 import controller.ConnectController;
 
 import java.util.ArrayList;
