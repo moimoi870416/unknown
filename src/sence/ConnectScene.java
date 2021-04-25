@@ -2,7 +2,6 @@ package sence;
 
 import client.ClientClass;
 import client.CommandReceiver;
-import object.actor.GameActor;
 import controller.ConnectController;
 
 import java.util.ArrayList;
@@ -64,9 +63,10 @@ public abstract class ConnectScene extends GameScene {
                         break;
                     case NetEvent.MONSTER:
                         ConnectController.getInstance().monsterReceive(monster, strs);
+                        break;
                     case  NetEvent.MONSTER_DEAD:
                         ConnectController.getInstance().monsterDeadReceive(monster,strs);
-
+                        break;
                 }
             }
         });

@@ -1,6 +1,7 @@
 package sence;
 
 import camera.Camera;
+import controller.ImageController;
 import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
@@ -30,6 +31,8 @@ public abstract class GameScene extends Scene {
     protected MapInfo mapInfo;
     private int mouseX;
     private int mouseY;
+    private EffectView effectView;
+
 
     @Override
     public void sceneBegin() {
@@ -43,6 +46,8 @@ public abstract class GameScene extends Scene {
                 .setChaseObj(gameActorArr.get(0), 20, 20)
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
+        effectView = new EffectView();
+
     }
 
     protected abstract void sceneBeginComponent();
@@ -77,6 +82,7 @@ public abstract class GameScene extends Scene {
         });
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
+        effectView.effectPaint(g);
         camera.end(g);
         display.paint(g);
     }
@@ -84,9 +90,9 @@ public abstract class GameScene extends Scene {
     @Override
     public void update() {
         connectUpdate();
+        effectView.effectUpdate();
         mouseUpdate();
         monsterUpdate();
-        System.out.println(monster.size());
         actorUpdate();
         displayUpdate();
         shootUpdate();
@@ -301,6 +307,9 @@ public abstract class GameScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
+                if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH || gameActorArr.get(0).getState() == GameObjForAnimator.State.DEAD){
+                    return;
+                }
                 if (commandCode >= 1 || commandCode <= 4) {
                     gameActorArr.get(0).setState(GameObjForAnimator.State.STAND);
                 }
@@ -329,4 +338,36 @@ public abstract class GameScene extends Scene {
         public abstract void mapUpdate();
     }
 
+    private class EffectView{
+        private Image victory;
+        private Image defeat;
+        private Image warning;
+        private boolean isVictory;
+        private boolean isNobodyAlive;
+
+        private EffectView() {
+            isVictory = false;
+            isNobodyAlive = false;
+            defeat = ImageController.getInstance().tryGet("/pictures/effect/fail.png");
+        }
+
+        private void effectPaint(Graphics g){
+            if(isNobodyAlive){
+                g.drawImage(defeat,camera.getCameraWindowX()+220,camera.getCameraWindowY()+200,null);
+            }
+
+        }
+
+        private void effectUpdate(){
+            int sum = 0;
+            for(int i=0 ; i<gameActorArr.size() ; i++){
+                sum += gameActorArr.get(i).getLife();
+
+            }
+
+            if(sum <= 0){
+                isNobodyAlive = true;
+            }
+        }
+    }
 }

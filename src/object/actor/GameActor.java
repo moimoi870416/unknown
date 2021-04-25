@@ -22,8 +22,7 @@ public class GameActor extends GameObjForAnimator {
     private int connectID;
     private Actor actor;
     private boolean isFirstGun;
-    private int mouseX;
-    private int mouseY;
+
 
     public GameActor(Actor actor, final int x, final int y) {
         super(x, y, actor.getWidth(), actor.getHeight(), 100, 10, 3);
@@ -278,7 +277,6 @@ public class GameActor extends GameObjForAnimator {
     public void update() {
         blood.barUpdate(collider().left(), collider().top(), this.life);
         if (life <= 0) {
-
             if (state == State.DEATH && animator.isFinish()) {
                 setState(State.DEAD);
                 return;

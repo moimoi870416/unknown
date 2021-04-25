@@ -58,9 +58,7 @@ public abstract class GameObjForAnimator extends GameObject {
     }
 
     @Override
-    public void update() {
-
-    }
+    public abstract void update();
 
     public enum Dir {
         RIGHT,
