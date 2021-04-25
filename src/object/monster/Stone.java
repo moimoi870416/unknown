@@ -2,6 +2,7 @@ package object.monster;
 
 import controller.ConnectController;
 import util.Animator;
+import util.Global;
 
 import javax.crypto.spec.PSource;
 
@@ -34,9 +35,7 @@ public class Stone extends Monster{
     @Override
     protected void setStateComponent() {
         if(life <= 0){
-            System.out.println("!!!!!!!");
             this.state = State.CRITICAL;
-            ConnectController.getInstance().monsterStateSend(state,connectID);
             moveSpeed = 0;
             atk = 0;
             life = Integer.MAX_VALUE;
