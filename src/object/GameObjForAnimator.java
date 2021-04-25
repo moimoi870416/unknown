@@ -54,7 +54,7 @@ public abstract class GameObjForAnimator extends GameObject {
     }
 
     public void setState(State state){
-        if(this.state == state){
+        if(this.state == state && this.state != State.CRITICAL){
             return;
         }
         this.state = state;

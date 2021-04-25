@@ -159,8 +159,9 @@ public abstract class GameScene extends Scene {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
-                                if(monster.get(i).getTypeCode() == 3){
+                                if(monster.get(k).getTypeCode() == 3){
                                     monster.get(k).setMonsterState(GameObjForAnimator.State.CRITICAL);
+                                    return;
                                 }
                                 monster.get(k).setMonsterState(GameObjForAnimator.State.DEATH);
                             }
@@ -177,7 +178,6 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
-
         for (int i = 0; i < monster.size(); i++) {
             if (isServer||isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
