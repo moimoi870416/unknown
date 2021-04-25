@@ -125,34 +125,40 @@ public class EnterScene extends Scene {
         if (isServer) {
             start.paint(g);
         }
-        if (playerCount == 1) {
-            g.drawImage(play1o, 100, 90, null);
-            g.drawImage(play2d, 550, 90, null);
-            g.drawImage(play3d, 1000, 90, null);
-        } else if (playerCount == 2) {
-            if (isServer) {
+        switch (playerCount) {
+            case 1 -> {
                 g.drawImage(play1o, 100, 90, null);
-                g.drawImage(play2l, 550, 90, null);
+                g.drawImage(play2d, 550, 90, null);
                 g.drawImage(play3d, 1000, 90, null);
-                return;
             }
-            g.drawImage(play1l, 100, 90, null);
-            g.drawImage(play2o, 550, 90, null);
-            g.drawImage(play3d, 1000, 90, null);
-        } else {
-            for (int i = 0; i < gameActorArr.size(); i++) {
-                if (gameActorArr.get(i).getConnectID() == 100) {
+            case 2 -> {
+                if (isServer) {
                     g.drawImage(play1o, 100, 90, null);
                     g.drawImage(play2l, 550, 90, null);
-                    g.drawImage(play3l, 1000, 90, null);
-                } else if (gameActorArr.get(i).getConnectID() == 101) {
-                    g.drawImage(play1l, 100, 90, null);
-                    g.drawImage(play2o, 550, 90, null);
-                    g.drawImage(play3l, 1000, 90, null);
-                } else {
-                    g.drawImage(play1l, 100, 90, null);
-                    g.drawImage(play2l, 550, 90, null);
-                    g.drawImage(play3o, 1000, 90, null);
+                    g.drawImage(play3d, 1000, 90, null);
+                    return;
+                }
+                g.drawImage(play1l, 100, 90, null);
+                g.drawImage(play2o, 550, 90, null);
+                g.drawImage(play3d, 1000, 90, null);
+            }
+            case 3 -> {
+                switch (gameActorArr.get(0).getConnectID()) {
+                    case 100 -> {
+                        g.drawImage(play1o, 100, 90, null);
+                        g.drawImage(play2l, 550, 90, null);
+                        g.drawImage(play3l, 1000, 90, null);
+                    }
+                    case 101 -> {
+                        g.drawImage(play1l, 100, 90, null);
+                        g.drawImage(play2o, 550, 90, null);
+                        g.drawImage(play3l, 1000, 90, null);
+                    }
+                    case 102 -> {
+                        g.drawImage(play1l, 100, 90, null);
+                        g.drawImage(play2l, 550, 90, null);
+                        g.drawImage(play3o, 1000, 90, null);
+                    }
                 }
             }
         }
