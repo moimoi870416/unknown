@@ -211,15 +211,15 @@ public class ConnectController {
         if(Boolean.valueOf(strs.get(0))){
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 switch (gameActorArr.get(i).getConnectID()){
-                    case 100 -> test.add(new GameActor(Actor.FIRST,200,200));
-                    case 101 -> test.add(new GameActor(Actor.SECOND,1000,2000));
-                    case 102 -> test.add(new GameActor(Actor.THIRD,1500,200));
+                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
+                    case 101 -> test.add(new GameActor(Actor.SECOND,500,500));
+                    case 102 -> test.add(new GameActor(Actor.THIRD,500,500));
                 }
             }
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
             }
-            SenceController.getSenceController().change(new BossScene(test));
+            SenceController.getSenceController().change(new NormalMode(test));
             return;
         }
         for(int i=0 ; i<gameActorArr.size() ; i++){

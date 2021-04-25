@@ -5,7 +5,7 @@ import controller.ConnectController;
 import util.Animator;
 import util.Delay;
 
-public class Rino extends Monster{
+public class Rino extends Monster {
 
     private final int atkDistance = 500;
     private int moveOnX;
@@ -15,8 +15,8 @@ public class Rino extends Monster{
     private int originalAtk;
 
     public Rino(int x, int y) {
-        super(x+5,y+6,94,58,x, y, 104,68,x+5,y+6,94,58, 1000, 80, 2,true,2);
-        animator = new Animator("/pictures/monster/rino/Idle2(52x34).png",30,52,34,2);
+        super(x + 5, y + 6, 94, 58, x, y, 104, 68, x + 5, y + 6, 94, 58, 1000, 80, 2, true, 2);
+        animator = new Animator("/pictures/monster/rino/Idle2(52x34).png", 30, 52, 34, 2);
         animator.setArr(11);
         readyAtk = true;
         attackDelay = new Delay(180);
@@ -31,7 +31,7 @@ public class Rino extends Monster{
     public void setState(State state) {
         this.state = state;
 
-        ConnectController.getInstance().monsterStateSend(state,connectID);
+        ConnectController.getInstance().monsterStateSend(state, connectID);
         switch (state) {
             case STAND -> {
                 animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
@@ -43,7 +43,7 @@ public class Rino extends Monster{
                 animator.setImg("/pictures/monster/rino/Idle2(52x34).png", 2);
                 animator.setArr(11);
                 animator.setDelayCount(10);
-                atk += atk*0.5;
+                atk += atk * 0.5;
                 moveSpeed = 2;
             }
             case ATTACK -> {
@@ -60,7 +60,7 @@ public class Rino extends Monster{
             }
             case DEATH -> {
                 animator.setImg("/pictures/monster/rino/dead(224-64).png", 2);
-                animator.setWidthAndHeightSize(32,32);
+                animator.setWidthAndHeightSize(32, 32);
                 animator.setArr(7);
                 animator.setDelayCount(10);
                 animator.setPlayOnce();
@@ -76,11 +76,11 @@ public class Rino extends Monster{
 
 
     protected void updateComponent() {
-        if(isChase){
+        if (isChase) {
             forRino = true;
-            ConnectController.getInstance().monsterBooleanSend(forRino,connectID,"forRino");
-            if(readyAtk){
-                if(attack()){
+            ConnectController.getInstance().monsterBooleanSend(forRino, connectID, "forRino");
+            if (readyAtk) {
+                if (attack()) {
                     return;
                 }
                 chase();
@@ -91,11 +91,11 @@ public class Rino extends Monster{
         }
     }
 
-    private boolean attack(){
-        if(Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
+    private boolean attack() {
+        if (Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
-            ConnectController.getInstance().monsterBooleanSend(focus,connectID,"focus");
-            if(state != State.STAND){
+            ConnectController.getInstance().monsterBooleanSend(focus, connectID, "focus");
+            if (state != State.STAND) {
                 setState(State.STAND);
             }
             if (attackDelay.count()) {
@@ -111,9 +111,9 @@ public class Rino extends Monster{
                 if (gameActor.collider().centerX() < painter().centerX()) {
                     this.moveOnX = -moveOnX;
                 }
-                moveDistance = (int)Math.sqrt(moveOnX * moveOnX+ moveOnY * moveOnY);
+                moveDistance = (int) Math.sqrt(moveOnX * moveOnX + moveOnY * moveOnY);
                 readyAtk = false;
-                ConnectController.getInstance().monsterBooleanSend(readyAtk,connectID,"readyAtk");
+                ConnectController.getInstance().monsterBooleanSend(readyAtk, connectID, "readyAtk");
                 changeDir(moveOnX);
             }
             return true;
@@ -121,19 +121,19 @@ public class Rino extends Monster{
         return false;
     }
 
-    private void atkMove(){
-        if(totalDistance < atkDistance){
-            translate(moveOnX,moveOnY);
+    private void atkMove() {
+        if (totalDistance < atkDistance) {
+            translate(moveOnX, moveOnY);
             totalDistance += moveDistance;
             return;
         }
         focus = false;
-        ConnectController.getInstance().monsterBooleanSend(focus,connectID,"focus");
+        ConnectController.getInstance().monsterBooleanSend(focus, connectID, "focus");
         readyAtk = true;
-        ConnectController.getInstance().monsterBooleanSend(readyAtk,connectID,"readyAtk");
+        ConnectController.getInstance().monsterBooleanSend(readyAtk, connectID, "readyAtk");
         attackDelay.play();
         totalDistance = 0;
-        changeDir(gameActor.collider().centerX()-painter().centerX());
+        changeDir(gameActor.collider().centerX() - painter().centerX());
         animator.setDelayCount(30);
     }
 }
