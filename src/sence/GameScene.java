@@ -63,7 +63,7 @@ public abstract class GameScene extends Scene {
                 monster.paint(g);
             }
         });
-        for(int i=0 ; i<gameActorArr.size() ; i++){
+        for (int i = 0; i < gameActorArr.size(); i++) {
             if (camera.isCollision(gameActorArr.get(i))) {
                 gameActorArr.get(i).paint(g);
             }
@@ -86,6 +86,7 @@ public abstract class GameScene extends Scene {
         connectUpdate();
         mouseUpdate();
         monsterUpdate();
+        System.out.println(monster.size());
         actorUpdate();
         displayUpdate();
         shootUpdate();
@@ -128,7 +129,7 @@ public abstract class GameScene extends Scene {
                     break;
                 }
             }
-            if(x == 0){
+            if (x == 0) {
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
                         gameActorArr.get(k).offLife(testBullets.get(i).getAtk() / 4);
@@ -162,41 +163,41 @@ public abstract class GameScene extends Scene {
 
     private void monsterUpdate() {
 
-            for (int i = 0; i < monster.size(); i++) {
-                if(isServer) {
-                    if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                        ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
-//                        monster.remove(i);
-//                        i--;
-                        break;
-                    }
-                }
-
-                if(monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD){
+        for (int i = 0; i < monster.size(); i++) {
+            if (isServer) {
+                if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
+                    ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
+                        monster.remove(i);
+                        i--;
                     break;
                 }
-                monster.get(i).updateForConnect();
+            }
 
-                if(isServer) {
-                    monster.get(i).update();
+            if (monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
+                break;
+            }
+            monster.get(i).updateForConnect();
+
+            if (isServer) {
+                monster.get(i).update();
+                for (int k = 0; k < gameActorArr.size(); k++) {
+                    monster.get(i).whoIsNear(gameActorArr.get(k));
+                }
+                for (int k = 0; k < mapObjArr.size(); k++) {
+                    monster.get(i).isCollider(mapObjArr.get(k));
+                }
+                if (monster.size() > 1 && i != monster.size() - 1) {
                     for (int k = 0; k < gameActorArr.size(); k++) {
-                        monster.get(i).whoIsNear(gameActorArr.get(k));
-                    }
-                    for (int k = 0; k < mapObjArr.size(); k++) {
-                        monster.get(i).isCollider(mapObjArr.get(k));
-                    }
-                    if (monster.size() > 1 && i != monster.size() - 1) {
-                        for (int k = 0; k < gameActorArr.size(); k++) {
-                            if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
-                                monster.get(i).isCollisionWithMonster(monster.get(i + 1));
-                            }
+                        if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
+                            monster.get(i).isCollisionWithMonster(monster.get(i + 1));
                         }
                     }
-                    ConnectController.getInstance().monsterSend(monster.get(i),i);
                 }
-                if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
-                    monster.get(i).attack(gameActorArr.get(0));
-                }
+                ConnectController.getInstance().monsterSend(monster.get(i), i);
+            }
+            if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
+                monster.get(i).attack(gameActorArr.get(0));
+            }
         }
     }
 
@@ -208,24 +209,24 @@ public abstract class GameScene extends Scene {
                                 mouseX, mouseY,
                                 gameActorArr.get(0).getCurrentGun().getGunType(),
                                 gameActorArr.get(0).getConnectID()));
-                ConnectController.getInstance().newBulletSend(gameActorArr.get(0),mouseX,mouseY);
+                ConnectController.getInstance().newBulletSend(gameActorArr.get(0), mouseX, mouseY);
                 shootCount++;
             }
         }
     }
 
     private void actorUpdate() {
-        for(int i=0 ; i<gameActorArr.size() ; i++){
+        for (int i = 0; i < gameActorArr.size(); i++) {
             gameActorArr.get(i).getSkill().skillUpdate();
         }
         gameActorArr.get(0).update();
-        gameActorArr.get(0).rotationUpdate(mouseX,mouseY);
-        ConnectController.getInstance().actorSend(gameActorArr.get(0),mouseX,mouseY);//傳送自己的資料
+        gameActorArr.get(0).rotationUpdate(mouseX, mouseY);
+        ConnectController.getInstance().actorSend(gameActorArr.get(0), mouseX, mouseY);//傳送自己的資料
         for (int i = 0; i < mapObjArr.size(); i++) {//場景物件碰撞
             gameActorArr.get(0).isCollider(mapObjArr.get(i));
         }
-        if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEAD){//死亡畫面追蹤
-            if(gameActorArr.size() == 2) {
+        if (gameActorArr.get(0).getState() == GameObjForAnimator.State.DEAD) {//死亡畫面追蹤
+            if (gameActorArr.size() == 2) {
                 camera.setObj(gameActorArr.get(1));
                 gameActorArr.get(0).offSetX(gameActorArr.get(1).collider().left());
                 gameActorArr.get(0).offSetY(gameActorArr.get(1).collider().top());
@@ -269,7 +270,7 @@ public abstract class GameScene extends Scene {
                                         mouseX, mouseY,
                                         gameActorArr.get(0).getCurrentGun().getGunType(),
                                         gameActorArr.get(0).getConnectID()));
-                        ConnectController.getInstance().newBulletSend(gameActorArr.get(0),mouseX,mouseY);
+                        ConnectController.getInstance().newBulletSend(gameActorArr.get(0), mouseX, mouseY);
                     }
                 }
                 if (gameActorArr.get(0).getCurrentGun().getGunType() == Gun.GunType.MACHINE_GUN) {
@@ -306,7 +307,7 @@ public abstract class GameScene extends Scene {
                 }
                 if (commandCode == Active.SPACE.getCommandCode() && gameActorArr.get(0).getSkill().getDelayForFlash().isStop()) {
                     gameActorArr.get(0).getSkill().flash(mouseX, mouseY, mapObjArr);
-                    ConnectController.getInstance().flashSend(gameActorArr.get(0),mouseX,mouseY);
+                    ConnectController.getInstance().flashSend(gameActorArr.get(0), mouseX, mouseY);
 
                 }
                 if (commandCode == Active.SKILL.getCommandCode() && gameActorArr.get(0).getSkill().getHealCD().isStop()) {
