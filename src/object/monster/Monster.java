@@ -51,6 +51,7 @@ public abstract class Monster extends GameObjForAnimator {
             ConnectController.getInstance().newMonsterSend(this, typeCode);
 
         }
+        System.out.println(connectID);
     }
 
     public void chase() {
