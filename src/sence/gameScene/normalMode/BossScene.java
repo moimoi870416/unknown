@@ -38,7 +38,7 @@ public class BossScene extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if(isServer) {
-            monster.add(new BullBoss(1024,200));
+//            monster.add(new BullBoss(1024,200));
         }
     }
 
