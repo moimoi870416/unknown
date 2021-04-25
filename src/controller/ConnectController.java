@@ -8,6 +8,7 @@ import object.actor.GameActor;
 import object.monster.*;
 import sence.GameScene;
 import sence.gameScene.LimitMode;
+import sence.gameScene.normalMode.BossScene;
 import sence.gameScene.normalMode.NormalMode;
 import weapon.Bullet;
 import weapon.Gun;
@@ -210,15 +211,15 @@ public class ConnectController {
         if(Boolean.valueOf(strs.get(0))){
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 switch (gameActorArr.get(i).getConnectID()){
-                    case 100 -> test.add(new GameActor(Actor.FIRST,500,500));
-                    case 101 -> test.add(new GameActor(Actor.SECOND,500,525));
+                    case 100 -> test.add(new GameActor(Actor.FIRST,2000,2000));
+                    case 101 -> test.add(new GameActor(Actor.SECOND,2000,2000));
                     case 102 -> test.add(new GameActor(Actor.THIRD,500,550));
                 }
             }
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
             }
-            SenceController.getSenceController().change(new NormalMode(test));
+            SenceController.getSenceController().change(new BossScene(test));
             return;
         }
         for(int i=0 ; i<gameActorArr.size() ; i++){

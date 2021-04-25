@@ -200,6 +200,7 @@ public abstract class GameScene extends Scene {
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));
+                gameActorArr.get(0).setLife(100);
             }
         }
     }

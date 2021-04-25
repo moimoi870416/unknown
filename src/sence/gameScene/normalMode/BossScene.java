@@ -4,35 +4,48 @@ import camera.MapInformation;
 import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
+import object.actor.GameActor;
 import object.monster.BullBoss;
+import object.monster.Rino;
+import object.monster.SmallMonster;
+import object.monster.Stone;
+import sence.ConnectScene;
 import sence.GameScene;
 import static util.Global.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static util.Global.MAP_HEIGHT;
 import static util.Global.MAP_WIDTH;
 
-public class BossScene extends GameScene {
+public class BossScene extends ConnectScene {
 
+    public BossScene(){
+        gameActorArr = new ArrayList<>();
+        gameActorArr.add(new GameActor(Actor.FIRST,500,500));
+    }
+
+    public BossScene(ArrayList<GameActor> gameActorArr){
+        this.gameActorArr = gameActorArr;
+    }
 
     @Override
-    protected void sceneBeginComponent() {
+    protected void gameSceneBegin() {
+        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
+        MAP_WIDTH = 3096;
+        MAP_HEIGHT = 3096;
+        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
+        mapInfo = new BossMapInfo();
+        if(isServer) {
+            monster.add(new BullBoss(1024,200));
+        }
+    }
+
+    @Override
+    protected void gameSceneEnd() {
         MAP_HEIGHT = 2048;
         MAP_WIDTH = 2048;
-        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
-//        gameActor = new GameActor(Actor.FIRST.getPath(), 1024, 1900);
-        mapInfo = new BossMapInfo();
-    }
-
-    @Override
-    protected void sceneEndComponent() {
-        MAP_HEIGHT = 2048;
-        MAP_WIDTH = 1024;
-    }
-
-    @Override
-    protected void connectUpdate() {
 
     }
 
