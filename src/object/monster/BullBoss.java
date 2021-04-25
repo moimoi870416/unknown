@@ -35,6 +35,11 @@ public class BullBoss extends Monster {
     }
 
     @Override
+    protected void updateForDelay() {
+
+    }
+
+    @Override
     protected void updateComponent() {
         if(attacking) {
             if(atkType == 3) {

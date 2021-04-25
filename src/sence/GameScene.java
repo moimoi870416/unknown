@@ -168,8 +168,6 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
-
-
         for (int i = 0; i < monster.size(); i++) {
             if (isServer) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
@@ -362,11 +360,14 @@ public abstract class GameScene extends Scene {
             int sum = 0;
             for(int i=0 ; i<gameActorArr.size() ; i++){
                 sum += gameActorArr.get(i).getLife();
+                System.out.println(gameActorArr.get(i).getLife());
 
             }
 
             if(sum <= 0){
                 isNobodyAlive = true;
+            }else {
+                isNobodyAlive = false;
             }
         }
     }

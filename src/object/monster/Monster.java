@@ -81,6 +81,7 @@ public abstract class Monster extends GameObjForAnimator {
         }
         if (state == State.DEATH) {
             isChase = false;
+            ConnectController.getInstance().monsterIsChaseSend(isChase,connectID);
             return;
         }
         updateComponent();
@@ -101,10 +102,10 @@ public abstract class Monster extends GameObjForAnimator {
                 canAttack = true;
             }
         }
-//        updateForDelay();
+        updateForDelay();
     }
 
-//    protected abstract void updateForDelay();
+    protected abstract void updateForDelay();
 
     public void whoIsNear(GameActor gameActor){
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
@@ -118,6 +119,7 @@ public abstract class Monster extends GameObjForAnimator {
         if(nearest <Global.WINDOW_WIDTH/2){
             setState(State.RUN);
             isChase = true;
+            ConnectController.getInstance().monsterIsChaseSend(isChase,connectID);
         }
 
     }
@@ -211,6 +213,10 @@ public abstract class Monster extends GameObjForAnimator {
 
     public int getConnectID(){
         return connectID;
+    }
+
+    public void setIsChase(boolean isChase){
+        this.isChase = isChase;
     }
 
 }

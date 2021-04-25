@@ -72,24 +72,8 @@ public class Rino extends Monster{
         }
     }
 
-//    @Override
-//    public void update(){
-//        if(isChase){
-//            if(readyAtk){
-//                if(!attack()){
-//                    return;
-//                }
-//                chase();
-//                return;
-//            }
-//            atkMove();
-//            return;
-//        }
-//        isSeeingActor();
-//        setState(State.RUN);
-//    }
-
-    protected void updateComponent() {
+    @Override
+    protected void updateForDelay() {
         if(isChase){
             forRino = true;
             if(readyAtk){
@@ -102,6 +86,21 @@ public class Rino extends Monster{
             atkMove();
             return;
         }
+    }
+
+    protected void updateComponent() {
+//        if(isChase){
+//            forRino = true;
+//            if(readyAtk){
+//                if(attack()){
+//                    return;
+//                }
+//                chase();
+//                return;
+//            }
+//            atkMove();
+//            return;
+//        }
     }
 
     private boolean attack(){

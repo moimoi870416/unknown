@@ -15,6 +15,11 @@ public class SmallMonster extends Monster {
     }
 
     @Override
+    protected void updateForDelay() {
+
+    }
+
+    @Override
     protected void updateComponent() {
 
     }
