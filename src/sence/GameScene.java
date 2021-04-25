@@ -165,8 +165,8 @@ public abstract class GameScene extends Scene {
                 if(isServer) {
                     if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                         ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
-//                        monster.remove(i);
-//                        i--;
+                        monster.remove(i);
+                        i--;
                         break;
                     }
                 }
@@ -189,7 +189,7 @@ public abstract class GameScene extends Scene {
                             }
                         }
                     }
-                    ConnectController.getInstance().monsterSend(monster.get(i), i);
+                    ConnectController.getInstance().monsterSend(monster.get(i));
                 }
                 if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                     monster.get(i).attack(gameActorArr.get(0));

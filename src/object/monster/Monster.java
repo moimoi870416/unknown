@@ -99,7 +99,10 @@ public abstract class Monster extends GameObjForAnimator {
                 canAttack = true;
             }
         }
+//        updateForDelay();
     }
+
+//    protected abstract void updateForDelay();
 
     public void whoIsNear(GameActor gameActor){
         float dx = Math.abs(gameActor.collider().centerX() - painter().centerX());
