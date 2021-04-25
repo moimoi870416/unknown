@@ -62,8 +62,6 @@ public class GameActor extends GameObjForAnimator {
             case FIRST -> {
                 animator = new Animator(actor.getPath(), 30, 58, 58, 2);
                 animator.setArr(3);
-                animator.setDelayCount(30);
-                animator.setPlayLoop();
             }
             case SECOND -> {
                 animator = new Animator(actor.getPath(), 30, 64, 68, 2);
@@ -76,6 +74,7 @@ public class GameActor extends GameObjForAnimator {
                 animator.setArr(16);
                 animator.setDelayCount(10);
                 animator.setPlayLoop();
+
             }
         }
 
