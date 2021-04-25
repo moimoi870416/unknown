@@ -366,7 +366,7 @@ public abstract class GameScene extends Scene {
         private void effectUpdate() {
             int sum = 0;
             for (int i = 0; i < gameActorArr.size(); i++) {
-                if(gameActorArr.get(i).getLife() <=0){
+                if (gameActorArr.get(i).getLife() <= 0) {
                     gameActorArr.get(i).setLife(0);
                 }
                 sum += gameActorArr.get(i).getLife();
@@ -374,7 +374,7 @@ public abstract class GameScene extends Scene {
             if (sum <= 0) {
                 isNobodyAlive = true;
 
-            }else {
+            } else {
 
                 isNobodyAlive = false;
             }
