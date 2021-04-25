@@ -86,7 +86,6 @@ public abstract class GameScene extends Scene {
         connectUpdate();
         mouseUpdate();
         monsterUpdate();
-        System.out.println(monster.size());
         actorUpdate();
         displayUpdate();
         shootUpdate();
@@ -164,11 +163,13 @@ public abstract class GameScene extends Scene {
     private void monsterUpdate() {
 
             for (int i = 0; i < monster.size(); i++) {
-                if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                    //ConnectController.getInstance().monsterDeadSend(i);
-                    monster.remove(i);
-                    i--;
-                    break;
+                if(isServer) {
+                    if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
+                        ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
+//                        monster.remove(i);
+//                        i--;
+                        break;
+                    }
                 }
 
                 if(monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD){
