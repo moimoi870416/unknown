@@ -6,8 +6,10 @@ import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
 import object.monster.Monster;
+import util.Animator;
 import util.CommandSolver;
 import controller.ConnectController;
+import util.Delay;
 import util.Display;
 import weapon.Bullet;
 import weapon.Gun;
@@ -32,6 +34,7 @@ public abstract class GameScene extends Scene {
     private int mouseX;
     private int mouseY;
     private EffectView effectView;
+    protected boolean touchDown;
 
 
     @Override
@@ -348,19 +351,41 @@ public abstract class GameScene extends Scene {
         private Image victory;
         private Image defeat;
         private Image warning;
+        private Delay warningDelay;
         private boolean isVictory;
         private boolean isNobodyAlive;
+        private int count;
 
         private EffectView() {
+            warning = ImageController.getInstance().tryGet("/pictures/effect/warning.png");
+            victory = ImageController.getInstance().tryGet("/pictures/effect/victory.png");
+            warningDelay = new Delay(45);
+            warningDelay.play();
+            count = 0;
             isVictory = false;
             isNobodyAlive = false;
             defeat = ImageController.getInstance().tryGet("/pictures/effect/fail.png");
         }
 
         private void effectPaint(Graphics g) {
+            if(isVictory){
+                g.drawImage(victory,camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
+            }
             if (isNobodyAlive) {
                 g.drawImage(defeat, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
             }
+            if(touchDown){
+                if(warningDelay.count()){
+                    if(count > 45){
+                        g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
+                        count++;
+                        return;
+                    }
+                    warningDelay.play();
+                }
+
+            }
+
 
         }
 

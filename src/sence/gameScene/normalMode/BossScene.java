@@ -11,6 +11,9 @@ import object.monster.SmallMonster;
 import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
+import util.Animator;
+import util.Delay;
+
 import static util.Global.*;
 
 import java.awt.*;
@@ -23,7 +26,7 @@ public class BossScene extends ConnectScene {
 
     public BossScene(){
         gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.FIRST,500,500));
+        gameActorArr.add(new GameActor(Actor.FIRST,1024,1800));
     }
 
     public BossScene(ArrayList<GameActor> gameActorArr){
@@ -34,13 +37,13 @@ public class BossScene extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
-        MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
+
         MAP_WIDTH = 2048;
         MAP_HEIGHT = 2048;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if(isServer) {
-//            monster.add(new BullBoss(1024,200));
+            monster.add(new BullBoss(1024,200));
         }
     }
 
@@ -86,4 +89,5 @@ public class BossScene extends ConnectScene {
                     .setMap());
         }
     }
+
 }
