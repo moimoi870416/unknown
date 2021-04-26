@@ -8,11 +8,15 @@ public class SmallMonster extends Monster {
 
     public SmallMonster(int x, int y,Type type) {
         super(x, y, 32, 32,500,10,type.speedMove,false,type.typeCode);
-        animator = new Animator(type.path,15,16,16,2);
-        animator.setArr(6);
         this.type = type;
-        state = State.RUN;
-        setState(state);
+        if(type == Type.GOBLIN) {
+            animator = new Animator(type.path, 15, 16, 16, 2);
+            animator.setArr(6);
+        }else if(type == Type.MUSHROOM){
+            animator = new Animator(type.path, 15, 32, 32, 2);
+            animator.setArr(16);
+        }
+
     }
 
     @Override

@@ -40,6 +40,8 @@ public class BossScene extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
+        AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
+        AudioResourceController.getInstance().loop("/sounds/bgm/warning.wav",1);
         BGMDelay = new Delay(300);
         BGMDelay.play();
         MAP_WIDTH = 2048;
@@ -47,10 +49,10 @@ public class BossScene extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if (isServer) {
-            monster.add(new BullBoss(1024, 200));
-            monster.add(new Stone(1024, 800));
+//            monster.add(new BullBoss(1024, 200));
+//            monster.add(new Stone(1024, 800));
             monster.add(new Rino(1024, 1024));
-            monster.add(new SmallMonster(1024, 200, SmallMonster.Type.GOBLIN));
+            monster.add(new SmallMonster(1024, 200, SmallMonster.Type.MUSHROOM));
 
         }
     }
@@ -69,7 +71,7 @@ public class BossScene extends ConnectScene {
             map = ImageController.getInstance().tryGet(MapPath.END.mapPath);
             mapBoss();
             //monster.add(new BullBoss(1024,1024));
-            AudioResourceController.getInstance().loop("/sounds/bgm/warning.wav",1);
+
         }
 
         @Override
