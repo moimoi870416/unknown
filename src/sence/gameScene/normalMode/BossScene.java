@@ -41,7 +41,7 @@ public class BossScene extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if (isServer) {
-            monster.add(new BullBoss(1024,200));
+            monster.add(new BullBoss(1024, 200));
             monster.add(new Stone(1024, 800));
             monster.add(new Rino(1024, 1024));
             monster.add(new SmallMonster(1024, 200, SmallMonster.Type.GOBLIN));
@@ -74,47 +74,48 @@ public class BossScene extends ConnectScene {
         public void mapUpdate() {
 
 
-            int x = random(124,1924);
-            int y = random(124,1924);;
-            boolean xOK =false;
-            boolean yOK =false;
-            for(int i=0 ; i<gameActorArr.size() ; i++){
-                if(x > gameActorArr.get(i).collider().centerX()+WINDOW_WIDTH/2+10 && x< gameActorArr.get(i).collider().centerX()-WINDOW_WIDTH/2-10 ){
-                    xOK = true;
-                }else {
-                    xOK = false;
-                }
-                if(y > gameActorArr.get(i).collider().centerX()+WINDOW_HEIGHT+10 && y< gameActorArr.get(i).collider().centerX()-WINDOW_HEIGHT/2-10 ){
-                    yOK = true;
-                }else {
-                    yOK = false;
-                }
-            }
-            if(xOK && yOK){
-                int r = random(0,4);
-                if(r == 0){
-                    monster.add(new Rino(x,y));
-                }
-                if(r == 1){
-                    monster.add(new Stone(x,y));
-                }
-                if(r == 2){
-                    monster.add(new SmallMonster(x,y, SmallMonster.Type.GOBLIN));
-                }
-                if(r == 3){
-                    monster.add(new SmallMonster(x,y, SmallMonster.Type.MUSHROOM));
-                }
-
-                monster.getLast().setIsChase(true);
-            }
-            
             if (monster.size() == 0) {
                 return;
             }
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
+            if (isServer) {
+                int x = random(124, 1924);
+                int y = random(124, 1924);
+                ;
+                boolean xOK = false;
+                boolean yOK = false;
+                for (int i = 0; i < gameActorArr.size(); i++) {
+                    if (x > gameActorArr.get(i).collider().centerX() + WINDOW_WIDTH / 2 + 10 && x < gameActorArr.get(i).collider().centerX() - WINDOW_WIDTH / 2 - 10) {
+                        xOK = true;
+                    } else {
+                        xOK = false;
+                    }
+                    if (y > gameActorArr.get(i).collider().centerX() + WINDOW_HEIGHT + 10 && y < gameActorArr.get(i).collider().centerX() - WINDOW_HEIGHT / 2 - 10) {
+                        yOK = true;
+                    } else {
+                        yOK = false;
+                    }
+                }
+                if (xOK && yOK && monster.size() < 20 + stoneDead) {
+                    int r = random(0, 4);
+                    if (r == 0) {
+                        monster.add(new Rino(x, y));
+                    }
+                    if (r == 1) {
+                        monster.add(new Stone(x, y));
+                    }
+                    if (r == 2) {
+                        monster.add(new SmallMonster(x, y, SmallMonster.Type.GOBLIN));
+                    }
+                    if (r == 3) {
+                        monster.add(new SmallMonster(x, y, SmallMonster.Type.MUSHROOM));
+                    }
 
+                    monster.getLast().setIsChase(true);
+                }
+            }
         }
 
         private void mapBoss() {
