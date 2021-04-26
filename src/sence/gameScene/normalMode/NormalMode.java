@@ -28,21 +28,15 @@ public class NormalMode extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
+        bossScene = false;
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
         if(isSingle){
-//            monster.add(new BullBoss(3000,500));
+
         }
         if(isServer) {
-//            monster.add(new BullBoss(3000,500));
-//            monster.add(new SmallMonster(9000,500, SmallMonster.Type.MUSHROOM));
-//            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new SmallMonster(9600,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new BullBoss(3000,500));
-//            monster.add(new SmallMonster(9500,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new Rino(2000,500));
+
         }
     }
 
@@ -64,6 +58,7 @@ public class NormalMode extends ConnectScene {
         private Image boss;
         private final int mapWidth = 2048;
         private int count;
+        private boolean touchDown;
 
 
         public NormalModeMapInfo(){
@@ -125,10 +120,9 @@ public class NormalMode extends ConnectScene {
                 mapFinal = forest;
                 count = 0;
             }
-            if(isServer) {
-                System.out.println(gameActorArr.get(0).collider().centerX());
+            if(isServer||isSingle) {
                 for(int i = 0; i < gameActorArr.size(); i++) {
-                    if (monster.size() != 0 || gameActorArr.get(i).collider().centerX() <18400) {
+                    if (monster.size() != 0 || gameActorArr.get(i).collider().centerX() <18500) {
                         return;
                     }
                     if (isSingle) {
@@ -137,7 +131,6 @@ public class NormalMode extends ConnectScene {
                     touchDown = true;
                 }
                 if (touchDown) {
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!");
                     ConnectController.getInstance().changeBossSceneSend();
                 }
             }

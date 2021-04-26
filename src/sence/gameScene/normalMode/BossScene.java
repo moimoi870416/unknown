@@ -30,6 +30,7 @@ public class BossScene extends ConnectScene {
     }
 
     public BossScene(ArrayList<GameActor> gameActorArr){
+        bossScene = true;
         this.gameActorArr = gameActorArr;
         this.gameActorArr.get(0).offSetX(1024);
         this.gameActorArr.get(0).offSetY(1800);

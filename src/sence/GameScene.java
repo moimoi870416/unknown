@@ -6,7 +6,6 @@ import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
 import object.monster.Monster;
-import util.Animator;
 import util.CommandSolver;
 import controller.ConnectController;
 import util.Delay;
@@ -34,7 +33,7 @@ public abstract class GameScene extends Scene {
     private int mouseX;
     private int mouseY;
     private EffectView effectView;
-    protected boolean touchDown;
+    protected boolean bossScene;
 
 
     @Override
@@ -355,13 +354,15 @@ public abstract class GameScene extends Scene {
         private boolean isVictory;
         private boolean isNobodyAlive;
         private int count;
+        private int warningTime;
 
         private EffectView() {
             warning = ImageController.getInstance().tryGet("/pictures/effect/warning.png");
             victory = ImageController.getInstance().tryGet("/pictures/effect/victory.png");
             warningDelay = new Delay(45);
-            warningDelay.play();
+            warningDelay.loop();
             count = 0;
+            warningTime = 0;
             isVictory = false;
             isNobodyAlive = false;
             defeat = ImageController.getInstance().tryGet("/pictures/effect/fail.png");
@@ -374,15 +375,20 @@ public abstract class GameScene extends Scene {
             if (isNobodyAlive) {
                 g.drawImage(defeat, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
             }
-            if(touchDown){
-                if(warningDelay.count()){
-                    if(count > 45){
-                        g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
-                        count++;
-                        return;
+
+            if(bossScene && warningTime <3){
+                if(count < 45){
+                    g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
+                    count++;
+                    if(count == 44){
+                        warningTime++;
                     }
-                    warningDelay.play();
+                    return;
                 }
+                if(warningDelay.count()){
+                    count = 0;
+                }
+
 
             }
 
