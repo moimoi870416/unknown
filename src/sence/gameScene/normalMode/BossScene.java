@@ -51,6 +51,8 @@ public class BossScene extends ConnectScene {
 
         if (isServer) {
             monster.add(new BullBoss(1024, 500));
+            System.out.println(monster.get(0).getConnectID());
+
 //            monster.add(new Rino(random(200, 900), random(100, 500)));
 //            monster.add(new Rino(random(200, 900), random(100, 500)));
 //            monster.add(new Stone(random(200, 900), random(100, 500)));
@@ -96,9 +98,9 @@ public class BossScene extends ConnectScene {
         @Override
         public void mapUpdate() {
             System.out.println(gameActorArr.get(0).getState());
-            if(BGMDelay.count()){
+            if (BGMDelay.count()) {
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
-                AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);
+                AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav", 0);
             }
 
 
