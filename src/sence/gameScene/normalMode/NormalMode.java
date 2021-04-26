@@ -133,7 +133,7 @@ public class NormalMode extends ConnectScene {
             }
             if(isServer||isSingle) {
                 for(int i = 0; i < gameActorArr.size(); i++) {
-                    if (monster.size() != 0 || gameActorArr.get(i).collider().centerX() <18500) {
+                    if (monster.size() != stoneCount || gameActorArr.get(i).collider().centerX() <18500) {
                         return;
                     }
                     if (isSingle) {
