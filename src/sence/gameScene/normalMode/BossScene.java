@@ -95,23 +95,22 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
+            System.out.println(gameActorArr.get(0).collider().left() +"///"+ gameActorArr.get(0).collider().top());
             if(BGMDelay.count()){
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);
-
             }
 
-//            if (monster.size() == 0) {
-//                return;
-//            }
-            System.out.println(monster.size()+"////"+stoneCount+"///"+stoneDead);
+            if (monster.size() == 0) {
+                return;
+            }
+
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
             if (isServer) {
-                int x = random(124, 1924);
-                int y = random(124, 1924);
-                ;
+                int x = random(554, 1750);
+                int y = random(320, 2000);
                 boolean xOK = false;
                 boolean yOK = false;
                 for (int i = 0; i < gameActorArr.size(); i++) {

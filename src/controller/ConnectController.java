@@ -162,7 +162,6 @@ public class ConnectController {
     }
     public void newMonsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
-        System.out.println("!!!!!!!!!!!!!!!");
         strs.add(monster.getTypeCode() +"");//0
         strs.add(monster.getConnectID() + "");//1
         strs.add(monster.painter().left() + "");//2
@@ -173,7 +172,6 @@ public class ConnectController {
     public void newMonsterReceive(LinkedList<Monster> monsters, ArrayList<String> strs) {
         for (int i = 0; i < monsters.size(); i++) {
             if (Integer.valueOf(strs.get(1)) == monsters.get(i).getConnectID()) {
-
                 return;
             }
         }
@@ -190,7 +188,6 @@ public class ConnectController {
         }
         tmp.setConnectID(Integer.valueOf(strs.get(1)));
         monsters.add(tmp);
-
     }
 
     public void bossAtkTypeSend(int typeCode) {
@@ -213,8 +210,7 @@ public class ConnectController {
         strs.add(monster.getConnectID() + "");//0
         strs.add(monster.collider().left() + "");//1
         strs.add(monster.collider().top() + "");//2
-        strs.add(monster.getState() + "");//3
-        strs.add(monster.getDir() + "");//4
+        strs.add(monster.getDir() + "");//3
         ClientClass.getInstance().sent(NetEvent.MONSTER, strs);
     }
 
@@ -223,8 +219,7 @@ public class ConnectController {
             if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
                 monster.get(i).offSetX(Integer.valueOf(strs.get(1)));
                 monster.get(i).offSetY(Integer.valueOf(strs.get(2)));
-                //monster.get(i).setStateComponent(GameObjForAnimator.State.valueOf(strs.get(3)));
-                monster.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+                monster.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(3)));
                 monster.get(i).transHitArea();
             }
         }
