@@ -33,8 +33,8 @@ public class BossScene extends ConnectScene {
     public BossScene(ArrayList<GameActor> gameActorArr) {
         bossScene = true;
         this.gameActorArr = gameActorArr;
-        this.gameActorArr.get(0).offSetX(1024);
-        this.gameActorArr.get(0).offSetY(1800);
+//        this.gameActorArr.get(0).offSetX(1024);
+//        this.gameActorArr.get(0).offSetY(1800);
 
     }
 
@@ -57,8 +57,8 @@ public class BossScene extends ConnectScene {
 //            monster.add(new Stone(random(200, 900), random(100, 500)));
 //            monster.add(new Stone(random(200, 900), random(100, 500)));
 //            monster.add(new Stone(random(200, 900), random(100, 500)));
-//            monster.add(new Stone(random(200, 900), random(100, 500)));
-//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+            monster.add(new Stone(random(200, 900), random(100, 500)));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
 //            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
 //            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
 //            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
@@ -95,7 +95,6 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-            System.out.println(gameActorArr.get(0).getState());
             if(BGMDelay.count()){
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);

@@ -186,6 +186,7 @@ public class ConnectController {
             case 6 -> tmp = new SmallMonster(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
 
         }
+        System.out.println(Integer.valueOf(strs.get(1)));
         tmp.setConnectID(Integer.valueOf(strs.get(1)));
         monsters.add(tmp);
     }
@@ -202,7 +203,6 @@ public class ConnectController {
                 monster.get(i).setAtkType(Integer.valueOf(strs.get(0)));
             }
         }
-
     }
 
     public void monsterSend(Monster monster) {
