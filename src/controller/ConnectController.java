@@ -170,19 +170,21 @@ public class ConnectController {
     }
 
     public void newMonsterReceive(LinkedList<Monster> monsters,ArrayList<String> strs){
+        Monster tmp =null;
         switch (Integer.valueOf(strs.get(0))){
-            case 0 -> monsters.add(new BullBoss(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
-            case 1 -> monsters.add(new Cockroach(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
-            case 2 -> monsters.add(new Rino(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
-            case 3 -> monsters.add(new Stone(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2))));
-            case 4 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
-            case 5 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
-            case 6 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
+            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
+            case 1 -> tmp = new Cockroach(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
+            case 2 -> tmp = new Rino(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
+            case 3 -> tmp = new Stone(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
+            case 4 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
+            case 5 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
+            case 6 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
         }
-        for(int i=0; i<monsters.size() ;i++){
-            if(monsters.getLast().getConnectID() == monsters.get(i).getConnectID()){
-                monsters.removeLast();
+        for(int i=0 ; i<monsters.size() ; i++){
+            if(tmp == null || tmp.getConnectID() == monsters.get(i).getConnectID()){
+                return;
             }
+            monsters.add(tmp);
         }
     }
 
