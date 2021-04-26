@@ -72,7 +72,14 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
+<<<<<<< HEAD
             System.out.println(monster.size());
+=======
+<<<<<<< HEAD
+=======
+//            System.out.println(monster.size());
+>>>>>>> 2d01f0bca5de22cd2ce6403348012d1d1d138682
+>>>>>>> ec9aac3600b9d5020ef9bbf85afb12692e7c718b
             if (monster.size() == 0) {
                 return;
             }
