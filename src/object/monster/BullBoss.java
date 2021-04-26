@@ -123,9 +123,7 @@ public class BullBoss extends Monster {
 
     private void normalAtk(){
         if(Math.abs(painter().centerX() - gameActor.collider().centerX()) > 80){
-            if(state != State.RUN){
-                setState(State.RUN);
-            }
+            setState(State.RUN);
             chase();
             chaseCount++;
             if(chaseCount >300){

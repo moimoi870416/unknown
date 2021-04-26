@@ -50,7 +50,8 @@ public abstract class GameObjForAnimator extends GameObject {
         ATTACK,
         CRITICAL,
         DEATH,
-        DEAD
+        DEAD,
+        OTHER
     }
 
     public void setState(State state){
