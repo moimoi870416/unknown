@@ -59,6 +59,7 @@ public abstract class GameObjForAnimator extends GameObject {
             return;
         }
 
+
         this.state = state;
         if (animator == null) {
             return;

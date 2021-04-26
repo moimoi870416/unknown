@@ -225,6 +225,7 @@ public class GameActor extends GameObjForAnimator {
         }
         switch (this.actor) {
             case FIRST -> {
+
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actorStand.png", 2);
@@ -245,10 +246,10 @@ public class GameActor extends GameObjForAnimator {
                         animator.setPlayOnce();
                     }
                     case DEAD -> animator.setArr(0);
-
                 }
             }
             case SECOND -> {
+
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actor2Stand(2).png", 2);
@@ -273,6 +274,7 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case THIRD -> {
+
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actor3Run.png", 2);

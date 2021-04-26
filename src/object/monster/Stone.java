@@ -5,6 +5,7 @@ import util.Animator;
 import util.Global;
 
 import javax.crypto.spec.PSource;
+import java.awt.*;
 
 public class Stone extends Monster{
     private boolean dead;
@@ -14,7 +15,6 @@ public class Stone extends Monster{
         animator = new Animator("/pictures/monster/rock/rockRun(32x28).png",15,32,27,2);
         animator.setArr(14);
         dead = false;
-
     }
 
     @Override
@@ -24,6 +24,11 @@ public class Stone extends Monster{
 
     @Override
     protected void updateComponent() {
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if(animator.isFinish()){
             animator.setImg("/pictures/monster/rock/rockDead(22x18).png",2);
             animator.setArr(1);
