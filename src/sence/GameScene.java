@@ -375,18 +375,10 @@ public abstract class GameScene extends Scene {
 
         private void effectPaint(Graphics g) {
             if (isVictory) {
-                AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
-                AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
-                AudioResourceController.getInstance().loop("/sounds/bgm/victory.wav",0);
                 g.drawImage(victory, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
-
             }
             if (isNobodyAlive) {
-                AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
-                AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
-                AudioResourceController.getInstance().play("/sounds/bgm/fail.wav");
                 g.drawImage(defeat, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
-
             }
             if(bossScene && warningTime <3){
                 if(count < 45){
@@ -418,8 +410,13 @@ public abstract class GameScene extends Scene {
                 sum += gameActorArr.get(i).getLife();
             }
             if (sum <= 0) {
+                if(isNobodyAlive){
+                    return;
+                }
+                AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
+                AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
+                AudioResourceController.getInstance().play("/sounds/bgm/fail.wav");
                 isNobodyAlive = true;
-
             } else {
 
                 isNobodyAlive = false;
@@ -427,6 +424,9 @@ public abstract class GameScene extends Scene {
         }
 
         public void setVictory(boolean isVictory){
+            AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
+            AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
+            AudioResourceController.getInstance().loop("/sounds/bgm/victory.wav",0);
             this.isVictory = isVictory;
         }
     }

@@ -95,8 +95,7 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-
-            System.out.println(monster.size());
+            System.out.println(gameActorArr.get(0).getState());
             if(BGMDelay.count()){
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);
