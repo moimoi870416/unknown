@@ -93,7 +93,7 @@ public class BullBoss extends Monster {
                 moveSpeed = 0;
             }
             case ATTACK -> {
-                animator.setArr(9, 4);
+                animator.setArr(8, 4);
                 animator.setDelayCount(5);
                 animator.setPlayOnce();
                 moveSpeed = 3;
@@ -103,7 +103,7 @@ public class BullBoss extends Monster {
 
             }
             case CRITICAL -> {
-                animator.setArr(9, 7);
+                animator.setArr(8, 7);
                 animator.setDelayCount(5);
                 animator.setPlayOnce();
                 moveSpeed = 4;
