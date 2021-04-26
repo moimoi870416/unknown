@@ -21,7 +21,6 @@ public class BullBoss extends Monster {
         super(x+60,y+40,280,230,x, y, 384, 384,x+150,y+90,100,90,30000,51,2,false,0);
         animator = new Animator("/pictures/monster/bullboss.png",30,96,96,20);
         attacking = false;
-        setState(State.STAND);
         delayForAttack = new Delay(45);
         animator.setDelayCount(30);
         focus = false;

@@ -93,11 +93,10 @@ public class Rino extends Monster {
         if (Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
             ConnectController.getInstance().monsterBooleanSend(focus, connectID, "focus");
-            setState(State.STAND);
+            setMonsterState(State.STAND);
 
             if (attackDelay.count()) {
-                System.out.println("!!!!!!!!!!!!!");
-                setState(State.RUN);
+                setMonsterState(State.RUN);
                 int x = Math.abs(gameActor.collider().centerX() - painter().centerX());
                 int y = Math.abs(gameActor.collider().bottom() - painter().centerY());
                 float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
