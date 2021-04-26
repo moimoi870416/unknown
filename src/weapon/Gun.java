@@ -50,15 +50,17 @@ public class Gun extends GameObjForAnimator {
     }
 
     public enum GunType {
-        PISTOL("/pictures/weapon/pistol.png", "/pictures/actor/pistol3.png",76, 32,28,42, Integer.MAX_VALUE, 15, 15, 60, 0,5),
-        UZI("/pictures/weapon/uzi.png", "/pictures/actor/uzi3.png",70, 54,29,44, 360, 40, 7, 60, 5,4),
-        AK("/pictures/weapon/ak.png", "/pictures/actor/ak3.png",70, 54,53,56, 360, 30, 10, 90, 10,4),
-        SNIPER("/pictures/weapon/sniper.png", "/pictures/actor/sniper3.png",70, 54,66,60, 30, 10, 60, 100, 10,2),
-        MACHINE_GUN("/pictures/weapon/machine.png", "/pictures/actor/machine3.png",70, 54,62,62, 500, 100, 5, 150, 45,2);
+        PISTOL("/pictures/weapon/pistol.png", "/pictures/actor/pistol3.png","/sounds/weapon/ak.wav","/sounds/weapon/pistolR.wav",76, 32,28,42, Integer.MAX_VALUE, 15, 15, 60, 0,5),
+        UZI("/pictures/weapon/uzi.png", "/pictures/actor/uzi3.png","/sounds/weapon/ak.wav","/sounds/weapon/UZIR.wav",70, 54,29,44, 360, 40, 7, 60, 5,4),
+        AK("/pictures/weapon/ak.png", "/pictures/actor/ak3.png","/sounds/weapon/ak-2.wav","/sounds/weapon/AKR.wav",70, 54,53,56, 360, 30, 10, 90, 10,4),
+        SNIPER("/pictures/weapon/sniper.png", "/pictures/actor/sniper3.png","/sounds/weapon/sniper.wav","/sounds/weapon/sniperR.wav",70, 54,66,60, 30, 10, 60, 100, 10,2),
+        MACHINE_GUN("/pictures/weapon/machine.png", "/pictures/actor/machine3.png","/sounds/weapon/ak.wav","/sounds/weapon/machineGunR.wav",70, 54,62,62, 500, 100, 5, 150, 45,2);
 
 
         public String forMapPath;
         public String forActorPath;
+        public String shootSoundsPath;
+        public String reloadSoundPath;
         private int width;
         private int height;
         private int magazine;//彈匣
@@ -82,9 +84,11 @@ public class Gun extends GameObjForAnimator {
             return moveSpeed;
         }
 
-        GunType(String forMapPath,String forActorPath, int width, int height,int widthForActor,int heightForActor, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot,int moveSpeed) {
+        GunType(String forMapPath, String forActorPath, String shootSoundsPath,String reloadSoundPath, int width, int height, int widthForActor, int heightForActor, int maxMagazine, int magazine, int shootingDelay, int reloadingDelay, int beginShoot, int moveSpeed) {
             this.forMapPath = forMapPath;
             this.forActorPath = forActorPath;
+            this.shootSoundsPath = shootSoundsPath;
+            this.reloadSoundPath = reloadSoundPath;
             this.width = width;
             this.height = height;
             this.maxMagazine = maxMagazine;
@@ -116,9 +120,10 @@ public class Gun extends GameObjForAnimator {
                 aloneClick.play();
                 shootingDelay.play();
                 if (magazine <= 0) {
-                    AudioResourceController.getInstance().play("/sounds/weapon/noBullet.wav");
+                    AudioResourceController.getInstance().shot("/sounds/weapon/button.wav");
                     return false;
                 }
+                AudioResourceController.getInstance().shot(gunType.shootSoundsPath);
                 magazine--;
                 return true;
             }
@@ -139,6 +144,7 @@ public class Gun extends GameObjForAnimator {
         }
         if (canReloading) {
             reloadingDelay.play();
+            AudioResourceController.getInstance().play(gunType.reloadSoundPath);
             if (surplusBullet < magazineMax) {
                 if (surplusBullet + magazine > magazineMax) {
                     surplusBullet -= (magazineMax - magazine);
