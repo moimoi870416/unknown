@@ -182,6 +182,7 @@ public class MenuScene extends Scene {
         multiplayer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
             ModeState = FOURTH;
+            isSingle = false;
         });
         backToSec.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);

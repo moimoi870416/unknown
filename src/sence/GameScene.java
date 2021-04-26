@@ -51,7 +51,7 @@ public abstract class GameScene extends Scene {
                 .gen();
         effectView = new EffectView();
         monsterCheckDelay = new Delay(60);
-        monsterCheckDelay.count();
+        monsterCheckDelay.loop();
     }
 
     protected abstract void sceneBeginComponent();
@@ -222,6 +222,9 @@ public abstract class GameScene extends Scene {
 
     private void shootUpdate() {
         if (shooting) {
+            if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH){
+                return;
+            }
             if (gameActorArr.get(0).getCurrentGun().shoot()) {
                 this.testBullets.add(new Bullet
                         (gameActorArr.get(0).painter().centerX(), gameActorArr.get(0).painter().centerY(),
@@ -283,7 +286,11 @@ public abstract class GameScene extends Scene {
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
                 if (shooting) {
+                    if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH){
+                        return;
+                    }
                     if (gameActorArr.get(0).getCurrentGun().shoot()) {
+
                         this.testBullets.add(new Bullet
                                 (this.gameActorArr.get(0).painter().centerX(), this.gameActorArr.get(0).painter().centerY(),
                                         mouseX, mouseY,
