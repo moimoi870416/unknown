@@ -5,6 +5,7 @@ import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
+import object.monster.BullBoss;
 import object.monster.Rino;
 import object.monster.SmallMonster;
 import object.monster.Stone;
@@ -44,6 +45,7 @@ public class BossScene extends ConnectScene {
             monster.add(new Stone(1024, 800));
             monster.add(new Rino(1024, 1024));
             monster.add(new SmallMonster(1024, 200, SmallMonster.Type.GOBLIN));
+
         }
     }
 
@@ -77,6 +79,7 @@ public class BossScene extends ConnectScene {
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
+
         }
 
         private void mapBoss() {

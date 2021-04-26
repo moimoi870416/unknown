@@ -179,6 +179,11 @@ public class ConnectController {
             case 5 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
             case 6 -> monsters.add(new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]));
         }
+        for(int i=0; i<monsters.size() ;i++){
+            if(monsters.getLast().getConnectID() == monsters.get(i).getConnectID()){
+                monsters.removeLast();
+            }
+        }
     }
 
     public void bossAtkTypeSend(int typeCode){
