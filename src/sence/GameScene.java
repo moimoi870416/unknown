@@ -178,7 +178,6 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
-
         for (int i = 0; i < monster.size(); i++) {
             if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {

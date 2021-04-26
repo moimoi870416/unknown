@@ -53,12 +53,12 @@ public abstract class GameObjForAnimator extends GameObject {
         DEAD
     }
 
-    public void setState(State state){
-        if(this.state == state){
+    public void setState(State state) {
+        if (this.state == state && this.state != State.CRITICAL) {
             return;
         }
         this.state = state;
-        if(animator == null){
+        if (animator == null) {
             return;
         }
         setStateComponent();
@@ -106,7 +106,7 @@ public abstract class GameObjForAnimator extends GameObject {
         this.life -= atk;
     }
 
-    public void setLife(int life){
+    public void setLife(int life) {
         this.life = life;
     }
 
