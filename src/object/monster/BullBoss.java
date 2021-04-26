@@ -16,8 +16,10 @@ public class BullBoss extends Monster {
     private boolean readyAtk;
     private int chaseCount;
     private Delay normalAtkDelay;
-
-    public BullBoss(int x, int y) {
+    public BullBoss(int x,int y){
+        this(x,y,0);
+    }
+    public BullBoss(int x, int y,int connectID) {
         super(x + 60, y + 40, 280, 230, x, y, 384, 384, x + 150, y + 90, 100, 90, 30000, 51, 2, false, 0);
         animator = new Animator("/pictures/monster/bullboss.png", 30, 96, 96, 20);
         animator.setArr(5, 5);
@@ -31,6 +33,7 @@ public class BullBoss extends Monster {
         chaseCount = 0;
         normalAtkDelay = new Delay(45);
         normalAtkDelay.loop();
+        this.connectID = connectID;
     }
 
     @Override

@@ -35,10 +35,8 @@ public class NormalMode extends ConnectScene {
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
+//        monster.add(new BullBoss(18000,500));
 
-        if (isSingle) {
-//            monster.add(new BullBoss(3000,500));
-        }
         if (isServer) {
             //monster.add(new BullBoss(20000,500));
 //            monster.add(new SmallMonster(9000,500, SmallMonster.Type.MUSHROOM));

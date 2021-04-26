@@ -160,9 +160,9 @@ public class ConnectController {
                 Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)),
                         Gun.GunType.valueOf(strs.get(4)),Integer.valueOf(strs.get(5))));
     }
-
     public void newMonsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
+        System.out.println("!!!!!!!!!!!!!!!");
         strs.add(monster.getTypeCode() +"");//0
         strs.add(monster.getConnectID() + "");//1
         strs.add(monster.painter().left() +"");//2
@@ -178,7 +178,7 @@ public class ConnectController {
         }
         Monster tmp = null;
         switch (Integer.valueOf(strs.get(0))){
-            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
+            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)),Integer.valueOf(strs.get(1)));
             case 1 -> tmp = new Cockroach(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
             case 2 -> tmp = new Rino(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
             case 3 -> tmp = new Stone(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));

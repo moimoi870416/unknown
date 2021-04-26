@@ -309,11 +309,9 @@ public class GameActor extends GameObjForAnimator {
         }
         if (life <= 0) {
             if (state != State.DEATH) {
-                System.out.println("?????????????????");
                 setState(State.DEATH);
             }
             if (state == State.DEATH && animator.isFinish()) {
-                System.out.println("!!!!!!!!!!!!!!!!!!");
                 setState(State.DEAD);
                 return;
             }
