@@ -288,7 +288,7 @@ public class MenuScene extends Scene {
                                 isPress(backToFou, e);
                                 isPress(normalMode, e);
                                 isPress(limitMode, e);
-                                isPress(inputText, e);
+//                                isPress(inputText, e);
                                 if (normalMode.IsUse(limitMode)) {
                                     multiSceneChange();
                                 }
@@ -307,6 +307,8 @@ public class MenuScene extends Scene {
             @Override
             public void keyPressed(final int commandCode, final long trigTime) {
 //                moveKey(commandCode); //偵測目前鍵盤位置
+                System.out.println(connectIP);
+                connectIP = inputText.getEditText();
                 if (commandCode == Active.ENTER.getCommandCode()) {
 //                    if (inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
                     if (IS_DEBUG) {
@@ -314,8 +316,8 @@ public class MenuScene extends Scene {
                         addConnectLanArea();
                         return;
                     }
-                    connectIP = inputText.getEditText();
                     inputText.unFocus();
+                    inputText.setEditText("");
                     addConnectLanArea();
                 }
             }
@@ -394,7 +396,6 @@ public class MenuScene extends Scene {
         } catch (IOException ex) {
             addServer.unFocus();
             isAdd = false;
-            inputText.setEditText("");
             Logger.getLogger(ConnectScene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
