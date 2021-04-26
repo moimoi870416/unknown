@@ -97,6 +97,7 @@ public class NormalMode extends ConnectScene {
             thirdWave = true;
             fourthWave = true;
             fifthWave = true;
+            firstWave();
 
         }
 
@@ -116,7 +117,7 @@ public class NormalMode extends ConnectScene {
                 mapRight = forest;
                 mapFinal = change;
                 count = 1;
-                if(secondWave){
+                if(secondWave && isServer){
                     secondWave();
                     secondWave = false;
                 }
@@ -125,7 +126,7 @@ public class NormalMode extends ConnectScene {
                     mapRight = desert;
                     mapFinal = desert;
                     count = 3;
-                    if(thirdWave){
+                    if(thirdWave && isServer){
                         thirdWave();
                         thirdWave = false;
                     }
@@ -133,14 +134,14 @@ public class NormalMode extends ConnectScene {
                         mapLeft = desert;
                         mapMiddle = desert;
                         count = 5;
-                        if(fourthWave){
+                        if(fourthWave && isServer){
                             fourthWave();
                             fourthWave = false;
                         }
                         if (actorX > 16384) {
                             mapFinal = boss;
                             count = 6;
-                            if(fifthWave){
+                            if(fifthWave && isServer){
                                 fifthWave();
                                 fifthWave = false;
                             }
@@ -252,8 +253,7 @@ public class NormalMode extends ConnectScene {
                     .setMap());
         }
 
-
-        private void secondWave(){
+        private void firstWave(){
             for(int i=0 ; i<20 ; i++){
                 monster.add(new SmallMonster(1500,random(370,1000), SmallMonster.Type.GOBLIN));
                 if(i%2 == 0){
@@ -264,6 +264,11 @@ public class NormalMode extends ConnectScene {
             for(int i=0 ; i< 8 ; i++) {
                 monster.add(new Stone(random(1500,2000), random(370,1000)));
             }
+        }
+
+
+        private void secondWave(){
+
 
 
         }
