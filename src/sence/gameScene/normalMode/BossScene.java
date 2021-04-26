@@ -70,7 +70,10 @@ public class BossScene extends ConnectScene {
             if(monster.size() == stoneCount && stoneCount == stoneDead){
                 effectView.setVictory(true);
             }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 10071067d4d34e2dcf6d834df7d32f8ec78a0693
         }
 
         private void mapBoss(){
