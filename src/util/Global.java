@@ -42,6 +42,7 @@ public class Global {
     public static final int CENTER_HEIGHT = 32;
 
     public static int stoneCount = 0;
+    public static int stoneDead = 0;
 
     public static class NetEvent {
         public static final int CONNECT = 100;

@@ -67,7 +67,7 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-            if(monster.size()<= stoneCount){
+            if(monster.size() == stoneCount && stoneCount == stoneDead){
                 effectView.setVictory(true);
             }
 
