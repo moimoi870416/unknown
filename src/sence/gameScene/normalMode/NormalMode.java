@@ -2,10 +2,7 @@ package sence.gameScene.normalMode;
 
 
 import camera.MapInformation;
-import controller.ConnectController;
-import controller.ImageController;
-import controller.MapObjController;
-import controller.SenceController;
+import controller.*;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
@@ -38,6 +35,7 @@ public class NormalMode extends ConnectScene {
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
+        AudioResourceController.getInstance().loop("/sounds/bgm/bgm1.wav",0);
 //        monster.add(new BullBoss(18000,500));
 
         if (isServer) {
@@ -266,7 +264,7 @@ public class NormalMode extends ConnectScene {
             for(int i=0 ; i< 8 ; i++) {
                 monster.add(new Stone(random(1500,2000), random(370,1000)));
             }
-            
+
 
         }
         private void thirdWave(){
