@@ -7,6 +7,7 @@ import object.GameObjForAnimator;
 import object.actor.GameActor;
 import object.monster.*;
 import sence.gameScene.LimitMode;
+import sence.gameScene.normalMode.BossScene;
 import sence.gameScene.normalMode.NormalMode;
 import weapon.Bullet;
 import weapon.Gun;
@@ -233,7 +234,7 @@ public class ConnectController {
                 }
             }
         }
-        SenceController.getSenceController().change(new NormalMode(gameActorArr));
+        SenceController.getSenceController().change(new BossScene(gameActorArr));
     }
 
     public void changeSceneSend(boolean isNormal){

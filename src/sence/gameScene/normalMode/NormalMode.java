@@ -15,18 +15,20 @@ import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
 import util.Global;
+
 import java.awt.*;
 import java.util.ArrayList;
+
 import static util.Global.*;
 
 public class NormalMode extends ConnectScene {
 
-    public NormalMode(){
+    public NormalMode() {
         gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.FIRST,17500,500));
+        gameActorArr.add(new GameActor(Actor.FIRST, 17500, 500));
     }
 
-    public NormalMode(ArrayList<GameActor> gameActorArr){
+    public NormalMode(ArrayList<GameActor> gameActorArr) {
         this.gameActorArr = gameActorArr;
     }
 
@@ -35,10 +37,10 @@ public class NormalMode extends ConnectScene {
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
-        if(isSingle){
+        if (isSingle) {
 //            monster.add(new BullBoss(3000,500));
         }
-        if(isServer) {
+        if (isServer) {
 //            monster.add(new BullBoss(3000,500));
 //            monster.add(new SmallMonster(9000,500, SmallMonster.Type.MUSHROOM));
 //            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
@@ -55,7 +57,7 @@ public class NormalMode extends ConnectScene {
         MAP_WIDTH = 2048;
     }
 
-    public class NormalModeMapInfo extends GameScene.MapInfo{
+    public class NormalModeMapInfo extends GameScene.MapInfo {
         //之後會有切換圖片的行為，所以先開一個內部類
         private Image mapLeft;
         private Image mapMiddle;
@@ -70,7 +72,7 @@ public class NormalMode extends ConnectScene {
         private int count;
         private boolean touchDown;
 
-        public NormalModeMapInfo(){
+        public NormalModeMapInfo() {
             mapBegin();
             mapForest(4096);
             mapChange(8192);
@@ -96,59 +98,61 @@ public class NormalMode extends ConnectScene {
             g.drawImage(mapLeft, mapWidth * count, 0, null);
             g.drawImage(mapMiddle, mapWidth * (count + 1), 0, null);
             g.drawImage(mapRight, mapWidth * (count + 2), 0, null);
-            g.drawImage(mapFinal,mapWidth * (count +3),0,null);
+            g.drawImage(mapFinal, mapWidth * (count + 3), 0, null);
         }
 
         @Override
         public void mapUpdate() {
-            if(actorX > 4096){
+            if (actorX > 4096) {
                 mapLeft = forest;
                 mapMiddle = forest;
                 mapRight = forest;
                 mapFinal = change;
                 count = 1;
-                if(actorX > 8192){
+                if (actorX > 8192) {
                     mapMiddle = change;
                     mapRight = desert;
                     mapFinal = desert;
                     count = 3;
-                    if(actorX > 12288){
+                    if (actorX > 12288) {
                         mapLeft = desert;
                         mapMiddle = desert;
                         count = 5;
-                        if(actorX > 16384){
+                        if (actorX > 16384) {
                             mapFinal = boss;
                             count = 6;
                         }
                     }
                 }
-            }else {
+            } else {
                 mapLeft = begin;
                 mapMiddle = forest;
                 mapRight = forest;
                 mapFinal = forest;
                 count = 0;
             }
-
-            for(int i=0 ; i<gameActorArr.size() ; i++){
-                if(monster.size() != 0){
-                    return;
-                }
-                if(gameActorArr.get(i).collider().centerX() > 18400){
-                    if(isSingle){
-                        SenceController.getSenceController().change(new BossScene(gameActorArr));
+            if (isServer) {
+                for (int i = 0; i < gameActorArr.size(); i++) {
+                    if (monster.size() != 0) {
+                        return;
                     }
-                    touchDown = true;
-                }else {
-                    touchDown = false;
+                    if (gameActorArr.get(i).collider().centerX() > 18400) {
+                        if (isSingle) {
+                            SenceController.getSenceController().change(new BossScene(gameActorArr));
+                        }
+                        touchDown = true;
+                    } else {
+                        touchDown = false;
+                    }
                 }
-            }
-            if(touchDown){
-                ConnectController.getInstance().changeBossSceneSend();
+                if (touchDown) {
+                    ConnectController.getInstance().changeBossSceneSend();
+                }
             }
         }
-        private int randomY(){
-            return random(336,1000);
+
+        private int randomY() {
+            return random(336, 1000);
         }
 
         private void mapBegin() {
@@ -184,7 +188,7 @@ public class NormalMode extends ConnectScene {
 
         }
 
-        private void mapForest(int x){//4096
+        private void mapForest(int x) {//4096
             mapObjArr.addAll(new MapObjController.Builder().setBmpAndTxt("beginMap.bmp", "beginMap.txt")
                     .setX(x)
                     .setNameAndPath("tree1", "/pictures/map/tree1-208-336.png", true, new GameObjForPic("/pictures/map/tree1-208-336.png", 0, 0, 208, 336))
@@ -195,23 +199,23 @@ public class NormalMode extends ConnectScene {
                     .setMap());
         }
 
-        private void mapChange(int x){//8192
+        private void mapChange(int x) {//8192
             mapObjArr.addAll(new MapObjController.Builder().setBmpAndTxt("changeMap.bmp", "changeMap.txt")
                     .setX(x)
-                    .setNameAndPath("changetree1", "/pictures/map/change-tree1(268-272).png",true,new GameObjForPic("/pictures/map/change-tree1(268-272).png", 0, 0, 242, 272))
-                    .setNameAndPath("changetree2", "/pictures/map/change-tree1(242-271).png",true,new GameObjForPic("/pictures/map/change-tree1(242-271).png", 0, 0, 242, 272))
-                    .setNameAndPath("deserttree1", "/pictures/map/desert-tree1(239-272).png",true,new GameObjForPic("/pictures/map/desert-tree1(239-272).png", 0, 0, 239, 272))
-                    .setNameAndPath("signright", "/pictures/map/signRight(152-104).png",true,new GameObjForPic("/pictures/map/signRight(152-104).png", 0, 0, 152, 104))
-                    .setNameAndPath("sandbag1", "/pictures/map/sandbag1(272-100).png",true,new GameObjForPic("/pictures/map/sandbag1(272-100).png", 0, 0, 272, 100))
-                    .setNameAndPath("rock2", "/pictures/map/rock-sand1-584-216.png", true,new GameObjForPic("/pictures/map/rock-sand1-584-216.png", 0, -200, 584, 216))
-                    .setNameAndPath("sandbag2", "/pictures/map/sandbag2(288-80).png",true,new GameObjForPic("/pictures/map/sandbag2(288-80).png", 0, 0, 288, 80))
-                    .setNameAndPath("rocko1", "/pictures/map/rocko(208-136).png",true,new GameObjForPic("/pictures/map/rocko(208-136).png", 0, 0, 208, 136))
-                    .setNameAndPath("rocko2", "/pictures/map/rocko(208-120).png",true,new GameObjForPic("/pictures/map/rocko(208-120).png", 0, 0, 208, 120))
+                    .setNameAndPath("changetree1", "/pictures/map/change-tree1(268-272).png", true, new GameObjForPic("/pictures/map/change-tree1(268-272).png", 0, 0, 242, 272))
+                    .setNameAndPath("changetree2", "/pictures/map/change-tree1(242-271).png", true, new GameObjForPic("/pictures/map/change-tree1(242-271).png", 0, 0, 242, 272))
+                    .setNameAndPath("deserttree1", "/pictures/map/desert-tree1(239-272).png", true, new GameObjForPic("/pictures/map/desert-tree1(239-272).png", 0, 0, 239, 272))
+                    .setNameAndPath("signright", "/pictures/map/signRight(152-104).png", true, new GameObjForPic("/pictures/map/signRight(152-104).png", 0, 0, 152, 104))
+                    .setNameAndPath("sandbag1", "/pictures/map/sandbag1(272-100).png", true, new GameObjForPic("/pictures/map/sandbag1(272-100).png", 0, 0, 272, 100))
+                    .setNameAndPath("rock2", "/pictures/map/rock-sand1-584-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-584-216.png", 0, -200, 584, 216))
+                    .setNameAndPath("sandbag2", "/pictures/map/sandbag2(288-80).png", true, new GameObjForPic("/pictures/map/sandbag2(288-80).png", 0, 0, 288, 80))
+                    .setNameAndPath("rocko1", "/pictures/map/rocko(208-136).png", true, new GameObjForPic("/pictures/map/rocko(208-136).png", 0, 0, 208, 136))
+                    .setNameAndPath("rocko2", "/pictures/map/rocko(208-120).png", true, new GameObjForPic("/pictures/map/rocko(208-120).png", 0, 0, 208, 120))
                     .gen()
                     .setMap());
         }
 
-        private void mapDesert(int x){//10240 && 14336
+        private void mapDesert(int x) {//10240 && 14336
             mapObjArr.addAll(new MapObjController.Builder().setBmpAndTxt("desertMap.bmp", "desertMap.txt")
                     .setX(x)
                     .setNameAndPath("deserttree1", "/pictures/map/deserttree1(400-344).png", true, new GameObjForPic("/pictures/map/deserttree1(400-344).png", 0, 0, 400, 344))
@@ -223,20 +227,20 @@ public class NormalMode extends ConnectScene {
                     .setMap());
         }
 
-        private void mapBoss(int x){
+        private void mapBoss(int x) {
             mapObjArr.addAll(new MapObjController.Builder().setBmpAndTxt("bossMap.bmp", "bossMap.txt")
                     .setX(x)
-                    .setNameAndPath("farmhay", "/pictures/map/farm_hay(184-144).png",true,new GameObjForPic("/pictures/map/farm_hay(184-144).png", 0, 0, 184, 144))
-                    .setNameAndPath("farmhay2", "/pictures/map/farmhay(72-160).png",true,new GameObjForPic("/pictures/map/farmhay(72-160).png", 0, 0, 72, 160))
-                    .setNameAndPath("signright", "/pictures/map/signRight(152-104).png",true,new GameObjForPic("/pictures/map/signRight(152-104).png", 0, -150, 152, 104))
-                    .setNameAndPath("warmsign", "/pictures/map/warmsign(240-160).png",true,new GameObjForPic("/pictures/map/warmsign(240-160).png", 0, -150, 240, 160))
-                    .setNameAndPath("verticlawall1", "/pictures/map/vertical_wall(24-216).png",true,new GameObjForPic("/pictures/map/vertical_wall(24-216).png", 0, 0, 32, 216))
-                    .setNameAndPath("verticalwall2", "/pictures/map/vertical_wall2(24-216).png",true,new GameObjForPic("/pictures/map/vertical_wall2(24-216).png", 0, 0, 32, 216))
-                    .setNameAndPath("wall1", "/pictures/map/horizontal_wall(176-96).png",true,new GameObjForPic("/pictures/map/horizontal_wall(176-96).png", 0, 0, 176, 96))
-                    .setNameAndPath("wall2", "/pictures/map/horizontal_wall(288-96).png",true,new GameObjForPic("/pictures/map/horizontal_wall(288-96).png", 0, 0, 288, 96))
-                    .setNameAndPath("wall3", "/pictures/map/horizontal_wall(304-96).png",true,new GameObjForPic("/pictures/map/horizontal_wall(304-96).png", 0, 0, 304, 96))
-                    .setNameAndPath("oasis1", "/pictures/map/oasis_tree (232-400).png",true,new GameObjForPic("/pictures/map/oasis_tree (232-400).png", 110, 0, 200, 400))
-                    .setNameAndPath("oasis2", "/pictures/map/oasis_tree2(232-400).png",true,new GameObjForPic("/pictures/map/oasis_tree2(232-400).png", 130, 0, 232, 400))
+                    .setNameAndPath("farmhay", "/pictures/map/farm_hay(184-144).png", true, new GameObjForPic("/pictures/map/farm_hay(184-144).png", 0, 0, 184, 144))
+                    .setNameAndPath("farmhay2", "/pictures/map/farmhay(72-160).png", true, new GameObjForPic("/pictures/map/farmhay(72-160).png", 0, 0, 72, 160))
+                    .setNameAndPath("signright", "/pictures/map/signRight(152-104).png", true, new GameObjForPic("/pictures/map/signRight(152-104).png", 0, -150, 152, 104))
+                    .setNameAndPath("warmsign", "/pictures/map/warmsign(240-160).png", true, new GameObjForPic("/pictures/map/warmsign(240-160).png", 0, -150, 240, 160))
+                    .setNameAndPath("verticlawall1", "/pictures/map/vertical_wall(24-216).png", true, new GameObjForPic("/pictures/map/vertical_wall(24-216).png", 0, 0, 32, 216))
+                    .setNameAndPath("verticalwall2", "/pictures/map/vertical_wall2(24-216).png", true, new GameObjForPic("/pictures/map/vertical_wall2(24-216).png", 0, 0, 32, 216))
+                    .setNameAndPath("wall1", "/pictures/map/horizontal_wall(176-96).png", true, new GameObjForPic("/pictures/map/horizontal_wall(176-96).png", 0, 0, 176, 96))
+                    .setNameAndPath("wall2", "/pictures/map/horizontal_wall(288-96).png", true, new GameObjForPic("/pictures/map/horizontal_wall(288-96).png", 0, 0, 288, 96))
+                    .setNameAndPath("wall3", "/pictures/map/horizontal_wall(304-96).png", true, new GameObjForPic("/pictures/map/horizontal_wall(304-96).png", 0, 0, 304, 96))
+                    .setNameAndPath("oasis1", "/pictures/map/oasis_tree (232-400).png", true, new GameObjForPic("/pictures/map/oasis_tree (232-400).png", 110, 0, 200, 400))
+                    .setNameAndPath("oasis2", "/pictures/map/oasis_tree2(232-400).png", true, new GameObjForPic("/pictures/map/oasis_tree2(232-400).png", 130, 0, 232, 400))
                     .gen()
                     .setMap());
         }
