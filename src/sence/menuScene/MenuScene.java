@@ -209,6 +209,7 @@ public class MenuScene extends Scene {
         });
         crateServer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
+            isSingle = false;
             isServer = true;
             isAdd = false;
             inputText.unFocus();
@@ -220,6 +221,7 @@ public class MenuScene extends Scene {
             isAdd = true;
             inputText.isFocus();
             isServer = false;
+            isSingle = false;
         });
     }
 

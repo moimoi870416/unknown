@@ -348,19 +348,18 @@ public class ConnectController {
     }
 
     public void checkMonsterReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+        int tmp ;
         for(int i=0; i<monster.size() ; i++){
-            int tmp = 0;
+            tmp=0;
             for(int k=0 ; k<strs.size() ; k++){
                 if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(k))){
-                    strs.remove(k);
                     tmp++;
+                    strs.remove(k--);
                     break;
                 }
-
             }
             if(tmp ==0){
-                monster.remove(i);
-                i--;
+                monster.remove(i--);
             }
         }
     }
