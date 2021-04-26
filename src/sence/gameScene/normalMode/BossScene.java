@@ -5,7 +5,9 @@ import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
-import object.monster.BullBoss;
+import object.monster.Rino;
+import object.monster.SmallMonster;
+import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
 import static util.Global.*;
@@ -36,7 +38,10 @@ public class BossScene extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if(isServer) {
-            monster.add(new BullBoss(1024,200));
+            //monster.add(new BullBoss(1024,200));
+            monster.add(new Stone(1024,800));
+            monster.add(new Rino(1024,1024));
+            monster.add(new SmallMonster(1024,200, SmallMonster.Type.GOBLIN));
         }
     }
 
@@ -62,7 +67,11 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-            System.out.println(monster.size());
+            if(monster.size()<= 0){
+                effectView.setVictory(true);
+            }
+            System.out.println(monster.get(0).getState());
+
         }
 
         private void mapBoss(){

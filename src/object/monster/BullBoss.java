@@ -181,6 +181,7 @@ public class BullBoss extends Monster {
         totalDistance = 0;
         changeDir(gameActor.collider().centerX() - painter().centerX());
         attacking = false;
+        forRino = false;
     }
 
 }

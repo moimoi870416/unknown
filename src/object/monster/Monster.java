@@ -90,6 +90,7 @@ public abstract class Monster extends GameObjForAnimator {
             }
         }
         transHitArea();
+        updateComponent();
         if (isOut()) {
             return;
         }
@@ -100,6 +101,7 @@ public abstract class Monster extends GameObjForAnimator {
         if (forRino) {
             return;
         }
+
         if (isChase) {
             chase();
         }
