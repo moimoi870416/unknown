@@ -338,4 +338,30 @@ public class ConnectController {
             }
         }
     }
+
+    public void checkMonsterSend(LinkedList<Monster> monster){
+        ArrayList<String> strs = new ArrayList<>();
+        for(int i=0 ; i<monster.size() ; i++){
+            strs.add(monster.get(i).getConnectID() + "");
+        }
+        ClientClass.getInstance().sent(NetEvent.MONSTER_CHECK, strs);
+    }
+
+    public void checkMonsterReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+        for(int i=0; i<monster.size() ; i++){
+            int tmp = 0;
+            for(int k=0 ; k<strs.size() ; k++){
+                if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(k))){
+                    strs.remove(k);
+                    tmp++;
+                    break;
+                }
+
+            }
+            if(tmp ==0){
+                monster.remove(i);
+                i--;
+            }
+        }
+    }
 }
