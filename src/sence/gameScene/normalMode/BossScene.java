@@ -41,7 +41,7 @@ public class BossScene extends ConnectScene {
     @Override
     protected void gameSceneBegin() {
 
-        AudioResourceController.getInstance().loop("/sounds/bgm/warning-2.wav",0);
+        AudioResourceController.getInstance().loop("/sounds/bgm/warning-2.wav", 0);
         BGMDelay = new Delay(300);
         BGMDelay.play();
         MAP_WIDTH = 2048;
@@ -51,19 +51,19 @@ public class BossScene extends ConnectScene {
 
         if (isServer) {
             monster.add(new BullBoss(1024, 500));
-            monster.add(new Rino(random(200,900), random(100,500)));
-            monster.add(new Rino(random(200,900), random(100,500)));
-            monster.add(new Stone(random(200,900), random(100,500)));
-            monster.add(new Stone(random(200,900), random(100,500)));
-            monster.add(new Stone(random(200,900), random(100,500)));
-            monster.add(new Stone(random(200,900), random(100,500)));
-            monster.add(new Stone(random(200,900), random(100,500)));
-            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.MUSHROOM));
-            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.GOBLIN));
-            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.MUSHROOM));
-            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.GOBLIN));
-            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.MUSHROOM));
-            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.GOBLIN));
+            monster.add(new Rino(random(200, 900), random(100, 500)));
+            monster.add(new Rino(random(200, 900), random(100, 500)));
+            monster.add(new Stone(random(200, 900), random(100, 500)));
+            monster.add(new Stone(random(200, 900), random(100, 500)));
+            monster.add(new Stone(random(200, 900), random(100, 500)));
+            monster.add(new Stone(random(200, 900), random(100, 500)));
+            monster.add(new Stone(random(200, 900), random(100, 500)));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
         }
     }
 
@@ -95,16 +95,15 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-            if(BGMDelay.count()){
+            if (BGMDelay.count()) {
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
-                AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);
+                AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav", 0);
 
             }
 
-//            if (monster.size() == 0) {
-//                return;
-//            }
-            System.out.println(monster.size()+"////"+stoneCount+"///"+stoneDead);
+            if (monster.size() == 0) {
+                return;
+            }
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
