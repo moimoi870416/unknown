@@ -35,7 +35,6 @@ public abstract class GameScene extends Scene {
     private EffectView effectView;
     protected boolean bossScene;
 
-
     @Override
     public void sceneBegin() {
         mapObjArr = new ArrayList<>();
@@ -49,7 +48,6 @@ public abstract class GameScene extends Scene {
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
         effectView = new EffectView();
-
     }
 
     protected abstract void sceneBeginComponent();

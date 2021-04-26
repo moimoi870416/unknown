@@ -391,6 +391,7 @@ public class MenuScene extends Scene {
 
     private void addConnectLanArea() {
         try {
+            System.out.println(connectIP+"!!!!!!!!!!!!!!");
             ClientClass.getInstance().connect(connectIP, 12345); // ("SERVER端IP", "SERVER端PORT")
             SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
         } catch (IOException ex) {

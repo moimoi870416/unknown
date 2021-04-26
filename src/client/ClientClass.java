@@ -136,6 +136,10 @@ public class ClientClass {
         serverIP = host;
         serverTCPPort = port;
         socket = null;
+        if(ds != null){
+            ds.close();
+            ds = null;
+        }
         ds = new DatagramSocket(UDP_PORT);//創建埠號為UDP_PORT代表UDP協議的Socket
         socket = new Socket(serverIP, serverTCPPort);//創建TCP Socket 連接ip地址為serverIP 埠號為serverTCPPort
         DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());//創建資料輸入流

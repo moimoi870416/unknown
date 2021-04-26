@@ -78,9 +78,21 @@ public class GameActor extends GameObjForAnimator {
 
             }
         }
-
     }
 
+    public boolean dead() {
+        if (state == State.DEAD) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean both() {
+        if (state == State.DEAD || state == State.DEATH) {
+            return true;
+        }
+        return false;
+    }
 
     public void setIsFirstGun(boolean isFirst) {
         if (isFirst) {
@@ -92,7 +104,7 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void paintComponent(Graphics g) {
-        if (state == State.DEAD) {
+        if (dead()) {
             return;
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
@@ -179,7 +191,7 @@ public class GameActor extends GameObjForAnimator {
     }
 
     public void move(int commandCode) {
-        if (state == State.DEATH || state == State.DEAD) {
+        if (both()) {
             return;
         }
         if (state != State.RUN) {
@@ -210,9 +222,10 @@ public class GameActor extends GameObjForAnimator {
 
     @Override
     public void setStateComponent() {
-        if (this.state == State.DEAD || actor == null) {
+        if (dead() || actor == null) {
             return;
         }
+
         ConnectController.getInstance().actorStateSend(connectID, state);
         switch (this.actor) {
             case FIRST -> {
@@ -293,14 +306,16 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void update() {
         blood.barUpdate(collider().left(), collider().top(), this.life);
-        if ( state == State.DEAD) {
+        if (dead()) {
             return;
         }
         if (life <= 0) {
-            if (state != State.DEATH || state != State.DEAD) {
+            if (state != State.DEATH) {
+                System.out.println("?????????????????");
                 setState(State.DEATH);
             }
             if (state == State.DEATH && animator.isFinish()) {
+                System.out.println("!!!!!!!!!!!!!!!!!!");
                 setState(State.DEAD);
                 return;
             }
@@ -439,7 +454,7 @@ public class GameActor extends GameObjForAnimator {
         }
 
         public void flash(int mouseX, int mouseY, ArrayList<GameObject> arr) {
-            if (state == State.DEATH || state == State.DEAD) {
+            if (both()) {
                 return;
             }
             delayForFlash.play();
@@ -506,7 +521,5 @@ public class GameActor extends GameObjForAnimator {
         public boolean getCanFlash() {
             return canFlash;
         }
-
-
     }
 }
