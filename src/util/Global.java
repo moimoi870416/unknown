@@ -41,6 +41,8 @@ public class Global {
     public static final int CENTER_WIDTH = 32;
     public static final int CENTER_HEIGHT = 32;
 
+    public static int stoneCount = 0;
+
     public static class NetEvent {
         public static final int CONNECT = 100;
 
@@ -80,8 +82,6 @@ public class Global {
         public static final int EVENT_CHANGE_BOSS_SCENE = 504;
 
         public static int MONSTER_CONNECT_ID = 600;
-
-
     }
 
     public enum State {

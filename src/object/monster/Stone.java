@@ -15,6 +15,7 @@ public class Stone extends Monster{
         animator = new Animator("/pictures/monster/rock/rockRun(32x28).png",15,32,27,2);
         animator.setArr(14);
         dead = false;
+        Global.stoneCount++;
     }
 
     @Override
