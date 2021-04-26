@@ -66,7 +66,7 @@ public class MenuScene extends Scene {
         addLabels();
         this.isAdd = false;
         isSingle = false;
-        isNormal = false;
+        isNormal = true;
         ModeState = FIRST;
         buttonSound = "/sounds/button01a.wav";
     }
@@ -209,7 +209,6 @@ public class MenuScene extends Scene {
         });
         crateServer.setClickedActionPerformed((x, y) -> {
                 AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = FIFTH;
                 isServer = true;
                 isAdd = false;
                 inputText.unFocus();
@@ -295,16 +294,17 @@ public class MenuScene extends Scene {
                                 isPress(backToSec, e);
                                 isPress(crateServer, e);
                                 isPress(addServer, e);
+                                multiSceneChange();
                             }
-                            case FIFTH -> {
-                                isPress(backToFou, e);
-                                isPress(normalMode, e);
-                                isPress(limitMode, e);
-//                                isPress(inputText, e);
-                                if (normalMode.IsUse(limitMode)) {
-                                    multiSceneChange();
-                                }
-                            }
+//                            case FIFTH -> {
+//                                isPress(backToFou, e);
+//                                isPress(normalMode, e);
+//                                isPress(limitMode, e);
+////                                isPress(inputText, e);
+//                                if (normalMode.IsUse(limitMode)) {
+//
+//                                }
+//                            }
                         }
                     }
                 }
@@ -377,11 +377,11 @@ public class MenuScene extends Scene {
                     this.inputText.paint(g);
                 }
             }
-            case FIFTH -> {
-                backToFou.paint(g);
-                limitMode.paint(g);
-                normalMode.paint(g);
-            }
+//            case FIFTH -> {
+//                backToFou.paint(g);
+//                limitMode.paint(g);
+//                normalMode.paint(g);
+//            }
         }
     }
 

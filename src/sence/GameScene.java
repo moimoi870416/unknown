@@ -35,6 +35,7 @@ public abstract class GameScene extends Scene {
     private int mouseY;
     protected EffectView effectView;
     protected boolean bossScene;
+    private Delay monsterCheckDelay;
 
     @Override
     public void sceneBegin() {
@@ -49,6 +50,8 @@ public abstract class GameScene extends Scene {
                 .setCameraStartLocation(-WINDOW_WIDTH / 2, -WINDOW_HEIGHT / 2)
                 .gen();
         effectView = new EffectView();
+        monsterCheckDelay = new Delay(60);
+        monsterCheckDelay.count();
     }
 
     protected abstract void sceneBeginComponent();
@@ -207,6 +210,9 @@ public abstract class GameScene extends Scene {
                     }
                 }
                 ConnectController.getInstance().monsterSend(monster.get(i));
+                if(monsterCheckDelay.count()){
+                    ConnectController.getInstance().checkMonsterSend(monster);
+                }
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));

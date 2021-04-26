@@ -8,7 +8,6 @@ import weapon.Gun;
 
 import java.awt.*;
 import java.util.ArrayList;
-
 import static util.Global.*;
 
 public class GameActor extends GameObjForAnimator {
@@ -21,6 +20,7 @@ public class GameActor extends GameObjForAnimator {
     private Skill skill;
     private Actor actor;
     private boolean isFirstGun;
+
 
 
     public GameActor(Actor actor, final int x, final int y) {
@@ -38,6 +38,7 @@ public class GameActor extends GameObjForAnimator {
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
         isFirstGun = true;
+
     }
 
     private void setGun() {

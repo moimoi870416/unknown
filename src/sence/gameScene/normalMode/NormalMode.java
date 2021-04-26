@@ -36,18 +36,6 @@ public class NormalMode extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
         AudioResourceController.getInstance().loop("/sounds/bgm/bgm1.wav",0);
-//        monster.add(new BullBoss(18000,500));
-
-        if (isServer) {
-            //monster.add(new BullBoss(20000,500));
-//            monster.add(new SmallMonster(9000,500, SmallMonster.Type.MUSHROOM));
-//            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new SmallMonster(9600,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new BullBoss(3000,500));
-//            monster.add(new SmallMonster(9500,500, SmallMonster.Type.GOBLIN));
-//            monster.add(new Rino(2000,500));
-        }
     }
 
     @Override
@@ -175,9 +163,6 @@ public class NormalMode extends ConnectScene {
             }
         }
 
-        private int randomY() {
-            return random(336, 1000);
-        }
 
         private void mapBegin() {
             mapObjArr.addAll(new MapObjController.Builder().setBmpAndTxt("beginMap.bmp", "beginMap.txt")
