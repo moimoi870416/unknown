@@ -192,8 +192,13 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.MONSTER_BOSS_ATTACK_TYPE, strs);
     }
 
-    public void bossAtkTypeReceive(Monster monster,ArrayList<String> strs){
-        monster.setAtkType(Integer.valueOf(strs.get(0)));
+    public void bossAtkTypeReceive(LinkedList<Monster> monster,ArrayList<String> strs){
+        for(int i=0 ; i<monster.size() ; i++){
+            if(monster.get(i).getTypeCode() == 0){
+                monster.get(i).setAtkType(Integer.valueOf(strs.get(0)));
+            }
+        }
+
     }
 
     public void monsterSend(Monster monster){
