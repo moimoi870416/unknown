@@ -36,7 +36,7 @@ public class NormalMode extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new NormalModeMapInfo();
         if(isSingle){
-            monster.add(new BullBoss(3000,500));
+//            monster.add(new BullBoss(3000,500));
         }
         if(isServer) {
 //            monster.add(new BullBoss(3000,500));
@@ -44,7 +44,7 @@ public class NormalMode extends ConnectScene {
 //            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
 //            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
 //            monster.add(new SmallMonster(9600,500, SmallMonster.Type.GOBLIN));
-            monster.add(new BullBoss(3000,500));
+//            monster.add(new BullBoss(3000,500));
 //            monster.add(new SmallMonster(9500,500, SmallMonster.Type.GOBLIN));
 //            monster.add(new Rino(2000,500));
         }
@@ -129,8 +129,15 @@ public class NormalMode extends ConnectScene {
                 mapFinal = forest;
                 count = 0;
             }
+
             for(int i=0 ; i<gameActorArr.size() ; i++){
-                if(gameActorArr.get(i).collider().centerX() > 17600){
+                if(monster.size() != 0){
+                    return;
+                }
+                if(gameActorArr.get(i).collider().centerX() > 18400){
+                    if(isSingle){
+                        SenceController.getSenceController().change(new BossScene(gameActorArr));
+                    }
                     touchDown = true;
                 }else {
                     touchDown = false;

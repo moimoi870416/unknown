@@ -219,9 +219,18 @@ public class ConnectController {
     public void changeBossSceneReceive(ArrayList<GameActor> gameActorArr){
         for(int i=0 ; i<gameActorArr.size() ; i++){
             switch (gameActorArr.get(i).getConnectID()){
-                case 100 -> gameActorArr.get(i).offSet(1000 + 15, 2000);
-                case 101 -> gameActorArr.get(i).offSet(1000 + 30, 2000);
-                case 102 -> gameActorArr.get(i).offSet(1000 + 45, 2000);
+                case 100 -> {
+                    gameActorArr.get(i).offSetX(1000 + 15);
+                    gameActorArr.get(i).offSetY(2000);
+                }
+                case 101 -> {
+                    gameActorArr.get(i).offSetX(1000 + 25);
+                    gameActorArr.get(i).offSetY(2000);
+                }
+                case 102 -> {
+                    gameActorArr.get(i).offSetX(1000 + 35);
+                    gameActorArr.get(i).offSetY(2000);
+                }
             }
         }
         SenceController.getSenceController().change(new NormalMode(gameActorArr));
