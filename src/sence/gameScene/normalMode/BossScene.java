@@ -70,8 +70,6 @@ public class BossScene extends ConnectScene {
             if(monster.size()<= 0){
                 effectView.setVictory(true);
             }
-            System.out.println(monster.get(0).getState());
-
         }
 
         private void mapBoss(){
