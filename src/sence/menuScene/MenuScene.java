@@ -207,6 +207,7 @@ public class MenuScene extends Scene {
         addServer.setClickedActionPerformed((x, y) -> {
                     isAdd = true;
                     inputText.isFocus();
+                    isServer = false;
                 }
         );
     }
