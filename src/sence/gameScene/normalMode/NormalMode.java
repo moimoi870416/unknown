@@ -255,12 +255,12 @@ public class NormalMode extends ConnectScene {
 
         private void firstWave(){
             for(int i=0 ; i<20 ; i++){
-                monster.add(new SmallMonster(1500,random(370,1000), SmallMonster.Type.GOBLIN));
+                monster.add(new SmallMonster(random(1500,2000),random(370,1000), SmallMonster.Type.GOBLIN));
                 if(i%2 == 0){
-                    monster.add(new SmallMonster(2000,random(370,1000), SmallMonster.Type.MUSHROOM));
+                    monster.add(new SmallMonster(random(1500,2000),random(370,1000), SmallMonster.Type.MUSHROOM));
                 }
             }
-            monster.add(new Rino(2000,500));
+            monster.add(new Rino(random(1500,2000),500));
             for(int i=0 ; i< 8 ; i++) {
                 monster.add(new Stone(random(1500,2000), random(370,1000)));
             }
