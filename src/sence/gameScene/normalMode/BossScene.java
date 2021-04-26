@@ -1,6 +1,7 @@
 package sence.gameScene.normalMode;
 
 import camera.MapInformation;
+import controller.AudioResourceController;
 import controller.ImageController;
 import controller.MapObjController;
 import object.GameObjForPic;
@@ -32,6 +33,7 @@ public class BossScene extends ConnectScene {
         this.gameActorArr = gameActorArr;
         this.gameActorArr.get(0).offSetX(1024);
         this.gameActorArr.get(0).offSetY(1800);
+//        AudioResourceController.getInstance().loop("/sounds/weapon/noBullet.wav",0);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class BossScene extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
         if (isServer) {
-            monster.add(new BullBoss(1024,200));
+            monster.add(new BullBoss(1024, 200));
             monster.add(new Stone(1024, 800));
             monster.add(new Rino(1024, 1024));
             monster.add(new SmallMonster(1024, 200, SmallMonster.Type.GOBLIN));
@@ -67,52 +69,64 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapPaint(Graphics g) {
-            g.drawImage(map, 0, 0, null);
+            g.drawImage(
+                    map,
+                    0,
+                    0,
+//                    2048,
+//                    2048,
+//                    camera.collider().left(),
+//                    camera.collider().top(),
+//                    camera.collider().right(),
+//                    camera.collider().bottom(),
+
+                    null);
         }
 
         @Override
         public void mapUpdate() {
 
-
-            int x = random(124,1924);
-            int y = random(124,1924);;
-            boolean xOK =false;
-            boolean yOK =false;
-            for(int i=0 ; i<gameActorArr.size() ; i++){
-                if(x > gameActorArr.get(i).collider().centerX()+WINDOW_WIDTH/2+10 && x< gameActorArr.get(i).collider().centerX()-WINDOW_WIDTH/2-10 ){
-                    xOK = true;
-                }else {
-                    xOK = false;
-                }
-                if(y > gameActorArr.get(i).collider().centerX()+WINDOW_HEIGHT+10 && y< gameActorArr.get(i).collider().centerX()-WINDOW_HEIGHT/2-10 ){
-                    yOK = true;
-                }else {
-                    yOK = false;
-                }
-            }
-            if(xOK && yOK){
-                int r = random(0,4);
-                if(r == 0){
-                    monster.add(new Rino(x,y));
-                }
-                if(r == 1){
-                    monster.add(new Stone(x,y));
-                }
-                if(r == 2){
-                    monster.add(new SmallMonster(x,y, SmallMonster.Type.GOBLIN));
-                }
-                if(r == 3){
-                    monster.add(new SmallMonster(x,y, SmallMonster.Type.MUSHROOM));
-                }
-
-                monster.getLast().setIsChase(true);
-            }
-            
             if (monster.size() == 0) {
                 return;
             }
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
+            }
+            if (isServer) {
+                int x = random(124, 1924);
+                int y = random(124, 1924);
+                ;
+                boolean xOK = false;
+                boolean yOK = false;
+                for (int i = 0; i < gameActorArr.size(); i++) {
+                    if (x > gameActorArr.get(i).collider().centerX() + WINDOW_WIDTH / 2 + 10 && x < gameActorArr.get(i).collider().centerX() - WINDOW_WIDTH / 2 - 10) {
+                        xOK = true;
+                    } else {
+                        xOK = false;
+                    }
+                    if (y > gameActorArr.get(i).collider().centerX() + WINDOW_HEIGHT + 10 && y < gameActorArr.get(i).collider().centerX() - WINDOW_HEIGHT / 2 - 10) {
+                        yOK = true;
+                    } else {
+                        yOK = false;
+                    }
+                }
+                if (xOK && yOK) {
+                    int r = random(0, 4);
+                    if (r == 0) {
+                        monster.add(new Rino(x, y));
+                    }
+                    if (r == 1) {
+                        monster.add(new Stone(x, y));
+                    }
+                    if (r == 2) {
+                        monster.add(new SmallMonster(x, y, SmallMonster.Type.GOBLIN));
+                    }
+                    if (r == 3) {
+                        monster.add(new SmallMonster(x, y, SmallMonster.Type.MUSHROOM));
+                    }
+
+                    monster.getLast().setIsChase(true);
+                }
             }
 
         }

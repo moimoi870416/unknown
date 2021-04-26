@@ -75,11 +75,11 @@ public abstract class GameScene extends Scene {
         }
 
         mapObjArr.forEach(a -> a.paint(g));
-        mapObjArr.forEach(object -> {
-            if (camera.isCollision(object)) {
-                object.paint(g);
-            }
-        });
+//        mapObjArr.forEach(object -> {
+//            if (camera.isCollision(object)) {
+//                object.paint(g);
+//            }
+//        });
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         effectView.effectPaint(g);
