@@ -49,6 +49,9 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitY = hitCollied.top() - collider().top();
         nearest = 50000f;
         connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
+        if(typeCode == 0){
+            connectID = 20000;
+        }
 
         this.typeCode = typeCode;
         if(Global.isServer) {

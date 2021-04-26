@@ -5,8 +5,6 @@ import util.Animator;
 import util.Delay;
 import util.Global;
 
-import java.awt.*;
-
 public class BullBoss extends Monster {
     private boolean attacking;
     private final int atkDistance = 600;

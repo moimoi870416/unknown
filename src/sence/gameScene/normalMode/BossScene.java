@@ -6,16 +6,9 @@ import controller.MapObjController;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
-import object.monster.Rino;
-import object.monster.SmallMonster;
-import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
-import util.Animator;
-import util.Delay;
-
 import static util.Global.*;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -38,7 +31,6 @@ public class BossScene extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
-
         MAP_WIDTH = 2048;
         MAP_HEIGHT = 2048;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);

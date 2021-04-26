@@ -225,10 +225,11 @@ public class GameActor extends GameObjForAnimator {
         if (dead() || actor == null) {
             return;
         }
-
-        ConnectController.getInstance().actorStateSend(connectID, state);
         switch (this.actor) {
             case FIRST -> {
+                if(connectID == 100){
+                    ConnectController.getInstance().actorStateSend(connectID, state);
+                }
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actorStand.png", 2);
@@ -253,6 +254,9 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case SECOND -> {
+                if(connectID == 101){
+                    ConnectController.getInstance().actorStateSend(connectID, state);
+                }
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actor2Stand(2).png", 2);
@@ -277,6 +281,9 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case THIRD -> {
+                if(connectID == 102){
+                    ConnectController.getInstance().actorStateSend(connectID, state);
+                }
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actor3Run.png", 2);

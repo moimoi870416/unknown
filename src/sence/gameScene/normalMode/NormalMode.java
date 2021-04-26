@@ -8,6 +8,7 @@ import controller.MapObjController;
 import controller.SenceController;
 import object.GameObjForPic;
 import object.actor.GameActor;
+import object.monster.BullBoss;
 import sence.ConnectScene;
 import sence.GameScene;
 import util.Global;
@@ -39,7 +40,7 @@ public class NormalMode extends ConnectScene {
 //            monster.add(new BullBoss(3000,500));
         }
         if (isServer) {
-//            monster.add(new BullBoss(3000,500));
+            //monster.add(new BullBoss(20000,500));
 //            monster.add(new SmallMonster(9000,500, SmallMonster.Type.MUSHROOM));
 //            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
 //            monster.add(new SmallMonster(10500,500, SmallMonster.Type.GOBLIN));
