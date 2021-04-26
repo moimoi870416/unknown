@@ -194,9 +194,7 @@ public class GameActor extends GameObjForAnimator {
         if (both()) {
             return;
         }
-        if (state != State.RUN) {
-            setState(State.RUN);
-        }
+        setState(State.RUN);
         switch (commandCode) {
             case 2:
                 translateY(-moveSpeed);
@@ -227,9 +225,7 @@ public class GameActor extends GameObjForAnimator {
         }
         switch (this.actor) {
             case FIRST -> {
-                if(connectID == 100){
-                    ConnectController.getInstance().actorStateSend(connectID, state);
-                }
+
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actorStand.png", 2);
@@ -250,11 +246,10 @@ public class GameActor extends GameObjForAnimator {
                         animator.setPlayOnce();
                     }
                     case DEAD -> animator.setArr(0);
-
                 }
             }
             case SECOND -> {
-                if(connectID == 101){
+                if (connectID == 101) {
                     ConnectController.getInstance().actorStateSend(connectID, state);
                 }
                 switch (this.state) {
@@ -281,7 +276,7 @@ public class GameActor extends GameObjForAnimator {
                 }
             }
             case THIRD -> {
-                if(connectID == 102){
+                if (connectID == 102) {
                     ConnectController.getInstance().actorStateSend(connectID, state);
                 }
                 switch (this.state) {

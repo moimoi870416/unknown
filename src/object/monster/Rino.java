@@ -76,7 +76,6 @@ public class Rino extends Monster {
     protected void updateComponent() {
         if (isChase) {
             forRino = true;
-            ConnectController.getInstance().monsterBooleanSend(forRino, connectID, "forRino");
             if (readyAtk) {
                 if (attack()) {
                     return;

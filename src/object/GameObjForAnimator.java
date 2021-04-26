@@ -60,8 +60,6 @@ public abstract class GameObjForAnimator extends GameObject {
             return;
         }
         if (connectID == 101) {
-            System.out.println(state);
-            System.out.println(collider().centerX()+" "+collider().centerY());
         }
 
         this.state = state;

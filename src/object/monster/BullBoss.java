@@ -43,10 +43,10 @@ public class BullBoss extends Monster {
         if (attacking) {
             if (atkType == 3) {
                 if (!isChase) {
-                    if (animator.isFinish()) {
-                        setMonsterState(State.STAND);
-                    }
+//                    if (animator.isFinish()) { //單人才需使用
+                    setMonsterState(State.STAND);
                     return;
+//                    }
                 }
                 forRino = true;
                 if (readyAtk) {
@@ -58,7 +58,6 @@ public class BullBoss extends Monster {
                 }
                 criticalAtkMove();
                 return;
-
             } else {
                 normalAtk();
             }
@@ -84,7 +83,8 @@ public class BullBoss extends Monster {
                 animator.setArr(6, 6);
 //                }
                 animator.setDelayCount(15);
-                animator.setPlayOnce();
+//                animator.setPlayOnce()//單人才需使用;
+                animator.setPlayLoop();
             }
             case DEATH -> {
                 animator.setArr(6, 10);
@@ -136,8 +136,8 @@ public class BullBoss extends Monster {
                 setMonsterState(State.ATTACK);
             }
         }
-            chase();
-        if ( animator.isFinish()) {
+        chase();
+        if (animator.isFinish()) {
             setMonsterState(State.RUN);
             attacking = false;
         }
@@ -181,6 +181,7 @@ public class BullBoss extends Monster {
         totalDistance = 0;
         changeDir(gameActor.collider().centerX() - painter().centerX());
         attacking = false;
+        forRino = false;
     }
 
 }

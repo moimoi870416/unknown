@@ -85,7 +85,7 @@ public class ConnectController {
                 gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
                 gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
                 gameActorArr.get(i).setLife(Integer.valueOf(strs.get(2)));
-                //gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
+                gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
                 gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
                                                          Integer.valueOf(strs.get(1)),
@@ -319,9 +319,7 @@ public class ConnectController {
     }
 
     public void monsterStateReceive(LinkedList<Monster> monster, ArrayList<String> strs){
-        System.out.println(monster.size());
         for(int i=0 ; i< monster.size() ; i++){
-            System.out.println(monster.get(i).getConnectID() + " " + Integer.valueOf(strs.get(0)));
             if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                 monster.get(i).setMonsterState(GameObjForAnimator.State.valueOf(strs.get(1)));
             }

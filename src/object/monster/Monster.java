@@ -49,12 +49,12 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitY = hitCollied.top() - collider().top();
         nearest = 50000f;
         connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
-        if(typeCode == 0){
+        if (typeCode == 0) {
             connectID = 20000;
         }
 
         this.typeCode = typeCode;
-        if(Global.isServer) {
+        if (Global.isServer) {
             ConnectController.getInstance().newMonsterSend(this, typeCode);
         }
 
@@ -81,6 +81,11 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
+        if (state == State.DEATH||state==State.DEAD) {
+            isChase = false;
+            return;
+        }
+        transHitArea();
         if (delayForCollision.count()) {
             collision = true;
         }
@@ -89,26 +94,22 @@ public abstract class Monster extends GameObjForAnimator {
                 canAttack = true;
             }
         }
-        transHitArea();
-        if (isOut()) {
-            return;
-        }
-        if (state == State.DEATH) {
-            isChase = false;
-            return;
-        }
+        updateComponent();
         if (forRino) {
             return;
         }
         if (isChase) {
             chase();
         }
+//        if (isOut()) {
+//            return;
+//        }
     }
 
     public void setMonsterState(State state) {
         setState(state);
 
-        if(Global.isServer) {
+        if (Global.isServer) {
             ConnectController.getInstance().monsterStateSend(state, connectID);
         }
     }
@@ -125,7 +126,7 @@ public abstract class Monster extends GameObjForAnimator {
         }
 
 
-        if(nearest <Global.WINDOW_WIDTH/2){
+        if (nearest < Global.WINDOW_WIDTH / 2) {
 
             isChase = true;
             ConnectController.getInstance().monsterBooleanSend(isChase, connectID, "isChase");
@@ -238,7 +239,7 @@ public abstract class Monster extends GameObjForAnimator {
         this.readyAtk = isTure;
     }
 
-    public int getTypeCode(){
+    public int getTypeCode() {
         return typeCode;
     }
 }
