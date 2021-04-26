@@ -97,7 +97,7 @@ public class NormalMode extends ConnectScene {
             thirdWave = true;
             fourthWave = true;
             fifthWave = true;
-            firstWave();
+//            firstWave();
 
         }
 
