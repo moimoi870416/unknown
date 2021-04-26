@@ -23,7 +23,7 @@ public class NormalMode extends ConnectScene {
 
     public NormalMode(){
         gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.FIRST,500,500));
+        gameActorArr.add(new GameActor(Actor.FIRST,17500,500));
     }
 
     public NormalMode(ArrayList<GameActor> gameActorArr){
@@ -130,11 +130,11 @@ public class NormalMode extends ConnectScene {
                 count = 0;
             }
             for(int i=0 ; i<gameActorArr.size() ; i++){
-                if(gameActorArr.get(i).collider().centerX() > 18000){
+                if(gameActorArr.get(i).collider().centerX() > 17600){
                     touchDown = true;
-                    return;
+                }else {
+                    touchDown = false;
                 }
-                touchDown = false;
             }
             if(touchDown){
                 ConnectController.getInstance().changeBossSceneSend();
