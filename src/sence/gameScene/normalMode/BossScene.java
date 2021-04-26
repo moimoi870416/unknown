@@ -73,6 +73,7 @@ public class BossScene extends ConnectScene {
         @Override
         public void mapUpdate() {
 
+
             int x = random(124,1924);
             int y = random(124,1924);;
             boolean xOK =false;
@@ -106,7 +107,7 @@ public class BossScene extends ConnectScene {
 
                 monster.getLast().setIsChase(true);
             }
-
+            
             if (monster.size() == 0) {
                 return;
             }

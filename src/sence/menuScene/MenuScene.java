@@ -207,6 +207,7 @@ public class MenuScene extends Scene {
         addServer.setClickedActionPerformed((x, y) -> {
                     isAdd = true;
                     inputText.isFocus();
+                    isServer = false;
                 }
         );
     }
@@ -217,11 +218,9 @@ public class MenuScene extends Scene {
     }
 
     private void singleSceneChange() {
-        if (isNormal) {
+        if (isSingle) {
             SenceController.getSenceController().change(new NormalMode());
-            return;
         }
-        SenceController.getSenceController().change(new LimitMode());
     }
 
     private boolean isOverLap(Label obj, int eX, int eY) {
@@ -270,15 +269,16 @@ public class MenuScene extends Scene {
                                 isPress(backToFir, e);
                                 isPress(singleMode, e);
                                 isPress(multiplayer, e);
+                                singleSceneChange();
                             }
-                            case THIRD -> {
-                                isPress(normalMode, e);
-                                isPress(limitMode, e);
-                                isPress(backToSec, e);
-                                if (singleMode.IsUse(limitMode)) {
-                                    singleSceneChange();
-                                }
-                            }
+//                            case THIRD -> {
+//                                isPress(normalMode, e);
+//                                isPress(limitMode, e);
+//                                isPress(backToSec, e);
+//                                if (singleMode.IsUse(limitMode)) {
+//
+//                                }
+//                            }
                             case FOURTH -> {
                                 isPress(backToSec, e);
                                 isPress(crateServer, e);
@@ -352,11 +352,11 @@ public class MenuScene extends Scene {
                 singleMode.paint(g);
                 multiplayer.paint(g);
             }
-            case THIRD -> {
-                backToSec.paint(g);
-                normalMode.paint(g);
-                limitMode.paint(g);
-            }
+//            case THIRD -> {
+//                backToSec.paint(g);
+//                normalMode.paint(g);
+//                limitMode.paint(g);
+//            }
             case FOURTH -> {
                 backToSec.paint(g);
                 addServer.paint(g);
