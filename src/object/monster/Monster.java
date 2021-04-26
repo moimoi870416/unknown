@@ -135,8 +135,9 @@ public abstract class Monster extends GameObjForAnimator {
             this.gameActor = gameActor;
         }
 
-        if (nearest < Global.WINDOW_WIDTH / 2) {
-//            setMonsterState(State.RUN);
+
+        if(nearest <Global.WINDOW_WIDTH/2){
+
             isChase = true;
             ConnectController.getInstance().monsterBooleanSend(isChase, connectID, "isChase");
         }

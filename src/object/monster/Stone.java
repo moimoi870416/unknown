@@ -35,7 +35,7 @@ public class Stone extends Monster{
     @Override
     protected void setStateComponent() {
         switch (this.state) {
-            case CRITICAL -> {
+            case OTHER -> {
                 if(!dead) {
                     animator.setImg("/pictures/monster/rock/RockDeath(22x18).png", 2);
                     animator.setArr(4);

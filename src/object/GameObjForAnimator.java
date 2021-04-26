@@ -50,11 +50,17 @@ public abstract class GameObjForAnimator extends GameObject {
         ATTACK,
         CRITICAL,
         DEATH,
-        DEAD
+        DEAD,
+        OTHER
     }
 
+<<<<<<< HEAD
     public void setState(State state) {
         if (this.state == state && this.state != State.CRITICAL) {
+=======
+    public void setState(State state){
+        if(this.state == state && this.state != State.CRITICAL){
+>>>>>>> e862352c5883ea3151e76d34281b8ae315b1bcaf
             return;
         }
         this.state = state;
