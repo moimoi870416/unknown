@@ -51,19 +51,19 @@ public class BossScene extends ConnectScene {
 
         if (isServer) {
             monster.add(new BullBoss(1024, 500));
-            monster.add(new Rino(random(200, 900), random(100, 500)));
-            monster.add(new Rino(random(200, 900), random(100, 500)));
-            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
+//            monster.add(new Rino(random(200, 900), random(100, 500)));
+//            monster.add(new Rino(random(200, 900), random(100, 500)));
+//            monster.add(new Stone(random(200, 900), random(100, 500)));
+//            monster.add(new Stone(random(200, 900), random(100, 500)));
+//            monster.add(new Stone(random(200, 900), random(100, 500)));
+//            monster.add(new Stone(random(200, 900), random(100, 500)));
+//            monster.add(new Stone(random(200, 900), random(100, 500)));
+//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
+//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
+//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
+//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
         }
     }
 
