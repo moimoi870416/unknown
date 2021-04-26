@@ -44,6 +44,7 @@ public class MenuScene extends Scene {
     private Button backToSec;//返回狀態二
     private Button backToFou;//返回四
     private String connectIP;
+    private String buttonSound;
 
     private ArrayList<Label> labels;
 
@@ -67,6 +68,7 @@ public class MenuScene extends Scene {
         isSingle = false;
         isNormal = false;
         ModeState = FIRST;
+        buttonSound = "/sounds/button01a.wav";
     }
 
     @Override
@@ -156,15 +158,15 @@ public class MenuScene extends Scene {
 
     private void changState() {
         enter.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = SECOND;
         });
         enter2.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = ZERO;
         });
         backToFir.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = FIRST;
                 backToFir.unFocus();
                 singleMode.unFocus();
@@ -173,16 +175,16 @@ public class MenuScene extends Scene {
                 }
         );
         singleMode.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = THIRD;
                 isSingle = true;
         });
         multiplayer.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = FOURTH;
         });
         backToSec.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = SECOND;
                 backToSec.unFocus();
                 singleMode.unFocus();
@@ -191,11 +193,11 @@ public class MenuScene extends Scene {
                 isAdd = false;
         });
         normalMode.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 isNormal = true;
         });
         backToFou.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = FOURTH;
                 backToFou.unFocus();
                 crateServer.unFocus();
@@ -206,7 +208,7 @@ public class MenuScene extends Scene {
 
         });
         crateServer.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 ModeState = FIFTH;
                 isServer = true;
                 isAdd = false;
@@ -215,7 +217,7 @@ public class MenuScene extends Scene {
                 crateConnectLanArea();
         });
         addServer.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot("/sounds/button.wav");
+                AudioResourceController.getInstance().shot(buttonSound);
                 isAdd = true;
                 inputText.isFocus();
                 isServer = false;
