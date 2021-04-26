@@ -50,7 +50,7 @@ public abstract class ConnectScene extends GameScene {
                     case NetEvent.ACTOR_FLASH -> ConnectController.getInstance().flashReceive(gameActorArr, serialNum, strs);
                     case NetEvent.ACTOR_CHANGE_GUN -> ConnectController.getInstance().changeGunReceive(gameActorArr, serialNum, strs);
                     case NetEvent.MONSTER_NEW -> ConnectController.getInstance().newMonsterReceive(monster, strs);
-                    case NetEvent.MONSTER_BOSS_ATTACK_TYPE -> ConnectController.getInstance().bossAtkTypeReceive(monster.getLast(), strs);
+                    case NetEvent.MONSTER_BOSS_ATTACK_TYPE -> ConnectController.getInstance().bossAtkTypeReceive(monster, strs);
                     case NetEvent.MONSTER -> ConnectController.getInstance().monsterReceive(monster, strs);
                     case NetEvent.MONSTER_DEAD -> ConnectController.getInstance().monsterDeadReceive(monster, strs);
 //                    case NetEvent.MONSTER_IS_CHASE -> ConnectController.getInstance().monsterBooleanReceive(monster,strs);
