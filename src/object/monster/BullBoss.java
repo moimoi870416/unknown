@@ -46,7 +46,7 @@ public class BullBoss extends Monster {
             if (atkType == 3) {
                 if (!isChase) {
                     if (animator.isFinish()) {
-                        setState(State.STAND);
+                        setMonsterState(State.STAND);
                     }
                     return;
                 }
@@ -124,10 +124,10 @@ public class BullBoss extends Monster {
 
     private void normalAtk() {
         if (Math.abs(painter().centerX() - gameActor.collider().centerX()) > 80) {
-            setState(State.RUN);
+            setMonsterState(State.RUN);
             chase();
             chaseCount++;
-            if (chaseCount > 300) {
+            if (chaseCount > 240) {
                 attacking = false;
                 chaseCount = 0;
             }
@@ -135,14 +135,14 @@ public class BullBoss extends Monster {
         }
         if (state != State.ATTACK) {
             if (normalAtkDelay.count()) {
-                setState(State.ATTACK);
+                setMonsterState(State.ATTACK);
             }
         }
         if (state == State.ATTACK) {
             chase();
         }
         if (state == State.ATTACK && animator.isFinish()) {
-            setState(State.RUN);
+            setMonsterState(State.RUN);
             attacking = false;
         }
     }
@@ -151,7 +151,7 @@ public class BullBoss extends Monster {
         if (Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
             if (attackDelay.count()) {
-                setState(State.CRITICAL);
+                setMonsterState(State.CRITICAL);
                 int x = Math.abs(gameActor.collider().centerX() - painter().centerX());
                 int y = Math.abs(gameActor.collider().bottom() - painter().centerY());
                 float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
@@ -181,15 +181,10 @@ public class BullBoss extends Monster {
         focus = false;
         readyAtk = true;
         attackDelay.play();
-        setState(State.STAND);
+        setMonsterState(State.STAND);
         totalDistance = 0;
         changeDir(gameActor.collider().centerX() - painter().centerX());
         attacking = false;
     }
 
-    @Override
-
-    public void paintComponent(Graphics g) {
-//        System.out.println(state);
-    }
 }

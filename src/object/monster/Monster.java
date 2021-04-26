@@ -92,10 +92,8 @@ public abstract class Monster extends GameObjForAnimator {
         }
         if (state == State.DEATH) {
             isChase = false;
-            ConnectController.getInstance().monsterBooleanSend(isChase, connectID, "isChase");
             return;
         }
-        updateComponent();
         if (forRino) {
             return;
         }
@@ -110,18 +108,6 @@ public abstract class Monster extends GameObjForAnimator {
         if(Global.isServer) {
             ConnectController.getInstance().monsterStateSend(state, connectID);
         }
-    }
-
-    public void updateForConnect() {
-//        if (delayForCollision.count()) {
-//            collision = true;
-//        }
-//        if (isOnceAttack) {
-//            if (delayForAttack.count()) {
-//                canAttack = true;
-//            }
-//        }
-//        updateForDelay();
     }
 
     protected abstract void updateForDelay();
