@@ -34,11 +34,6 @@ public abstract class Monster extends GameObjForAnimator {
 
     }
 
-    public Monster(int x, int y, int width, int height, int life, int atk, int moveSpeed, boolean isOnceAttack, int typeCode) {
-        this(x, y, width, height, x, y, width, height, x, y, width, height, life, atk, moveSpeed, isOnceAttack, typeCode);
-
-    }
-
     public Monster(int x, int y, int width, int height, int x2, int y2, int width2, int height2, int hitX, int hitY, int hitWidth, int hitHeight, int life, int atk, int moveSpeed, boolean isOnceAttack, int typeCode) {
         super(x, y, width, height, x2, y2, width2, height2, life, atk, moveSpeed);
         attackDelay = new Delay(60);

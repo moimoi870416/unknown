@@ -178,7 +178,7 @@ public class ConnectController {
         }
         Monster tmp = null;
         switch (Integer.valueOf(strs.get(0))){
-            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3))));
+            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
             case 1 -> tmp = new Cockroach(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
             case 2 -> tmp = new Rino(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
             case 3 -> tmp = new Stone(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
