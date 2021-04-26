@@ -36,6 +36,9 @@ public abstract class ConnectScene extends GameScene {
         ClientClass.getInstance().consume(new CommandReceiver() {
             @Override
             public void receive(int serialNum, int commandCode, ArrayList<String> strs) {
+                if(commandCode == NetEvent.EVENT_CHANGE_BOSS_SCENE){
+                    ConnectController.getInstance().changeBossSceneReceive(gameActorArr);
+                }
                 if (serialNum == gameActorArr.get(0).getConnectID()) {
                     return;
                 }
@@ -52,7 +55,7 @@ public abstract class ConnectScene extends GameScene {
                     case NetEvent.MONSTER_DEAD -> ConnectController.getInstance().monsterDeadReceive(monster, strs);
 //                    case NetEvent.MONSTER_IS_CHASE -> ConnectController.getInstance().monsterBooleanReceive(monster,strs);
                     case NetEvent.MONSTER_STATE ->    ConnectController.getInstance().monsterStateReceive(monster,strs);
-                    case NetEvent.EVENT_CHANGE_BOSS_SCENE -> ConnectController.getInstance().changeBossSceneReceive(gameActorArr);
+
                 }
             }
         });

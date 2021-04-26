@@ -8,10 +8,6 @@ import controller.MapObjController;
 import controller.SenceController;
 import object.GameObjForPic;
 import object.actor.GameActor;
-import object.monster.BullBoss;
-import object.monster.Rino;
-import object.monster.SmallMonster;
-import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
 import util.Global;
@@ -68,7 +64,7 @@ public class NormalMode extends ConnectScene {
         private Image boss;
         private final int mapWidth = 2048;
         private int count;
-        private boolean touchDown;
+
 
         public NormalModeMapInfo(){
             mapBegin();
@@ -129,22 +125,21 @@ public class NormalMode extends ConnectScene {
                 mapFinal = forest;
                 count = 0;
             }
-
-            for(int i=0 ; i<gameActorArr.size() ; i++){
-                if(monster.size() != 0){
-                    return;
-                }
-                if(gameActorArr.get(i).collider().centerX() > 18400){
-                    if(isSingle){
+            if(isServer) {
+                System.out.println(gameActorArr.get(0).collider().centerX());
+                for(int i = 0; i < gameActorArr.size(); i++) {
+                    if (monster.size() != 0 || gameActorArr.get(i).collider().centerX() <18400) {
+                        return;
+                    }
+                    if (isSingle) {
                         SenceController.getSenceController().change(new BossScene(gameActorArr));
                     }
                     touchDown = true;
-                }else {
-                    touchDown = false;
                 }
-            }
-            if(touchDown){
-                ConnectController.getInstance().changeBossSceneSend();
+                if (touchDown) {
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!");
+                    ConnectController.getInstance().changeBossSceneSend();
+                }
             }
         }
         private int randomY(){
