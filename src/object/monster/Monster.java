@@ -9,6 +9,8 @@ import object.GameObjForAnimator;
 
 import java.awt.*;
 
+import static util.Global.isServer;
+
 public abstract class Monster extends GameObjForAnimator {
     private Delay delayForCollision;
     protected Delay attackDelay;
@@ -49,7 +51,7 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitY = hitCollied.top() - collider().top();
         nearest = 50000f;
         this.typeCode = typeCode;
-        if (Global.isServer) {
+        if (isServer) {
             this.connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
             System.out.println(connectID);
             ConnectController.getInstance().newMonsterSend(this);
@@ -112,7 +114,7 @@ public abstract class Monster extends GameObjForAnimator {
     public void setMonsterState(State state) {
         setState(state);
 
-        if (Global.isServer) {
+        if (isServer) {
             ConnectController.getInstance().monsterStateSend(state, connectID);
         }
     }
