@@ -97,9 +97,9 @@ public class NormalMode extends ConnectScene {
             thirdWave = true;
             fourthWave = true;
             fifthWave = true;
-            if(isServer) {
-                firstWave();
-            }
+//            if(isServer) {
+//                firstWave();
+//            }
 
 
         }
