@@ -211,16 +211,17 @@ public class ConnectController {
         }
     }
 
-    public void changeBossSceneSend(GameActor gameActorArr){
+    public void changeBossSceneSend(){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActorArr.getConnectID() + "");
-        ClientClass.getInstance().sent(NetEvent.EVENT_CHANGE_BOSS_SCENE, strs);
+        ClientClass.getInstance().sent(NetEvent.EVENT_CHANGE_BOSS_SCENE,strs);
     }
 
-    public void changeBossSceneReceive(ArrayList<String> strs, ArrayList<GameActor> gameActorArr){
+    public void changeBossSceneReceive(ArrayList<GameActor> gameActorArr){
         for(int i=0 ; i<gameActorArr.size() ; i++){
-            if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
-                gameActorArr.get(i).offSet(1000 + (Integer.valueOf(strs.get(0))-100)* 15, 2000);
+            switch (gameActorArr.get(i).getConnectID()){
+                case 100 -> gameActorArr.get(i).offSet(1000 + 15, 2000);
+                case 101 -> gameActorArr.get(i).offSet(1000 + 30, 2000);
+                case 102 -> gameActorArr.get(i).offSet(1000 + 45, 2000);
             }
         }
         SenceController.getSenceController().change(new NormalMode(gameActorArr));
