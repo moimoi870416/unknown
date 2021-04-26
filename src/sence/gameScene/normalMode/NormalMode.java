@@ -137,7 +137,7 @@ public class NormalMode extends ConnectScene {
                 touchDown = false;
             }
             if(touchDown){
-                ConnectController.getInstance().changeBossSceneSend(gameActorArr.get(0));
+                ConnectController.getInstance().changeBossSceneSend();
             }
         }
         private int randomY(){
