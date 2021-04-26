@@ -289,12 +289,13 @@ public class ConnectController {
         ArrayList<String> strs = new ArrayList<>();
         strs.add(connectID + "");//0
         strs.add(state +"");//1
-        System.out.println(state);
         ClientClass.getInstance().sent(NetEvent.MONSTER_STATE, strs);
     }
 
     public void monsterStateReceive(LinkedList<Monster> monster, ArrayList<String> strs){
-        for(int i=0 ; i<monster.size() ; i++){
+        System.out.println(monster.size());
+        for(int i=0 ; i< monster.size() ; i++){
+            System.out.println(monster.get(i).getConnectID() + " " + Integer.valueOf(strs.get(0)));
             if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                 monster.get(i).setMonsterState(GameObjForAnimator.State.valueOf(strs.get(1)));
             }
