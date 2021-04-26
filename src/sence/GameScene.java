@@ -27,7 +27,7 @@ public abstract class GameScene extends Scene {
     protected ArrayList<GameActor> gameActorArr;//主角
     private Display display;//畫面物件
     private boolean shooting;
-    private Camera camera;
+    protected Camera camera;
     protected MapInfo mapInfo;
     private int mouseX;
     private int mouseY;
@@ -74,7 +74,7 @@ public abstract class GameScene extends Scene {
             }
         }
 
-        //mapObjArr.forEach(a -> a.paint(g));
+        mapObjArr.forEach(a -> a.paint(g));
         mapObjArr.forEach(object -> {
             if (camera.isCollision(object)) {
                 object.paint(g);
@@ -190,7 +190,6 @@ public abstract class GameScene extends Scene {
             if (monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                 break;
             }
-            monster.get(i).updateForConnect();
             if (isServer || isSingle) {
                 monster.get(i).update();
                 for (int k = 0; k < gameActorArr.size(); k++) {
@@ -310,7 +309,6 @@ public abstract class GameScene extends Scene {
                 if (commandCode == Active.NUMBER_ONE.getCommandCode() || commandCode == Active.NUMBER_TWO.getCommandCode()) {
                     gameActorArr.get(0).changeGun(commandCode);
                 }
-
             }
 
             @Override

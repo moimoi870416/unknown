@@ -127,7 +127,7 @@ public class BullBoss extends Monster {
             setMonsterState(State.RUN);
             chase();
             chaseCount++;
-            if (chaseCount > 300) {
+            if (chaseCount > 240) {
                 attacking = false;
                 chaseCount = 0;
             }

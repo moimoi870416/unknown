@@ -2,8 +2,10 @@ package sence.gameScene.normalMode;
 
 
 import camera.MapInformation;
+import controller.ConnectController;
 import controller.ImageController;
 import controller.MapObjController;
+import controller.SenceController;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
@@ -66,6 +68,7 @@ public class NormalMode extends ConnectScene {
         private Image boss;
         private final int mapWidth = 2048;
         private int count;
+        private boolean touchDown;
 
         public NormalModeMapInfo(){
             mapBegin();
@@ -85,6 +88,7 @@ public class NormalMode extends ConnectScene {
             mapRight = forest;
             mapFinal = forest;
             this.count = 0;
+            touchDown = false;
         }
 
         @Override
@@ -124,6 +128,16 @@ public class NormalMode extends ConnectScene {
                 mapRight = forest;
                 mapFinal = forest;
                 count = 0;
+            }
+            for(int i=0 ; i<gameActorArr.size() ; i++){
+                if(gameActorArr.get(i).collider().centerX() > 18000){
+                    touchDown = true;
+                    return;
+                }
+                touchDown = false;
+            }
+            if(touchDown){
+                ConnectController.getInstance().changeBossSceneSend(gameActorArr.get(0));
             }
         }
         private int randomY(){
