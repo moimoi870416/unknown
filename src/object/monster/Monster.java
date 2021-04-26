@@ -48,14 +48,10 @@ public abstract class Monster extends GameObjForAnimator {
         this.hitX = hitCollied.left() - collider().left();
         this.hitY = hitCollied.top() - collider().top();
         nearest = 50000f;
-        connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
-        if (typeCode == 0) {
-            connectID = 20000;
-        }
-
         this.typeCode = typeCode;
         if (Global.isServer) {
-            ConnectController.getInstance().newMonsterSend(this, typeCode);
+            this.connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
+            ConnectController.getInstance().newMonsterSend(this);
         }
 
     }
@@ -247,5 +243,9 @@ public abstract class Monster extends GameObjForAnimator {
 
     public int getTypeCode() {
         return typeCode;
+    }
+
+    public void setConnectID(int connectID){
+        this.connectID = connectID;
     }
 }

@@ -161,18 +161,19 @@ public class ConnectController {
                 Gun.GunType.valueOf(strs.get(4)), Integer.valueOf(strs.get(5))));
     }
 
-    public void newMonsterSend(Monster monster, int commandCode) {
+    public void newMonsterSend(Monster monster) {
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(commandCode + "");//0
-        strs.add(monster.painter().left() + "");//1
-        strs.add(monster.painter().top() + "");//2
+        strs.add(monster.getTypeCode() + "");//0
+        strs.add(monster.getConnectID() + "");//1
+        strs.add(monster.painter().left() + "");//2
+        strs.add(monster.painter().top() + "");//3
         ClientClass.getInstance().sent(NetEvent.MONSTER_NEW, strs);
     }
 
     public void newMonsterReceive(LinkedList<Monster> monsters, ArrayList<String> strs) {
-        int i;
-        for (i = 0; i < monsters.size(); i++) {
-            if (strs.get(XXX) == monsters.get(i).getConnectID()) {
+        for (int i = 0; i < monsters.size(); i++) {
+            if (Integer.valueOf(strs.get(1)) == monsters.get(i).getConnectID()) {
+
                 return;
             }
         }
@@ -186,7 +187,9 @@ public class ConnectController {
             case 5 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)), Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0)) - 4]);
             case 6 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)), Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0)) - 4]);
         }
+        tmp.setConnectID(Integer.valueOf(strs.get(1)));
         monsters.add(tmp);
+
     }
 
     public void bossAtkTypeSend(int typeCode) {
