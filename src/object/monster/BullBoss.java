@@ -40,6 +40,9 @@ public class BullBoss extends Monster {
 
     @Override
     protected void updateComponent() {
+        if(this.state == State.RUN){
+            chase();
+        }
         if (attacking) {
             if (atkType == 3) {
                 if (!isChase) {
