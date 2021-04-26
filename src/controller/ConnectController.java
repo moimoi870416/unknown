@@ -161,31 +161,34 @@ public class ConnectController {
                         Gun.GunType.valueOf(strs.get(4)),Integer.valueOf(strs.get(5))));
     }
 
-    public void newMonsterSend(Monster monster,int commandCode){
+    public void newMonsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(commandCode +"");//0
-        strs.add(monster.painter().left() +"");//1
-        strs.add(monster.painter().top() +"");//2
+        strs.add(monster.getTypeCode() +"");//0
+        strs.add(monster.getConnectID() + "");//1
+        strs.add(monster.painter().left() +"");//2
+        strs.add(monster.painter().top() +"");//3
         ClientClass.getInstance().sent(NetEvent.MONSTER_NEW, strs);
     }
 
     public void newMonsterReceive(LinkedList<Monster> monsters,ArrayList<String> strs){
-        Monster tmp =null;
-        switch (Integer.valueOf(strs.get(0))){
-            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
-            case 1 -> tmp = new Cockroach(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
-            case 2 -> tmp = new Rino(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
-            case 3 -> tmp = new Stone(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)));
-            case 4 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
-            case 5 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
-            case 6 -> tmp = new SmallMonster(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
-        }
         for(int i=0 ; i<monsters.size() ; i++){
-            if(tmp == null || tmp.getConnectID() == monsters.get(i).getConnectID()){
+            if(Integer.valueOf(strs.get(1)) == monsters.get(i).getConnectID()){
                 return;
             }
-            monsters.add(tmp);
         }
+        Monster tmp = null;
+        switch (Integer.valueOf(strs.get(0))){
+            case 0 -> tmp = new BullBoss(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3))));
+            case 1 -> tmp = new Cockroach(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
+            case 2 -> tmp = new Rino(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
+            case 3 -> tmp = new Stone(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)));
+            case 4 -> tmp = new SmallMonster(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
+            case 5 -> tmp = new SmallMonster(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
+            case 6 -> tmp = new SmallMonster(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
+        }
+        tmp.setConnectID(Integer.valueOf(strs.get(1)));
+        monsters.add(tmp);
+
     }
 
     public void bossAtkTypeSend(int typeCode){
