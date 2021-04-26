@@ -34,5 +34,4 @@ public class Bar {
         this.y = y;
         this.life = life;
     }
-
 }

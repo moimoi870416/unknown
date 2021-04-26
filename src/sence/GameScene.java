@@ -162,7 +162,7 @@ public abstract class GameScene extends Scene {
                             int life = monster.get(k).getLife();
                             monster.get(k).offLife(testBullets.get(i).getAtk());
                             if (monster.get(k).getLife() <= 0) {
-                                if(monster.get(k).getTypeCode() == 3){
+                                if (monster.get(k).getTypeCode() == 3) {
                                     monster.get(k).setMonsterState(GameObjForAnimator.State.OTHER);
                                     return;
                                 }
@@ -368,15 +368,15 @@ public abstract class GameScene extends Scene {
         }
 
         private void effectPaint(Graphics g) {
-            if(isVictory){
-                g.drawImage(victory,camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
+            if (isVictory) {
+                g.drawImage(victory, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
             }
             if (isNobodyAlive) {
                 g.drawImage(defeat, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
             }
-            if(touchDown){
-                if(warningDelay.count()){
-                    if(count > 45){
+            if (touchDown) {
+                if (warningDelay.count()) {
+                    if (count > 45) {
                         g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
                         count++;
                         return;

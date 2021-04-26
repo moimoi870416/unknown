@@ -123,11 +123,11 @@ public class BullBoss extends Monster {
     }
 
     private void normalAtk() {
-        if (Math.abs(painter().centerX() - gameActor.collider().centerX()) > 80) {
+        if (Math.abs(painter().centerX() - gameActor.collider().centerX()) > 50) {
             setMonsterState(State.RUN);
             chase();
             chaseCount++;
-            if (chaseCount > 240) {
+            if (chaseCount > 180) {
                 attacking = false;
                 chaseCount = 0;
             }
@@ -138,10 +138,8 @@ public class BullBoss extends Monster {
                 setMonsterState(State.ATTACK);
             }
         }
-        if (state == State.ATTACK) {
             chase();
-        }
-        if (state == State.ATTACK && animator.isFinish()) {
+        if ( animator.isFinish()) {
             setMonsterState(State.RUN);
             attacking = false;
         }

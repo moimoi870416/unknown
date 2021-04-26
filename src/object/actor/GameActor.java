@@ -39,19 +39,20 @@ public class GameActor extends GameObjForAnimator {
         skill = new Skill();
         isFirstGun = true;
     }
-    private void setGun(){
-        switch (actor){
+
+    private void setGun() {
+        switch (actor) {
             case FIRST -> {
-                WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL,collider().centerX(),collider().bottom());
-                WhichGun.TWO.gun = new Gun(Gun.GunType.SNIPER,collider().centerX(),collider().bottom());
+                WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
+                WhichGun.TWO.gun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
             }
             case SECOND -> {
-                WhichGun.ONE.gun = new Gun(Gun.GunType.UZI,collider().centerX(),collider().bottom());
-                WhichGun.TWO.gun = new Gun(Gun.GunType.AK,collider().centerX(),collider().bottom());
+                WhichGun.ONE.gun = new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom());
+                WhichGun.TWO.gun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
             }
             case THIRD -> {
-                WhichGun.ONE.gun = new Gun(Gun.GunType.AK,collider().centerX(),collider().bottom());
-                WhichGun.TWO.gun = new Gun(Gun.GunType.UZI,collider().centerX(),collider().bottom());
+                WhichGun.ONE.gun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
+                WhichGun.TWO.gun = new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom());
             }
         }
 
@@ -81,8 +82,8 @@ public class GameActor extends GameObjForAnimator {
     }
 
 
-    public void setIsFirstGun(boolean isFirst){
-        if(isFirst){
+    public void setIsFirstGun(boolean isFirst) {
+        if (isFirst) {
             changeGun(-1);
             return;
         }
@@ -120,10 +121,10 @@ public class GameActor extends GameObjForAnimator {
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
-        if(currentGun == WhichGun.ONE){
+        if (currentGun == WhichGun.ONE) {
             return;
         }
-        ConnectController.getInstance().changeGunSend(this,commandCode);
+        ConnectController.getInstance().changeGunSend(this, commandCode);
     }
 
     private enum WhichGun {
@@ -212,7 +213,7 @@ public class GameActor extends GameObjForAnimator {
         if (this.state == State.DEAD || actor == null) {
             return;
         }
-        ConnectController.getInstance().actorStateSend(connectID,state);
+        ConnectController.getInstance().actorStateSend(connectID, state);
         switch (this.actor) {
             case FIRST -> {
                 switch (this.state) {
@@ -281,6 +282,7 @@ public class GameActor extends GameObjForAnimator {
                         animator.setArr(6);
                         animator.setDelayCount(30);
                         animator.setPlayOnce();
+                        System.out.println();
                     }
                     case DEAD -> animator.setArr(0);
                 }
@@ -291,18 +293,19 @@ public class GameActor extends GameObjForAnimator {
     @Override
     public void update() {
         blood.barUpdate(collider().left(), collider().top(), this.life);
+        if ( state == State.DEAD) {
+            return;
+        }
         if (life <= 0) {
+            if (state != State.DEATH || state != State.DEAD) {
+                setState(State.DEATH);
+            }
             if (state == State.DEATH && animator.isFinish()) {
                 setState(State.DEAD);
                 return;
             }
-            if (state != State.DEATH && state != State.DEAD) {
-                setState(State.DEATH);
-            }
         }
-        if (state == State.DEATH || state == State.DEAD) {
-            return;
-        }
+
         switch (verticalDir) {
             case UP:
                 if (painter().top() < 0) {
@@ -413,8 +416,8 @@ public class GameActor extends GameObjForAnimator {
         }
 
 
-        public void heal(){
-            if(life == HP_MAX && !canHeal){
+        public void heal() {
+            if (life == HP_MAX && !canHeal) {
                 return;
             }
             if (!canHeal && healCD.isStop()) {
@@ -439,35 +442,35 @@ public class GameActor extends GameObjForAnimator {
             if (state == State.DEATH || state == State.DEAD) {
                 return;
             }
-                delayForFlash.play();
-                flashAnimator.setPlayOnce();
-                XForFlash = painter().centerX();
-                YForFlash = painter().centerY();
-                int x = Math.abs(mouseX - painter().centerX());
-                int y = Math.abs(mouseY - painter().centerY());
-                if (x == 0 && y == 0) {
-                    return;
-                }
-                float d = (float) Math.sqrt(x * x + y * y);
-                float distance = d;//計算斜邊,怪物與人物的距離
-                if (distance > FLASH_MAX_DISTANCE) {
-                    distance = FLASH_MAX_DISTANCE;
-                }
-                float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
-                float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
-                if (mouseY < painter().centerY()) {
-                    moveOnY = -moveOnY;
-                }
-                if (mouseX < painter().centerX()) {
-                    moveOnX = -moveOnX;
-                }
-                translate((int) moveOnX, (int) moveOnY);
-                flashInObj(arr);
+            delayForFlash.play();
+            flashAnimator.setPlayOnce();
+            XForFlash = painter().centerX();
+            YForFlash = painter().centerY();
+            int x = Math.abs(mouseX - painter().centerX());
+            int y = Math.abs(mouseY - painter().centerY());
+            if (x == 0 && y == 0) {
+                return;
+            }
+            float d = (float) Math.sqrt(x * x + y * y);
+            float distance = d;//計算斜邊,怪物與人物的距離
+            if (distance > FLASH_MAX_DISTANCE) {
+                distance = FLASH_MAX_DISTANCE;
+            }
+            float moveOnX = (float) Math.cos(Math.toRadians((Math.acos(x / d) / Math.PI * 180))) * distance;
+            float moveOnY = (float) Math.sin(Math.toRadians((Math.asin(y / d) / Math.PI * 180))) * distance;
+            if (mouseY < painter().centerY()) {
+                moveOnY = -moveOnY;
+            }
+            if (mouseX < painter().centerX()) {
+                moveOnX = -moveOnX;
+            }
+            translate((int) moveOnX, (int) moveOnY);
+            flashInObj(arr);
 
         }
 
         private void flashInObj(ArrayList<GameObject> arr) {
-            if(arr == null){
+            if (arr == null) {
                 return;
             }
             for (int i = 0; i < arr.size(); i++) {
@@ -496,14 +499,13 @@ public class GameActor extends GameObjForAnimator {
             return delayForFlash;
         }
 
-        public boolean getCanHeal(){
+        public boolean getCanHeal() {
             return canHeal;
         }
 
-        public boolean getCanFlash(){
+        public boolean getCanFlash() {
             return canFlash;
         }
-
 
 
     }
