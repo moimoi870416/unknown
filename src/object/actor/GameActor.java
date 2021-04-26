@@ -43,7 +43,7 @@ public class GameActor extends GameObjForAnimator {
     private void setGun() {
         switch (actor) {
             case FIRST -> {
-                WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
+                WhichGun.ONE.gun = new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom());
                 WhichGun.TWO.gun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
             }
             case SECOND -> {

@@ -40,20 +40,30 @@ public class BossScene extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
-        AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
-        AudioResourceController.getInstance().loop("/sounds/bgm/warning.wav",1);
+
+        AudioResourceController.getInstance().loop("/sounds/bgm/warning-2.wav",0);
         BGMDelay = new Delay(300);
         BGMDelay.play();
         MAP_WIDTH = 2048;
         MAP_HEIGHT = 2048;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
-        if (isServer) {
-//            monster.add(new BullBoss(1024, 200));
-//            monster.add(new Stone(1024, 800));
-            monster.add(new Rino(1024, 1024));
-            monster.add(new SmallMonster(1024, 200, SmallMonster.Type.MUSHROOM));
 
+        if (isServer) {
+            monster.add(new BullBoss(1024, 500));
+            monster.add(new Rino(random(200,900), random(100,500)));
+            monster.add(new Rino(random(200,900), random(100,500)));
+            monster.add(new Stone(random(200,900), random(100,500)));
+            monster.add(new Stone(random(200,900), random(100,500)));
+            monster.add(new Stone(random(200,900), random(100,500)));
+            monster.add(new Stone(random(200,900), random(100,500)));
+            monster.add(new Stone(random(200,900), random(100,500)));
+            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.MUSHROOM));
+            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.GOBLIN));
+            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.MUSHROOM));
+            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.GOBLIN));
+            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.MUSHROOM));
+            monster.add(new SmallMonster(random(200,900), random(100,500), SmallMonster.Type.GOBLIN));
         }
     }
 
@@ -86,14 +96,15 @@ public class BossScene extends ConnectScene {
         @Override
         public void mapUpdate() {
             if(BGMDelay.count()){
-                AudioResourceController.getInstance().stop("/sounds/bgm/warning.wav");
+                AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);
 
             }
 
-            if (monster.size() == 0) {
-                return;
-            }
+//            if (monster.size() == 0) {
+//                return;
+//            }
+            System.out.println(monster.size()+"////"+stoneCount+"///"+stoneDead);
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }

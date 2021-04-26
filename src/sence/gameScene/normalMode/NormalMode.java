@@ -169,6 +169,7 @@ public class NormalMode extends ConnectScene {
                     touchDown = true;
                 }
                 if (touchDown) {
+                    AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
                     ConnectController.getInstance().changeBossSceneSend();
                 }
             }
