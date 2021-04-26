@@ -354,12 +354,14 @@ public abstract class GameScene extends Scene {
         private Delay warningDelay;
         private boolean isVictory;
         private boolean isNobodyAlive;
+        private int count;
 
         private EffectView() {
             warning = ImageController.getInstance().tryGet("/pictures/effect/warning.png");
             victory = ImageController.getInstance().tryGet("/pictures/effect/victory.png");
             warningDelay = new Delay(45);
-            warningDelay.loop();
+            warningDelay.play();
+            count = 0;
             isVictory = false;
             isNobodyAlive = false;
             defeat = ImageController.getInstance().tryGet("/pictures/effect/fail.png");
@@ -374,7 +376,12 @@ public abstract class GameScene extends Scene {
             }
             if(touchDown){
                 if(warningDelay.count()){
-                    g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
+                    if(count > 45){
+                        g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
+                        count++;
+                        return;
+                    }
+                    warningDelay.play();
                 }
 
             }
