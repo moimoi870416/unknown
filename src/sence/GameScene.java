@@ -32,7 +32,7 @@ public abstract class GameScene extends Scene {
     protected MapInfo mapInfo;
     private int mouseX;
     private int mouseY;
-    private EffectView effectView;
+    protected EffectView effectView;
     protected boolean bossScene;
 
 
@@ -346,7 +346,7 @@ public abstract class GameScene extends Scene {
         public abstract void mapUpdate();
     }
 
-    private class EffectView {
+    protected class EffectView {
         private Image victory;
         private Image defeat;
         private Image warning;
@@ -356,7 +356,7 @@ public abstract class GameScene extends Scene {
         private int count;
         private int warningTime;
 
-        private EffectView() {
+        protected EffectView() {
             warning = ImageController.getInstance().tryGet("/pictures/effect/warning.png");
             victory = ImageController.getInstance().tryGet("/pictures/effect/victory.png");
             warningDelay = new Delay(45);
@@ -410,6 +410,10 @@ public abstract class GameScene extends Scene {
 
                 isNobodyAlive = false;
             }
+        }
+
+        public void setVictory(boolean isVictory){
+            this.isVictory = isVictory;
         }
     }
 }
