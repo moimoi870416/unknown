@@ -42,6 +42,7 @@ public class ConnectController {
 
     public void actorStateSend(int connectID, GameObjForAnimator.State state){
         ArrayList<String> strs = new ArrayList<>();
+        System.out.println("!!!!!!!!!!!!!!!!");
         strs.add(connectID + "");//0
         strs.add(state + "");//1
         ClientClass.getInstance().sent(NetEvent.ACTOR_STATE, strs);
@@ -80,7 +81,7 @@ public class ConnectController {
 
 
     public void actorReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
-        for(int i=1 ; i<gameActorArr.size() ; i++){
+        for(int i=0 ; i<gameActorArr.size() ; i++){
             if(gameActorArr.get(i).getConnectID() == serialNum){
                 gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
                 gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
@@ -115,7 +116,7 @@ public class ConnectController {
     }
 
     public void healReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
-        for(int i=1 ; i<gameActorArr.size() ; i++) {
+        for(int i=0 ; i<gameActorArr.size() ; i++) {
             if (gameActorArr.get(i).getConnectID() == serialNum) {
                 if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                     gameActorArr.get(i).getSkill().heal();
@@ -125,7 +126,7 @@ public class ConnectController {
     }
 
     public void flashReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
-        for(int i=1 ; i<gameActorArr.size() ; i++) {
+        for(int i=0 ; i<gameActorArr.size() ; i++) {
             if (gameActorArr.get(i).getConnectID() == serialNum) {
                 if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))){
                     gameActorArr.get(i).getSkill().flash(Integer.valueOf(strs.get(1)),Integer.valueOf(strs.get(2)),null);
@@ -136,7 +137,7 @@ public class ConnectController {
     }
 
     public void changeGunReceive(ArrayList<GameActor> gameActorArr,int serialNum,ArrayList<String> strs){
-        for(int i=1 ; i<gameActorArr.size() ; i++) {
+        for(int i=0 ; i<gameActorArr.size() ; i++) {
             if (gameActorArr.get(i).getConnectID() == serialNum) {
                 gameActorArr.get(i).changeGun(Integer.valueOf(strs.get(1)));
             }

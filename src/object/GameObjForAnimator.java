@@ -55,12 +55,10 @@ public abstract class GameObjForAnimator extends GameObject {
     }
 
     public void setState(State state) {
-
         if (this.state == state) {
             return;
         }
-        if (connectID == 101) {
-        }
+
 
         this.state = state;
         if (animator == null) {

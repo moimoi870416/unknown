@@ -414,4 +414,5 @@ public abstract class GameScene extends Scene {
             this.isVictory = isVictory;
         }
     }
+
 }

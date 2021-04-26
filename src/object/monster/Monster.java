@@ -95,9 +95,15 @@ public abstract class Monster extends GameObjForAnimator {
             }
         }
         updateComponent();
+        if (state == State.DEATH) {
+            isChase = false;
+            return;
+        }
+
         if (forRino) {
             return;
         }
+
         if (isChase) {
             chase();
         }
