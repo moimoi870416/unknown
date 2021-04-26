@@ -157,75 +157,77 @@ public class MenuScene extends Scene {
     }
 
     private void changState() {
-        enter.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = SECOND;
+        enter.setClickedActionPerformed((x, y) -> {
+            AudioResourceController.getInstance().shot(buttonSound);
+            ModeState = SECOND;
         });
-        enter2.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = ZERO;
+        enter2.setClickedActionPerformed((x, y) -> {
+            AudioResourceController.getInstance().shot(buttonSound);
+            ModeState = ZERO;
         });
         backToFir.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = FIRST;
-                backToFir.unFocus();
-                singleMode.unFocus();
-                multiplayer.unFocus();
-                enter.unFocus();
+                    AudioResourceController.getInstance().shot(buttonSound);
+                    ModeState = FIRST;
+                    backToFir.unFocus();
+                    singleMode.unFocus();
+                    multiplayer.unFocus();
+                    enter.unFocus();
                 }
         );
         singleMode.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = THIRD;
-                isSingle = true;
+            AudioResourceController.getInstance().shot(buttonSound);
+            ModeState = THIRD;
+            isSingle = true;
         });
-        multiplayer.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = FOURTH;
+        multiplayer.setClickedActionPerformed((x, y) -> {
+            AudioResourceController.getInstance().shot(buttonSound);
+            ModeState = FOURTH;
         });
         backToSec.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = SECOND;
-                backToSec.unFocus();
-                singleMode.unFocus();
-                multiplayer.unFocus();
-                inputText.unFocus();
-                isAdd = false;
+            AudioResourceController.getInstance().shot(buttonSound);
+            ModeState = SECOND;
+            backToSec.unFocus();
+            singleMode.unFocus();
+            multiplayer.unFocus();
+            inputText.unFocus();
+            isAdd = false;
         });
-        normalMode.setClickedActionPerformed((x, y) ->{
-                AudioResourceController.getInstance().shot(buttonSound);
-                isNormal = true;
+        normalMode.setClickedActionPerformed((x, y) -> {
+            AudioResourceController.getInstance().shot(buttonSound);
+            isNormal = true;
         });
         backToFou.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot(buttonSound);
-                ModeState = FOURTH;
-                backToFou.unFocus();
-                crateServer.unFocus();
-                addServer.unFocus();
-                inputText.unFocus();
-                isAdd = false;
-                isServer = false;
+            AudioResourceController.getInstance().shot(buttonSound);
+            ModeState = FOURTH;
+            backToFou.unFocus();
+            crateServer.unFocus();
+            addServer.unFocus();
+            inputText.unFocus();
+            isAdd = false;
+            isServer = false;
 
         });
         crateServer.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot(buttonSound);
-                isServer = true;
-                isAdd = false;
-                inputText.unFocus();
-                addServer.unFocus();
-                crateConnectLanArea();
+            AudioResourceController.getInstance().shot(buttonSound);
+            isServer = true;
+            isAdd = false;
+            inputText.unFocus();
+            addServer.unFocus();
+            crateConnectLanArea();
         });
         addServer.setClickedActionPerformed((x, y) -> {
-                AudioResourceController.getInstance().shot(buttonSound);
-                isAdd = true;
-                inputText.isFocus();
-                isServer = false;
+            AudioResourceController.getInstance().shot(buttonSound);
+            isAdd = true;
+            inputText.isFocus();
+            isServer = false;
         });
     }
 
     //換背景
     private void multiSceneChange() {
-        SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
+        if (!isAdd) {
+            SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
+        }
     }
 
     private void singleSceneChange() {
