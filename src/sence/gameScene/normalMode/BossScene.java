@@ -12,6 +12,7 @@ import object.monster.SmallMonster;
 import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
+import util.Delay;
 
 import static util.Global.*;
 
@@ -22,6 +23,7 @@ import static util.Global.MAP_HEIGHT;
 import static util.Global.MAP_WIDTH;
 
 public class BossScene extends ConnectScene {
+    private Delay BGMDelay;
 
     public BossScene() {
         gameActorArr = new ArrayList<>();
@@ -33,11 +35,13 @@ public class BossScene extends ConnectScene {
         this.gameActorArr = gameActorArr;
         this.gameActorArr.get(0).offSetX(1024);
         this.gameActorArr.get(0).offSetY(1800);
-//        AudioResourceController.getInstance().loop("/sounds/weapon/noBullet.wav",0);
+
     }
 
     @Override
     protected void gameSceneBegin() {
+        BGMDelay = new Delay(300);
+        BGMDelay.play();
         MAP_WIDTH = 2048;
         MAP_HEIGHT = 2048;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
@@ -65,6 +69,7 @@ public class BossScene extends ConnectScene {
             map = ImageController.getInstance().tryGet(MapPath.END.mapPath);
             mapBoss();
             //monster.add(new BullBoss(1024,1024));
+            AudioResourceController.getInstance().loop("/sounds/bgm/warning.wav",1);
         }
 
         @Override
@@ -73,18 +78,16 @@ public class BossScene extends ConnectScene {
                     map,
                     0,
                     0,
-//                    2048,
-//                    2048,
-//                    camera.collider().left(),
-//                    camera.collider().top(),
-//                    camera.collider().right(),
-//                    camera.collider().bottom(),
-
                     null);
         }
 
         @Override
         public void mapUpdate() {
+            if(BGMDelay.count()){
+                AudioResourceController.getInstance().stop("/sounds/bgm/warning.wav");
+                AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav",0);
+
+            }
 
             if (monster.size() == 0) {
                 return;
@@ -110,7 +113,7 @@ public class BossScene extends ConnectScene {
                         yOK = false;
                     }
                 }
-                if (xOK && yOK) {
+                if (xOK && yOK && monster.size() < 20 + stoneDead) {
                     int r = random(0, 4);
                     if (r == 0) {
                         monster.add(new Rino(x, y));

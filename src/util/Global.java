@@ -100,7 +100,7 @@ public class Global {
         FOREST("/pictures/map/map-forest.png"),
         DESERT("/pictures/map/map-desert.png"),
         CHANGE("/pictures/map/map-change.png"),
-        END("/pictures/map/qvAGto.jpg"),
+        END("/pictures/map/map-boss-down.png"),
         LIMIT("/pictures/map/map-limit.png");
 
         public String mapPath;

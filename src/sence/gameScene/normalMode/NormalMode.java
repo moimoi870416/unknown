@@ -9,6 +9,9 @@ import controller.SenceController;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
+import object.monster.Rino;
+import object.monster.SmallMonster;
+import object.monster.Stone;
 import sence.ConnectScene;
 import sence.GameScene;
 import util.Global;
@@ -68,7 +71,10 @@ public class NormalMode extends ConnectScene {
         private final int mapWidth = 2048;
         private int count;
         private boolean touchDown;
-
+        private boolean secondWave;
+        private boolean thirdWave;
+        private boolean fourthWave;
+        private boolean fifthWave;
 
         public NormalModeMapInfo() {
             mapBegin();
@@ -89,6 +95,11 @@ public class NormalMode extends ConnectScene {
             mapFinal = forest;
             this.count = 0;
             touchDown = false;
+            secondWave = true;
+            thirdWave = true;
+            fourthWave = true;
+            fifthWave = true;
+
         }
 
         @Override
@@ -107,18 +118,34 @@ public class NormalMode extends ConnectScene {
                 mapRight = forest;
                 mapFinal = change;
                 count = 1;
+                if(secondWave){
+                    secondWave();
+                    secondWave = false;
+                }
                 if (actorX > 8192) {
                     mapMiddle = change;
                     mapRight = desert;
                     mapFinal = desert;
                     count = 3;
+                    if(thirdWave){
+                        thirdWave();
+                        thirdWave = false;
+                    }
                     if (actorX > 12288) {
                         mapLeft = desert;
                         mapMiddle = desert;
                         count = 5;
+                        if(fourthWave){
+                            fourthWave();
+                            fourthWave = false;
+                        }
                         if (actorX > 16384) {
                             mapFinal = boss;
                             count = 6;
+                            if(fifthWave){
+                                fifthWave();
+                                fifthWave = false;
+                            }
                         }
                     }
                 }
@@ -167,18 +194,6 @@ public class NormalMode extends ConnectScene {
                     .setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                     .gen()
                     .setMap());
-
-//            for(int i=0 ; i<30 ; i++){
-//                monster.add(new SmallMonster(random(2000,2500),randomY(), SmallMonster.Type.GOBLIN));
-//                monster.add(new Stone(random(2000,2500),randomY()));
-//                if(i%2 == 0){
-//                    monster.add(new SmallMonster(random(2000,2500),randomY(), SmallMonster.Type.MUSHROOM));
-//                }
-//                if(i%3 == 0){
-//                    monster.add(new Rino(random(2500,3200),randomY()));
-//                }
-//            }
-
 
         }
 
@@ -237,6 +252,31 @@ public class NormalMode extends ConnectScene {
                     .setNameAndPath("oasis2", "/pictures/map/oasis_tree2(232-400).png", true, new GameObjForPic("/pictures/map/oasis_tree2(232-400).png", 130, 0, 232, 400))
                     .gen()
                     .setMap());
+        }
+
+
+        private void secondWave(){
+            for(int i=0 ; i<20 ; i++){
+                monster.add(new SmallMonster(1500,random(370,1000), SmallMonster.Type.GOBLIN));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(2000,random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
+            }
+            monster.add(new Rino(2000,500));
+            for(int i=0 ; i< 8 ; i++) {
+                monster.add(new Stone(random(1500,2000), random(370,1000)));
+            }
+            
+
+        }
+        private void thirdWave(){
+
+        }
+        private void fourthWave(){
+
+        }
+        private void fifthWave(){
+
         }
     }
 }
