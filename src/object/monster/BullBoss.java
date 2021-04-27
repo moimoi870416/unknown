@@ -148,6 +148,7 @@ public class BullBoss extends Monster {
         if (animator.isFinish()) {
             setMonsterState(State.RUN);
             attacking = false;
+            forRino = false;
 
         }
     }

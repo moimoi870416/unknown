@@ -348,23 +348,22 @@ public abstract class GameScene extends Scene {
                 if (commandCode == Active.ENTER.getCommandCode()) {
                     if(!typeCode){
                         typeCode = true;
+                        return;
                     }
                     if(typeCode){
-                        if(type.size()>4 || type.size() == 0){
-                            typeCode = false;
-                            return;
-                        }
                         if ((type.get(0) == 'L' || type.get(0) == 'l') && (type.get(1) == 'Y' || type.get(1) == 'y') && (type.get(2) == 'S' || type.get(2) == 's') && (type.get(3) == 'U' || type.get(3) == 'u')) {
                             for(int i=0 ; i<gameActorArr.size() ; i++){
                                 if(gameActorArr.get(i).getState() == GameObjForAnimator.State.DEAD) {
                                     GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
                                     gameActorArr.remove(i);
                                     gameActorArr.set(i,tmp);
-                                    type.clear();
                                     break;
                                 }
                             }
+
                         }
+                        typeCode = false;
+                        type.clear();
                     }
                 }
 
