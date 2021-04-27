@@ -119,6 +119,10 @@ public class GameActor extends GameObjForAnimator {
         return isFirstGun;
     }
 
+    public Actor getActor(){
+        return actor;
+    }
+
     public void changeGun(int commandCode) {
         if (commandCode == -1) {
             currentGun = WhichGun.ONE;

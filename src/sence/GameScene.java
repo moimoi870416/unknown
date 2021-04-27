@@ -17,10 +17,12 @@ import weapon.Gun;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import static util.Global.*;
 
 public abstract class GameScene extends Scene {
+    Scanner sc = new Scanner(System.in);
     protected ArrayList<GameObject> mapObjArr;
     protected LinkedList<Bullet> testBullets;
     protected LinkedList<Monster> monster;
@@ -340,8 +342,22 @@ public abstract class GameScene extends Scene {
                     ConnectController.getInstance().healSend(gameActorArr.get(0));
                 }
                 if (commandCode == Active.ENTER.getCommandCode()) {
+                    String str = sc.next();
+                    for(int i=0 ; i<gameActorArr.size() ; i++){
+                        if(gameActorArr.get(i).getLife() <= 0 && (str.equals("lysu") || str.equals("LYSU"))){
+                            GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
+                            tmp.setConnectID(gameActorArr.get(i).getConnectID());
+                            gameActorArr.remove(i);
+                            gameActorArr.set(i,tmp);
+                            break;
+                        }
+
+                    }
+
+
 
                 }
+
             }
 
             @Override

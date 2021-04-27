@@ -60,6 +60,7 @@ public abstract class Monster extends GameObjForAnimator {
     }
 
     public void chase() {
+        System.out.println("!!!!!!!!!!!");
         float x = Math.abs(gameActor.collider().centerX() - painter().centerX());
         float y = Math.abs(gameActor.collider().bottom() - painter().centerY() - 10);
         if (x <= 20 && y <= 20) {
