@@ -113,7 +113,7 @@ public class ConnectController {
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
-        if(gameActor.getCurrentGun().getGunType().ordinal() != Gun.GunType.valueOf(strs.get(9)).ordinal()){
+        if(gameActor.getCurrentGun().getGunType().ordinal() == Integer.valueOf(strs.get(9))){
             gameActor.changeGun(-1);
             return;
         }
@@ -282,7 +282,7 @@ public class ConnectController {
             }
             for (int i = 0; i < gameActorArr.size(); i++) {
                 test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
-
+                System.out.println(test.get(i).getCurrentGun().getGunType().ordinal());
             }
             SenceController.getSenceController().change(new NormalMode(test));
             return;
