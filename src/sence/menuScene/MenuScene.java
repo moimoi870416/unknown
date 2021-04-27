@@ -112,7 +112,7 @@ public class MenuScene extends Scene {
     private void initStyle() {
         IpStyle = new Style.StyleRect(300, 100, true,
                 new BackgroundType.BackgroundImage(ImageController.getInstance().tryGet("/pictures/menu/IPButton2.png")));
-        inputText = new EditText(825, 500, "", IpStyle);
+        inputText = new EditText(900, 500, "", IpStyle);
         inputText.setEditLimit(12);//設定文字輸入長度限制
         inputText.setCursorColor(Color.black);
         inputText.setTranX(50);
