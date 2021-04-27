@@ -53,7 +53,6 @@ public abstract class Monster extends GameObjForAnimator {
         this.typeCode = typeCode;
         if (isServer) {
             this.connectID = Global.NetEvent.MONSTER_CONNECT_ID++;
-            System.out.println(connectID);
             ConnectController.getInstance().newMonsterSend(this);
         }
 

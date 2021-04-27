@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import static util.Global.*;
 
 public class NormalMode extends ConnectScene {
+    private boolean isChangingScene = false;
 
     public NormalMode() {
         gameActorArr = new ArrayList<>();
@@ -146,17 +147,21 @@ public class NormalMode extends ConnectScene {
                 mapFinal = forest;
                 count = 0;
             }
-            if(isServer||isSingle) {
+            if((isServer||isSingle) && !isChangingScene) {
                 for(int i = 0; i < gameActorArr.size(); i++) {
                     if (monster.size() != stoneCount || gameActorArr.get(i).collider().centerX() <18500) {
                         return;
                     }
-//                    if (isSingle) {
-//                        SenceController.getSenceController().change(new BossScene(gameActorArr));
-//                    }
+
+                    if (isSingle) {
+                        isChangingScene = true;
+                        SenceController.getSenceController().change(new BossScene(gameActorArr));
+                    }
+
                     touchDown = true;
                 }
                 if (touchDown) {
+                    isChangingScene = true;
                     AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
                     ConnectController.getInstance().changeBossSceneSend();
                 }
