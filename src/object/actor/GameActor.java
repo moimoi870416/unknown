@@ -41,7 +41,6 @@ public class GameActor extends GameObjForAnimator {
     private void setGun() {
         switch (actor) {
             case FIRST -> {
-
                     WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom()));
             }

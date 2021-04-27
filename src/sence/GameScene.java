@@ -137,7 +137,7 @@ public abstract class GameScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
-                        if (testBullets.get(i).getAtk() >= 100) {
+                        if (gameActorArr.get(k).getLife()>=80) {
                             gameActorArr.get(k).setLife(1);
                             i--;
                             x++;

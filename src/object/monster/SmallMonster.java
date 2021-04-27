@@ -7,7 +7,7 @@ public class SmallMonster extends Monster {
     private Type type;
 
     public SmallMonster(int x, int y,Type type) {
-        super(x, y, 32, 32,500,10,type.speedMove,false,type.typeCode);
+        super(x, y, 32, 32,400,10,type.speedMove,false,type.typeCode);
         this.type = type;
         if(type == Type.GOBLIN) {
             animator = new Animator(type.path, 15, 16, 16, 2);

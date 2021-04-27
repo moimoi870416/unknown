@@ -23,7 +23,7 @@ public class NormalMode extends ConnectScene {
 
     public NormalMode() {
         gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.FIRST, 17500, 500));
+        gameActorArr.add(new GameActor(Actor.FIRST, 500, 500));
     }
 
     public NormalMode(ArrayList<GameActor> gameActorArr) {
@@ -62,6 +62,7 @@ public class NormalMode extends ConnectScene {
         private boolean thirdWave;
         private boolean fourthWave;
         private boolean fifthWave;
+        private int monsterNumber;
 
         public NormalModeMapInfo() {
             mapBegin();
@@ -86,9 +87,10 @@ public class NormalMode extends ConnectScene {
             thirdWave = true;
             fourthWave = true;
             fifthWave = true;
-//            if(isServer) {
-//                firstWave();
-//            }
+            monsterNumber = gameActorArr.size() *5;
+            if(isServer||isSingle) {
+                firstWave();
+            }
 
 
         }
@@ -109,7 +111,7 @@ public class NormalMode extends ConnectScene {
                 mapRight = forest;
                 mapFinal = change;
                 count = 1;
-                if(secondWave && isServer){
+                if(secondWave && (isServer||isSingle)){
                     secondWave();
                     secondWave = false;
                 }
@@ -118,7 +120,7 @@ public class NormalMode extends ConnectScene {
                     mapRight = desert;
                     mapFinal = desert;
                     count = 3;
-                    if(thirdWave && isServer){
+                    if(thirdWave &&  (isServer||isSingle)){
                         thirdWave();
                         thirdWave = false;
                     }
@@ -126,14 +128,14 @@ public class NormalMode extends ConnectScene {
                         mapLeft = desert;
                         mapMiddle = desert;
                         count = 5;
-                        if(fourthWave && isServer){
+                        if(fourthWave && (isServer||isSingle)){
                             fourthWave();
                             fourthWave = false;
                         }
                         if (actorX > 16384) {
                             mapFinal = boss;
                             count = 6;
-                            if(fifthWave && isServer){
+                            if(fifthWave &&  (isServer||isSingle)){
                                 fifthWave();
                                 fifthWave = false;
                             }
@@ -248,32 +250,80 @@ public class NormalMode extends ConnectScene {
         }
 
         private void firstWave(){
-            for(int i=0 ; i<20 ; i++){
-                monster.add(new SmallMonster(random(1500,2000),random(370,1000), SmallMonster.Type.GOBLIN));
+            for(int i=0 ; i<monsterNumber*2 ; i++){
+                monster.add(new SmallMonster(random(2000,3000),random(370,1000), SmallMonster.Type.GOBLIN));
                 if(i%2 == 0){
-                    monster.add(new SmallMonster(random(1500,2000),random(370,1000), SmallMonster.Type.MUSHROOM));
+                    monster.add(new SmallMonster(random(2000,3000),random(370,1000), SmallMonster.Type.MUSHROOM));
                 }
             }
-            monster.add(new Rino(random(1500,2000),500));
-            for(int i=0 ; i< 8 ; i++) {
-                monster.add(new Stone(random(1500,2000), random(370,1000)));
+            for(int i=0 ; i<monsterNumber*3 ; i++){
+                monster.add(new SmallMonster(random(3000,4500),random(370,1000), SmallMonster.Type.GOBLIN));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(random(3000,4500),random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
             }
-        }
-
-
-        private void secondWave(){
-
-
+            monster.add(new Rino(random(2000,2500),500));
+            monster.add(new Rino(random(4000,2500),500));
 
         }
-        private void thirdWave(){
+
+
+        private void secondWave(){//4096
+            for(int i=0 ; i<monsterNumber*2 ; i++){
+                monster.add(new SmallMonster(random(5000,7000),random(370,1000), SmallMonster.Type.GOBLIN));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(random(5000,7000),random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
+            }
+            for(int i=0 ; i<monsterNumber*2 ; i++){
+                monster.add(new SmallMonster(random(7000,8000),random(370,1000), SmallMonster.Type.GOBLIN));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(random(7000,8000),random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
+            }
+            monster.add(new Rino(random(8000,2500),500));
+
+            for(int i=0 ; i<monsterNumber*3 ; i++){
+                monster.add(new Stone(random(8000,10000),random(370,1000)));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(random(8000,10000),random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
+                if(i%5 == 0){
+                    monster.add(new Rino(random(8000,10000),random(370,1000)));
+                }
+            }
 
         }
-        private void fourthWave(){
+        private void thirdWave(){//8192
+            for(int i=0 ; i<monsterNumber ; i++){
+                monster.add(new SmallMonster(random(10000,15000),random(370,1000), SmallMonster.Type.GOBLIN));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(random(10000,15000),random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
+            }
+            for(int i=0 ; i<monsterNumber ; i++){
+                monster.add(new Rino(random(10000,15000),random(370,1000)));
+
+            }
+            for(int i=0 ; i<monsterNumber*3 ; i++){
+                monster.add(new Stone(random(10000,15000),random(370,1000)));
+                if(i%2 == 0){
+                    monster.add(new SmallMonster(random(10000,15000),random(370,1000), SmallMonster.Type.MUSHROOM));
+                }
+                if(i%5 == 0){
+                    monster.add(new Rino(random(10000,15000),random(370,1000)));
+                }
+            }
 
         }
-        private void fifthWave(){
+        private void fourthWave(){//12288
 
+
+        }
+        private void fifthWave(){//16384
+            for(int i=0 ; i<monsterNumber/2 ; i++){
+                monster.add(new Rino(17500,450+50*i));
+            }
         }
     }
 }

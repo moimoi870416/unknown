@@ -80,7 +80,7 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
         PISTOL(20,10,500,1,-1,50),
         UZI(26,15,500,7,-7,100),
         AK(35,12,700,3,-3,100),
-        SNIPER(200,30,1000,0,0,1000),
+        SNIPER(300,30,1000,0,0,1000),
         MACHINE_GUN(31,15,600,5,-5,100);
 
         private int atk;//攻擊力
