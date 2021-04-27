@@ -117,7 +117,7 @@ public class ConnectController {
             gameActor.changeGun(-1);
         }else {
             gameActor.changeGun(-2);
-//        }
+        }
     }
 
     public void healReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
