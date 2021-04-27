@@ -51,6 +51,7 @@ public class MenuScene extends Scene {
     //    private boolean isSingle;//是不是單人
     private boolean isNormal;//是不是一般
     private boolean isAdd;  //是不是創建房間
+    private boolean isCrate;
 
     private State ModeState;//此刻的模式 決定會出現哪些按鈕
     private Style IpStyle;//輸入ip的模式
@@ -67,6 +68,7 @@ public class MenuScene extends Scene {
         this.isAdd = false;
         isSingle = false;
         isNormal = true;
+        isCrate = false;
         ModeState = FIRST;
         buttonSound = "/sounds/button01a.wav";
     }
@@ -176,7 +178,7 @@ public class MenuScene extends Scene {
         );
         singleMode.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
-            ModeState = THIRD;
+//            ModeState = THIRD;
             isSingle = true;
         });
         multiplayer.setClickedActionPerformed((x, y) -> {
@@ -210,6 +212,7 @@ public class MenuScene extends Scene {
         });
         crateServer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
+            isCrate = true;
             isSingle = false;
             isServer = true;
             isAdd = false;
@@ -228,7 +231,7 @@ public class MenuScene extends Scene {
 
     //換背景
     private void multiSceneChange() {
-        if (!isAdd) {
+        if (!isAdd && isCrate) {
             SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
         }
     }

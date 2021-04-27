@@ -94,6 +94,9 @@ public class EnterScene extends Scene {
         return new CommandSolver.KeyListener() {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
+                if (commandCode == Active.ENTER.getCommandCode()) {
+                    ConnectController.getInstance().changeSceneSend(isNormal);
+                }
             }
 
             @Override
