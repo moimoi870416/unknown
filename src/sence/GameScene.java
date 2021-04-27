@@ -190,10 +190,10 @@ public abstract class GameScene extends Scene {
                 break;
             }
             if (isServer || isSingle) {
-                monster.get(i).update();
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     monster.get(i).whoIsNear(gameActorArr.get(k));
                 }
+                monster.get(i).update();
                 for (int k = 0; k < mapObjArr.size(); k++) {
                     monster.get(i).isCollider(mapObjArr.get(k));
                 }
@@ -336,6 +336,9 @@ public abstract class GameScene extends Scene {
                 if (commandCode == Active.SKILL.getCommandCode() && gameActorArr.get(0).getSkill().getHealCD().isStop()) {
                     gameActorArr.get(0).getSkill().heal();
                     ConnectController.getInstance().healSend(gameActorArr.get(0));
+                }
+                if(commandCode == Active.ENTER.getCommandCode()){
+
                 }
             }
 

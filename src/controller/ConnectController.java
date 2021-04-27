@@ -274,9 +274,9 @@ public class ConnectController {
         if (Boolean.valueOf(strs.get(0))) {
             for (int i = 0; i < gameActorArr.size(); i++) {
                 switch (gameActorArr.get(i).getConnectID()) {
-                    case 100 -> test.add(new GameActor(Actor.FIRST, 17500, 500));
-                    case 101 -> test.add(new GameActor(Actor.SECOND, 17500, 550));
-                    case 102 -> test.add(new GameActor(Actor.THIRD, 17500, 600));
+                    case 100 -> test.add(new GameActor(Actor.FIRST, 500, 500));
+                    case 101 -> test.add(new GameActor(Actor.SECOND, 500, 550));
+                    case 102 -> test.add(new GameActor(Actor.THIRD, 500, 600));
                 }
             }
             for (int i = 0; i < gameActorArr.size(); i++) {

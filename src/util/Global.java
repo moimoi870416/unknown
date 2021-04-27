@@ -12,10 +12,11 @@ public class Global {
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
 
-    public final static boolean IS_DEBUG = true;
+    public final static boolean IS_DEBUG = false;
     //網路
     public static boolean isSingle = true;
     public static boolean isServer = false;
+    public static boolean bossDead = false;
 
     public final static int BUTTON_WIDTH = 375;
     public final static int BUTTON_HEIGHT = 750;

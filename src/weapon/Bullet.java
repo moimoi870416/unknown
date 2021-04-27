@@ -77,11 +77,11 @@ public class Bullet implements GameKernel.PaintInterface, GameKernel.UpdateInter
     }
 
     private enum BulletType{
-        PISTOL(20,10,500,1,-1,50),
-        UZI(26,15,500,7,-7,100),
+        PISTOL(15,10,500,1,-1,50),
+        UZI(19,15,500,7,-7,100),
         AK(35,12,700,3,-3,100),
         SNIPER(300,30,1000,0,0,1000),
-        MACHINE_GUN(31,15,600,5,-5,100);
+        MACHINE_GUN(24,15,600,5,-5,100);
 
         private int atk;//攻擊力
         private int speedMove;//子彈的速度

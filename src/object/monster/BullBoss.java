@@ -97,12 +97,13 @@ public class BullBoss extends Monster {
                 animator.setDelayCount(30);
                 animator.setPlayOnce();
                 moveSpeed = 0;
+                Global.bossDead = true;
             }
             case ATTACK -> {
                 animator.setArr(8, 4);
                 animator.setDelayCount(5);
                 animator.setPlayOnce();
-                moveSpeed = 3;
+                moveSpeed = 1;
                 isOnceAttack = false;
                 canAttack = true;
                 attackDelay = new Delay(30);
@@ -121,7 +122,7 @@ public class BullBoss extends Monster {
                 animator.setArr(8, 2);
                 animator.setDelayCount(10);
                 animator.setPlayLoop();
-                moveSpeed = 3;
+                moveSpeed = 2;
             }
         }
     }

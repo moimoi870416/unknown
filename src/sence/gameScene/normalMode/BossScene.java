@@ -27,15 +27,14 @@ public class BossScene extends ConnectScene {
 
     public BossScene() {
         gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.FIRST, 1024, 1800));
+        this.gameActorArr.add(new GameActor(Actor.FIRST, 1024, 1800));
     }
 
     public BossScene(ArrayList<GameActor> gameActorArr) {
         bossScene = true;
         this.gameActorArr = gameActorArr;
-//        this.gameActorArr.get(0).offSetX(1024);
-//        this.gameActorArr.get(0).offSetY(1800);
-
+        this.gameActorArr.get(0).offSetX(1024);
+        this.gameActorArr.get(0).offSetY(1800);
     }
 
     @Override
@@ -49,22 +48,8 @@ public class BossScene extends ConnectScene {
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
         mapInfo = new BossMapInfo();
 
-        if (isServer) {
+        if (isServer || isSingle) {
             monster.add(new BullBoss(1024, 500));
-
-//            monster.add(new Rino(random(200, 900), random(100, 500)));
-//            monster.add(new Rino(random(200, 900), random(100, 500)));
-//            monster.add(new Stone(random(200, 900), random(100, 500)));
-//            monster.add(new Stone(random(200, 900), random(100, 500)));
-//            monster.add(new Stone(random(200, 900), random(100, 500)));
-//            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new Stone(random(200, 900), random(100, 500)));
-            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
-//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
-//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
-//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
-//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.MUSHROOM));
-//            monster.add(new SmallMonster(random(200, 900), random(100, 500), SmallMonster.Type.GOBLIN));
         }
     }
 
@@ -77,10 +62,20 @@ public class BossScene extends ConnectScene {
 
     public class BossMapInfo extends GameScene.MapInfo {
         private Image map;
+        private int x;
+        private int y;
+        private boolean xOK;
+        private boolean yOK;
+        private boolean start;
 
         public BossMapInfo() {
             map = ImageController.getInstance().tryGet(MapPath.END.mapPath);
             mapBoss();
+            x = 0;
+            y = 0;
+            xOK = false;
+            yOK = false;
+            start = false;
             //monster.add(new BullBoss(1024,1024));
 
         }
@@ -100,6 +95,7 @@ public class BossScene extends ConnectScene {
             if(BGMDelay.count()){
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav", 0);
+                start = true;
             }
 
 
@@ -110,41 +106,42 @@ public class BossScene extends ConnectScene {
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
-//            if (isServer) {
-//                int x = random(554, 1750);
-//                int y = random(320, 2000);
-//                boolean xOK = false;
-//                boolean yOK = false;
-//                for (int i = 0; i < gameActorArr.size(); i++) {
-//                    if (x > gameActorArr.get(i).collider().centerX() + WINDOW_WIDTH / 2 + 10 && x < gameActorArr.get(i).collider().centerX() - WINDOW_WIDTH / 2 - 10) {
-//                        xOK = true;
-//                    } else {
-//                        xOK = false;
-//                    }
-//                    if (y > gameActorArr.get(i).collider().centerX() + WINDOW_HEIGHT + 10 && y < gameActorArr.get(i).collider().centerX() - WINDOW_HEIGHT / 2 - 10) {
-//                        yOK = true;
-//                    } else {
-//                        yOK = false;
-//                    }
-//                }
-//                if (xOK && yOK && monster.size() < 20 + stoneDead) {
-//                    int r = random(0, 4);
-//                    if (r == 0) {
-//                        monster.add(new Rino(x, y));
-//                    }
-//                    if (r == 1) {
-//                        monster.add(new Stone(x, y));
-//                    }
-//                    if (r == 2) {
-//                        monster.add(new SmallMonster(x, y, SmallMonster.Type.GOBLIN));
-//                    }
-//                    if (r == 3) {
-//                        monster.add(new SmallMonster(x, y, SmallMonster.Type.MUSHROOM));
-//                    }
-//
-//                    monster.getLast().setIsChase(true);
-//                }
-//            }
+            if ((isServer || isSingle) && !bossDead && start) {
+
+                xOK = false;
+                yOK = false;
+                for (int i = 0; i < gameActorArr.size(); i++) {
+                    x = random(550,1750);
+                    y = random(320,1950);
+                    if (x < gameActorArr.get(i).collider().centerX() + WINDOW_WIDTH / 2 + 10 && x > gameActorArr.get(i).collider().centerX() - WINDOW_WIDTH / 2 - 10) {
+                        return;
+                    }
+                    xOK = true;
+                    if (y < gameActorArr.get(i).collider().centerX() + WINDOW_HEIGHT + 10 && y > gameActorArr.get(i).collider().centerY() - WINDOW_HEIGHT / 2 - 10) {
+                        return;
+                    }
+                    yOK = true;
+                    System.out.println(xOK + "///" + yOK);
+                }
+
+                if ((xOK && yOK) && monster.size() < 20 + stoneDead && Math.random()*100<20) {
+                    int r = random(0, 10);
+                    if (r >=0 && r <4) {
+                        monster.add(new SmallMonster(x, y, SmallMonster.Type.MUSHROOM));
+                    }
+                    if (r >=4 && r <6) {
+                        monster.add(new SmallMonster(x, y, SmallMonster.Type.GOBLIN));
+                    }
+                    if (r >=6 && r <8) {
+                        monster.add(new Stone(x, y));
+                    }
+                    if (r >=9 && r<11 ) {
+                        monster.add(new Rino(x, y));
+                    }
+
+                    monster.getLast().setIsChase(true);
+                }
+            }
 
         }
 
