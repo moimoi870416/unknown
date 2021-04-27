@@ -151,9 +151,9 @@ public class NormalMode extends ConnectScene {
                     if (monster.size() != stoneCount || gameActorArr.get(i).collider().centerX() <18500) {
                         return;
                     }
-                    if (isSingle) {
-                        SenceController.getSenceController().change(new BossScene(gameActorArr));
-                    }
+//                    if (isSingle) {
+//                        SenceController.getSenceController().change(new BossScene(gameActorArr));
+//                    }
                     touchDown = true;
                 }
                 if (touchDown) {
