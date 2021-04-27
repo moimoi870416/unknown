@@ -360,6 +360,7 @@ public abstract class GameScene extends Scene {
                                     GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
                                     gameActorArr.remove(i);
                                     gameActorArr.set(i,tmp);
+                                    type.clear();
                                     break;
                                 }
                             }
