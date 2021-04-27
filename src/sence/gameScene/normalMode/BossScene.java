@@ -18,7 +18,6 @@ import static util.Global.*;
 
 import java.awt.*;
 import java.util.ArrayList;
-
 import static util.Global.MAP_HEIGHT;
 import static util.Global.MAP_WIDTH;
 
@@ -91,14 +90,11 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-
             if(BGMDelay.count()){
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav", 0);
                 start = true;
             }
-
-
             if (monster.size() == 0) {
                 return;
             }
@@ -121,10 +117,9 @@ public class BossScene extends ConnectScene {
                         return;
                     }
                     yOK = true;
-                    System.out.println(xOK + "///" + yOK);
                 }
 
-                if ((xOK && yOK) && monster.size() < 20 + stoneDead && Math.random()*100<20) {
+                if ((xOK && yOK) && monster.size() < gameActorArr.size()*12 + stoneDead && Math.random()*100<20) {
                     int r = random(0, 10);
                     if (r >=0 && r <4) {
                         monster.add(new SmallMonster(x, y, SmallMonster.Type.MUSHROOM));

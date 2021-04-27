@@ -52,6 +52,7 @@ public abstract class GameScene extends Scene {
         effectView = new EffectView();
         monsterCheckDelay = new Delay(60);
         monsterCheckDelay.loop();
+        playerNum = gameActorArr.size();
     }
 
     protected abstract void sceneBeginComponent();

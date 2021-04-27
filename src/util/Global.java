@@ -8,6 +8,7 @@ public class Global {
     public static int actorX;
     public static int actorY;
     public static int shootCount = 0;
+    public static int playerNum;
 
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
