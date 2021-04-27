@@ -134,10 +134,7 @@ public class GameActor extends GameObjForAnimator {
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
-        if (currentGun == WhichGun.ONE) {
-            return;
-        }
-        ConnectController.getInstance().changeGunSend(this, commandCode);
+        //ConnectController.getInstance().changeGunSend(this, commandCode);
     }
 
     private enum WhichGun {
@@ -185,6 +182,10 @@ public class GameActor extends GameObjForAnimator {
 
     public Gun getCurrentGun() {
         return currentGun.gun;
+    }
+
+    public Gun getWhichOneGun(){
+        return WhichGun.ONE.gun;
     }
 
     public Skill getSkill() {

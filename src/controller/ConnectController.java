@@ -103,6 +103,7 @@ public class ConnectController {
         strs.add(gameActor.collider().bottom() + "");//6
         strs.add(mouseX + "");//7
         strs.add(mouseY + "");//8
+        strs.add(gameActor.getCurrentGun().getAtk() +"");
         return strs;
     }
 
@@ -112,7 +113,11 @@ public class ConnectController {
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
-
+        if(gameActor.getWhichOneGun().getAtk() != Integer.valueOf(strs.get(9))){
+            gameActor.changeGun(-2);
+        }else {
+            gameActor.changeGun(-1);
+        }
     }
 
     public void healReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
@@ -269,6 +274,7 @@ public class ConnectController {
             }
             for (int i = 0; i < gameActorArr.size(); i++) {
                 test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
+
             }
             SenceController.getSenceController().change(new NormalMode(test));
             return;

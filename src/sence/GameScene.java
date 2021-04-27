@@ -218,7 +218,7 @@ public abstract class GameScene extends Scene {
 
     private void shootUpdate() {
         if (shooting) {
-            if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH){
+            if (gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH) {
                 return;
             }
             if (gameActorArr.get(0).getCurrentGun().shoot()) {
@@ -282,7 +282,7 @@ public abstract class GameScene extends Scene {
             if (state == CommandSolver.MouseState.CLICKED || state == CommandSolver.MouseState.RELEASED || state == CommandSolver.MouseState.MOVED) {
                 shooting = false;
                 if (shooting) {
-                    if(gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH){
+                    if (gameActorArr.get(0).getState() == GameObjForAnimator.State.DEATH) {
                         return;
                     }
                     if (gameActorArr.get(0).getCurrentGun().shoot()) {
@@ -383,23 +383,22 @@ public abstract class GameScene extends Scene {
             if (isNobodyAlive) {
                 g.drawImage(defeat, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
             }
-            if(bossScene && warningTime <3){
-                if(count < 45){
+            if (bossScene && warningTime < 3) {
+                if (count < 45) {
                     g.drawImage(warning, camera.getCameraWindowX() + 220, camera.getCameraWindowY() + 200, null);
                     count++;
-                    if(count == 44){
+                    if (count == 44) {
                         warningTime++;
 
                     }
                     return;
                 }
-                if(warningDelay.count()){
+                if (warningDelay.count()) {
                     count = 0;
                 }
 
 
             }
-
 
 
         }
@@ -413,7 +412,7 @@ public abstract class GameScene extends Scene {
                 sum += gameActorArr.get(i).getLife();
             }
             if (sum <= 0) {
-                if(isNobodyAlive){
+                if (isNobodyAlive) {
                     return;
                 }
                 AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
@@ -426,10 +425,10 @@ public abstract class GameScene extends Scene {
             }
         }
 
-        public void setVictory(boolean isVictory){
+        public void setVictory(boolean isVictory) {
             AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
             AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
-            AudioResourceController.getInstance().loop("/sounds/bgm/victory.wav",0);
+            AudioResourceController.getInstance().loop("/sounds/bgm/victory.wav", 0);
             this.isVictory = isVictory;
         }
     }

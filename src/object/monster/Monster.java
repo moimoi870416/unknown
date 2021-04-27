@@ -80,7 +80,7 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
-        if (state == State.DEATH||state==State.DEAD) {
+        if (state == State.DEATH || state == State.DEAD) {
             isChase = false;
             return;
         }
@@ -208,7 +208,6 @@ public abstract class Monster extends GameObjForAnimator {
     protected void paintDebug(Graphics g) {
         g.setColor(Color.ORANGE);
         g.drawRect(this.hitCollied.left(), this.hitCollied.top(), this.hitCollied.width(), this.hitCollied.height());
-
     }
 
     public void transHitArea() {
@@ -248,7 +247,7 @@ public abstract class Monster extends GameObjForAnimator {
         return typeCode;
     }
 
-    public void setConnectID(int connectID){
+    public void setConnectID(int connectID) {
         this.connectID = connectID;
     }
 }
