@@ -24,8 +24,8 @@ public class Global {
     public final static int BUTTON_WIDTH = 375;
     public final static int BUTTON_HEIGHT = 750;
 
-    public final static int BUTTON_X1 = 200;
-    public final static int BUTTON_X2 = 800;
+    public final static int BUTTON_X1 = 250;
+    public final static int BUTTON_X2 = 850;
     public final static int BUTTON_Y = 50;
 
     public final static int LABEL_WIDTH = 300;
