@@ -1,6 +1,7 @@
 import controller.ImageController;
 
 import sence.gameScene.normalMode.BossScene;
+import sence.gameScene.normalMode.NormalMode;
 import sence.menuScene.MenuScene;
 
 import util.Global;
@@ -18,7 +19,7 @@ public class Main {
     public static void main(final String[] args) {
 
         final JFrame jFrame = new JFrame();//創建一個視窗
-        SenceController.getSenceController().change(new BossScene());
+        SenceController.getSenceController().change(new MenuScene());
         final SenceController sc = SenceController.getSenceController();//創建場景實體,並賦予行為
         final GameKernel gk = new GameKernel.Builder()
                 .input(new CommandSolver.BuildStream().mouseTrack().subscribe(sc).keyboardTrack()

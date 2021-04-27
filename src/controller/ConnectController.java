@@ -10,6 +10,7 @@ import object.monster.*;
 import sence.gameScene.LimitMode;
 import sence.gameScene.normalMode.BossScene;
 import sence.gameScene.normalMode.NormalMode;
+import util.Global;
 import weapon.Bullet;
 import weapon.Gun;
 
@@ -115,10 +116,10 @@ public class ConnectController {
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
 
         if(gameActor.getWhichOneGun().getGunType().ordinal() != Integer.valueOf(strs.get(9))){
-            gameActor.changeGun(-1);
+            gameActor.changeGun(Active.NUMBER_ONE.getCommandCode());
             return;
         }
-        gameActor.changeGun(-2);
+        gameActor.changeGun(Active.NUMBER_TWO.getCommandCode());
     }
 
     public void healReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {

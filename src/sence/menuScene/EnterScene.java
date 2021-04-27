@@ -98,7 +98,10 @@ public class EnterScene extends Scene {
             @Override
             public void keyPressed(int commandCode, long trigTime) {
                 if (commandCode == Active.ENTER.getCommandCode()) {
-                    ConnectController.getInstance().changeSceneSend(isNormal);
+                    if(isServer) {
+//                        ConnectController.getInstance().changeSceneSend(isNormal);
+                        ConnectController.getInstance().changeBossSceneSend();
+                    }
                 }
             }
 
