@@ -1,6 +1,5 @@
 package object.actor;
 
-import controller.ConnectController;
 import object.GameObject;
 import util.*;
 import object.GameObjForAnimator;
@@ -28,7 +27,10 @@ public class GameActor extends GameObjForAnimator {
         this.actor = actor;
         setAnimator();
         setGun();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9745440f7f21d3b7a6f5858f5f2bc7d2bee6a31b
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
@@ -43,6 +45,7 @@ public class GameActor extends GameObjForAnimator {
     private void setGun() {
         switch (actor) {
             case FIRST -> {
+<<<<<<< HEAD
                     WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
                     WhichGun.TWO.gun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
 
@@ -56,6 +59,18 @@ public class GameActor extends GameObjForAnimator {
                     WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
                     WhichGun.TWO.gun = new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom());
 
+=======
+                    WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
+                    WhichGun.TWO.setGun(new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom()));
+            }
+            case SECOND -> {
+                    WhichGun.ONE.setGun(new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom()));
+                    WhichGun.TWO.setGun(new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom()));
+            }
+            case THIRD -> {
+                    WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
+                    WhichGun.TWO.setGun(new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom()));
+>>>>>>> 9745440f7f21d3b7a6f5858f5f2bc7d2bee6a31b
             }
         }
         currentGun = WhichGun.ONE;
@@ -145,10 +160,15 @@ public class GameActor extends GameObjForAnimator {
         ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
         TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
         private Gun gun;
+        private void setGun(Gun gun){
+            this.gun = gun;
+        }
 
         WhichGun(Gun gun) {
             this.gun = gun;
         }
+
+
     }
 
     public void setMoveSpeed(int moveSpeed) {
