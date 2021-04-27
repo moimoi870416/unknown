@@ -11,9 +11,11 @@ import menu.Label;
 import sence.ConnectScene;
 import sence.Scene;
 import sence.gameScene.LimitMode;
+import sence.gameScene.normalMode.BossScene;
 import sence.gameScene.normalMode.NormalMode;
 import server.Server;
 import util.CommandSolver;
+import util.Global;
 
 
 import static util.Global.*;
@@ -48,11 +50,6 @@ public class MenuScene extends Scene {
 
     private ArrayList<Label> labels;
 
-    //    private boolean isSingle;//是不是單人
-    private boolean isNormal;//是不是一般
-    private boolean isAdd;  //是不是創建房間
-    private boolean isCrate;
-
     private State ModeState;//此刻的模式 決定會出現哪些按鈕
     private Style IpStyle;//輸入ip的模式
 
@@ -65,17 +62,13 @@ public class MenuScene extends Scene {
         initTheme();
         initStyle();
         addLabels();
-        this.isAdd = false;
-        isSingle = false;
-        isNormal = true;
-        isCrate = false;
         ModeState = FIRST;
         buttonSound = "/sounds/button01a.wav";
     }
 
     @Override
     public void sceneEnd() {
-        labels.clear();
+        labels = null;
         menuImg0 = null;
         menuImg1 = null;
         menuImg2 = null;
@@ -174,17 +167,18 @@ public class MenuScene extends Scene {
                     singleMode.unFocus();
                     multiplayer.unFocus();
                     enter.unFocus();
+                    enter2.unFocus();
                 }
         );
         singleMode.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
-//            ModeState = THIRD;
-            isSingle = true;
+            ModeState = THIRD;
         });
         multiplayer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
-            ModeState = FOURTH;
             isSingle = false;
+            ModeState = FOURTH;
+
         });
         backToSec.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
@@ -197,8 +191,13 @@ public class MenuScene extends Scene {
         });
         normalMode.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
-            isNormal = true;
         });
+
+        limitMode.setClickedActionPerformed((x, y) -> {
+                    AudioResourceController.getInstance().shot(buttonSound);
+                    isNormal = false;
+                }
+        );
         backToFou.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
             ModeState = FOURTH;
@@ -208,17 +207,15 @@ public class MenuScene extends Scene {
             inputText.unFocus();
             isAdd = false;
             isServer = false;
-
         });
         crateServer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
-            isCrate = true;
+            ModeState = FIFTH;
             isSingle = false;
             isServer = true;
             isAdd = false;
             inputText.unFocus();
             addServer.unFocus();
-            crateConnectLanArea();
         });
         addServer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
@@ -231,15 +228,18 @@ public class MenuScene extends Scene {
 
     //換背景
     private void multiSceneChange() {
-        if (!isAdd && isCrate) {
+        if (isServer) {
             SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
         }
     }
 
     private void singleSceneChange() {
-        if (isSingle) {
+        if (isNormal) {
             SenceController.getSenceController().change(new NormalMode());
+            return;
         }
+        SenceController.getSenceController().change(new BossScene());
+
     }
 
     private boolean isOverLap(Label obj, int eX, int eY) {
@@ -288,31 +288,30 @@ public class MenuScene extends Scene {
                                 isPress(backToFir, e);
                                 isPress(singleMode, e);
                                 isPress(multiplayer, e);
-                                singleSceneChange();
                             }
-//                            case THIRD -> {
-//                                isPress(normalMode, e);
-//                                isPress(limitMode, e);
-//                                isPress(backToSec, e);
-//                                if (singleMode.IsUse(limitMode)) {
-//
-//                                }
-//                            }
+                            case THIRD -> {
+                                isPress(normalMode, e);
+                                isPress(limitMode, e);
+                                isPress(backToSec, e);
+                                if (singleMode.IsUse(limitMode)) {
+                                    singleSceneChange();
+                                }
+                            }
                             case FOURTH -> {
                                 isPress(backToSec, e);
                                 isPress(crateServer, e);
                                 isPress(addServer, e);
-                                multiSceneChange();
                             }
-//                            case FIFTH -> {
-//                                isPress(backToFou, e);
-//                                isPress(normalMode, e);
-//                                isPress(limitMode, e);
-////                                isPress(inputText, e);
-//                                if (normalMode.IsUse(limitMode)) {
-//
-//                                }
-//                            }
+                            case FIFTH -> {
+                                isPress(backToFou, e);
+                                isPress(normalMode, e);
+                                isPress(limitMode, e);
+                                isPress(inputText, e);
+                                if (normalMode.IsUse(limitMode)) {
+                                    crateConnectLanArea();
+                                    multiSceneChange();
+                                }
+                            }
                         }
                     }
                 }
@@ -330,7 +329,7 @@ public class MenuScene extends Scene {
                 connectIP = inputText.getEditText();
 
                 if (commandCode == Active.ENTER.getCommandCode()) {
-                    if(ModeState==FOURTH ){
+                    if (ModeState == FOURTH) {
                         if (IS_DEBUG) {
                             connectIP = "192.168.1.16";
                             addConnectLanArea();
@@ -376,11 +375,11 @@ public class MenuScene extends Scene {
                 singleMode.paint(g);
                 multiplayer.paint(g);
             }
-//            case THIRD -> {
-//                backToSec.paint(g);
-//                normalMode.paint(g);
-//                limitMode.paint(g);
-//            }
+            case THIRD -> {
+                backToSec.paint(g);
+                normalMode.paint(g);
+                limitMode.paint(g);
+            }
             case FOURTH -> {
                 backToSec.paint(g);
                 addServer.paint(g);
@@ -389,11 +388,11 @@ public class MenuScene extends Scene {
                     this.inputText.paint(g);
                 }
             }
-//            case FIFTH -> {
-//                backToFou.paint(g);
-//                limitMode.paint(g);
-//                normalMode.paint(g);
-//            }
+            case FIFTH -> {
+                backToFou.paint(g);
+                limitMode.paint(g);
+                normalMode.paint(g);
+            }
         }
     }
 
@@ -415,7 +414,7 @@ public class MenuScene extends Scene {
     private void addConnectLanArea() {
         try {
             ClientClass.getInstance().connect(connectIP, 12345); // ("SERVER端IP", "SERVER端PORT")
-            SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isAdd));
+            SenceController.getSenceController().change(new EnterScene(isSingle, isNormal, isServer));
         } catch (IOException ex) {
             addServer.unFocus();
             isAdd = false;

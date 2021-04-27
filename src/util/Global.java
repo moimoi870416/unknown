@@ -16,14 +16,16 @@ public class Global {
     public final static boolean IS_DEBUG = false;
     //網路
     public static boolean isSingle = true;
+    public static boolean isNormal = true;//是不是一般
+    public static boolean isAdd = false;  //是不是創建房間
     public static boolean isServer = false;
     public static boolean bossDead = false;
 
     public final static int BUTTON_WIDTH = 375;
     public final static int BUTTON_HEIGHT = 750;
 
-    public final static int BUTTON_X1 = 200;
-    public final static int BUTTON_X2 = 800;
+    public final static int BUTTON_X1 = 250;
+    public final static int BUTTON_X2 = 850;
     public final static int BUTTON_Y = 50;
 
     public final static int LABEL_WIDTH = 300;
