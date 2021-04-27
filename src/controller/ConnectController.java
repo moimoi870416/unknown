@@ -44,7 +44,6 @@ public class ConnectController {
 
     public void actorStateSend(int connectID, GameObjForAnimator.State state) {
         ArrayList<String> strs = new ArrayList<>();
-        System.out.println("!!!!!!!!!!!!!!!!");
         strs.add(connectID + "");//0
         strs.add(state + "");//1
         ClientClass.getInstance().sent(NetEvent.ACTOR_STATE, strs);
@@ -199,7 +198,6 @@ public class ConnectController {
             case 5 -> tmp = new SmallMonster(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
             case 6 -> tmp = new SmallMonster(Integer.valueOf(strs.get(2)),Integer.valueOf(strs.get(3)), SmallMonster.Type.values()[Integer.valueOf(strs.get(0))-4]);
         }
-        System.out.println(Integer.valueOf(strs.get(1)));
         tmp.setConnectID(Integer.valueOf(strs.get(1)));
         monsters.add(tmp);
     }
@@ -220,7 +218,6 @@ public class ConnectController {
 
     public void monsterSend(Monster monster) {
         ArrayList<String> strs = new ArrayList<>();
-        System.out.println(monster.getState());
         strs.add(monster.getConnectID() + "");//0
         strs.add(monster.collider().left() + "");//1
         strs.add(monster.collider().top() + "");//2

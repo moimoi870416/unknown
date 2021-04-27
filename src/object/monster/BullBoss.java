@@ -29,7 +29,7 @@ public class BullBoss extends Monster {
         focus = false;
         readyAtk = true;
         totalDistance = 0;
-        attackDelay.play();
+        attackDelay.loop();
         chaseCount = 0;
         normalAtkDelay = new Delay(45);
         normalAtkDelay.loop();
@@ -46,6 +46,7 @@ public class BullBoss extends Monster {
 //            chase();
 //        }
         if (attacking) {
+
             if (atkType == 3) {
 //                if (!isChase) {
 ////                    if (animator.isFinish()) { //單人才需使用
@@ -56,6 +57,7 @@ public class BullBoss extends Monster {
                 forRino = true;
                 if (readyAtk) {
                     if (criticalAttack()) {
+                        System.out.println("1111");
                         return;
                     }
                     chase();
@@ -102,10 +104,11 @@ public class BullBoss extends Monster {
                 animator.setArr(8, 4);
                 animator.setDelayCount(5);
                 animator.setPlayOnce();
-                moveSpeed = 1;
+                moveSpeed = 2;
                 isOnceAttack = false;
                 canAttack = true;
                 attackDelay = new Delay(30);
+                attackDelay.loop();
 
             }
             case CRITICAL -> {
@@ -116,12 +119,13 @@ public class BullBoss extends Monster {
                 isOnceAttack = true;
                 canAttack = true;
                 attackDelay = new Delay(60);
+                attackDelay.loop();
             }
             case RUN -> {
                 animator.setArr(8, 2);
                 animator.setDelayCount(10);
                 animator.setPlayLoop();
-                moveSpeed = 2;
+                moveSpeed = 3;
             }
         }
     }
@@ -141,7 +145,6 @@ public class BullBoss extends Monster {
         if (state != State.ATTACK) {
             if (normalAtkDelay.count()) {
                 setMonsterState(State.ATTACK);
-                forRino = false;
             }
         }
         chase();
@@ -156,7 +159,9 @@ public class BullBoss extends Monster {
     private boolean criticalAttack() {
         if (Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
-            if (attackDelay.count()) {
+            System.out.println(attackDelay.getCount());
+            if (attackDelay.count()) { //如果還在DELAY就不公及
+                System.out.println("!!!!!!!!!!!!!!!!!!!"+attackDelay.getCount());
                 setMonsterState(State.CRITICAL);
                 int x = Math.abs(gameActor.collider().centerX() - painter().centerX());
                 int y = Math.abs(gameActor.collider().bottom() - painter().centerY());
@@ -174,6 +179,7 @@ public class BullBoss extends Monster {
                 changeDir(moveOnX);
             }
             return true;
+
         }
         return false;
     }
@@ -186,12 +192,11 @@ public class BullBoss extends Monster {
         }
         focus = false;
         readyAtk = true;
-        attackDelay.play();
         setMonsterState(State.STAND);
         totalDistance = 0;
         changeDir(gameActor.collider().centerX() - painter().centerX());
         attacking = false;
-        forRino = false;
+
     }
 
 }

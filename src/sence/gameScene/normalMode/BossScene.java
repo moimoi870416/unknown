@@ -30,7 +30,7 @@ public class BossScene extends ConnectScene {
     }
 
     public BossScene(ArrayList<GameActor> gameActorArr) {
-        bossScene = true;
+
         this.gameActorArr = gameActorArr;
         this.gameActorArr.get(0).offSetX(1024);
         this.gameActorArr.get(0).offSetY(1800);
@@ -38,7 +38,7 @@ public class BossScene extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
-
+        bossScene = true;
         AudioResourceController.getInstance().loop("/sounds/bgm/warning-2.wav", 0);
         BGMDelay = new Delay(300);
         BGMDelay.play();
