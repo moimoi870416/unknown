@@ -115,7 +115,10 @@ public class ConnectController {
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
 
         if(gameActor.getCurrentGun().getGunType().ordinal() == Integer.valueOf(strs.get(9))){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0016b578ea48c68f395ba122aff7649a9775b835
             gameActor.changeGun(-1);
             return;
         }
