@@ -178,6 +178,7 @@ public abstract class GameScene extends Scene {
 
     private void monsterUpdate() {
         for (int i = 0; i < monster.size(); i++) {
+            System.out.println(monster.get(i).getConnectID());
             if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                     ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
