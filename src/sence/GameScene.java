@@ -37,6 +37,8 @@ public abstract class GameScene extends Scene {
     private int mouseY;
     protected EffectView effectView;
     protected boolean bossScene;
+    private boolean typeCode;
+    private ArrayList<Character> type;
     private Delay monsterCheckDelay;
 
     @Override
@@ -55,6 +57,8 @@ public abstract class GameScene extends Scene {
         monsterCheckDelay = new Delay(60);
         monsterCheckDelay.loop();
         playerNum = gameActorArr.size();
+        typeCode = false;
+        type = new ArrayList<>();
     }
 
     protected abstract void sceneBeginComponent();
@@ -342,27 +346,34 @@ public abstract class GameScene extends Scene {
                     ConnectController.getInstance().healSend(gameActorArr.get(0));
                 }
                 if (commandCode == Active.ENTER.getCommandCode()) {
-                    String str = sc.next();
-                    for(int i=0 ; i<gameActorArr.size() ; i++){
-                        if(gameActorArr.get(i).getLife() <= 0 && (str.equals("lysu") || str.equals("LYSU"))){
-                            GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
-                            tmp.setConnectID(gameActorArr.get(i).getConnectID());
-                            gameActorArr.remove(i);
-                            gameActorArr.set(i,tmp);
-                            break;
-                        }
-
+                    if(!typeCode){
+                        typeCode = true;
                     }
-
-
-
+                    if(typeCode){
+                        if(type.size()>4 || type.size() == 0){
+                            typeCode = false;
+                            return;
+                        }
+                        if ((type.get(0) == 'L' || type.get(0) == 'l') && (type.get(1) == 'Y' || type.get(1) == 'y') && (type.get(2) == 'S' || type.get(2) == 's') && (type.get(3) == 'U' || type.get(3) == 'u')) {
+                            for(int i=0 ; i<gameActorArr.size() ; i++){
+                                if(gameActorArr.get(i).getState() == GameObjForAnimator.State.DEAD) {
+                                    GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
+                                    gameActorArr.remove(i);
+                                    gameActorArr.set(i,tmp);
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
 
             @Override
             public void keyTyped(char c, long trigTime) {
-
+                if(typeCode){
+                    type.add(c);
+                }
             }
         };
     }

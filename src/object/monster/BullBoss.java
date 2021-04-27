@@ -134,6 +134,7 @@ public class BullBoss extends Monster {
             chaseCount++;
             if (chaseCount > 180) {
                 attacking = false;
+                forRino = false;
                 chaseCount = 0;
             }
             return;
@@ -141,12 +142,14 @@ public class BullBoss extends Monster {
         if (state != State.ATTACK) {
             if (normalAtkDelay.count()) {
                 setMonsterState(State.ATTACK);
+                forRino = false;
             }
         }
         chase();
         if (animator.isFinish()) {
             setMonsterState(State.RUN);
             attacking = false;
+
         }
     }
 
