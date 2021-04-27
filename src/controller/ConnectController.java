@@ -114,10 +114,10 @@ public class ConnectController {
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
         if(gameActor.getWhichOneGun().getAtk() != Integer.valueOf(strs.get(9))){
-            gameActor.changeGun(-2);
-        }else {
             gameActor.changeGun(-1);
-        }
+        }else {
+            gameActor.changeGun(-2);
+//        }
     }
 
     public void healReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
