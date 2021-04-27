@@ -248,15 +248,15 @@ public class ConnectController {
             switch (gameActorArr.get(i).getConnectID()) {
                 case 100 -> {
                     gameActorArr.get(i).offSetX(1000 + 15);
-                    gameActorArr.get(i).offSetY(2000);
+                    gameActorArr.get(i).offSetY(1950);
                 }
                 case 101 -> {
                     gameActorArr.get(i).offSetX(1000 + 25);
-                    gameActorArr.get(i).offSetY(2000);
+                    gameActorArr.get(i).offSetY(1950);
                 }
                 case 102 -> {
                     gameActorArr.get(i).offSetX(1000 + 35);
-                    gameActorArr.get(i).offSetY(2000);
+                    gameActorArr.get(i).offSetY(1950);
                 }
             }
         }
@@ -289,16 +289,16 @@ public class ConnectController {
         }
         for (int i = 0; i < gameActorArr.size(); i++) {
             switch (gameActorArr.get(i).getConnectID()) {
-                case 100 -> test.add(new GameActor(Actor.FIRST, 500, 500));
-                case 101 -> test.add(new GameActor(Actor.SECOND, 500, 525));
-                case 102 -> test.add(new GameActor(Actor.THIRD, 500, 550));
+                case 100 -> test.add(new GameActor(Actor.FIRST, 1015, 1950));
+                case 101 -> test.add(new GameActor(Actor.SECOND, 1025, 1950));
+                case 102 -> test.add(new GameActor(Actor.THIRD, 1035, 1950));
             }
         }
         for (int i = 0; i < gameActorArr.size(); i++) {
             test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
         }
 
-        SenceController.getSenceController().change(new LimitMode(test));
+        SenceController.getSenceController().change(new BossScene(test));
     }
 
     public void monsterDeadSend(int key) {

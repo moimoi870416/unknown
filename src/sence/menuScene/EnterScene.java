@@ -60,7 +60,7 @@ public class EnterScene extends Scene {
         this.start = new Button(1100, 720, Theme.get(9));
         start.setClickedActionPerformed((x, y) -> {
             if (isServer && !change) {
-                ConnectController.getInstance().changeSceneSend(isNormal);
+                ConnectController.getInstance().changeSceneSend(!isNormal);
                 change = true;
             }
         });
@@ -99,8 +99,7 @@ public class EnterScene extends Scene {
             public void keyPressed(int commandCode, long trigTime) {
                 if (commandCode == Active.ENTER.getCommandCode()) {
                     if(isServer) {
-//                        ConnectController.getInstance().changeSceneSend(isNormal);
-                        ConnectController.getInstance().changeBossSceneSend();
+                        ConnectController.getInstance().changeSceneSend(!isNormal);
                     }
                 }
             }
