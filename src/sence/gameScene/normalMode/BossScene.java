@@ -90,14 +90,11 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapUpdate() {
-
             if(BGMDelay.count()){
                 AudioResourceController.getInstance().stop("/sounds/bgm/warning-2.wav");
                 AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav", 0);
                 start = true;
             }
-
-
             if (monster.size() == 0) {
                 return;
             }

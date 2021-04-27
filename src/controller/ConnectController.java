@@ -91,7 +91,7 @@ public class ConnectController {
                 gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
                         Integer.valueOf(strs.get(1)),
                         Integer.valueOf(strs.get(2)));
-//                gunReceive(gameActorArr.get(i), strs);
+                gunReceive(gameActorArr.get(i), strs);
 
             }
         }
@@ -103,7 +103,7 @@ public class ConnectController {
         strs.add(gameActor.collider().bottom() + "");//6
         strs.add(mouseX + "");//7
         strs.add(mouseY + "");//8
-        strs.add(gameActor.getWhichOneGun().getGunType().ordinal() +"");//9
+        strs.add(gameActor.getCurrentGun().getGunType().ordinal() +"");//9
         return strs;
     }
 
@@ -114,7 +114,7 @@ public class ConnectController {
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
 
-        if(gameActor.getCurrentGun().getGunType().ordinal() == Integer.valueOf(strs.get(9))){
+        if(gameActor.getWhichOneGun().getGunType().ordinal() != Integer.valueOf(strs.get(9))){
             gameActor.changeGun(-1);
             return;
         }
