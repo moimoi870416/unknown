@@ -85,12 +85,12 @@ public class BossScene extends ConnectScene {
                     map,
                     0,
                     0,
-                    2048,
-                    2048,
-                    camera.painter().left(),
-                    camera.painter().top(),
-                    camera.painter().right(),
-                    camera.painter().bottom(),
+//                    2048,
+//                    2048,
+//                    camera.painter().left(),
+//                    camera.painter().top(),
+//                    camera.painter().right(),
+//                    camera.painter().bottom(),
                     null);
         }
 
@@ -108,7 +108,7 @@ public class BossScene extends ConnectScene {
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
-            if ((isServer || isSingle) && !bossDead && start || false) {
+            if ((isServer || isSingle) && !bossDead && start && false) {
                 xOK = false;
                 yOK = false;
                 for (int i = 0; i < gameActorArr.size(); i++) {
