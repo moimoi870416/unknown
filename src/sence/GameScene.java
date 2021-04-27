@@ -3,6 +3,7 @@ package sence;
 import camera.Camera;
 import controller.AudioResourceController;
 import controller.ImageController;
+import jdk.swing.interop.SwingInterOpUtils;
 import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
