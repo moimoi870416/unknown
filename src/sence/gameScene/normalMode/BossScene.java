@@ -81,10 +81,17 @@ public class BossScene extends ConnectScene {
 
         @Override
         public void mapPaint(Graphics g) {
+            System.out.println(camera.painter().left() + "////" + camera.painter().centerX());
             g.drawImage(
                     map,
                     0,
                     0,
+                    2048,
+                    2048,
+                    camera.painter().left(),
+                    camera.painter().top(),
+                    camera.painter().right(),
+                    camera.painter().bottom(),
                     null);
         }
 

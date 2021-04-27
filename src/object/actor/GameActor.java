@@ -27,12 +27,9 @@ public class GameActor extends GameObjForAnimator {
         this.actor = actor;
         setAnimator();
         setGun();
-        currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Direction.NO;
-        otherGun.gun.translate(painter().centerX(), painter().centerY());
         rotation = new Rotation();
         blood = new Bar(actor);
-        this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
         skill = new Skill();
         isFirstGun = true;
 
@@ -40,27 +37,22 @@ public class GameActor extends GameObjForAnimator {
 
     private void setGun() {
         switch (actor) {
-            case FIRST -> {if(connectID != 100){
-                return;
-            }
+            case FIRST -> {
                     WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom()));
             }
-            case SECOND -> {if(connectID != 101){
-                return;
-            }
+            case SECOND -> {
                     WhichGun.ONE.setGun(new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom()));
             }
-            case THIRD -> {if(connectID != 102){
-                return;
-            }
+            case THIRD -> {
                     WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom()));
             }
         }
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
+        this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
     }
 
     private void setAnimator() {

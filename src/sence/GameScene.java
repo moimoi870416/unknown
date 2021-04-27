@@ -89,7 +89,6 @@ public abstract class GameScene extends Scene {
 
     @Override
     public void update() {
-        System.out.println(monster.size());
         connectUpdate();
         effectView.effectUpdate();
         mouseUpdate();
