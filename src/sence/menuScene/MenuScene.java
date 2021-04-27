@@ -328,7 +328,7 @@ public class MenuScene extends Scene {
                 if (commandCode == Active.ENTER.getCommandCode()) {
 //                    if (inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
                     if (IS_DEBUG) {
-                        connectIP = "192.168.1.37";
+                        connectIP = "192.168.1.16";
                         addConnectLanArea();
                         return;
                     }

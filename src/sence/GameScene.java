@@ -79,11 +79,6 @@ public abstract class GameScene extends Scene {
         }
 
         mapObjArr.forEach(a -> a.paint(g));
-//        mapObjArr.forEach(object -> {
-//            if (camera.isCollision(object)) {
-//                object.paint(g);
-//            }
-//        });
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         effectView.effectPaint(g);
@@ -183,6 +178,7 @@ public abstract class GameScene extends Scene {
 
     private void monsterUpdate() {
         for (int i = 0; i < monster.size(); i++) {
+            System.out.println(monster.get(i).getConnectID());
             if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                     ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
@@ -210,9 +206,9 @@ public abstract class GameScene extends Scene {
                     }
                 }
                 ConnectController.getInstance().monsterSend(monster.get(i));
-//                if(monsterCheckDelay.count()){
-//                    ConnectController.getInstance().checkMonsterSend(monster);
-//                }
+                if(monsterCheckDelay.count()){
+                    ConnectController.getInstance().checkMonsterSend(monster);
+                }
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));
