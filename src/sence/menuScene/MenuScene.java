@@ -330,7 +330,7 @@ public class MenuScene extends Scene {
                 connectIP = inputText.getEditText();
 
                 if (commandCode == Active.ENTER.getCommandCode()) {
-                    if(ModeState==FOURTH &&inputText.getIsFocus()){
+                    if(ModeState==FOURTH ){
                         if (IS_DEBUG) {
                             connectIP = "192.168.1.16";
                             addConnectLanArea();
