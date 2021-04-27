@@ -3,7 +3,6 @@ package sence;
 import camera.Camera;
 import controller.AudioResourceController;
 import controller.ImageController;
-import jdk.swing.interop.SwingInterOpUtils;
 import object.GameObjForAnimator;
 import object.GameObject;
 import object.actor.GameActor;
@@ -53,6 +52,7 @@ public abstract class GameScene extends Scene {
         effectView = new EffectView();
         monsterCheckDelay = new Delay(60);
         monsterCheckDelay.loop();
+        playerNum = gameActorArr.size();
     }
 
     protected abstract void sceneBeginComponent();
