@@ -180,12 +180,10 @@ public class ConnectController {
         strs.add(monster.getConnectID() + "");//1
         strs.add(monster.painter().left() + "");//2
         strs.add(monster.painter().top() + "");//3
-        System.out.println("!!!!!!!!!!!!!!!!");
         ClientClass.getInstance().sent(NetEvent.MONSTER_NEW, strs);
     }
 
     public void newMonsterReceive(LinkedList<Monster> monsters, ArrayList<String> strs) {
-        System.out.println("?????????????????");
         for (int i = 0; i < monsters.size(); i++) {
             if (Integer.valueOf(strs.get(1)) == monsters.get(i).getConnectID()) {
                 return;
