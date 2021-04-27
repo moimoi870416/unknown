@@ -152,8 +152,6 @@ public class ConnectController {
                     gameActorArr.get(i).changeGun(-2);
                 }
 
-
-
             }
         }
     }
