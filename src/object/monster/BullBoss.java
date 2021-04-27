@@ -33,7 +33,6 @@ public class BullBoss extends Monster {
         chaseCount = 0;
         normalAtkDelay = new Delay(45);
         normalAtkDelay.loop();
-        this.connectID = connectID;
     }
 
     @Override
