@@ -16,6 +16,7 @@ public class Global {
     //網路
     public static boolean isSingle = true;
     public static boolean isServer = false;
+    public static boolean bossDead = false;
 
     public final static int BUTTON_WIDTH = 375;
     public final static int BUTTON_HEIGHT = 750;

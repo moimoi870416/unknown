@@ -404,11 +404,11 @@ public class GameActor extends GameObjForAnimator {
             healDelay = new Delay(45);
             healDelay.loop();
             canHeal = false;
-            healCD = new Delay(1800);
+            healCD = new Delay(1200);
             healAnimator = new Animator("/pictures/actor/heal.png", 5, 128, 128, 4);
             healAnimator.setArr(4, 2);
 
-            delayForFlash = new Delay(600);
+            delayForFlash = new Delay(480);
             canFlash = true;
             flashAnimator = new Animator("/pictures/actor/flash.png", 8, 48, 32, 2);
             flashAnimator.setArr(4);
