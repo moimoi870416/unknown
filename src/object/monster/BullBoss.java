@@ -42,17 +42,17 @@ public class BullBoss extends Monster {
 
     @Override
     protected void updateComponent() {
-        if(this.state == State.RUN){
-            chase();
-        }
+//        if(this.state == State.RUN){
+//            chase();
+//        }
         if (attacking) {
             if (atkType == 3) {
-                if (!isChase) {
-//                    if (animator.isFinish()) { //單人才需使用
-                    setMonsterState(State.STAND);
-                    return;
-//                    }
-                }
+//                if (!isChase) {
+////                    if (animator.isFinish()) { //單人才需使用
+//                    setMonsterState(State.STAND);
+//                    return;
+////                    }
+//                }
                 forRino = true;
                 if (readyAtk) {
                     if (criticalAttack()) {
@@ -71,7 +71,7 @@ public class BullBoss extends Monster {
         attacking = true;
         if (Global.isServer) {
             atkType = Global.random(0, 3);
-            ConnectController.getInstance().bossAtkTypeSend(atkType);
+//            ConnectController.getInstance().bossAtkTypeSend(atkType);
         }
 
     }
