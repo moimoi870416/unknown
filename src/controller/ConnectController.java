@@ -378,4 +378,26 @@ public class ConnectController {
             }
         }
     }
+
+    public void lysuSend(GameActor gameActor){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.collider().centerX() +"");//0
+        strs.add(gameActor.collider().centerY() +"");//1
+        strs.add(gameActor.getActor() +"");//2
+        strs.add(gameActor.getConnectID() + "");//3
+        ClientClass.getInstance().sent(NetEvent.ACTOR_LYSU, strs);
+    }
+
+    public void lysuReceive(ArrayList<GameActor> gameActorArr, ArrayList<String> strs){
+        GameActor tmp = new GameActor(Actor.valueOf(strs.get(2)),Integer.valueOf(strs.get(0)),Integer.valueOf(strs.get(1)));
+        tmp.setConnectID(Integer.valueOf(strs.get(3)));
+        for(int i=0 ; i<gameActorArr.size() ; i++){
+            if(gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(3))){
+                gameActorArr.remove(i);
+                gameActorArr.add(tmp);
+                break;
+            }
+
+        }
+    }
 }

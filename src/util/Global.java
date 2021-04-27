@@ -59,6 +59,7 @@ public class Global {
         public static final int ACTOR_BAR_LEFT = 207;
         public static final int ACTOR_BAR_TOP = 208;
         public static final int ACTOR_CHANGE_GUN = 209;
+        public static final int ACTOR_LYSU = 210;
 
         public static final int BULLET = 300;
         public static final int BULLET_NEW = 301;
