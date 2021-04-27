@@ -16,6 +16,8 @@ public class Global {
     public final static boolean IS_DEBUG = false;
     //網路
     public static boolean isSingle = true;
+    public static boolean isNormal = true;//是不是一般
+    public static boolean isAdd = false;  //是不是創建房間
     public static boolean isServer = false;
     public static boolean bossDead = false;
 
