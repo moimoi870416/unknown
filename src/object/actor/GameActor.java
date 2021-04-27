@@ -134,7 +134,7 @@ public class GameActor extends GameObjForAnimator {
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
-        //ConnectController.getInstance().changeGunSend(this, commandCode);
+        ConnectController.getInstance().changeGunSend(this, commandCode);
     }
 
     private enum WhichGun {

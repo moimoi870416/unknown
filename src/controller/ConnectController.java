@@ -143,8 +143,15 @@ public class ConnectController {
 
     public void changeGunReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
         for (int i = 0; i < gameActorArr.size(); i++) {
-            if (gameActorArr.get(i).getConnectID() == serialNum) {
-                gameActorArr.get(i).changeGun(Integer.valueOf(strs.get(1)));
+            if (gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
+                if(Integer.valueOf(strs.get(1)) == -1){
+                    if(gameActorArr.get(i).getCurrentGun() != gameActorArr.get(i).getWhichOneGun()){
+                        gameActorArr.get(i).changeGun(-1);
+                        return;
+                    }
+                }
+                gameActorArr.get(i).changeGun(-2);
+
             }
         }
     }
