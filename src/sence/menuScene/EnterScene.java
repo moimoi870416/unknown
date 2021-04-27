@@ -40,6 +40,7 @@ public class EnterScene extends Scene {
     private boolean isAdd;
     private int playerCount;
     private Button start;
+    private boolean change;
 
     public EnterScene(boolean isSingle, boolean isNormal, boolean isAdd) {
         this.isSingle = isSingle;
@@ -49,6 +50,7 @@ public class EnterScene extends Scene {
         playerCount = 0;
         gameActorArr.add(new GameActor(Global.Actor.FIRST, 500, 500));
         gameActorArr.get(playerCount++).setConnectID(ClientClass.getInstance().getID());
+        change = false;
     }
 
     @Override
@@ -57,8 +59,9 @@ public class EnterScene extends Scene {
         addImg();
         this.start = new Button(1100, 720, Theme.get(9));
         start.setClickedActionPerformed((x, y) -> {
-            if (isServer) {
+            if (isServer && !change) {
                 ConnectController.getInstance().changeSceneSend(isNormal);
+                change = true;
             }
         });
 

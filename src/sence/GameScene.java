@@ -89,6 +89,7 @@ public abstract class GameScene extends Scene {
 
     @Override
     public void update() {
+        System.out.println(monster.size());
         connectUpdate();
         effectView.effectUpdate();
         mouseUpdate();
@@ -138,7 +139,7 @@ public abstract class GameScene extends Scene {
             if (x == 0) {
                 for (int k = 0; k < gameActorArr.size(); k++) {
                     if (testBullets.get(i).isShootingActor(gameActorArr.get(k))) {
-                        if (gameActorArr.get(k).getLife()>=80) {
+                        if (gameActorArr.get(k).getLife() >= 80) {
                             gameActorArr.get(k).setLife(1);
                             i--;
                             x++;
@@ -206,7 +207,7 @@ public abstract class GameScene extends Scene {
                     }
                 }
                 ConnectController.getInstance().monsterSend(monster.get(i));
-                if(monsterCheckDelay.count()){
+                if (monsterCheckDelay.count()) {
                     ConnectController.getInstance().checkMonsterSend(monster);
                 }
             }
@@ -338,7 +339,7 @@ public abstract class GameScene extends Scene {
                     gameActorArr.get(0).getSkill().heal();
                     ConnectController.getInstance().healSend(gameActorArr.get(0));
                 }
-                if(commandCode == Active.ENTER.getCommandCode()){
+                if (commandCode == Active.ENTER.getCommandCode()) {
 
                 }
             }
