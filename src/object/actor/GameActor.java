@@ -27,10 +27,6 @@ public class GameActor extends GameObjForAnimator {
         this.actor = actor;
         setAnimator();
         setGun();
-<<<<<<< HEAD
-
-=======
->>>>>>> 9745440f7f21d3b7a6f5858f5f2bc7d2bee6a31b
         currentGun.gun.translate(painter().centerX(), painter().centerY());
         verticalDir = horizontalDir = Direction.NO;
         otherGun.gun.translate(painter().centerX(), painter().centerY());
@@ -45,21 +41,7 @@ public class GameActor extends GameObjForAnimator {
     private void setGun() {
         switch (actor) {
             case FIRST -> {
-<<<<<<< HEAD
-                    WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
-                    WhichGun.TWO.gun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
 
-            }
-            case SECOND -> {
-                    WhichGun.ONE.gun = new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom());
-                    WhichGun.TWO.gun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
-
-            }
-            case THIRD -> {
-                    WhichGun.ONE.gun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
-                    WhichGun.TWO.gun = new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom());
-
-=======
                     WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom()));
             }
@@ -70,7 +52,6 @@ public class GameActor extends GameObjForAnimator {
             case THIRD -> {
                     WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom()));
->>>>>>> 9745440f7f21d3b7a6f5858f5f2bc7d2bee6a31b
             }
         }
         currentGun = WhichGun.ONE;
