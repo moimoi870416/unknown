@@ -55,7 +55,6 @@ public class GameActor extends GameObjForAnimator {
         }
         currentGun = WhichGun.ONE;
         otherGun = WhichGun.TWO;
-
     }
 
     private void setAnimator() {
@@ -137,15 +136,18 @@ public class GameActor extends GameObjForAnimator {
     }
 
     private enum WhichGun {
-        ONE(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY)),
-        TWO(new Gun(Gun.GunType.PISTOL, Global.actorX, Global.actorY));
+        ONE,
+        TWO;
         private Gun gun;
         private void setGun(Gun gun){
             this.gun = gun;
         }
 
-        WhichGun(Gun gun) {
-            this.gun = gun;
+        private Gun getGun(){
+            return gun;
+        }
+
+        WhichGun() {
         }
 
 
