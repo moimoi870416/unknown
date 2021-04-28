@@ -24,7 +24,6 @@ public class Rotation {
         float angle1 = (float) Math.atan2((startPointY - fixedY), (startPointX - fixedX));
         float angle2 = (float) Math.atan2((this.mouseY - fixedY), (this.mouseX - fixedX));
         return angle2 - angle1;
-
     }
 
     public boolean isRight() {

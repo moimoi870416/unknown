@@ -368,16 +368,18 @@ public abstract class GameScene extends Scene {
                         type.clear();
                     }
                 }
-                if(commandCode == Active.F1.getCommandCode()){
+                if(commandCode == Active.F1.getCommandCode() && !I_AM_MAC){
                     I_AM_MAC = true;
+                    AudioResourceController.getInstance().pause("/sounds/bgm/bgm1.wav");
+                    AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
                 }
-                if(commandCode == Active.F2.getCommandCode()){
+                if(commandCode == Active.F2.getCommandCode() && I_AM_MAC){
                     I_AM_MAC = false;
                     if(isNormal){
                         AudioResourceController.getInstance().loop("/sounds/bgm/bgm1.wav",50);
                         return;
                     }
-                    AudioResourceController.getInstance().loop("/sounds/bgm/warning-2.wav", 0);
+                    AudioResourceController.getInstance().loop("/sounds/bgm/BGM-BOSS.wav", 0);
                 }
 
             }
