@@ -355,8 +355,9 @@ public abstract class GameScene extends Scene {
                                 if(gameActorArr.get(i).getState() == GameObjForAnimator.State.DEAD) {
                                     GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
                                     tmp.setConnectID(gameActorArr.get(i).getConnectID());
-                                    ConnectController.getInstance().lysuSend(gameActorArr.get(i));
-                                    gameActorArr.remove(i);
+                                    tmp.setState(GameObjForAnimator.State.STAND);
+//                                    ConnectController.getInstance().lysuSend(gameActorArr.get(i));
+//                                    gameActorArr.remove(i);
                                     gameActorArr.add(tmp);
                                     break;
                                 }
