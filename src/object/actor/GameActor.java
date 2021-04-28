@@ -12,6 +12,8 @@ import static util.Global.*;
 public class GameActor extends GameObjForAnimator {
     private Gun currentGun;
     private Gun otherGun;
+    private Gun firstGun;
+    private Gun secondGun;
     private Global.Direction verticalDir;
     private Global.Direction horizontalDir;
     private Rotation rotation;
@@ -38,19 +40,20 @@ public class GameActor extends GameObjForAnimator {
     private void setGun() {
         switch (actor) {
             case FIRST -> {
-                    currentGun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
-                    otherGun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
+                    firstGun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
+                    secondGun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
             }
             case SECOND -> {
-                    currentGun = new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom());
-                    otherGun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
+                    firstGun = new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom());
+                    secondGun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
             }
             case THIRD -> {
-                    currentGun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
-                    otherGun = new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom());
+                    firstGun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
+                    secondGun = new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom());
             }
         }
-
+        currentGun = firstGun;
+        otherGun = secondGun;
         this.moveSpeed = currentGun.getGunType().getMoveSpeed();
     }
 
@@ -124,8 +127,12 @@ public class GameActor extends GameObjForAnimator {
 
     public void changeGun(int commandCode) {
         if (commandCode == -1) {
+            currentGun = firstGun;
+            otherGun = secondGun;
             isFirstGun = true;
         } else if (commandCode == -2) {
+            currentGun = secondGun;
+            otherGun = firstGun;
             isFirstGun = false;
         }
         this.moveSpeed = currentGun.getGunType().getMoveSpeed();
