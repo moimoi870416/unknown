@@ -119,12 +119,13 @@ public class ConnectController {
 
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY) {
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.painter().centerX() + "");
-        strs.add(gameActor.painter().bottom() + "");
-        strs.add(mouseX + "");
-        strs.add(mouseY + "");
-        strs.add(gameActor.getCurrentGun().getGunType() + "");
-        strs.add(gameActor.getConnectID() + "");
+        strs.add(gameActor.painter().centerX() + "");//0
+        strs.add(gameActor.painter().bottom() + "");//1
+        strs.add(mouseX + "");//2
+        strs.add(mouseY + "");//3
+        strs.add(gameActor.getCurrentGun().getGunType() + "");//4
+        strs.add(gameActor.getConnectID() + "");//5
+        strs.add(gameActor.getCurrentGun().getGunType().shootSoundsPath);//6
         ClientClass.getInstance().sent(NetEvent.BULLET_NEW, strs);
     }
 
@@ -132,6 +133,7 @@ public class ConnectController {
         bullets.add(new Bullet(Integer.valueOf(strs.get(0)), Integer.valueOf(strs.get(1))-28,
                 Integer.valueOf(strs.get(2)), Integer.valueOf(strs.get(3)),
                 Gun.GunType.valueOf(strs.get(4)), Integer.valueOf(strs.get(5))));
+        AudioResourceController.getInstance().shot(strs.get(6));
     }
     public void newMonsterSend(Monster monster){
         ArrayList<String> strs = new ArrayList<>();
