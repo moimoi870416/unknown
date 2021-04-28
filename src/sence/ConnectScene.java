@@ -43,8 +43,7 @@ public abstract class ConnectScene extends GameScene {
                     return;
                 }
                 switch (commandCode) {
-                    case NetEvent.ACTOR -> ConnectController.getInstance().actorReceive(gameActorArr, serialNum, strs);
-                    case NetEvent.ACTOR_STATE -> ConnectController.getInstance().actorStateReceive(gameActorArr, strs);
+                    case NetEvent.ACTOR -> ConnectController.getInstance().actorReceive(gameActorArr, strs);
                     case NetEvent.BULLET_NEW -> ConnectController.getInstance().newBulletReceive(testBullets, strs);
                     case NetEvent.ACTOR_HEAL -> ConnectController.getInstance().healReceive(gameActorArr, serialNum, strs);
                     case NetEvent.ACTOR_FLASH -> ConnectController.getInstance().flashReceive(gameActorArr, serialNum, strs);

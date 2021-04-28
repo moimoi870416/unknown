@@ -37,32 +37,51 @@ public class ConnectController {
         strs.add(gameActor.getLife() + "");//2
         strs.add(gameActor.getState() + "");//3
         strs.add(gameActor.getDir() + "");//4
+        strs.add(gameActor.getConnectID() + "");//5
         strs.addAll(gunSend(gameActor, mouseX, mouseY));
         ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
 
-    public void actorStateSend(int connectID, GameObjForAnimator.State state) {
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(connectID + "");//0
-        strs.add(state + "");//1
-        ClientClass.getInstance().sent(NetEvent.ACTOR_STATE, strs);
-    }
-
-    public void actorStateReceive(ArrayList<GameActor> gameActorArr, ArrayList<String> strs) {
+    public void actorReceive(ArrayList<GameActor> gameActorArr, ArrayList<String> strs) {
         for (int i = 0; i < gameActorArr.size(); i++) {
-            if (gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
-                gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(1)));
+            if (gameActorArr.get(i).getConnectID() == Integer.valueOf(5)) {
+                gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
+                gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
+                gameActorArr.get(i).setLife(Integer.valueOf(strs.get(2)));
+                gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
+                gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+                gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
+                        Integer.valueOf(strs.get(1)),
+                        Integer.valueOf(strs.get(2)));
+                gunReceive(gameActorArr.get(i), strs);
+
             }
         }
     }
 
-
-    public void changeGunSend(GameActor gameActor, int commandCode) {
+    private ArrayList<String> gunSend(GameActor gameActor, int mouseX, int mouseY) {
         ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.getConnectID() + "");//0
-        strs.add(commandCode + "");//1
-        ClientClass.getInstance().sent(NetEvent.ACTOR_CHANGE_GUN, strs);
+        strs.add(gameActor.collider().centerX() + "");//6
+        strs.add(gameActor.collider().bottom() + "");//7
+        strs.add(mouseX + "");//8
+        strs.add(mouseY + "");//9
+        strs.add(gameActor.getCurrentGun().getGunType().ordinal() +"");//10
+        return strs;
+    }
+
+    private void gunReceive(GameActor gameActor, ArrayList<String> strs) {
+        gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)), Integer.valueOf(strs.get(7)) - 35);
+        gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)), Integer.valueOf(strs.get(7)) - 35);
+        gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
+        gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
+                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(8)), Integer.valueOf(strs.get(9)));
+
+        if(gameActor.getWhichOneGun().getGunType().ordinal() != Integer.valueOf(strs.get(10))){
+            gameActor.changeGun(Active.NUMBER_ONE.getCommandCode());
+            return;
+        }
+        gameActor.changeGun(Active.NUMBER_TWO.getCommandCode());
     }
 
     public void healSend(GameActor gameActor) {
@@ -80,46 +99,7 @@ public class ConnectController {
     }
 
 
-    public void actorReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
-        for (int i = 0; i < gameActorArr.size(); i++) {
-            if (gameActorArr.get(i).getConnectID() == serialNum) {
-                gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
-                gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
-                gameActorArr.get(i).setLife(Integer.valueOf(strs.get(2)));
-                gameActorArr.get(i).setState(GameObjForAnimator.State.valueOf(strs.get(3)));
-                gameActorArr.get(i).setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
-                gameActorArr.get(i).getBlood().barUpdate(Integer.valueOf(strs.get(0)),
-                        Integer.valueOf(strs.get(1)),
-                        Integer.valueOf(strs.get(2)));
-                gunReceive(gameActorArr.get(i), strs);
 
-            }
-        }
-    }
-
-    private ArrayList<String> gunSend(GameActor gameActor, int mouseX, int mouseY) {
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.collider().centerX() + "");//5
-        strs.add(gameActor.collider().bottom() + "");//6
-        strs.add(mouseX + "");//7
-        strs.add(mouseY + "");//8
-        strs.add(gameActor.getCurrentGun().getGunType().ordinal() +"");//9
-        return strs;
-    }
-
-    private void gunReceive(GameActor gameActor, ArrayList<String> strs) {
-        gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(5)), Integer.valueOf(strs.get(6)) - 28);
-        gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(5)), Integer.valueOf(strs.get(6)) - 28);
-        gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
-        gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
-                gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(7)), Integer.valueOf(strs.get(8)));
-
-        if(gameActor.getWhichOneGun().getGunType().ordinal() != Integer.valueOf(strs.get(9))){
-            gameActor.changeGun(Active.NUMBER_ONE.getCommandCode());
-            return;
-        }
-        gameActor.changeGun(Active.NUMBER_TWO.getCommandCode());
-    }
 
     public void healReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
         for (int i = 0; i < gameActorArr.size(); i++) {
@@ -138,21 +118,6 @@ public class ConnectController {
                     gameActorArr.get(i).getSkill().flash(Integer.valueOf(strs.get(1)), Integer.valueOf(strs.get(2)), null);
 
                 }
-            }
-        }
-    }
-
-    public void changeGunReceive(ArrayList<GameActor> gameActorArr, int serialNum, ArrayList<String> strs) {
-        for (int i = 0; i < gameActorArr.size(); i++) {
-            if (gameActorArr.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
-                if(Integer.valueOf(strs.get(1)) == -1){
-                    if(gameActorArr.get(i).getCurrentGun() != gameActorArr.get(i).getWhichOneGun()){
-                        gameActorArr.get(i).changeGun(-1);
-                        return;
-                    }
-                    gameActorArr.get(i).changeGun(-2);
-                }
-
             }
         }
     }
@@ -200,12 +165,6 @@ public class ConnectController {
         }
         tmp.setConnectID(Integer.valueOf(strs.get(1)));
         monsters.add(tmp);
-    }
-
-    public void bossAtkTypeSend(int typeCode) {
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(typeCode + "");//0
-        ClientClass.getInstance().sent(NetEvent.MONSTER_BOSS_ATTACK_TYPE, strs);
     }
 
     public void bossAtkTypeReceive(LinkedList<Monster> monster, ArrayList<String> strs) {
@@ -322,20 +281,6 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.MONSTER_IS_CHASE, strs);
     }
 
-    public void monsterBooleanReceive(LinkedList<Monster> monster, ArrayList<String> strs) {
-        for (int i = 0; i < monster.size(); i++) {
-            if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(1))) {
-                switch (strs.get(0)) {
-                    case "isChase" -> monster.get(i).setIsChase(Boolean.valueOf(strs.get(2)));
-                    case "forRino" -> monster.get(i).setForRino(Boolean.valueOf(strs.get(2)));
-                    case "focus" -> monster.get(i).setFocus(Boolean.valueOf(strs.get(2)));
-                    case "readyAtk" -> monster.get(i).setReadyAtk(Boolean.valueOf(strs.get(2)));
-                }
-
-            }
-        }
-    }
-
     public void monsterStateSend(GameObjForAnimator.State state, int connectID) {
         ArrayList<String> strs = new ArrayList<>();
         strs.add(connectID + "");//0
@@ -347,31 +292,6 @@ public class ConnectController {
         for (int i = 0; i < monster.size(); i++) {
             if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
                 monster.get(i).setMonsterState(GameObjForAnimator.State.valueOf(strs.get(1)));
-            }
-        }
-    }
-
-    public void checkMonsterSend(LinkedList<Monster> monster){
-        ArrayList<String> strs = new ArrayList<>();
-        for(int i=0 ; i<monster.size() ; i++){
-            strs.add(monster.get(i).getConnectID() + "");
-        }
-        ClientClass.getInstance().sent(NetEvent.MONSTER_CHECK, strs);
-    }
-
-    public void checkMonsterReceive(LinkedList<Monster> monster,ArrayList<String> strs){
-        int tmp ;
-        for(int i=0; i<monster.size() ; i++){
-            tmp=0;
-            for(int k=0 ; k<strs.size() ; k++){
-                if(monster.get(i).getConnectID() == Integer.valueOf(strs.get(k))){
-                    tmp++;
-                    strs.remove(k--);
-                    break;
-                }
-            }
-            if(tmp ==0){
-                monster.remove(i--);
             }
         }
     }
