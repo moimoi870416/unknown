@@ -40,6 +40,8 @@ public class Main {
                         .add(KeyEvent.VK_F, Global.Active.SKILL.getCommandCode())
                         .add(KeyEvent.VK_E, Global.Active.CATCH_ITEM.getCommandCode())
                         .add(KeyEvent.VK_ENTER, Active.ENTER.getCommandCode())
+                        .add(KeyEvent.VK_F1,Active.F1.getCommandCode())
+                        .add(KeyEvent.VK_F2,Active.F2.getCommandCode())
                         .next().trackChar().keyCleanMode()
                         .subscribe(sc))
                 //鍵盤監聽

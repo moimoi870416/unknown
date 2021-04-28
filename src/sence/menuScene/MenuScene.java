@@ -342,11 +342,18 @@ public class MenuScene extends Scene {
 //                    if (inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
 
                 }
+
             }
-//            }
+
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
+                if(commandCode == Active.F1.getCommandCode()){
+                    I_AM_MAC = true;
+                }
+                if(commandCode == Active.F2.getCommandCode()){
+                    I_AM_MAC = false;
+                }
             }
 
             @Override

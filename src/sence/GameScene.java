@@ -368,6 +368,17 @@ public abstract class GameScene extends Scene {
                         type.clear();
                     }
                 }
+                if(commandCode == Active.F1.getCommandCode()){
+                    I_AM_MAC = true;
+                }
+                if(commandCode == Active.F2.getCommandCode()){
+                    I_AM_MAC = false;
+                    if(isNormal){
+                        AudioResourceController.getInstance().loop("/sounds/bgm/bgm1.wav",50);
+                        return;
+                    }
+                    AudioResourceController.getInstance().loop("/sounds/bgm/warning-2.wav", 0);
+                }
 
             }
 

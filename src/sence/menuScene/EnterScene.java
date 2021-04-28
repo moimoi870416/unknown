@@ -103,10 +103,17 @@ public class EnterScene extends Scene {
                         ConnectController.getInstance().changeSceneSend(isNormal);
                     }
                 }
+
             }
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
+                if(commandCode == Active.F1.getCommandCode()){
+                    I_AM_MAC = true;
+                }
+                if(commandCode == Active.F2.getCommandCode()){
+                    I_AM_MAC = false;
+                }
             }
 
             @Override
