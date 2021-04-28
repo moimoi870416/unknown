@@ -30,7 +30,15 @@ public class ConnectController {
         return connectController;
     }
 
+    public void connectSend(GameActor gameActor){
+        ArrayList<String> strs = new ArrayList<>();
+        strs.add(gameActor.getConnectID() +"");
+        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
+    }
 
+    public void connectReceive(){
+
+    }
 
     public void actorSend(GameActor gameActor, int mouseX, int mouseY) {
         ArrayList<String> strs = new ArrayList<>();
