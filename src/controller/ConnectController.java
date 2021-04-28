@@ -67,6 +67,7 @@ public class ConnectController {
         strs.add(mouseX + "");//8
         strs.add(mouseY + "");//9
         strs.add(gameActor.getCurrentGun().getGunType().ordinal() +"");//10
+        System.out.println(gameActor.getConnectID() +"////"+gameActor.getCurrentGun().getGunType().ordinal());
         return strs;
     }
 
