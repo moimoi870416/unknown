@@ -30,15 +30,7 @@ public class ConnectController {
         return connectController;
     }
 
-    public void connectSend(GameActor gameActor){
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(gameActor.getConnectID() +"");
-        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
-    }
 
-    public void connectReceive(){
-
-    }
 
     public void actorSend(GameActor gameActor, int mouseX, int mouseY) {
         ArrayList<String> strs = new ArrayList<>();
@@ -53,9 +45,9 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
 
-    public void actorReceive(ArrayList<GameActor> gameActorArr, ArrayList<String> strs) {
+    public void actorReceive(ArrayList<GameActor> gameActorArr,int serialNum, ArrayList<String> strs) {
         for (int i = 0; i < gameActorArr.size(); i++) {
-            if (gameActorArr.get(i).getConnectID() == Integer.valueOf(5)) {
+            if (gameActorArr.get(i).getConnectID() == serialNum && gameActorArr.get(i).getConnectID() == Integer.valueOf(5)) {
                 gameActorArr.get(i).offSetX(Integer.valueOf(strs.get(0)));
                 gameActorArr.get(i).offSetY(Integer.valueOf(strs.get(1)));
                 gameActorArr.get(i).setLife(Integer.valueOf(strs.get(2)));
