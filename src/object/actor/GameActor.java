@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import static util.Global.*;
 
 public class GameActor extends GameObjForAnimator {
-    private WhichGun currentGun;
-    private WhichGun otherGun;
+    private Gun currentGun;
+    private Gun otherGun;
     private Global.Direction verticalDir;
     private Global.Direction horizontalDir;
     private Rotation rotation;
@@ -38,21 +38,20 @@ public class GameActor extends GameObjForAnimator {
     private void setGun() {
         switch (actor) {
             case FIRST -> {
-                    WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
-                    WhichGun.TWO.setGun(new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom()));
+                    currentGun = new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom());
+                    otherGun = new Gun(Gun.GunType.SNIPER, collider().centerX(), collider().bottom());
             }
             case SECOND -> {
-                    WhichGun.ONE.setGun(new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom()));
-                    WhichGun.TWO.setGun(new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom()));
+                    currentGun = new Gun(Gun.GunType.UZI, collider().centerX(), collider().bottom());
+                    otherGun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
             }
             case THIRD -> {
-                    WhichGun.ONE.setGun(new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom()));
-                    WhichGun.TWO.setGun(new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom()));
+                    currentGun = new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom());
+                    otherGun = new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom());
             }
         }
-        currentGun = WhichGun.ONE;
-        otherGun = WhichGun.TWO;
-        this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
+
+        this.moveSpeed = currentGun.getGunType().getMoveSpeed();
     }
 
     private void setAnimator() {
@@ -105,7 +104,7 @@ public class GameActor extends GameObjForAnimator {
             return;
         }
         animator.paintAnimator(g, painter().left(), painter().right(), painter().top(), painter().bottom(), dir);
-        rotation.paint(g, currentGun.gun, this);
+        rotation.paint(g, currentGun, this);
         skill.skillPaint(g);
         blood.paint(g);
     }
@@ -125,33 +124,11 @@ public class GameActor extends GameObjForAnimator {
 
     public void changeGun(int commandCode) {
         if (commandCode == -1) {
-            currentGun = WhichGun.ONE;
-            otherGun = WhichGun.TWO;
             isFirstGun = true;
         } else if (commandCode == -2) {
-            currentGun = WhichGun.TWO;
-            otherGun = WhichGun.ONE;
             isFirstGun = false;
         }
-        this.moveSpeed = currentGun.gun.getGunType().getMoveSpeed();
-    }
-
-    private enum WhichGun {
-        ONE,
-        TWO;
-        private Gun gun;
-        private void setGun(Gun gun){
-            this.gun = gun;
-        }
-
-        private Gun getGun(){
-            return gun;
-        }
-
-        WhichGun() {
-        }
-
-
+        this.moveSpeed = currentGun.getGunType().getMoveSpeed();
     }
 
     public void setMoveSpeed(int moveSpeed) {
@@ -179,20 +156,14 @@ public class GameActor extends GameObjForAnimator {
         return blood;
     }
 
-    public void tradeGun(Gun gun) {
-        currentGun.gun = gun;
-    }
 
     public Gun gunOtherGun() {
-        return otherGun.gun;
+        return otherGun;
     }
 
-    public Gun getCurrentGun() {
-        return currentGun.gun;
-    }
 
-    public Gun getWhichOneGun(){
-        return WhichGun.ONE.gun;
+    public Gun getCurrentGun(){
+        return currentGun;
     }
 
     public Skill getSkill() {
@@ -234,7 +205,6 @@ public class GameActor extends GameObjForAnimator {
         }
         switch (this.actor) {
             case FIRST -> {
-
                 switch (this.state) {
                     case STAND -> {
                         animator.setImg("/pictures/actor/actorStand.png", 2);
@@ -364,8 +334,8 @@ public class GameActor extends GameObjForAnimator {
         }
 
 //        skill.skillUpdate();
-        currentGun.gun.update();
-        currentGun.gun.translateForActor();
+        currentGun.update();
+        currentGun.translateForActor();
         updatePosition();
 
     }

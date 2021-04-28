@@ -7,10 +7,8 @@ import static util.Global.*;
 import object.GameObjForAnimator;
 import object.actor.GameActor;
 import object.monster.*;
-import sence.gameScene.LimitMode;
 import sence.gameScene.normalMode.BossScene;
 import sence.gameScene.normalMode.NormalMode;
-import util.Global;
 import weapon.Bullet;
 import weapon.Gun;
 
@@ -76,9 +74,8 @@ public class ConnectController {
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(8)), Integer.valueOf(strs.get(9)));
-        System.out.println(gameActor.getConnectID());
 
-        if(gameActor.getWhichOneGun().getGunType().ordinal() != Integer.valueOf(strs.get(10))){
+        if(gameActor.getCurrentGun().getGunType().ordinal() != Integer.valueOf(strs.get(10))){
             gameActor.changeGun(Active.NUMBER_ONE.getCommandCode());
             return;
         }
@@ -229,18 +226,25 @@ public class ConnectController {
 
     public void changeSceneReceive(ArrayList<String> strs, ArrayList<GameActor> gameActorArr) {
         ArrayList<GameActor> test = new ArrayList<>();
-
         if (Boolean.valueOf(strs.get(0))) {
-            for (int i = 0; i < gameActorArr.size(); i++) {
-                switch (gameActorArr.get(i).getConnectID()) {
-                    case 100 -> test.add(new GameActor(Actor.FIRST, 500, 500));
-                    case 101 -> test.add(new GameActor(Actor.SECOND, 500, 550));
-                    case 102 -> test.add(new GameActor(Actor.THIRD, 500, 600));
-                }
+            System.out.println(gameActorArr.size());
+            for(int i=0 ; i<gameActorArr.size() ; i++){
+                System.out.println(gameActorArr.get(i).getConnectID());
             }
             for (int i = 0; i < gameActorArr.size(); i++) {
+                switch (gameActorArr.get(i).getConnectID()) {
+                    case 100 -> {
+                        test.add(new GameActor(Actor.FIRST, 500, 500));
+                        System.out.println(gameActorArr.get(i).getConnectID()+"!!!!!!!!"+test.get(i).getActor());
+                    }
+                    case 101 -> {
+                        test.add(new GameActor(Actor.SECOND, 500, 550));
+                        System.out.println(gameActorArr.get(0).getConnectID()+"!!!!!!!!"+test.get(i).getActor());
+                        System.out.println(gameActorArr.get(i).getConnectID()+"????????"+test.get(i).getActor());
+                    }
+                    case 102 -> test.add(new GameActor(Actor.THIRD, 500, 600));
+                }
                 test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
-                System.out.println(test.get(i).getCurrentGun().getGunType().ordinal());
             }
             SenceController.getSenceController().change(new NormalMode(test));
             return;
@@ -251,11 +255,8 @@ public class ConnectController {
                 case 101 -> test.add(new GameActor(Actor.SECOND, 1025, 1950));
                 case 102 -> test.add(new GameActor(Actor.THIRD, 1035, 1950));
             }
-        }
-        for (int i = 0; i < gameActorArr.size(); i++) {
             test.get(i).setConnectID(gameActorArr.get(i).getConnectID());
         }
-
         SenceController.getSenceController().change(new BossScene(test));
     }
 
