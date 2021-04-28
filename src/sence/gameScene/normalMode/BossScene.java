@@ -108,7 +108,7 @@ public class BossScene extends ConnectScene {
             if (monster.size() == stoneCount && stoneCount == stoneDead) {
                 effectView.setVictory(true);
             }
-            if ((isServer || isSingle) && !bossDead && start && false) {
+            if ((isServer || isSingle) && !bossDead && start) {
                 xOK = false;
                 yOK = false;
                 for (int i = 0; i < gameActorArr.size(); i++) {

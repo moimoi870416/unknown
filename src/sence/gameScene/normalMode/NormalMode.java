@@ -5,7 +5,6 @@ import camera.MapInformation;
 import controller.*;
 import object.GameObjForPic;
 import object.actor.GameActor;
-import object.monster.BullBoss;
 import object.monster.Rino;
 import object.monster.SmallMonster;
 import object.monster.Stone;
@@ -250,13 +249,13 @@ public class NormalMode extends ConnectScene {
         }
 
         private void firstWave(){
-            for(int i=0 ; i<monsterNumber*2 ; i++){
+            for(int i=0 ; i<monsterNumber ; i++){
                 monster.add(new SmallMonster(random(2500,3000),random(370,950), SmallMonster.Type.GOBLIN));
                 if(i%2 == 0){
                     monster.add(new SmallMonster(random(2500,3000),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
             }
-            for(int i=0 ; i<monsterNumber*3 ; i++){
+            for(int i=0 ; i<monsterNumber*2 ; i++){
                 monster.add(new SmallMonster(random(4000,4500),random(370,950), SmallMonster.Type.GOBLIN));
                 if(i%2 == 0){
                     monster.add(new SmallMonster(random(4000,4500),random(370,950), SmallMonster.Type.MUSHROOM));
@@ -271,24 +270,24 @@ public class NormalMode extends ConnectScene {
         private void secondWave(){//4096
             for(int i=0 ; i<monsterNumber*2 ; i++){
                 monster.add(new SmallMonster(random(6500,7000),random(370,950), SmallMonster.Type.GOBLIN));
-                if(i%2 == 0){
+                if(i%3 == 0){
                     monster.add(new SmallMonster(random(6500,7000),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
             }
             for(int i=0 ; i<monsterNumber*2 ; i++){
                 monster.add(new SmallMonster(random(6500,8000),random(370,950), SmallMonster.Type.GOBLIN));
-                if(i%2 == 0){
+                if(i%3 == 0){
                     monster.add(new SmallMonster(random(6500,8000),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
             }
             monster.add(new Rino(random(7000,8000),580));
 
-            for(int i=0 ; i<monsterNumber*3 ; i++){
+            for(int i=0 ; i<monsterNumber*2 ; i++){
                 monster.add(new Stone(random(9500,10000),random(370,950)));
-                if(i%2 == 0){
+                if(i%3 == 0){
                     monster.add(new SmallMonster(random(9500,10000),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
-                if(i%5 == 0){
+                if(i%4 == 0){
                     monster.add(new Rino(random(9500,10000),random(370,950)));
                 }
             }
@@ -305,12 +304,12 @@ public class NormalMode extends ConnectScene {
                 monster.add(new Rino(random(12000,12500),random(370,950)));
 
             }
-            for(int i=0 ; i<monsterNumber*3 ; i++){
+            for(int i=0 ; i<monsterNumber*2 ; i++){
                 monster.add(new Stone(random(12000,12500),random(370,950)));
-                if(i%2 == 0){
+                if(i%3 == 0){
                     monster.add(new SmallMonster(random(12000,12500),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
-                if(i%5 == 0){
+                if(i%4 == 0){
                     monster.add(new Rino(random(12000,12500),random(370,950)));
                 }
             }
@@ -321,12 +320,12 @@ public class NormalMode extends ConnectScene {
                 monster.add(new Rino(random(15500,16000),random(370,950)));
 
             }
-            for(int i=0 ; i<monsterNumber*3 ; i++){
+            for(int i=0 ; i<monsterNumber*2 ; i++){
                 monster.add(new Stone(random(15500,16000),random(370,950)));
-                if(i%2 == 0){
+                if(i%3 == 0){
                     monster.add(new SmallMonster(random(15500,16000),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
-                if(i%5 == 0){
+                if(i%4 == 0){
                     monster.add(new Rino(random(15500,16000),random(370,950)));
                 }
             }
