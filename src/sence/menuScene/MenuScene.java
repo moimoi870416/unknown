@@ -330,14 +330,14 @@ public class MenuScene extends Scene {
 
                 if (commandCode == Active.ENTER.getCommandCode()) {
                     if (ModeState == FOURTH) {
-                        if (IS_DEBUG) {
-                            connectIP = "192.168.1.16";
+//                        if (IS_DEBUG) {
+                            connectIP = "192.168.1.37";
                             addConnectLanArea();
-                            return;
-                        }
-                        inputText.unFocus();
-                        inputText.setEditText("");
-                        addConnectLanArea();
+//                            return;
+//                        }
+//                        inputText.unFocus();
+//                        inputText.setEditText("");
+//                        addConnectLanArea();
                     }
 //                    if (inputText.getIsFocus()) { //如果在輸入階段，按下Enter後則存成IP，並且input變成unFocus
 
