@@ -1,5 +1,7 @@
 package controller;
 
+import util.Global;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -44,6 +46,9 @@ public class AudioResourceController {
     }
 
     public void play(final String fileName) {
+        if (Global.I_AM_MAC){
+            return;
+        }
         if (this.soundMap.containsKey(fileName)) {
             final ClipThread ct = this.soundMap.get(fileName);
             if (!ct.isDead()) {
@@ -57,10 +62,16 @@ public class AudioResourceController {
     }
 
     public void shot(final String fileName) {
+        if (Global.I_AM_MAC){
+            return;
+        }
         new ClipThread(fileName, 1, this.finishHandler).start();
     }
 
     public void loop(final String fileName, final int count) {
+        if (Global.I_AM_MAC){
+            return;
+        }
         final ClipThread ct = new ClipThread(fileName, count, this.finishHandler);
         this.soundMap.put(fileName, ct);
         ct.start();
@@ -76,6 +87,9 @@ public class AudioResourceController {
 
     // 同樣音效連續撥放時只能停止最後一次
     public void stop(final String fileName) {
+        if (Global.I_AM_MAC){
+            return;
+        }
         if (!this.soundMap.containsKey(fileName)) {
             return;
         }
