@@ -229,7 +229,7 @@ public abstract class GameScene extends Scene {
             }
             if (gameActorArr.get(0).getCurrentGun().shoot()) {
                 this.testBullets.add(new Bullet
-                        (gameActorArr.get(0).painter().centerX(), gameActorArr.get(0).painter().centerY(),
+                        (gameActorArr.get(0).painter().centerX(), gameActorArr.get(0).painter().bottom()-26,
                                 mouseX, mouseY,
                                 gameActorArr.get(0).getCurrentGun().getGunType(),
                                 gameActorArr.get(0).getConnectID()));
@@ -294,7 +294,7 @@ public abstract class GameScene extends Scene {
                     if (gameActorArr.get(0).getCurrentGun().shoot()) {
 
                         this.testBullets.add(new Bullet
-                                (this.gameActorArr.get(0).painter().centerX(), this.gameActorArr.get(0).painter().centerY(),
+                                (this.gameActorArr.get(0).painter().centerX(), this.gameActorArr.get(0).painter().bottom()-26,
                                         mouseX, mouseY,
                                         gameActorArr.get(0).getCurrentGun().getGunType(),
                                         gameActorArr.get(0).getConnectID()));

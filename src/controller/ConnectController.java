@@ -125,7 +125,7 @@ public class ConnectController {
     public void newBulletSend(GameActor gameActor, int mouseX, int mouseY) {
         ArrayList<String> strs = new ArrayList<>();
         strs.add(gameActor.painter().centerX() + "");
-        strs.add(gameActor.painter().centerY() + "");
+        strs.add(gameActor.painter().bottom() + "");
         strs.add(mouseX + "");
         strs.add(mouseY + "");
         strs.add(gameActor.getCurrentGun().getGunType() + "");
@@ -134,7 +134,7 @@ public class ConnectController {
     }
 
     public void newBulletReceive(LinkedList<Bullet> bullets, ArrayList<String> strs) {
-        bullets.add(new Bullet(Integer.valueOf(strs.get(0)), Integer.valueOf(strs.get(1)),
+        bullets.add(new Bullet(Integer.valueOf(strs.get(0)), Integer.valueOf(strs.get(1))-28,
                 Integer.valueOf(strs.get(2)), Integer.valueOf(strs.get(3)),
                 Gun.GunType.valueOf(strs.get(4)), Integer.valueOf(strs.get(5))));
     }
