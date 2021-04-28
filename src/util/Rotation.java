@@ -47,6 +47,7 @@ public class Rotation {
     }
 
     public void paint(Graphics g, Gun gun, GameActor gameActor) {
+
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform t = g2d.getTransform();
         g2d.rotate(Math.toRadians(toDegrees()), gameActor.painter().centerX(), gameActor.painter().bottom() - 20);
