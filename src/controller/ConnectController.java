@@ -49,6 +49,7 @@ public class ConnectController {
         strs.add(gameActor.getDir() + "");//4
         strs.add(gameActor.getConnectID() + "");//5
         strs.addAll(gunSend(gameActor, mouseX, mouseY));
+        ClientClass.getInstance().sent(NetEvent.CONNECT, strs);
         ClientClass.getInstance().sent(NetEvent.ACTOR, strs);
     }
 
