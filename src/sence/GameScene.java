@@ -17,13 +17,14 @@ import weapon.Gun;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
+
 
 import static util.Global.*;
 
 public abstract class GameScene extends Scene {
     protected ArrayList<GameObject> mapObjArr;
     protected LinkedList<Bullet> testBullets;
+//    protected Map<Integer,Monster> monsterArr;
     protected LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
@@ -43,6 +44,7 @@ public abstract class GameScene extends Scene {
     @Override
     public void sceneBegin() {
         mapObjArr = new ArrayList<>();
+//        monsterArr = new HashMap<>();
         monster = new LinkedList<>();
         testBullets = new LinkedList<>();
         sceneBeginComponent();
@@ -183,6 +185,8 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
+
+        ///////////////////////////////
         for (int i = 0; i < monster.size(); i++) {
             if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
