@@ -46,7 +46,7 @@ public class GameActor extends GameObjForAnimator {
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom()));
             }
             case THIRD -> {
-                    WhichGun.ONE.setGun(new Gun(Gun.GunType.PISTOL, collider().centerX(), collider().bottom()));
+                    WhichGun.ONE.setGun(new Gun(Gun.GunType.AK, collider().centerX(), collider().bottom()));
                     WhichGun.TWO.setGun(new Gun(Gun.GunType.MACHINE_GUN, collider().centerX(), collider().bottom()));
             }
         }

@@ -53,9 +53,9 @@ public class Rotation {
         if (isRight()) {
             g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
                     gameActor.painter().centerX(),
-                    gameActor.painter().bottom() -35,
+                    gameActor.painter().bottom() -42,
                     gameActor.painter().centerX() + gun.getGunType().getWidthForActor(),
-                    gameActor.painter().bottom() + gun.getGunType().getHeightForActor() / 2 - 35,
+                    gameActor.painter().bottom() + gun.getGunType().getHeightForActor() / 2 - 42,
                     0,
                     0,
                     gun.getGunType().getWidthForActor(),
@@ -63,9 +63,9 @@ public class Rotation {
         } else {
             g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
                     gameActor.painter().centerX() - gun.getGunType().getWidthForActor(),
-                    gameActor.painter().bottom()-35,
+                    gameActor.painter().bottom()-42,
                     gameActor.painter().centerX(),
-                    gameActor.painter().bottom()-35 + gun.getGunType().getHeightForActor() / 2,
+                    gameActor.painter().bottom()-42 + gun.getGunType().getHeightForActor() / 2,
                     0,
                     gun.getGunType().getHeightForActor() / 2,
                     gun.getGunType().getWidthForActor(),
