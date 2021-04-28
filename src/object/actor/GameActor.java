@@ -497,4 +497,9 @@ public class GameActor extends GameObjForAnimator {
             return canFlash;
         }
     }
+
+    public boolean isFirstGun(){
+        return isFirstGun;
+    }
+
 }

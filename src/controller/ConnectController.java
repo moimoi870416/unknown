@@ -64,22 +64,18 @@ public class ConnectController {
         strs.add(gameActor.collider().bottom() + "");//7
         strs.add(mouseX + "");//8
         strs.add(mouseY + "");//9
-        strs.add(gameActor.getCurrentGun().getGunType().ordinal() +"");//10
+        strs.add(gameActor.getIsFirstGun() +"");//10
         return strs;
     }
 
     private void gunReceive(GameActor gameActor, ArrayList<String> strs) {
+        gameActor.setIsFirstGun(Boolean.valueOf(strs.get(10)));
         gameActor.getCurrentGun().painter().setCenter(Integer.valueOf(strs.get(6)), Integer.valueOf(strs.get(7)) - 35);
         gameActor.getCurrentGun().collider().setCenter(Integer.valueOf(strs.get(6)), Integer.valueOf(strs.get(7)) - 35);
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(8)), Integer.valueOf(strs.get(9)));
 
-        if(gameActor.getCurrentGun().getGunType().ordinal() != Integer.valueOf(strs.get(10))){
-            gameActor.changeGun(Active.NUMBER_ONE.getCommandCode());
-            return;
-        }
-        gameActor.changeGun(Active.NUMBER_TWO.getCommandCode());
     }
 
     public void healSend(GameActor gameActor) {
@@ -227,20 +223,14 @@ public class ConnectController {
     public void changeSceneReceive(ArrayList<String> strs, ArrayList<GameActor> gameActorArr) {
         ArrayList<GameActor> test = new ArrayList<>();
         if (Boolean.valueOf(strs.get(0))) {
-            System.out.println(gameActorArr.size());
-            for(int i=0 ; i<gameActorArr.size() ; i++){
-                System.out.println(gameActorArr.get(i).getConnectID());
-            }
+
             for (int i = 0; i < gameActorArr.size(); i++) {
                 switch (gameActorArr.get(i).getConnectID()) {
                     case 100 -> {
                         test.add(new GameActor(Actor.FIRST, 500, 500));
-                        System.out.println(gameActorArr.get(i).getConnectID()+"!!!!!!!!"+test.get(i).getActor());
                     }
                     case 101 -> {
                         test.add(new GameActor(Actor.SECOND, 500, 550));
-                        System.out.println(gameActorArr.get(0).getConnectID()+"!!!!!!!!"+test.get(i).getActor());
-                        System.out.println(gameActorArr.get(i).getConnectID()+"????????"+test.get(i).getActor());
                     }
                     case 102 -> test.add(new GameActor(Actor.THIRD, 500, 600));
                 }
