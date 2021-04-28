@@ -51,7 +51,7 @@ public class Rotation {
         AffineTransform t = g2d.getTransform();
         g2d.rotate(Math.toRadians(toDegrees()), gameActor.painter().centerX(), gameActor.painter().bottom() - 20);
         if (isRight()) {
-            g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
+            g2d.drawImage(ImageController.getInstance().tryGet(gameActor.getCurrentGun().getGunType().forActorPath),
                     gameActor.painter().centerX(),
                     gameActor.painter().bottom() -34,
                     gameActor.painter().centerX() + gun.getGunType().getWidthForActor(),
@@ -61,7 +61,7 @@ public class Rotation {
                     gun.getGunType().getWidthForActor(),
                     gun.getGunType().getHeightForActor() / 2-2, null);
         } else {
-            g2d.drawImage(ImageController.getInstance().tryGet(gun.getGunType().forActorPath),
+            g2d.drawImage(ImageController.getInstance().tryGet(gameActor.getCurrentGun().getGunType().forActorPath),
                     gameActor.painter().centerX() - gun.getGunType().getWidthForActor(),
                     gameActor.painter().bottom()-34,
                     gameActor.painter().centerX(),

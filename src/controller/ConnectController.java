@@ -76,6 +76,7 @@ public class ConnectController {
         gameActor.getCurrentGun().setDir(GameObjForAnimator.Dir.valueOf(strs.get(4)));
         gameActor.getRotation().rotationUpdate(gameActor.collider().centerX(), gameActor.collider().centerY(),
                 gameActor.collider().centerX(), gameActor.collider().centerY(), gameActor.getDir(), Integer.valueOf(strs.get(8)), Integer.valueOf(strs.get(9)));
+        System.out.println(gameActor.getConnectID());
 
         if(gameActor.getWhichOneGun().getGunType().ordinal() != Integer.valueOf(strs.get(10))){
             gameActor.changeGun(Active.NUMBER_ONE.getCommandCode());
