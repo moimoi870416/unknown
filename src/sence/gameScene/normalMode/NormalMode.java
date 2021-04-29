@@ -33,7 +33,6 @@ public class NormalMode extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
-        monster.add(new Cockroach(1000,500));
         bossScene = false;
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
