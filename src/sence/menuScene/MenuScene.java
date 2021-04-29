@@ -168,6 +168,7 @@ public class MenuScene extends Scene {
                     multiplayer.unFocus();
                     enter.unFocus();
                     enter2.unFocus();
+                    isSingle = true;
                 }
         );
         singleMode.setClickedActionPerformed((x, y) -> {
@@ -188,6 +189,11 @@ public class MenuScene extends Scene {
             multiplayer.unFocus();
             inputText.unFocus();
             isAdd = false;
+            limitMode.unFocus();
+            normalMode.unFocus();
+            isSingle = true;
+            isNormal = true;
+            isServer = false;
         });
         normalMode.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
@@ -207,6 +213,7 @@ public class MenuScene extends Scene {
             inputText.unFocus();
             isAdd = false;
             isServer = false;
+            isNormal = true;
         });
         crateServer.setClickedActionPerformed((x, y) -> {
             AudioResourceController.getInstance().shot(buttonSound);
@@ -331,8 +338,8 @@ public class MenuScene extends Scene {
                 if (commandCode == Active.ENTER.getCommandCode()) {
                     if (ModeState == FOURTH) {
 //                        if (IS_DEBUG) {
-                            connectIP = "192.168.1.37";
-                            addConnectLanArea();
+                        connectIP = "192.168.1.37";
+                        addConnectLanArea();
 //                            return;
 //                        }
 //                        inputText.unFocus();
@@ -348,10 +355,10 @@ public class MenuScene extends Scene {
 
             @Override
             public void keyReleased(int commandCode, long trigTime) {
-                if(commandCode == Active.F1.getCommandCode()){
+                if (commandCode == Active.F1.getCommandCode()) {
                     I_AM_MAC = true;
                 }
-                if(commandCode == Active.F2.getCommandCode()){
+                if (commandCode == Active.F2.getCommandCode()) {
                     I_AM_MAC = false;
                 }
             }
