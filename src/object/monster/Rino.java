@@ -16,7 +16,7 @@ public class Rino extends Monster {
 
     public Rino(int x, int y) {
         super(x + 5, y + 6, 94, 58, x, y, 104, 68, x + 5, y + 6, 94, 58, 1500, 45, 2, true, 2);
-        animator = new Animator("/pictures/monster/rino/Idle2(52x34).png", 30, 104, 68, 2);
+        animator = new Animator("/pictures/monster/rino/Idle2(52x34).png", 30, 104, 68d, 2);
         animator.setArr(11);
         readyAtk = true;
         attackDelay = new Delay(180);
