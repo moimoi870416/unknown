@@ -212,25 +212,14 @@ public abstract class GameScene extends Scene {
                         monster.get(i).isCollider(mapLarge.get(k));
                     }
                 }
-<<<<<<< HEAD
-//                if (monster.size() > 1 && i != monster.size() - 1) {
-//                    for (int k = 0; k < gameActorArr.size(); k++) {
-//                        if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
-//                            monster.get(i).isCollisionWithMonster(monster.get(i + 1));
-//                        }
-//                    }
-//                }
-=======
-                int r = 0;
                 if (monster.size() > 1 && i != monster.size() - 1) {
                     for (int k = 0; k < gameActorArr.size(); k++) {
                         if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
                             monster.get(i).isCollisionWithMonster(monster.get(i + 1));
-                            r++;
                         }
                     }
                 }
->>>>>>> e998ce9d4e71c5c3fc9c5decf35be60e2db44836
+
                 ConnectController.getInstance().monsterSend(i, monster.get(i));
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
