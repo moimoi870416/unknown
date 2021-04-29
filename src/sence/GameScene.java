@@ -185,9 +185,10 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
-
-        ///////////////////////////////
         for (int i = 0; i < monster.size(); i++) {
+//            if (camera.isCollision(monster.get(i))||monster.get(i).getIsChase()) {
+//                return;
+//            }
             if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
                     ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
@@ -356,8 +357,8 @@ public abstract class GameScene extends Scene {
                                     GameActor tmp = new GameActor(gameActorArr.get(i).getActor(),gameActorArr.get(i).collider().centerX(),gameActorArr.get(i).collider().centerY());
                                     tmp.setConnectID(gameActorArr.get(i).getConnectID());
                                     tmp.setState(GameObjForAnimator.State.STAND);
-//                                    ConnectController.getInstance().lysuSend(gameActorArr.get(i));
-//                                    gameActorArr.remove(i);
+                                    ConnectController.getInstance().lysuSend(gameActorArr.get(i));
+                                    gameActorArr.remove(i);
                                     gameActorArr.add(tmp);
                                     break;
                                 }
@@ -472,6 +473,9 @@ public abstract class GameScene extends Scene {
         }
 
         public void setVictory(boolean isVictory) {
+            if(isVictory){
+                return;
+            }
             AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
             AudioResourceController.getInstance().stop("/sounds/bgm/BGM-BOSS.wav");
             AudioResourceController.getInstance().loop("/sounds/bgm/victory.wav", 0);

@@ -4,6 +4,7 @@ import camera.MapInformation;
 import controller.AudioResourceController;
 import controller.ImageController;
 import controller.MapObjController;
+import object.GameObjForAnimator;
 import object.GameObjForPic;
 import object.actor.GameActor;
 import object.monster.BullBoss;
@@ -49,6 +50,7 @@ public class BossScene extends ConnectScene {
 
         if (isServer || isSingle) {
             monster.add(new BullBoss(1024, 500));
+            monster.get(0).setIsChase(true);
         }
     }
 
@@ -105,9 +107,10 @@ public class BossScene extends ConnectScene {
                 return;
             }
 
-            if (monster.size() == stoneCount && stoneCount == stoneDead) {
+            if(monster.get(0).getState() == GameObjForAnimator.State.DEATH){
                 effectView.setVictory(true);
             }
+
             if ((isServer || isSingle) && !bossDead && start) {
                 xOK = false;
                 yOK = false;

@@ -122,12 +122,9 @@ public abstract class Monster extends GameObjForAnimator {
             nearest = dc;
             this.gameActor = gameActor;
         }
-
-
         if (nearest < Global.WINDOW_WIDTH / 2) {
 
             isChase = true;
-            ConnectController.getInstance().monsterBooleanSend(isChase, connectID, "isChase");
         }
 
     }
@@ -242,5 +239,9 @@ public abstract class Monster extends GameObjForAnimator {
 
     public void setConnectID(int connectID) {
         this.connectID = connectID;
+    }
+
+    public boolean getIsChase(){
+        return isChase;
     }
 }

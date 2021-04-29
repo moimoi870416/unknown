@@ -74,10 +74,10 @@ public class Display {
             g.setFont(font3);
             g.setColor(Color.BLACK);
 
-            if (gameActor.getSkill().getHealCD().getCount()/ 60 < 21) {
-                g.drawString(String.valueOf(30 - gameActor.getSkill().getHealCD().getCount() / 60), 1272, 793);
+            if (gameActor.getSkill().getHealCD().getCount()/ 60 < 6) {
+                g.drawString(String.valueOf(15 - gameActor.getSkill().getHealCD().getCount() / 60), 1272, 793);
             }else{
-                g.drawString(String.valueOf(30 - gameActor.getSkill().getHealCD().getCount() / 60), 1284, 793);
+                g.drawString(String.valueOf(15 - gameActor.getSkill().getHealCD().getCount() / 60), 1284, 793);
             }
         }
 
@@ -89,7 +89,7 @@ public class Display {
             g.setColor(Color.BLACK);
 
             if (gameActor.getSkill().getDelayForFlash().getCount() / 60 < 10) {
-                g.drawString(String.valueOf(9 - gameActor.getSkill().getDelayForFlash().getCount()/ 60), 1364, 793);
+                g.drawString(String.valueOf(6 - gameActor.getSkill().getDelayForFlash().getCount()/ 60), 1364, 793);
 
             }
         }
