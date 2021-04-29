@@ -93,9 +93,6 @@ public abstract class GameObject implements GameKernel.PaintInterface, GameKerne
         return collider.overlap(obj.collider);
     }
 
-    public boolean isCollision(Image image){
-        image.getHeight(image.getGraphics())
-    }
 
     public enum CollisionDir{
         UP,
