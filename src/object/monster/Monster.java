@@ -124,7 +124,6 @@ public abstract class Monster extends GameObjForAnimator {
             this.gameActor = gameActor;
         }
         if (nearest < Global.WINDOW_WIDTH / 2) {
-
             isChase = true;
         }
 

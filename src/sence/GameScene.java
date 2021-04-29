@@ -23,6 +23,7 @@ import static util.Global.*;
 
 public abstract class GameScene extends Scene {
     protected ArrayList<GameObject> mapObjArr;
+    protected ArrayList<GameObject> mapLarge;
     protected LinkedList<Bullet> testBullets;
     protected ArrayList<Monster> monster;
     private int listenerMouseX;
@@ -43,6 +44,7 @@ public abstract class GameScene extends Scene {
     @Override
     public void sceneBegin() {
         mapObjArr = new ArrayList<>();
+        mapLarge = new ArrayList<>();
 //        monsterArr = new HashMap<>();
         monster = new ArrayList<>();
         testBullets = new LinkedList<>();
@@ -84,8 +86,12 @@ public abstract class GameScene extends Scene {
                 gameActorArr.get(i).paint(g);
             }
         }
-
-        mapObjArr.forEach(a -> a.paint(g));
+        for(int i=0 ; i<mapObjArr.size() ; i++){
+            if(camera.isCollision(mapObjArr.get(i))){
+                mapObjArr.get(i).paint(g);
+            }
+        }
+//        mapObjArr.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         effectView.effectPaint(g);
@@ -185,7 +191,6 @@ public abstract class GameScene extends Scene {
 
     private void monsterUpdate() {
         for (int i = 0; i < monster.size(); i++) {
-            System.out.println(i+"!!!"+monster.get(i).getState());
             if (monster.get(i).getState() == GameObjForAnimator.State.DEATH) {
                 if (isServer || isSingle) {
                     if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
@@ -201,9 +206,9 @@ public abstract class GameScene extends Scene {
                     monster.get(i).whoIsNear(gameActorArr.get(k));
                 }
                 monster.get(i).update();
-                if (monster.get(i).getState() != GameObjForAnimator.State.STAND) {
-                    for (int k = 0; k < mapObjArr.size(); k++) {
-                        monster.get(i).isCollider(mapObjArr.get(k));
+                if (monster.get(i).getIsChase()) {
+                    for (int k = 0; k < mapLarge.size() ; k++) {
+                        monster.get(i).isCollider(mapLarge.get(k));
                     }
                 }
                 if (monster.size() > 1 && i != monster.size() - 1) {
