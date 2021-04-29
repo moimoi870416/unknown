@@ -17,6 +17,7 @@ import weapon.Gun;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 
 
 import static util.Global.*;
@@ -24,7 +25,6 @@ import static util.Global.*;
 public abstract class GameScene extends Scene {
     protected ArrayList<GameObject> mapObjArr;
     protected LinkedList<Bullet> testBullets;
-//    protected Map<Integer,Monster> monsterArr;
     protected LinkedList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
@@ -473,7 +473,7 @@ public abstract class GameScene extends Scene {
         }
 
         public void setVictory(boolean isVictory) {
-            if(isVictory){
+            if(this.isVictory){
                 return;
             }
             AudioResourceController.getInstance().stop("/sounds/bgm/bgm1.wav");
