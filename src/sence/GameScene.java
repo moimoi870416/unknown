@@ -24,7 +24,7 @@ import static util.Global.*;
 public abstract class GameScene extends Scene {
     protected ArrayList<GameObject> mapObjArr;
     protected LinkedList<Bullet> testBullets;
-    protected LinkedList<Monster> monster;
+    protected ArrayList<Monster> monster;
     private int listenerMouseX;
     private int listenerMouseY;
     protected ArrayList<GameActor> gameActorArr;//主角
@@ -44,7 +44,7 @@ public abstract class GameScene extends Scene {
     public void sceneBegin() {
         mapObjArr = new ArrayList<>();
 //        monsterArr = new HashMap<>();
-        monster = new LinkedList<>();
+        monster = new ArrayList<>();
         testBullets = new LinkedList<>();
         sceneBeginComponent();
         display = new Display(gameActorArr.get(0));
@@ -185,18 +185,15 @@ public abstract class GameScene extends Scene {
 
     private void monsterUpdate() {
         for (int i = 0; i < monster.size(); i++) {
-//            if (camera.isCollision(monster.get(i))||monster.get(i).getIsChase()) {
-//                return;
-//            }
             if (isServer || isSingle) {
                 if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                    ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID());
+                    ConnectController.getInstance().monsterDeadSend(i);
                     monster.remove(i);
                     i--;
                     break;
                 }
             }
-            if (monster.get(i).getState() == GameObjForAnimator.State.DEATH || monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
+            if (monster.get(i).getState() == GameObjForAnimator.State.DEATH) {
                 break;
             }
             if (isServer || isSingle) {
@@ -214,7 +211,7 @@ public abstract class GameScene extends Scene {
                         }
                     }
                 }
-                ConnectController.getInstance().monsterSend(monster.get(i));
+                ConnectController.getInstance().monsterSend(i,monster.get(i));
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
                 monster.get(i).attack(gameActorArr.get(0));

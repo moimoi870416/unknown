@@ -91,7 +91,6 @@ public class Rino extends Monster {
     private boolean attack() {
         if (Math.abs(painter().centerX() - gameActor.collider().centerX()) < 500 || focus) {
             focus = true;
-            ConnectController.getInstance().monsterBooleanSend(focus, connectID, "focus");
             setMonsterState(State.STAND);
 
             if (attackDelay.count()) {
@@ -109,7 +108,6 @@ public class Rino extends Monster {
                 }
                 moveDistance = (int) Math.sqrt(moveOnX * moveOnX + moveOnY * moveOnY);
                 readyAtk = false;
-                ConnectController.getInstance().monsterBooleanSend(readyAtk, connectID, "readyAtk");
                 changeDir(moveOnX);
             }
             return true;
@@ -124,9 +122,7 @@ public class Rino extends Monster {
             return;
         }
         focus = false;
-        ConnectController.getInstance().monsterBooleanSend(focus, connectID, "focus");
         readyAtk = true;
-        ConnectController.getInstance().monsterBooleanSend(readyAtk, connectID, "readyAtk");
         attackDelay.play();
         totalDistance = 0;
         changeDir(gameActor.collider().centerX() - painter().centerX());

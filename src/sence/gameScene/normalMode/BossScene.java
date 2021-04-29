@@ -7,10 +7,7 @@ import controller.MapObjController;
 import object.GameObjForAnimator;
 import object.GameObjForPic;
 import object.actor.GameActor;
-import object.monster.BullBoss;
-import object.monster.Rino;
-import object.monster.SmallMonster;
-import object.monster.Stone;
+import object.monster.*;
 import sence.ConnectScene;
 import sence.GameScene;
 import util.Delay;
@@ -128,21 +125,22 @@ public class BossScene extends ConnectScene {
                 }
 
                 if ((xOK && yOK) && monster.size() < gameActorArr.size()*12 + stoneDead && Math.random()*100<20) {
+                    Monster tmp = null;
                     int r = random(0, 10);
                     if (r >=0 && r <4) {
-                        monster.add(new SmallMonster(x, y, SmallMonster.Type.MUSHROOM));
+                        tmp = new SmallMonster(x, y, SmallMonster.Type.MUSHROOM);
                     }
                     if (r >=4 && r <6) {
-                        monster.add(new SmallMonster(x, y, SmallMonster.Type.GOBLIN));
+                        tmp = new SmallMonster(x, y, SmallMonster.Type.GOBLIN);
                     }
                     if (r >=6 && r <8) {
-                        monster.add(new Stone(x, y));
+                        tmp = new Stone(x, y);
                     }
                     if (r >=9 && r<11 ) {
-                        monster.add(new Rino(x, y));
+                        tmp = new Rino(x, y);
                     }
-
-                    monster.getLast().setIsChase(true);
+                    tmp.setIsChase(true);
+                    monster.add(tmp);
                 }
             }
 

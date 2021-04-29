@@ -144,7 +144,7 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.MONSTER_NEW, strs);
     }
 
-    public void newMonsterReceive(LinkedList<Monster> monsters, ArrayList<String> strs) {
+    public void newMonsterReceive(ArrayList<Monster> monsters, ArrayList<String> strs) {
         for (int i = 0; i < monsters.size(); i++) {
             if (Integer.valueOf(strs.get(1)) == monsters.get(i).getConnectID()) {
                 return;
@@ -164,24 +164,25 @@ public class ConnectController {
         monsters.add(tmp);
     }
 
-    public void bossAtkTypeReceive(LinkedList<Monster> monster, ArrayList<String> strs) {
-        for (int i = 0; i < monster.size(); i++) {
-            if (monster.get(i).getTypeCode() == 0) {
-                monster.get(i).setAtkType(Integer.valueOf(strs.get(0)));
-            }
-        }
-    }
-
-    public void monsterSend(Monster monster) {
+    public void monsterSend(int key,Monster monster) {
         ArrayList<String> strs = new ArrayList<>();
         strs.add(monster.getConnectID() + "");//0
         strs.add(monster.collider().left() + "");//1
         strs.add(monster.collider().top() + "");//2
         strs.add(monster.getDir() + "");//3
+        strs.add(key +"");//4
         ClientClass.getInstance().sent(NetEvent.MONSTER, strs);
     }
 
-    public void monsterReceive(LinkedList<Monster> monster, ArrayList<String> strs) {
+    public void monsterReceive(ArrayList<Monster> monster, ArrayList<String> strs) {
+        int key = Integer.valueOf(strs.get(4));
+        if(monster.get(key).getConnectID() == Integer.valueOf(strs.get(0))){
+            monster.get(key).offSetX(Integer.valueOf(strs.get(1)));
+            monster.get(key).offSetY(Integer.valueOf(strs.get(2)));
+            monster.get(key).setDir(GameObjForAnimator.Dir.valueOf(strs.get(3)));
+            monster.get(key).transHitArea();
+            return;
+        }
         for (int i = 0; i < monster.size(); i++) {
             if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
                 monster.get(i).offSetX(Integer.valueOf(strs.get(1)));
@@ -259,22 +260,17 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.MONSTER_DEAD, strs);
     }
 
-    public void monsterDeadReceive(LinkedList<Monster> monster, ArrayList<String> strs) {
-        for (int i = 0; i < monster.size(); i++) {
-            if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
-                monster.remove(i);
-                return;
-            }
-        }
+    public void monsterDeadReceive(ArrayList<Monster> monster, ArrayList<String> strs) {
+        monster.remove(strs.get(0));
     }
 
-    public void monsterBooleanSend(boolean isTrue, int connectID, String type) {
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add(type);
-        strs.add(connectID + "");
-        strs.add(isTrue + "");
-        ClientClass.getInstance().sent(NetEvent.MONSTER_IS_CHASE, strs);
-    }
+//    public void monsterBooleanSend(boolean isTrue, int connectID, String type) {
+//        ArrayList<String> strs = new ArrayList<>();
+//        strs.add(type);
+//        strs.add(connectID + "");
+//        strs.add(isTrue + "");
+//        ClientClass.getInstance().sent(NetEvent.MONSTER_IS_CHASE, strs);
+//    }
 
     public void monsterStateSend(GameObjForAnimator.State state, int connectID) {
         ArrayList<String> strs = new ArrayList<>();
@@ -283,7 +279,7 @@ public class ConnectController {
         ClientClass.getInstance().sent(NetEvent.MONSTER_STATE, strs);
     }
 
-    public void monsterStateReceive(LinkedList<Monster> monster, ArrayList<String> strs) {
+    public void monsterStateReceive(ArrayList<Monster> monster, ArrayList<String> strs) {
         for (int i = 0; i < monster.size(); i++) {
             if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
                 monster.get(i).setMonsterState(GameObjForAnimator.State.valueOf(strs.get(1)));
