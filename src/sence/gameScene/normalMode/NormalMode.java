@@ -22,7 +22,7 @@ public class NormalMode extends ConnectScene {
 
     public NormalMode() {
         gameActorArr = new ArrayList<>();
-        gameActorArr.add(new GameActor(Actor.THIRD, 500, 500));
+        gameActorArr.add(new GameActor(Actor.SECOND, 500, 500));
     }
 
     public NormalMode(ArrayList<GameActor> gameActorArr) {
