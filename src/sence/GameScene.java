@@ -219,6 +219,7 @@ public abstract class GameScene extends Scene {
                         }
                     }
                 }
+
                 ConnectController.getInstance().monsterSend(i, monster.get(i));
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
