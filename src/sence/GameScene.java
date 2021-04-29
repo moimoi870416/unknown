@@ -190,11 +190,12 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
+        System.out.println(mapLarge.size());
         for (int i = 0; i < monster.size(); i++) {
             if (monster.get(i).getState() == GameObjForAnimator.State.DEATH) {
                 if (isServer || isSingle) {
                     if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                        ConnectController.getInstance().monsterDeadSend(i);
+                        ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID(),i);
                         monster.remove(i);
                         i--;
                     }
@@ -211,10 +212,12 @@ public abstract class GameScene extends Scene {
                         monster.get(i).isCollider(mapLarge.get(k));
                     }
                 }
+                int r = 0;
                 if (monster.size() > 1 && i != monster.size() - 1) {
                     for (int k = 0; k < gameActorArr.size(); k++) {
                         if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
                             monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+                            r++;
                         }
                     }
                 }

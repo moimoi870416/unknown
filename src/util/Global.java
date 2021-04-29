@@ -13,7 +13,7 @@ public class Global {
     public final static int UNIT_X = 32;
     public final static int UNIT_Y = 32;
 
-    public static boolean I_AM_MAC = true;
+    public static boolean I_AM_MAC = false;
     public final static boolean IS_DEBUG = false;
     //網路
     public static boolean isSingle = true;
