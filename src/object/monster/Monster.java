@@ -82,6 +82,7 @@ public abstract class Monster extends GameObjForAnimator {
 
     @Override
     public void update() {
+
         if (state == State.DEATH || state == State.DEAD) {
             isChase = false;
             return;

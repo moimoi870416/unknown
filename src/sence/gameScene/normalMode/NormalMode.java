@@ -104,7 +104,7 @@ public class NormalMode extends ConnectScene {
 
         @Override
         public void mapPaint(Graphics g) {
-            g.drawImage(mapLeft, mapWidth * count, 0, null);
+            g.drawImage(mapLeft, mapWidth * count,0, null);
             g.drawImage(mapMiddle, mapWidth * (count + 1), 0, null);
             g.drawImage(mapRight, mapWidth * (count + 2), 0, null);
             g.drawImage(mapFinal, mapWidth * (count + 3), 0, null);
@@ -180,11 +180,11 @@ public class NormalMode extends ConnectScene {
 
         private void mapBegin() {
             mapLarge.addAll(new MapObjController.Builder().setBmpAndTxt("mapLarge.bmp", "mapLarge.txt")
-                    .setNameAndPath("bananaStatue", "/pictures/map/banana.png", true, new GameObjForPic("/pictures/map/banana.png",  0, 156, 168, 256))
                     .setNameAndPath("Name", "/pictures/map/banana.png", true, new GameObjForPic("/pictures/map/banana.png", 0,0 , 19000, 350))
                     .gen()
                     .setMap());
-            mapLarge.addAll(new MapObjController.Builder().setBmpAndTxt("mapLarge.bmp", "mapLarge.txt")
+            mapLarge.addAll(new MapObjController.Builder().setBmpAndTxt("beginMap.bmp", "beginMap.txt")
+                    .setNameAndPath("bananaStatue", "/pictures/map/banana.png", true, new GameObjForPic("/pictures/map/banana.png",  0, 156, 168, 256))
                     .setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                     .gen()
                     .setMap());
@@ -280,12 +280,12 @@ public class NormalMode extends ConnectScene {
                     monster.add(new SmallMonster(random(2500,3000),random(370,950), SmallMonster.Type.MUSHROOM));
                 }
             }
-            for(int i=0 ; i<monsterNumber*2 ; i++){
-                monster.add(new SmallMonster(random(4000,4500),random(370,950), SmallMonster.Type.GOBLIN));
-                if(i%2 == 0){
-                    monster.add(new SmallMonster(random(4000,4500),random(370,950), SmallMonster.Type.MUSHROOM));
-                }
-            }
+//            for(int i=0 ; i<monsterNumber*2 ; i++){
+//                monster.add(new SmallMonster(random(4000,4500),random(370,950), SmallMonster.Type.GOBLIN));
+//                if(i%2 == 0){
+//                    monster.add(new SmallMonster(random(4000,4500),random(370,950), SmallMonster.Type.MUSHROOM));
+//                }
+//            }
             monster.add(new Rino(random(2000,2500),550));
             monster.add(new Rino(random(4000,4500),550));
 
@@ -307,15 +307,15 @@ public class NormalMode extends ConnectScene {
             }
             monster.add(new Rino(random(7000,8000),580));
 
-            for(int i=0 ; i<monsterNumber*2 ; i++){
-                monster.add(new Stone(random(9500,10000),random(370,950)));
-                if(i%3 == 0){
-                    monster.add(new SmallMonster(random(9500,10000),random(370,950), SmallMonster.Type.MUSHROOM));
-                }
-                if(i%4 == 0){
-                    monster.add(new Rino(random(9500,10000),random(370,950)));
-                }
-            }
+//            for(int i=0 ; i<monsterNumber*2 ; i++){
+//                monster.add(new Stone(random(9500,10000),random(370,950)));
+//                if(i%3 == 0){
+//                    monster.add(new SmallMonster(random(9500,10000),random(370,950), SmallMonster.Type.MUSHROOM));
+//                }
+//                if(i%4 == 0){
+//                    monster.add(new Rino(random(9500,10000),random(370,950)));
+//                }
+//            }
 
         }
         private void thirdWave(){//8192
@@ -329,15 +329,15 @@ public class NormalMode extends ConnectScene {
                 monster.add(new Rino(random(12000,12500),random(370,950)));
 
             }
-            for(int i=0 ; i<monsterNumber*2 ; i++){
-                monster.add(new Stone(random(12000,12500),random(370,950)));
-                if(i%3 == 0){
-                    monster.add(new SmallMonster(random(12000,12500),random(370,950), SmallMonster.Type.MUSHROOM));
-                }
-                if(i%4 == 0){
-                    monster.add(new Rino(random(12000,12500),random(370,950)));
-                }
-            }
+//            for(int i=0 ; i<monsterNumber*2 ; i++){
+//                monster.add(new Stone(random(12000,12500),random(370,950)));
+//                if(i%3 == 0){
+//                    monster.add(new SmallMonster(random(12000,12500),random(370,950), SmallMonster.Type.MUSHROOM));
+//                }
+//                if(i%4 == 0){
+//                    monster.add(new Rino(random(12000,12500),random(370,950)));
+//                }
+//            }
 
         }
         private void fourthWave(){//12288

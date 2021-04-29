@@ -338,7 +338,7 @@ public class MenuScene extends Scene {
                 if (commandCode == Active.ENTER.getCommandCode()) {
                     if (ModeState == FOURTH) {
 //                        if (IS_DEBUG) {
-                        connectIP = "192.168.1.18";
+                        connectIP = "172.20.10.4";
                         addConnectLanArea();
 //                            return;
 //                        }

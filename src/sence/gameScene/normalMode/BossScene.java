@@ -125,22 +125,22 @@ public class BossScene extends ConnectScene {
                 }
 
                 if ((xOK && yOK) && monster.size() < gameActorArr.size()*12 + stoneDead && Math.random()*100<20) {
-                    Monster tmp = null;
-                    int r = random(0, 10);
-                    if (r >=0 && r <4) {
-                        tmp = new SmallMonster(x, y, SmallMonster.Type.MUSHROOM);
-                    }
-                    if (r >=4 && r <6) {
-                        tmp = new SmallMonster(x, y, SmallMonster.Type.GOBLIN);
-                    }
-                    if (r >=6 && r <8) {
-                        tmp = new Stone(x, y);
-                    }
-                    if (r >=9 && r<11 ) {
-                        tmp = new Rino(x, y);
-                    }
-                    tmp.setIsChase(true);
-                    monster.add(tmp);
+//                    Monster tmp = null;
+//                    int r = random(0, 10);
+//                    if (r >=0 && r <4) {
+//                        tmp = new SmallMonster(x, y, SmallMonster.Type.MUSHROOM);
+//                    }
+//                    if (r >=4 && r <6) {
+//                        tmp = new SmallMonster(x, y, SmallMonster.Type.GOBLIN);
+//                    }
+//                    if (r >=6 && r <8) {
+//                        tmp = new Stone(x, y);
+//                    }
+//                    if (r >=9 && r<11 ) {
+//                        tmp = new Rino(x, y);
+//                    }
+//                    tmp.setIsChase(true);
+//                    monster.add(tmp);
                 }
             }
 

@@ -40,6 +40,7 @@ public abstract class GameScene extends Scene {
     private boolean typeCode;
     private ArrayList<Character> type;
     private Delay monsterCheckDelay;
+    private int x;
 
     @Override
     public void sceneBegin() {
@@ -86,12 +87,12 @@ public abstract class GameScene extends Scene {
                 gameActorArr.get(i).paint(g);
             }
         }
-        for(int i=0 ; i<mapObjArr.size() ; i++){
-            if(camera.isCollision(mapObjArr.get(i))){
-                mapObjArr.get(i).paint(g);
-            }
-        }
-//        mapObjArr.forEach(a -> a.paint(g));
+//        for(int i=0 ; i<mapObjArr.size() ; i++){
+//            if(camera.isCollision(mapObjArr.get(i))){
+//                mapObjArr.get(i).paint(g);
+//            }
+//        }
+        mapObjArr.forEach(a -> a.paint(g));
         testBullets.forEach(testBullet -> testBullet.paint(g));
         camera.paint(g);
         effectView.effectPaint(g);
@@ -138,9 +139,9 @@ public abstract class GameScene extends Scene {
                 i--;
                 continue;
             }
-            int x = 0;
-            for (int k = 0; k < mapObjArr.size(); k++) {
-                if (testBullets.get(i).isCollied(mapObjArr.get(k))) {
+            x = 0;
+            for (int k = 0; k < mapLarge.size(); k++) {
+                if (testBullets.get(i).isCollied(mapLarge.get(k))) {
                     testBullets.remove(i);
                     i--;
                     x++;
