@@ -254,14 +254,24 @@ public class ConnectController {
         SenceController.getSenceController().change(new BossScene(test));
     }
 
-    public void monsterDeadSend(int key) {
+    public void monsterDeadSend(int connectID,int key) {
         ArrayList<String> strs = new ArrayList<>();
+        strs.add(connectID +"");
         strs.add(key + "");
         ClientClass.getInstance().sent(NetEvent.MONSTER_DEAD, strs);
     }
 
     public void monsterDeadReceive(ArrayList<Monster> monster, ArrayList<String> strs) {
-        monster.remove(strs.get(0));
+        if(monster.get(Integer.valueOf(strs.get(1))).getConnectID() == Integer.valueOf(strs.get(0))) {
+            monster.remove(strs.get(0));
+            return;
+        }
+        for(int i=0 ; i<monster.size() ; i++){
+            if (monster.get(i).getConnectID() == Integer.valueOf(strs.get(0))) {
+                monster.remove(i);
+                return;
+            }
+        }
     }
 
 //    public void monsterBooleanSend(boolean isTrue, int connectID, String type) {

@@ -90,7 +90,7 @@ public class NormalMode extends ConnectScene {
             thirdWave = true;
             fourthWave = true;
             fifthWave = true;
-            monsterNumber = gameActorArr.size() *3;
+            monsterNumber = gameActorArr.size() *2;
             map.add(mapLeft);
             map.add(mapMiddle);
             map.add(mapRight);
@@ -179,9 +179,12 @@ public class NormalMode extends ConnectScene {
 
 
         private void mapBegin() {
-            mapLarge.addAll(new MapObjController.Builder().setBmpAndTxt("beginMap.bmp", "beginMap.txt")
-                    .setNameAndPath("bananaStatue", "/pictures/map/banana.png", true, new GameObjForPic("/pictures/map/banana.png", 0, 156, 168, 256))
-                    .setNameAndPath("tree1", "/pictures/map/tree1-208-336.png", true, new GameObjForPic("/pictures/map/tree1-208-336.png", 0, 0, 19000, 350))
+            mapLarge.addAll(new MapObjController.Builder().setBmpAndTxt("mapLarge.bmp", "mapLarge.txt")
+                    .setNameAndPath("bananaStatue", "/pictures/map/banana.png", true, new GameObjForPic("/pictures/map/banana.png",  0, 156, 168, 256))
+                    .setNameAndPath("Name", "/pictures/map/banana.png", true, new GameObjForPic("/pictures/map/banana.png", 0,0 , 19000, 350))
+                    .gen()
+                    .setMap());
+            mapLarge.addAll(new MapObjController.Builder().setBmpAndTxt("mapLarge.bmp", "mapLarge.txt")
                     .setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                     .gen()
                     .setMap());
@@ -198,7 +201,7 @@ public class NormalMode extends ConnectScene {
                     .setNameAndPath("tree1", "/pictures/map/tree1-208-336.png", true, new GameObjForPic("/pictures/map/tree1-208-336.png", 0, 0, 208, 336))
                     .setNameAndPath("tree2", "/pictures/map/tree2-208-336.png", true, new GameObjForPic("/pictures/map/tree2-208-336.png", 0, 0, 208, 336))
                     .setNameAndPath("tree3", "/pictures/map/tree3-208-336.png", true, new GameObjForPic("/pictures/map/tree3-208-336.png", 0, 0, 208, 336))
-                    //.setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
+                    .setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                     .gen()
                     .setMap());
 
@@ -207,7 +210,7 @@ public class NormalMode extends ConnectScene {
                     .setNameAndPath("tree1", "/pictures/map/tree1-208-336.png", true, new GameObjForPic("/pictures/map/tree1-208-336.png", 0, 0, 208, 336))
                     .setNameAndPath("tree2", "/pictures/map/tree2-208-336.png", true, new GameObjForPic("/pictures/map/tree2-208-336.png", 0, 0, 208, 336))
                     .setNameAndPath("tree3", "/pictures/map/tree3-208-336.png", true, new GameObjForPic("/pictures/map/tree3-208-336.png", 0, 0, 208, 336))
-                    //.setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
+                    .setNameAndPath("rock1", "/pictures/map/rock-sand1-424-216.png", true, new GameObjForPic("/pictures/map/rock-sand1-424-216.png", 0, 50, 425, 212))
                     .gen()
                     .setMap());
 

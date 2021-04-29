@@ -190,11 +190,12 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
+        System.out.println(mapLarge.size());
         for (int i = 0; i < monster.size(); i++) {
             if (monster.get(i).getState() == GameObjForAnimator.State.DEATH) {
                 if (isServer || isSingle) {
                     if (monster.get(i).getState() == GameObjForAnimator.State.DEAD) {
-                        ConnectController.getInstance().monsterDeadSend(i);
+                        ConnectController.getInstance().monsterDeadSend(monster.get(i).getConnectID(),i);
                         monster.remove(i);
                         i--;
                     }
@@ -211,6 +212,7 @@ public abstract class GameScene extends Scene {
                         monster.get(i).isCollider(mapLarge.get(k));
                     }
                 }
+<<<<<<< HEAD
 //                if (monster.size() > 1 && i != monster.size() - 1) {
 //                    for (int k = 0; k < gameActorArr.size(); k++) {
 //                        if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
@@ -218,6 +220,17 @@ public abstract class GameScene extends Scene {
 //                        }
 //                    }
 //                }
+=======
+                int r = 0;
+                if (monster.size() > 1 && i != monster.size() - 1) {
+                    for (int k = 0; k < gameActorArr.size(); k++) {
+                        if (!gameActorArr.get(k).isCollisionWithActor(monster.get(i))) {
+                            monster.get(i).isCollisionWithMonster(monster.get(i + 1));
+                            r++;
+                        }
+                    }
+                }
+>>>>>>> e998ce9d4e71c5c3fc9c5decf35be60e2db44836
                 ConnectController.getInstance().monsterSend(i, monster.get(i));
             }
             if (monster.get(i).isCollisionWithActor(gameActorArr.get(0))) {
