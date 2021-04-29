@@ -10,7 +10,7 @@ public class SmallMonster extends Monster {
         super(x, y, 32, 32,400,15,type.speedMove,false,type.typeCode);
         this.type = type;
         if(type == Type.GOBLIN) {
-            animator = new Animator(type.path, 15, 16, 16, 2);
+            animator = new Animator(type.path, 15, 32, 32, 2);
             animator.setArr(6);
         }else if(type == Type.MUSHROOM){
             animator = new Animator(type.path, 15, 32, 32, 2);
@@ -43,7 +43,7 @@ public class SmallMonster extends Monster {
             case DEATH -> {
                 animator.setImg("/pictures/monster/goblin/goblindead.png",2);
                 animator.setArr(4);
-                animator.setWidthAndHeightSize(16,16);
+                animator.setWidthAndHeightSize(32,32);
                 animator.setPlayOnce();
             }
         }
