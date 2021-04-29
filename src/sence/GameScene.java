@@ -156,7 +156,7 @@ public abstract class GameScene extends Scene {
                             x++;
                             break;
                         }
-                        gameActorArr.get(k).offLife(testBullets.get(i).getAtk() / 4);
+                        gameActorArr.get(k).offLife(testBullets.get(i).getAtk() / 6);
                         i--;
                         x++;
                         break;
@@ -190,7 +190,6 @@ public abstract class GameScene extends Scene {
     }
 
     private void monsterUpdate() {
-        System.out.println(mapLarge.size());
         for (int i = 0; i < monster.size(); i++) {
             if (monster.get(i).getState() == GameObjForAnimator.State.DEATH) {
                 if (isServer || isSingle) {
