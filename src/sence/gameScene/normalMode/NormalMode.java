@@ -5,6 +5,7 @@ import camera.MapInformation;
 import controller.*;
 import object.GameObjForPic;
 import object.actor.GameActor;
+import object.monster.Cockroach;
 import object.monster.Rino;
 import object.monster.SmallMonster;
 import object.monster.Stone;
@@ -23,6 +24,7 @@ public class NormalMode extends ConnectScene {
     public NormalMode() {
         gameActorArr = new ArrayList<>();
         gameActorArr.add(new GameActor(Actor.SECOND, 500, 500));
+
     }
 
     public NormalMode(ArrayList<GameActor> gameActorArr) {
@@ -31,6 +33,7 @@ public class NormalMode extends ConnectScene {
 
     @Override
     protected void gameSceneBegin() {
+        monster.add(new Cockroach(1000,500));
         bossScene = false;
         MAP_WIDTH = 19000;
         MapInformation.setMapInfo(0, 0, MAP_WIDTH, MAP_HEIGHT);
@@ -62,8 +65,10 @@ public class NormalMode extends ConnectScene {
         private boolean fourthWave;
         private boolean fifthWave;
         private int monsterNumber;
+        private ArrayList<Image> map;
 
         public NormalModeMapInfo() {
+            map = new ArrayList<>();
             mapBegin();
             mapForest(4096);
             mapChange(8192);
@@ -87,6 +92,10 @@ public class NormalMode extends ConnectScene {
             fourthWave = true;
             fifthWave = true;
             monsterNumber = gameActorArr.size() *3;
+            map.add(mapLeft);
+            map.add(mapMiddle);
+            map.add(mapRight);
+            map.add(mapFinal);
             if(isServer||isSingle) {
                 firstWave();
             }

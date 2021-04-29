@@ -9,7 +9,7 @@ public class Cockroach extends Monster {
     private int moveOnY;
 
     public Cockroach(int x, int y) {
-        super(x+30,y+30,100,92,x, y, 150, 150,x+75,y+30,30,30, 5000, 30, 5,false,1);
+        super(x+30,y+30,100,92,x, y, 150, 150,x+75,y+30,30,30, 10000, 30, 5,false,1);
         animator = new Animator("/pictures/monster/cockroach/run.png",0,150,150,2);
         animator.setArr(40);
         move = false;
@@ -25,7 +25,7 @@ public class Cockroach extends Monster {
     protected void updateComponent() {
         if(attacking) {
             if (delayForAttack.isPlaying()) {
-                setState(State.ATTACK);
+                setMonsterState(State.ATTACK);
                 attacking = false;
                 move = false;
             }
@@ -35,7 +35,7 @@ public class Cockroach extends Monster {
         }
         if(delayForAttack.isStop()){
             if(attacking) {
-                setState(State.RUN);
+                setMonsterState(State.RUN);
             }
             attacking = true;
         }
@@ -49,19 +49,19 @@ public class Cockroach extends Monster {
         if(!move) {
             int r = Global.random(0, 1);
             if (r == 0) {
-                x = Math.abs(Global.actorX - painter().centerX()) + 50;
+                x = Math.abs(gameActor.collider().centerX() - painter().centerX()) + 50;
             } else {
-                x = Math.abs(Global.actorX - painter().centerX()) - 50;
+                x = Math.abs(gameActor.collider().centerX() - painter().centerX()) - 50;
             }
         }
-        int y = Math.abs(Global.actorY - painter().centerY());
+        int y = Math.abs(gameActor.collider().centerY() - painter().centerY());
         float distance = (float) Math.sqrt(x * x + y * y);//計算斜邊,怪物與人物的距離
         int moveOnX = (int) (Math.cos(Math.toRadians((Math.acos(x / distance) / Math.PI * 180))) * moveSpeed); //  正負向量
         int moveOnY = (int) (Math.sin(Math.toRadians((Math.asin(y / distance) / Math.PI * 180))) * moveSpeed);
-        if (Global.actorY < painter().centerY()) {
+        if (gameActor.collider().centerY() < painter().centerY()) {
             this.moveOnY = -moveOnY;
         }
-        if (Global.actorX < painter().centerX()) {
+        if (gameActor.collider().centerY() < painter().centerX()) {
             this.moveOnX = -moveOnX;
         }
         translate(moveOnX,moveOnY);
@@ -72,7 +72,6 @@ public class Cockroach extends Monster {
 
     @Override
     protected void setStateComponent() {
-        this.state = state;
         switch (state){
             case RUN -> {
                 animator.setImg("/pictures/monster/cockroach/run.png",2);
