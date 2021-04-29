@@ -17,7 +17,6 @@ import weapon.Gun;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Map;
 
 
 import static util.Global.*;
